@@ -339,17 +339,10 @@ section {
 
 /* Visual Hierarchy & Focal Points */
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #667eea 75%, #764ba2 100%);
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 /* Horizontal Showcase Specific */
@@ -535,17 +528,13 @@ section {
   transform: translateZ(0);
 }
 
-.project-card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
+.project-card {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
-.project-card-3d:hover {
-  transform: translateZ(20px) rotateY(3deg) rotateX(-2deg);
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
 .horizontal-scroll {

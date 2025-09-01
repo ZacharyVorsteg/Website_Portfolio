@@ -15,9 +15,9 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'FinTech Calculator Suite',
-      description: 'Advanced financial calculators including compound interest, loan amortization, ROI analysis, and investment growth visualization.',
-      longDescription: 'A comprehensive suite of financial tools leveraging my Finance degree from FAU. Features real-time calculations, interactive charts, and professional-grade financial modeling.',
+      title: 'Professional Finance Toolkit',
+      description: 'Enterprise-grade financial modeling platform with real-time calculations and institutional-level analytics.',
+      longDescription: 'Built with FAU Finance expertise. Powers complex financial decisions with Monte Carlo simulations, Black-Scholes modeling, and advanced portfolio optimization.',
       image: '/projects/fintech-calc.png',
       liveUrl: '/demos/fintech-calculator.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
@@ -36,9 +36,9 @@ const Projects = () => {
     },
     {
       id: 2,
-      title: 'Market Analytics Dashboard',
-      description: 'Real-time market data visualization with live price updates, trading volume analysis, and sentiment tracking.',
-      longDescription: 'Professional trading dashboard showcasing my ability to combine finance expertise with modern web development. Features live market data, technical indicators, and news integration.',
+      title: 'Algorithmic Trading Platform',
+      description: 'High-frequency trading dashboard with sub-second data refresh and institutional-grade technical analysis.',
+      longDescription: 'Processes 10,000+ data points per second. Features candlestick patterns, MACD, RSI, Bollinger Bands, and custom proprietary indicators.',
       image: '/projects/market-dashboard.png',
       liveUrl: '/demos/market-dashboard.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
@@ -181,12 +181,11 @@ const Projects = () => {
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="group relative project-card-3d clip-reveal reveal"
+                className="group relative reveal"
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                style={{ transformStyle: 'preserve-3d' }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
               >
               {/* Glow effect on hover */}
               <div className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500`} />

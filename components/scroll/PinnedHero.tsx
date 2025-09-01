@@ -40,36 +40,25 @@ export default function PinnedHero() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=150%',
-          scrub: 0.3,          // Very responsive
+          end: '+=100%',
+          scrub: 1,              // Smoother scrubbing
           pin: true,
           anticipatePin: 1,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true
+          fastScrollEnd: false,  // Prevent jumpy stops
+          invalidateOnRefresh: true,
+          preventOverlaps: true
         }
       });
 
-      // Optimized animations with better visual impact
+      // Simplified animations to prevent glitching
       tl.to(bgRef.current, { 
-        scale: 1.2,
-        opacity: 0.6,
-        ease: 'power2.inOut'
+        scale: 1.15,
+        opacity: 0.7
       }, 0)
       .to(contentRef.current, {
-        y: -60,
-        opacity: 0.8,
-        ease: 'power2.out'
-      }, 0)
-      .to(titleRef.current, { 
-        letterSpacing: '0.1em',
-        scale: 1.05,
-        ease: 'power2.out'
-      }, 0)
-      .to(subRef.current, { 
-        y: -30,
-        opacity: 0.3,
-        ease: 'power2.out'
-      }, 0.05);
+        y: -50,
+        opacity: 0.9
+      }, 0);
 
     }, sectionRef);
 

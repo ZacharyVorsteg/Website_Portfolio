@@ -25,24 +25,21 @@ export default function BatchReveal({
     const ctx = gsap.context(() => {
       // Batch reveal for better performance
       ScrollTrigger.batch(selector, {
-        interval: 0.05,         // Faster gathering for smoother flow
-        batchMax: 6,            // Optimal batch size
+        interval: 0.1,          // More stable gathering
+        batchMax: 4,            // Smaller batches for smoother reveals
         onEnter: (batch) => {
           gsap.fromTo(batch,
             { 
-              y: 25,
-              opacity: 0,
-              scale: 0.97
+              y: 20,
+              opacity: 0
             },
             { 
               y: 0,
               opacity: 1,
-              scale: 1,
-              duration: duration * 0.8,  // Slightly faster
-              stagger: stagger * 0.8,
-              ease: 'power1.out',
-              overwrite: 'auto',
-              clearProps: 'all'  // Clean up after animation
+              duration: 0.6,
+              stagger: 0.08,
+              ease: 'power2.out',
+              overwrite: 'auto'
             }
           );
         },
@@ -69,8 +66,7 @@ export default function BatchReveal({
       // Set initial state
       gsap.set(selector, {
         opacity: 0,
-        y: 30,
-        scale: 0.98
+        y: 20
       });
     }, containerRef);
 

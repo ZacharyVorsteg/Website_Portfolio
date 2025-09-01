@@ -26,16 +26,15 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
         const { default: Lenis } = await import('lenis');
         
         lenis = new Lenis({
-          lerp: 0.08,            // Slightly crisper for better response
-          wheelMultiplier: 0.85,  // Better control on all devices
+          lerp: 0.1,             // Smoother, less aggressive
+          wheelMultiplier: 1.0,  // Standard multiplier
           smoothWheel: true,
-          touchMultiplier: 1.2,
-          duration: 1.0,          // Faster response
+          touchMultiplier: 2,
+          duration: 1.2,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: 'vertical',
           gestureOrientation: 'vertical',
-          infinite: false,
-          autoResize: true
+          infinite: false
         });
 
         // Single RAF to drive both Lenis and ScrollTrigger
