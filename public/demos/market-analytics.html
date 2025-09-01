@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmic Trading Signal Generator - Institutional Trading Desk</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, 'SF Pro Display', 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Trading Terminal Header */
+        .terminal-header {
+            background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+            border-bottom: 1px solid #1a1a1a;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .terminal-title h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .live-badge {
+            background: #00ff41;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            animation: livePulse 2s infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .terminal-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #00ff41;
+        }
+
+        /* Main Container */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            height: calc(100vh - 60px);
+        }
+
+        /* Left Panel - Trading Signals */
+        .signals-panel {
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #1a1a1a;
+        }
+
+        /* Signal Cards */
+        .signal-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .signal-card.buy {
+            border-left: 4px solid #00ff41;
+        }
+
+        .signal-card.sell {
+            border-left: 4px solid #ff0040;
+        }
+
+        .signal-card.hold {
+            border-left: 4px solid #ffaa00;
+        }
+
+        .signal-card:hover {
+            background: #111;
+            transform: translateX(5px);
+        }
+
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .signal-info {
+            flex: 1;
+        }
+
+        .signal-symbol {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .signal-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .signal-type.buy {
+            background: rgba(0, 255, 65, 0.2);
+            color: #00ff41;
+        }
+
+        .signal-type.sell {
+            background: rgba(255, 0, 64, 0.2);
+            color: #ff0040;
+        }
+
+        .signal-confidence {
+            text-align: right;
+        }
+
+        .confidence-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .confidence-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* Signal Metrics */
+        .signal-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* Signal Indicators */
+        .signal-indicators {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .indicator {
+            background: #111;
+            border: 1px solid #222;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .indicator.bullish {
+            border-color: #00ff41;
+            color: #00ff41;
+        }
+
+        .indicator.bearish {
+            border-color: #ff0040;
+            color: #ff0040;
+        }
+
+        /* Execute Button */
+        .execute-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .execute-btn.buy {
+            background: #00ff41;
+            color: #000;
+        }
+
+        .execute-btn.sell {
+            background: #ff0040;
+            color: #fff;
+        }
+
+        .execute-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+        }
+
+        /* Right Panel - Order Book & Charts */
+        .right-panel {
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Order Book */
+        .order-book {
+            padding: 20px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .order-book-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .order-book-table {
+            width: 100%;
+        }
+
+        .order-book-table th {
+            text-align: left;
+            padding: 8px;
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 500;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .order-book-table td {
+            padding: 6px 8px;
+            font-size: 0.85rem;
+            font-family: 'SF Mono', 'Monaco', monospace;
+        }
+
+        .order-row.ask {
+            color: #ff0040;
+        }
+
+        .order-row.bid {
+            color: #00ff41;
+        }
+
+        /* P&L Tracker */
+        .pnl-tracker {
+            padding: 20px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .pnl-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .pnl-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .pnl-stat {
+            background: #111;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #1a1a1a;
+        }
+
+        .pnl-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .pnl-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .profit { color: #00ff41; }
+        .loss { color: #ff0040; }
+
+        /* Chart Container */
+        .chart-section {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+
+        .chart-container {
+            height: 100%;
+            position: relative;
+        }
+
+        /* Execution Log */
+        .execution-log {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+            padding: 10px 30px;
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            font-size: 0.85rem;
+        }
+
+        .log-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .log-time {
+            color: #666;
+        }
+
+        .log-action {
+            color: #00ff41;
+        }
+
+        .log-details {
+            color: #999;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(90deg, #ff0040, #ff0080);
+            color: #fff;
+            padding: 10px 30px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            animation: alertSlide 20s linear infinite;
+        }
+
+        @keyframes alertSlide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Performance Grid */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+            background: #0a0a0a;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .perf-card {
+            text-align: center;
+        }
+
+        .perf-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .perf-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- Terminal Header -->
+    <div class="terminal-header">
+        <div class="terminal-title">
+            <h1>TRADING TERMINAL DEMO</h1>
+            <span class="live-badge">SIMULATION</span>
+        </div>
+        <div class="terminal-stats">
+            <div class="stat">
+                <span class="stat-label">Today's P&L</span>
+                <span class="stat-value">+$142,384</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Win Rate</span>
+                <span class="stat-value">87.3%</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Signals/Min</span>
+                <span class="stat-value">247</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Banner -->
+    <div class="alert-banner">
+        📊 DEMO MODE: This is a demonstration of trading terminal capabilities - All data is simulated for illustration purposes
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Left Panel - Trading Signals -->
+        <div class="signals-panel">
+            <!-- Signal 1 - Strong Buy -->
+            <div class="signal-card buy">
+                <div class="signal-header">
+                    <div class="signal-info">
+                        <div class="signal-symbol">AAPL</div>
+                        <span class="signal-type buy">STRONG BUY</span>
+                    </div>
+                    <div class="signal-confidence">
+                        <div class="confidence-value">94%</div>
+                        <div class="confidence-label">Confidence</div>
+                    </div>
+                </div>
+                
+                <div class="signal-metrics">
+                    <div class="metric">
+                        <div class="metric-value">$178.45</div>
+                        <div class="metric-label">Entry</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$182.20</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$176.80</div>
+                        <div class="metric-label">Stop Loss</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">2.8:1</div>
+                        <div class="metric-label">Risk/Reward</div>
+                    </div>
+                </div>
+
+                <div class="signal-indicators">
+                    <div class="indicator bullish">📈 RSI Oversold</div>
+                    <div class="indicator bullish">🔄 MACD Cross</div>
+                    <div class="indicator bullish">📊 Volume Spike</div>
+                    <div class="indicator bullish">🎯 Support Bounce</div>
+                </div>
+
+                <button class="execute-btn buy" onclick="executeTrade('AAPL', 'BUY')">
+                    EXECUTE BUY ORDER → 1000 SHARES
+                </button>
+            </div>
+
+            <!-- Signal 2 - Sell -->
+            <div class="signal-card sell">
+                <div class="signal-header">
+                    <div class="signal-info">
+                        <div class="signal-symbol">TSLA</div>
+                        <span class="signal-type sell">SELL SIGNAL</span>
+                    </div>
+                    <div class="signal-confidence">
+                        <div class="confidence-value">78%</div>
+                        <div class="confidence-label">Confidence</div>
+                    </div>
+                </div>
+                
+                <div class="signal-metrics">
+                    <div class="metric">
+                        <div class="metric-value">$242.30</div>
+                        <div class="metric-label">Entry</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$235.00</div>
+                        <div class="metric-label">Target</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$245.50</div>
+                        <div class="metric-label">Stop Loss</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">2.3:1</div>
+                        <div class="metric-label">Risk/Reward</div>
+                    </div>
+                </div>
+
+                <div class="signal-indicators">
+                    <div class="indicator bearish">📉 RSI Overbought</div>
+                    <div class="indicator bearish">🔻 Resistance Hit</div>
+                    <div class="indicator bearish">⚠️ Divergence</div>
+                </div>
+
+                <button class="execute-btn sell" onclick="executeTrade('TSLA', 'SELL')">
+                    EXECUTE SELL ORDER → 500 SHARES
+                </button>
+            </div>
+
+            <!-- Signal 3 - Options Play -->
+            <div class="signal-card buy">
+                <div class="signal-header">
+                    <div class="signal-info">
+                        <div class="signal-symbol">SPY OPTIONS</div>
+                        <span class="signal-type buy">CALL SPREAD</span>
+                    </div>
+                    <div class="signal-confidence">
+                        <div class="confidence-value">89%</div>
+                        <div class="confidence-label">Confidence</div>
+                    </div>
+                </div>
+                
+                <div class="signal-metrics">
+                    <div class="metric">
+                        <div class="metric-value">$478/$482</div>
+                        <div class="metric-label">Strikes</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$1.45</div>
+                        <div class="metric-label">Net Debit</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">$2.55</div>
+                        <div class="metric-label">Max Profit</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">176%</div>
+                        <div class="metric-label">ROI</div>
+                    </div>
+                </div>
+
+                <div class="signal-indicators">
+                    <div class="indicator bullish">🎯 IV Rank Low</div>
+                    <div class="indicator bullish">📈 Trend Aligned</div>
+                    <div class="indicator bullish">⏰ 2 Days to Exp</div>
+                </div>
+
+                <button class="execute-btn buy" onclick="executeTrade('SPY', 'OPTIONS')">
+                    EXECUTE OPTIONS STRATEGY → 100 CONTRACTS
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Order Book -->
+            <div class="order-book">
+                <div class="order-book-header">LEVEL 2 ORDER BOOK - SPY</div>
+                <table class="order-book-table">
+                    <thead>
+                        <tr>
+                            <th>BID SIZE</th>
+                            <th>BID</th>
+                            <th>ASK</th>
+                            <th>ASK SIZE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="order-row">
+                            <td class="bid">12,450</td>
+                            <td class="bid">478.24</td>
+                            <td class="ask">478.25</td>
+                            <td class="ask">8,320</td>
+                        </tr>
+                        <tr class="order-row">
+                            <td class="bid">8,200</td>
+                            <td class="bid">478.23</td>
+                            <td class="ask">478.26</td>
+                            <td class="ask">10,150</td>
+                        </tr>
+                        <tr class="order-row">
+                            <td class="bid">15,300</td>
+                            <td class="bid">478.22</td>
+                            <td class="ask">478.27</td>
+                            <td class="ask">7,800</td>
+                        </tr>
+                        <tr class="order-row">
+                            <td class="bid">9,100</td>
+                            <td class="bid">478.21</td>
+                            <td class="ask">478.28</td>
+                            <td class="ask">11,200</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- P&L Tracker -->
+            <div class="pnl-tracker">
+                <div class="pnl-header">TODAY'S PERFORMANCE</div>
+                <div class="pnl-stats">
+                    <div class="pnl-stat">
+                        <div class="pnl-value profit">+$142,384</div>
+                        <div class="pnl-label">Realized P&L</div>
+                    </div>
+                    <div class="pnl-stat">
+                        <div class="pnl-value profit">+$23,450</div>
+                        <div class="pnl-label">Unrealized</div>
+                    </div>
+                    <div class="pnl-stat">
+                        <div class="pnl-value">324</div>
+                        <div class="pnl-label">Trades Executed</div>
+                    </div>
+                    <div class="pnl-stat">
+                        <div class="pnl-value">87.3%</div>
+                        <div class="pnl-label">Win Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-section">
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Grid -->
+    <div class="performance-grid">
+        <div class="perf-card">
+            <div class="perf-value profit">$4.2M</div>
+            <div class="perf-label">Month to Date</div>
+        </div>
+        <div class="perf-card">
+            <div class="perf-value">2.8</div>
+            <div class="perf-label">Sharpe Ratio</div>
+        </div>
+        <div class="perf-card">
+            <div class="perf-value">12.4%</div>
+            <div class="perf-label">Max Drawdown</div>
+        </div>
+        <div class="perf-card">
+            <div class="perf-value">$438</div>
+            <div class="perf-label">Avg Win</div>
+        </div>
+    </div>
+
+    <!-- Execution Log -->
+    <div class="execution-log">
+        <div class="log-entry">
+            <span class="log-time">14:32:18</span>
+            <span class="log-action">BUY</span>
+            <span class="log-details">AAPL 1000 @ $178.45</span>
+        </div>
+        <div class="log-entry">
+            <span class="log-time">14:32:15</span>
+            <span class="log-action">SELL</span>
+            <span class="log-details">MSFT 500 @ $428.30 (+$2,150)</span>
+        </div>
+        <div class="log-entry">
+            <span class="log-time">14:32:12</span>
+            <span class="log-action">BUY</span>
+            <span class="log-details">SPY CALL 478 x100</span>
+        </div>
+        <div class="log-entry">
+            <span class="log-time">14:32:08</span>
+            <span class="log-action">CLOSE</span>
+            <span class="log-details">NVDA SHORT (+$8,420)</span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Chart
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 50}, (_, i) => ''),
+                datasets: [{
+                    label: 'Price',
+                    data: Array.from({length: 50}, () => 478 + Math.random() * 2 - 1),
+                    borderColor: '#00ff41',
+                    backgroundColor: 'rgba(0, 255, 65, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#1a1a1a' },
+                        ticks: { color: '#666' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Update chart with real-time data
+        setInterval(() => {
+            const newPrice = 478 + Math.random() * 2 - 1;
+            priceChart.data.datasets[0].data.shift();
+            priceChart.data.datasets[0].data.push(newPrice);
+            priceChart.update('none');
+        }, 1000);
+
+        // Execute Trade Function
+        function executeTrade(symbol, type) {
+            const time = new Date().toTimeString().split(' ')[0];
+            console.log(`Executing ${type} order for ${symbol} at ${time}`);
+            alert(`ORDER EXECUTED\n\nSymbol: ${symbol}\nType: ${type}\nStatus: FILLED\n\nP&L will be updated in real-time`);
+        }
+
+        // Update metrics
+        setInterval(() => {
+            // Update P&L
+            const pnlElement = document.querySelector('.stat-value');
+            const currentPnL = parseFloat(pnlElement.textContent.replace(/[$,+]/g, ''));
+            const change = (Math.random() - 0.3) * 1000;
+            const newPnL = currentPnL + change;
+            pnlElement.textContent = '+$' + newPnL.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            
+            // Update order book
+            const bidPrices = document.querySelectorAll('.order-row .bid:nth-child(2)');
+            const askPrices = document.querySelectorAll('.order-row .ask:nth-child(3)');
+            
+            bidPrices.forEach((bid, i) => {
+                bid.textContent = (478.24 - (i + 1) * 0.01 + Math.random() * 0.02 - 0.01).toFixed(2);
+            });
+            
+            askPrices.forEach((ask, i) => {
+                ask.textContent = (478.25 + i * 0.01 + Math.random() * 0.02 - 0.01).toFixed(2);
+            });
+        }, 2000);
+    </script>
+</body>
+</html>
