@@ -6,7 +6,6 @@
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
-  NEXT_PRIVATE_TARGET = "server"
   NODE_VERSION = "18"
 
 [[headers]]
