@@ -85,7 +85,7 @@ const Projects = () => {
         charts: '4 Types',
         type: 'Demo'
       },
-      liveUrl: '/demos/pl-dashboard.html',
+      liveUrl: '/demos/executive-financials.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       category: 'analytics',
       tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
