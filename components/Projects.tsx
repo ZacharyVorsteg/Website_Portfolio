@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ExternalLink, Github, Play, Code, TrendingUp, DollarSign, BarChart, Brain, Calculator, ChartBar, AlertCircle, LineChart, Target, Zap } from 'lucide-react'
+import { ExternalLink, Github, Play, Code, TrendingUp, DollarSign, BarChart, Brain, Calculator, AlertCircle, LineChart, Target, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import BatchReveal from './scroll/BatchReveal'
