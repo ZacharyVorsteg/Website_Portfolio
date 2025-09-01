@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { Candle, Interval } from '@/lib/proterminal/sim';
 
 type Props = {
@@ -13,17 +13,24 @@ export default function PriceChart({ data, interval, onReady }: Props) {
   const chartRef = useRef<any>(null);
   const candleSeriesRef = useRef<any>(null);
   const volumeSeriesRef = useRef<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    let chart: any = null;
+    let candleSeries: any = null;
+    let volumeSeries: any = null;
 
     // Dynamically import lightweight-charts to avoid SSR issues
     import('lightweight-charts').then((module) => {
       const { createChart, ColorType } = module;
       
+      if (!containerRef.current) return;
+      
       console.log('Creating chart...');
-      const chart = createChart(containerRef.current!, {
-        width: containerRef.current!.clientWidth,
+      chart = createChart(containerRef.current, {
+        width: containerRef.current.clientWidth,
         height: 500,
         layout: {
           background: { type: ColorType.Solid, color: '#0b1020' },
@@ -62,8 +69,8 @@ export default function PriceChart({ data, interval, onReady }: Props) {
         },
       });
 
-      // Use the correct API for v5
-      const candleSeries = chart.addCandlestickSeries({
+      // Create series
+      candleSeries = chart.addCandlestickSeries({
         upColor: '#22c55e',
         downColor: '#ef4444',
         borderVisible: false,
@@ -76,7 +83,7 @@ export default function PriceChart({ data, interval, onReady }: Props) {
         },
       });
 
-      const volumeSeries = chart.addHistogramSeries({
+      volumeSeries = chart.addHistogramSeries({
         color: 'rgba(148,163,184,0.3)',
         priceFormat: {
           type: 'volume',
@@ -113,6 +120,7 @@ export default function PriceChart({ data, interval, onReady }: Props) {
         chart.timeScale().fitContent();
       }
       
+      setIsLoading(false);
       console.log('Chart initialized');
       onReady?.({ candle: candleSeries });
 
@@ -126,15 +134,17 @@ export default function PriceChart({ data, interval, onReady }: Props) {
       };
       
       window.addEventListener('resize', handleResize);
-
-      // Cleanup function
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        chart.remove();
-      };
     }).catch(err => {
       console.error('Failed to load lightweight-charts:', err);
+      setIsLoading(false);
     });
+
+    // Cleanup function
+    return () => {
+      if (chart) {
+        chart.remove();
+      }
+    };
   }, []); // Only run once on mount
 
   // Update data when it changes
@@ -183,17 +193,18 @@ export default function PriceChart({ data, interval, onReady }: Props) {
         position: 'relative',
       }}
     >
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        color: '#6b7280',
-        fontSize: '14px',
-        display: chartRef.current ? 'none' : 'block',
-      }}>
-        Loading chart...
-      </div>
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: '#6b7280',
+          fontSize: '14px',
+        }}>
+          Loading chart...
+        </div>
+      )}
     </div>
   );
 }
