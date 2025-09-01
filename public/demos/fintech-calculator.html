@@ -318,6 +318,17 @@
                     <div class="icon">📊</div>
                     Compound Interest Calculator
                 </h2>
+                
+                <!-- Educational Context -->
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #667eea;">
+                    <p style="color: #e4e4e7; font-size: 0.9rem; margin-bottom: 8px;">
+                        <strong>What it does:</strong> Calculates how your money grows over time with compound interest - "interest on interest"
+                    </p>
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin: 0;">
+                        <strong>Used for:</strong> Savings accounts, investments, retirement planning • <strong>Formula:</strong> A = P(1 + r/n)^(nt)
+                    </p>
+                </div>
+
                 <div class="input-group">
                     <label>Principal Amount ($)</label>
                     <div class="input-wrapper">
@@ -372,6 +383,17 @@
                     <div class="icon">💰</div>
                     Loan Amortization
                 </h2>
+                
+                <!-- Educational Context -->
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #667eea;">
+                    <p style="color: #e4e4e7; font-size: 0.9rem; margin-bottom: 8px;">
+                        <strong>What it does:</strong> Calculates monthly payments and total interest for loans
+                    </p>
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin: 0;">
+                        <strong>Used for:</strong> Mortgages, auto loans, personal loans • Shows how much goes to principal vs interest
+                    </p>
+                </div>
+
                 <div class="input-group">
                     <label>Loan Amount ($)</label>
                     <div class="input-wrapper">
@@ -416,6 +438,17 @@
                     <div class="icon">📈</div>
                     ROI & NPV Analysis
                 </h2>
+                
+                <!-- Educational Context -->
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #667eea;">
+                    <p style="color: #e4e4e7; font-size: 0.9rem; margin-bottom: 8px;">
+                        <strong>What it does:</strong> Evaluates investment profitability using Net Present Value
+                    </p>
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin: 0;">
+                        <strong>Used for:</strong> Business investments, project evaluation • NPV > 0 means profitable investment
+                    </p>
+                </div>
+
                 <div class="input-group">
                     <label>Initial Investment ($)</label>
                     <div class="input-wrapper">
@@ -468,6 +501,17 @@
                     Portfolio Growth Projection
                     <span class="badge">Monte Carlo Simulation</span>
                 </h2>
+                
+                <!-- Educational Context -->
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #667eea;">
+                    <p style="color: #e4e4e7; font-size: 0.9rem; margin-bottom: 8px;">
+                        <strong>What this shows:</strong> Three investment scenarios based on different risk levels and expected returns
+                    </p>
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin: 0;">
+                        <strong>Conservative (5%):</strong> Bonds, CDs • <strong>Expected (12.5%):</strong> Balanced portfolio • <strong>Aggressive (20%):</strong> Growth stocks
+                    </p>
+                </div>
+
                 <div class="chart-container">
                     <canvas id="growthChart"></canvas>
                 </div>
@@ -493,6 +537,17 @@
                     <div class="icon">🎯</div>
                     Black-Scholes Options
                 </h2>
+                
+                <!-- Educational Context -->
+                <div style="background: rgba(102, 126, 234, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px; border-left: 3px solid #667eea;">
+                    <p style="color: #e4e4e7; font-size: 0.9rem; margin-bottom: 8px;">
+                        <strong>What it does:</strong> Calculates fair value of options using Nobel Prize-winning formula
+                    </p>
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin: 0;">
+                        <strong>Used for:</strong> Options trading, derivatives pricing • Industry standard for option valuation
+                    </p>
+                </div>
+
                 <div class="input-group">
                     <label>Stock Price ($)</label>
                     <div class="input-wrapper">
@@ -620,6 +675,17 @@
             document.getElementById('totalInterest').textContent = '$' + interest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             document.getElementById('roi').textContent = roiValue.toFixed(2) + '%';
             document.getElementById('compoundResult').style.display = 'block';
+            
+            // Add explanation
+            const resultBox = document.getElementById('compoundResult');
+            let explanation = resultBox.querySelector('.explanation');
+            if (!explanation) {
+                explanation = document.createElement('div');
+                explanation.className = 'explanation';
+                explanation.style.cssText = 'margin-top: 15px; padding: 10px; background: rgba(102,126,234,0.05); border-radius: 6px; font-size: 0.85rem; color: #9ca3af;';
+                resultBox.appendChild(explanation);
+            }
+            explanation.innerHTML = `💡 Your $${principal.toLocaleString()} investment will grow to <strong style="color: #10b981;">$${amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</strong> in ${time} years at ${(rate*100).toFixed(1)}% annual interest`;
             
             updateChart(principal, amount, time);
         }
