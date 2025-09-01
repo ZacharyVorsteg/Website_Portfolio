@@ -137,7 +137,7 @@ const Projects = () => {
         metrics: 'IRR + MOIC',
         export: 'PNG charts'
       },
-      liveUrl: '/demos/exit-calculator.html',
+      liveUrl: '/demos/exit-calculator-optimized.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       demoScript: '/demo-scripts/exit_calculator.py',
       category: 'ceo',
