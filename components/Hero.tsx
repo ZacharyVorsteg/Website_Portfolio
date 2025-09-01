@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { ArrowDown, Sparkles } from 'lucide-react'
 import Typed from 'typed.js'
-import { FadeIn } from './ScrollEffects'
+// import { FadeIn } from './ScrollEffects'
 
 const Hero = () => {
   const typedRef = useRef(null)
@@ -61,27 +61,27 @@ const Hero = () => {
 
       <div className="max-w-4xl mx-auto text-center z-10">
         {/* Main heading with animation */}
-        <FadeIn direction="down">
+        <div className="animate-fade-up">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="block text-foreground mb-2">Hi, I'm</span>
             <span className="gradient-text text-6xl md:text-8xl">Zachary Vorsteg</span>
           </h1>
-        </FadeIn>
+        </div>
 
         {/* Typed text */}
-        <FadeIn delay={0.2}>
+        <div className="animate-fade-up animation-delay-200">
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             <span ref={typedRef}></span>
           </p>
-        </FadeIn>
+        </div>
 
         {/* Description */}
-        <FadeIn delay={0.4}>
+        <div className="animate-fade-up animation-delay-400">
           <p className="text-lg text-secondary-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
             Bridging finance and technology with a unique perspective. FAU Finance graduate (2020) 
             turned Full-Stack Developer, specializing in FinTech solutions and data-driven applications.
           </p>
-        </FadeIn>
+        </div>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-600">

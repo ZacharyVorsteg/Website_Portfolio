@@ -2,6 +2,7 @@
 
 import { Calendar, MapPin, Briefcase, GraduationCap, Heart, Coffee } from 'lucide-react'
 import Image from 'next/image'
+import BatchReveal from './scroll/BatchReveal'
 
 const About = () => {
   const timeline = [
@@ -146,17 +147,15 @@ const About = () => {
             <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-primary via-accent to-primary opacity-20" />
             
             {/* Timeline Items */}
-            <div className="space-y-12">
-              {timeline.map((item, index) => (
-                <div
-                  key={item.year}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? 'justify-start' : 'justify-end'
-                  }`}
-                  style={{
-                    animation: `fadeUp 0.5s ease-out ${index * 0.2}s both`,
-                  }}
-                >
+            <BatchReveal>
+              <div className="space-y-12">
+                {timeline.map((item, index) => (
+                  <div
+                    key={item.year}
+                    className={`relative flex items-center reveal ${
+                      index % 2 === 0 ? 'justify-start' : 'justify-end'
+                    }`}
+                  >
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
                     <div className="glass-card p-6 hover:scale-105 transition-transform duration-200">
                       <div className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
@@ -173,8 +172,9 @@ const About = () => {
                   {/* Center Dot */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background" />
                 </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </BatchReveal>
           </div>
         </div>
 

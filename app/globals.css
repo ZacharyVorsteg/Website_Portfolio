@@ -290,6 +290,17 @@ body {
   will-change: auto;
 }
 
+/* Smooth section transitions */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 /* Optimize paint performance */
 .hero-section,
 .section {

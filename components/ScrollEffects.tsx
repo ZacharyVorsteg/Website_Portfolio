@@ -181,7 +181,8 @@ export const FadeIn: React.FC<FadeInProps> = ({
 }
 
 export default function ScrollEffects() {
-  useLenisSmoothScroll()
+  // Disabled - using SmoothScrollProvider instead
+  // useLenisSmoothScroll()
   
   const shouldReduceMotion = useReducedMotion()
   

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Code2, Database, Palette, Wrench, TrendingUp, Users } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { Reveal, FadeIn } from './ScrollEffects'
+import BatchReveal from './scroll/BatchReveal'
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('frontend')
@@ -102,11 +102,12 @@ const Skills = () => {
         </div>
 
         {/* Skills Display */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => (
-            <Reveal key={skill.name} delay={index * 0.05}>
+        <BatchReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => (
               <motion.div
-                className="glass-card p-6"
+                key={skill.name}
+                className="glass-card p-6 reveal"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
@@ -133,9 +134,9 @@ const Skills = () => {
                 />
               </div>
               </motion.div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </BatchReveal>
 
         {/* Soft Skills */}
         <div className="mt-20">
