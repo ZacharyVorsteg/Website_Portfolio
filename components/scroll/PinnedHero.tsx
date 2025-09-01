@@ -49,23 +49,27 @@ export default function PinnedHero() {
         }
       });
 
-      // Smooth, performant animations using only transform and opacity
+      // Optimized animations with better visual impact
       tl.to(bgRef.current, { 
-        scale: 1.3,
-        opacity: 0.4
+        scale: 1.2,
+        opacity: 0.6,
+        ease: 'power2.inOut'
       }, 0)
       .to(contentRef.current, {
-        y: -80,
-        opacity: 0.3
+        y: -60,
+        opacity: 0.8,
+        ease: 'power2.out'
       }, 0)
       .to(titleRef.current, { 
-        letterSpacing: '0.2em',
-        scale: 1.1
+        letterSpacing: '0.1em',
+        scale: 1.05,
+        ease: 'power2.out'
       }, 0)
       .to(subRef.current, { 
-        y: -20,
-        opacity: 0
-      }, 0.1);
+        y: -30,
+        opacity: 0.3,
+        ease: 'power2.out'
+      }, 0.05);
 
     }, sectionRef);
 

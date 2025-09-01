@@ -290,6 +290,42 @@ body {
   will-change: auto;
 }
 
+/* Performance optimizations */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optimize text rendering */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+}
+
+/* Reduce repaints on scroll */
+.fixed, .sticky {
+  will-change: transform;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease-out forwards;
+  }
+  
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 /* Smooth section transitions */
 section {
   position: relative;
@@ -338,19 +374,25 @@ section {
   background: linear-gradient(90deg, #667eea, #764ba2);
 }
 
-/* Enhanced Visual Hierarchy */
+/* Enhanced Visual Hierarchy - Optimized */
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 8px 32px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 12px 48px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
 }
 
 /* Focal Point Indicators */
@@ -376,20 +418,46 @@ section {
   opacity: 1;
 }
 
-/* Enhanced buttons for clear CTAs */
+/* Enhanced buttons for clear CTAs - Optimized */
 .btn-primary {
+  position: relative;
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-  padding: 12px 24px;
+  padding: 12px 28px;
   border-radius: 12px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 2px 8px rgba(102, 126, 234, 0.25),
+    0 4px 16px rgba(102, 126, 234, 0.15);
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 4px 12px rgba(102, 126, 234, 0.35),
+    0 8px 24px rgba(102, 126, 234, 0.25);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-secondary {

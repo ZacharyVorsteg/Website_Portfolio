@@ -12,7 +12,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import BatchReveal from '@/components/scroll/BatchReveal'
 import OptimizedScroll from '@/components/OptimizedScroll'
 import HorizontalShowcase from '@/components/HorizontalShowcase'
-import ScrollDemoButton from '@/components/ScrollDemoButton'
+// import ScrollDemoButton from '@/components/ScrollDemoButton' - Removed
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -49,7 +49,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <ScrollDemoButton />
     </>
   )
 }
