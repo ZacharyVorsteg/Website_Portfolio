@@ -36,6 +36,7 @@ export default function ProTerminalPage() {
       basePrice: base, 
       marketHoursOnly: false 
     });
+    console.log('Generated series:', newSeries.length, 'candles for', symbol);
     setSeries(newSeries);
   }, [symbol, interval]);
 
