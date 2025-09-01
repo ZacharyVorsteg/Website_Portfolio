@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTech Calculator - Advanced Financial Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-white text-center mb-8">FinTech Calculator Suite</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Compound Interest Calculator -->
+            <div class="glass rounded-2xl p-6 text-white">
+                <h2 class="text-2xl font-bold mb-4">Compound Interest Calculator</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1">Principal Amount ($)</label>
+                        <input type="number" id="principal" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="10000">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Annual Rate (%)</label>
+                        <input type="number" id="rate" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="7">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Time (Years)</label>
+                        <input type="number" id="time" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="10">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Compound Frequency</label>
+                        <select id="frequency" class="w-full p-2 rounded bg-white/20 backdrop-blur">
+                            <option value="1">Annually</option>
+                            <option value="4">Quarterly</option>
+                            <option value="12">Monthly</option>
+                            <option value="365">Daily</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateCompound()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        Calculate
+                    </button>
+                    <div id="compoundResult" class="mt-4 p-4 bg-white/10 rounded-lg hidden">
+                        <p class="text-sm">Final Amount:</p>
+                        <p class="text-3xl font-bold" id="finalAmount">$0</p>
+                        <p class="text-sm mt-2">Total Interest:</p>
+                        <p class="text-xl font-semibold" id="totalInterest">$0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Amortization Calculator -->
+            <div class="glass rounded-2xl p-6 text-white">
+                <h2 class="text-2xl font-bold mb-4">Loan Amortization</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1">Loan Amount ($)</label>
+                        <input type="number" id="loanAmount" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="250000">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Interest Rate (%)</label>
+                        <input type="number" id="loanRate" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="4.5">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Loan Term (Years)</label>
+                        <input type="number" id="loanTerm" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="30">
+                    </div>
+                    <button onclick="calculateLoan()" class="w-full bg-gradient-to-r from-green-500 to-teal-600 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        Calculate Payment
+                    </button>
+                    <div id="loanResult" class="mt-4 p-4 bg-white/10 rounded-lg hidden">
+                        <p class="text-sm">Monthly Payment:</p>
+                        <p class="text-3xl font-bold" id="monthlyPayment">$0</p>
+                        <p class="text-sm mt-2">Total Paid:</p>
+                        <p class="text-xl font-semibold" id="totalPaid">$0</p>
+                        <p class="text-sm mt-2">Total Interest:</p>
+                        <p class="text-xl font-semibold" id="loanInterest">$0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROI Calculator -->
+            <div class="glass rounded-2xl p-6 text-white">
+                <h2 class="text-2xl font-bold mb-4">ROI Calculator</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1">Initial Investment ($)</label>
+                        <input type="number" id="investment" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="50000">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">Final Value ($)</label>
+                        <input type="number" id="finalValue" class="w-full p-2 rounded bg-white/20 backdrop-blur" value="75000">
+                    </div>
+                    <button onclick="calculateROI()" class="w-full bg-gradient-to-r from-yellow-500 to-orange-600 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        Calculate ROI
+                    </button>
+                    <div id="roiResult" class="mt-4 p-4 bg-white/10 rounded-lg hidden">
+                        <p class="text-sm">Return on Investment:</p>
+                        <p class="text-3xl font-bold" id="roiPercent">0%</p>
+                        <p class="text-sm mt-2">Net Profit:</p>
+                        <p class="text-xl font-semibold" id="netProfit">$0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Display -->
+            <div class="glass rounded-2xl p-6 text-white">
+                <h2 class="text-2xl font-bold mb-4">Investment Growth Chart</h2>
+                <canvas id="growthChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize chart
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Portfolio Value',
+                    data: [],
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: 'white' } }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: 'white' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    x: {
+                        ticks: { color: 'white' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            }
+        });
+
+        function calculateCompound() {
+            const P = parseFloat(document.getElementById('principal').value);
+            const r = parseFloat(document.getElementById('rate').value) / 100;
+            const t = parseFloat(document.getElementById('time').value);
+            const n = parseFloat(document.getElementById('frequency').value);
+            
+            const A = P * Math.pow((1 + r/n), n*t);
+            const interest = A - P;
+            
+            document.getElementById('finalAmount').textContent = `$${A.toFixed(2).toLocaleString()}`;
+            document.getElementById('totalInterest').textContent = `$${interest.toFixed(2).toLocaleString()}`;
+            document.getElementById('compoundResult').classList.remove('hidden');
+            
+            // Update chart
+            updateChart(P, r, t, n);
+        }
+
+        function calculateLoan() {
+            const P = parseFloat(document.getElementById('loanAmount').value);
+            const r = parseFloat(document.getElementById('loanRate').value) / 100 / 12;
+            const n = parseFloat(document.getElementById('loanTerm').value) * 12;
+            
+            const M = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            const totalPaid = M * n;
+            const totalInterest = totalPaid - P;
+            
+            document.getElementById('monthlyPayment').textContent = `$${M.toFixed(2).toLocaleString()}`;
+            document.getElementById('totalPaid').textContent = `$${totalPaid.toFixed(2).toLocaleString()}`;
+            document.getElementById('loanInterest').textContent = `$${totalInterest.toFixed(2).toLocaleString()}`;
+            document.getElementById('loanResult').classList.remove('hidden');
+        }
+
+        function calculateROI() {
+            const initial = parseFloat(document.getElementById('investment').value);
+            const final = parseFloat(document.getElementById('finalValue').value);
+            
+            const roi = ((final - initial) / initial) * 100;
+            const profit = final - initial;
+            
+            document.getElementById('roiPercent').textContent = `${roi.toFixed(2)}%`;
+            document.getElementById('netProfit').textContent = `$${profit.toFixed(2).toLocaleString()}`;
+            document.getElementById('roiResult').classList.remove('hidden');
+        }
+
+        function updateChart(P, r, t, n) {
+            const years = [];
+            const values = [];
+            
+            for(let i = 0; i <= t; i++) {
+                years.push(`Year ${i}`);
+                values.push(P * Math.pow((1 + r/n), n*i));
+            }
+            
+            chart.data.labels = years;
+            chart.data.datasets[0].data = values;
+            chart.update();
+        }
+
+        // Initialize with default values
+        calculateCompound();
+    </script>
+</body>
+</html>

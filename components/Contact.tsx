@@ -16,12 +16,26 @@ const Contact = () => {
     e.preventDefault()
     setStatus('sending')
 
-    // Simulate form submission
-    setTimeout(() => {
+    // EmailJS integration (you'll need to sign up at emailjs.com and get your IDs)
+    // For now, we'll use a working simulation that shows the form is functional
+    try {
+      // In production, you would use:
+      // await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData, 'YOUR_PUBLIC_KEY')
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Log form data (in production, this would be sent via EmailJS)
+      console.log('Form submitted:', formData)
+      
       setStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
       setTimeout(() => setStatus('idle'), 5000)
-    }, 2000)
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 5000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

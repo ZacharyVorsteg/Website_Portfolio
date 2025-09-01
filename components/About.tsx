@@ -6,42 +6,44 @@ import Image from 'next/image'
 const About = () => {
   const timeline = [
     {
-      year: '2021',
-      title: 'Started Coding Journey',
-      description: 'Began learning web development, starting with HTML, CSS, and JavaScript.',
+      year: '2020',
+      title: 'FAU Graduate - Finance & Economics',
+      description: 'Graduated from Florida Atlantic University with a major in Finance and minor in Economics. Strong foundation in quantitative analysis, market dynamics, and financial modeling.',
       icon: <GraduationCap className="w-5 h-5" />,
       color: 'from-blue-500 to-cyan-500',
     },
     {
-      year: '2023',
-      title: 'Deep Dive into React',
-      description: 'Mastered React ecosystem, including hooks, state management, and modern patterns.',
+      year: '2021',
+      title: 'Pivot to Tech',
+      description: 'Leveraged analytical skills from finance to transition into software development. Started with web technologies and data visualization.',
       icon: <Briefcase className="w-5 h-5" />,
       color: 'from-green-500 to-emerald-500',
     },
     {
-      year: '2024',
-      title: 'Web3 & Blockchain',
-      description: 'Expanded into blockchain development with Solidity and DeFi applications.',
+      year: '2023',
+      title: 'FinTech Focus',
+      description: 'Combined finance expertise with coding skills to build financial applications, trading algorithms, and market analysis tools.',
       icon: <Heart className="w-5 h-5" />,
       color: 'from-purple-500 to-pink-500',
     },
     {
-      year: '2025',
-      title: 'Full-Stack Excellence',
-      description: 'Building production-ready applications with modern tech stacks.',
+      year: '2024-25',
+      title: 'Full-Stack FinTech Developer',
+      description: 'Creating innovative solutions at the intersection of finance and technology. Specializing in DeFi, market analytics, and automated trading systems.',
       icon: <Coffee className="w-5 h-5" />,
       color: 'from-orange-500 to-red-500',
     },
   ]
 
   const interests = [
-    '🎮 Gaming',
-    '📚 Reading Tech Blogs',
-    '🎨 UI/UX Design',
-    '🏋️ Fitness',
-    '🎵 Music',
-    '☕ Coffee Enthusiast',
+    '📈 Market Analysis',
+    '💹 Algorithmic Trading',
+    '🏦 FinTech Innovation',
+    '📊 Data Visualization',
+    '₿ Cryptocurrency',
+    '🎯 Investment Strategy',
+    '📚 Economics Research',
+    '☕ Coffee & Code',
   ]
 
   return (
@@ -61,20 +63,22 @@ const About = () => {
           {/* Personal Info */}
           <div className="space-y-6">
             <div className="glass-card p-8">
-              <h3 className="text-2xl font-bold mb-4 gradient-text">Who I Am</h3>
+              <h3 className="text-2xl font-bold mb-4 gradient-text">Finance Meets Technology</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                I'm a passionate full-stack developer with a keen eye for design and a love for creating 
-                exceptional digital experiences. My journey in tech began in 2021, and since then, I've been 
-                on an exciting path of continuous learning and growth.
+                I'm a unique blend of financial analyst turned full-stack developer. With a degree in Finance 
+                and Economics from Florida Atlantic University (Class of 2020), I bring a distinctive perspective 
+                to software development that sets me apart in the tech industry.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                What drives me is the ability to transform ideas into reality through code. I specialize in 
-                building modern web applications using React, TypeScript, and cutting-edge technologies. 
-                Recently, I've been exploring the Web3 space, diving into smart contract development and DeFi protocols.
+                My finance background gives me an edge in building FinTech applications, understanding market 
+                dynamics, and creating data-driven solutions. I don't just code – I understand the business logic, 
+                financial models, and economic principles behind the applications I build. This allows me to create 
+                more intelligent, practical, and valuable software solutions.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, 
-                or enjoying a good cup of coffee while planning my next big project.
+                Whether it's building trading algorithms, creating financial dashboards, or developing DeFi protocols, 
+                I leverage my dual expertise to deliver solutions that are both technically excellent and financially sound. 
+                My goal is to bridge the gap between traditional finance and modern technology.
               </p>
             </div>
 

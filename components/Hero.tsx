@@ -11,10 +11,12 @@ const Hero = () => {
     const typed = new Typed(typedRef.current, {
       strings: [
         'Full-Stack Developer',
-        'React Specialist',
-        'UI/UX Enthusiast',
+        'FinTech Engineer',
+        'FAU Finance Graduate',
+        'Economics Minor',
+        'DeFi Enthusiast',
+        'Data Analyst',
         'Problem Solver',
-        'Creative Thinker',
       ],
       typeSpeed: 50,
       backSpeed: 30,
@@ -66,8 +68,8 @@ const Hero = () => {
         {/* Description */}
         <div className="animate-fade-up animation-delay-400">
           <p className="text-lg text-secondary-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            Crafting exceptional digital experiences with modern web technologies.
-            Specialized in building scalable, performant applications that delight users.
+            Bridging finance and technology with a unique perspective. FAU Finance graduate (2020) 
+            turned Full-Stack Developer, specializing in FinTech solutions and data-driven applications.
           </p>
         </div>
 

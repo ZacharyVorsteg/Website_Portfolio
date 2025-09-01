@@ -8,11 +8,74 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
-  const categories = ['all', 'web-app', 'defi', 'ui-design']
+  const categories = ['all', 'fintech', 'defi', 'web-app', 'ui-design']
 
   const projects = [
     {
       id: 1,
+      title: 'FinTech Calculator Suite',
+      description: 'Advanced financial calculators including compound interest, loan amortization, ROI analysis, and investment growth visualization.',
+      longDescription: 'A comprehensive suite of financial tools leveraging my Finance degree from FAU. Features real-time calculations, interactive charts, and professional-grade financial modeling.',
+      image: '/projects/fintech-calc.png',
+      liveUrl: '/demos/fintech-calculator.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'fintech',
+      tech: ['JavaScript', 'Chart.js', 'Tailwind CSS', 'Financial Modeling'],
+      features: [
+        'Compound interest calculator',
+        'Loan amortization schedule',
+        'ROI & NPV analysis',
+        'Interactive growth charts',
+        'Real-time calculations'
+      ],
+      color: 'from-purple-500 to-pink-500',
+      icon: <Zap className="w-5 h-5" />,
+      status: 'Live Demo',
+    },
+    {
+      id: 2,
+      title: 'Market Analytics Dashboard',
+      description: 'Real-time market data visualization with live price updates, trading volume analysis, and sentiment tracking.',
+      longDescription: 'Professional trading dashboard showcasing my ability to combine finance expertise with modern web development. Features live market data, technical indicators, and news integration.',
+      image: '/projects/market-dashboard.png',
+      liveUrl: '/demos/market-dashboard.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'fintech',
+      tech: ['JavaScript', 'Chart.js', 'WebSockets', 'Real-time Data'],
+      features: [
+        'Live price updates',
+        'Volume analysis',
+        'Market sentiment gauge',
+        'Top movers tracking',
+        'News feed integration'
+      ],
+      color: 'from-blue-500 to-cyan-500',
+      icon: <Layers className="w-5 h-5" />,
+      status: 'Live Demo',
+    },
+    {
+      id: 3,
+      title: 'Crypto Portfolio Tracker',
+      description: 'Cryptocurrency portfolio management tool with real-time price tracking, profit/loss analysis, and portfolio distribution.',
+      longDescription: 'Advanced crypto portfolio tracker demonstrating my understanding of digital assets and blockchain technology. Features live price updates and portfolio analytics.',
+      image: '/projects/crypto-tracker.png',
+      liveUrl: '/demos/crypto-tracker.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'fintech',
+      tech: ['JavaScript', 'Crypto APIs', 'Chart.js', 'Real-time Updates'],
+      features: [
+        'Live price tracking',
+        'Portfolio distribution',
+        'P&L analysis',
+        'Price alerts',
+        'Performance charts'
+      ],
+      color: 'from-orange-500 to-red-500',
+      icon: <Code className="w-5 h-5" />,
+      status: 'Live Demo',
+    },
+    {
+      id: 4,
       title: 'Splitter UI',
       description: 'Advanced DeFi payment splitting application with smart contract integration, real-time gas tracking, and ENS support.',
       longDescription: 'A sophisticated Web3 application that enables users to deploy payment splitter smart contracts on multiple chains. Features include real-time gas estimation, wallet connection, and transaction monitoring.',
@@ -33,12 +96,12 @@ const Projects = () => {
       status: 'Production Ready',
     },
     {
-      id: 2,
+      id: 5,
       title: 'Deal Estate CRM',
       description: 'Professional real estate CRM with advanced property management, client tracking, and analytics dashboard.',
       longDescription: 'A comprehensive CRM solution designed for real estate professionals. Features a modern dark theme with neumorphic design, real-time notifications, and detailed analytics.',
       image: '/projects/deal-estate.png',
-      liveUrl: 'https://lively-gecko-d1d0de.netlify.app',
+      liveUrl: 'https://cheery-unicorn-b2813f.netlify.app',
       githubUrl: 'https://github.com/ZacharyVorsteg/deal-estate',
       category: 'web-app',
       tech: ['JavaScript', 'React', 'Tailwind CSS', 'Supabase', 'Chart.js'],
@@ -54,7 +117,7 @@ const Projects = () => {
       status: 'Live',
     },
     {
-      id: 3,
+      id: 6,
       title: 'Portfolio Website',
       description: 'Modern portfolio website with interactive animations, project showcases, and contact integration.',
       longDescription: 'This portfolio website you\'re currently viewing! Built with Next.js and TypeScript, featuring smooth animations, responsive design, and optimized performance.',
@@ -72,7 +135,7 @@ const Projects = () => {
       ],
       color: 'from-green-500 to-emerald-500',
       icon: <Code className="w-5 h-5" />,
-      status: 'Active Development',
+      status: 'You\'re Here!',
     },
   ]
 
