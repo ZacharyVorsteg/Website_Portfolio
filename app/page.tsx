@@ -10,6 +10,8 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import LoadingScreen from '@/components/LoadingScreen'
 import ScrollEffects from '@/components/ScrollEffects'
+import GSAPIntegration from '@/components/GSAPIntegration'
+import ScrollDemoButton from '@/components/ScrollDemoButton'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -30,6 +32,7 @@ export default function Home() {
   return (
     <>
       <ScrollEffects />
+      <GSAPIntegration />
       <Navigation />
       <main className="relative">
         {/* Animated background gradient */}
@@ -46,6 +49,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <ScrollDemoButton />
     </>
   )
 }
