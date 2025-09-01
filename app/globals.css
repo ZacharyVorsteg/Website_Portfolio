@@ -301,6 +301,113 @@ section {
   transform: translateY(30px);
 }
 
+/* Visual Hierarchy & Focal Points */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #667eea 75%, #764ba2 100%);
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Horizontal Showcase Specific */
+.horizontal-showcase-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.showcase-slide {
+  position: relative;
+}
+
+.showcase-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Active dot indicator */
+.showcase-dot.active {
+  width: 24px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* Enhanced Visual Hierarchy */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+}
+
+/* Focal Point Indicators */
+.focal-point {
+  position: relative;
+}
+
+.focal-point::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.focal-point:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced buttons for clear CTAs */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
 /* Optimize paint performance */
 .hero-section,
 .section {

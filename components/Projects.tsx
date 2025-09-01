@@ -184,11 +184,14 @@ const Projects = () => {
                 className="group relative project-card-3d clip-reveal reveal"
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                whileHover={{ y: -8, rotateY: 5, rotateX: -5 }}
+                whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
-              <div className="glass-card p-6 h-full project-card">
+              {/* Glow effect on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500`} />
+              
+              <div className="glass-card p-6 h-full project-card relative">
                 {/* Project Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
