@@ -1,6 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { createChart, ColorType, IChartApi, Time } from 'lightweight-charts';
+import React, { useEffect, useRef } from 'react';
 import type { Candle, Interval } from '@/lib/proterminal/sim';
 
 type Props = {
@@ -11,125 +10,144 @@ type Props = {
 
 export default function PriceChart({ data, interval, onReady }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<IChartApi | null>(null);
+  const chartRef = useRef<any>(null);
   const candleSeriesRef = useRef<any>(null);
   const volumeSeriesRef = useRef<any>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Initialize chart
   useEffect(() => {
     if (!containerRef.current) return;
 
-    console.log('Initializing chart...');
-    
-    const chart = createChart(containerRef.current, {
-      width: containerRef.current.clientWidth,
-      height: 500,
-      layout: {
-        background: { type: ColorType.Solid, color: '#0b1020' },
-        textColor: '#c7d2fe',
-      },
-      grid: {
-        vertLines: { color: 'rgba(255,255,255,0.04)' },
-        horzLines: { color: 'rgba(255,255,255,0.04)' },
-      },
-      rightPriceScale: {
-        borderColor: 'rgba(255,255,255,0.08)',
-        autoScale: true,
+    // Dynamically import lightweight-charts to avoid SSR issues
+    import('lightweight-charts').then((module) => {
+      const { createChart, ColorType } = module;
+      
+      console.log('Creating chart...');
+      const chart = createChart(containerRef.current!, {
+        width: containerRef.current!.clientWidth,
+        height: 500,
+        layout: {
+          background: { type: ColorType.Solid, color: '#0b1020' },
+          textColor: '#c7d2fe',
+        },
+        grid: {
+          vertLines: { color: 'rgba(255,255,255,0.04)' },
+          horzLines: { color: 'rgba(255,255,255,0.04)' },
+        },
+        rightPriceScale: {
+          borderColor: 'rgba(255,255,255,0.08)',
+          autoScale: true,
+          scaleMargins: {
+            top: 0.1,
+            bottom: 0.25,
+          },
+        },
+        timeScale: {
+          borderColor: 'rgba(255,255,255,0.08)',
+          timeVisible: true,
+          secondsVisible: interval === '1m',
+          rightOffset: 5,
+        },
+        crosshair: {
+          mode: 0,
+          vertLine: {
+            width: 1,
+            color: 'rgba(255,255,255,0.2)',
+            style: 2,
+          },
+          horzLine: {
+            width: 1,
+            color: 'rgba(255,255,255,0.2)',
+            style: 2,
+          },
+        },
+      });
+
+      // Use the correct API for v5
+      const candleSeries = chart.addCandlestickSeries({
+        upColor: '#22c55e',
+        downColor: '#ef4444',
+        borderVisible: false,
+        wickUpColor: '#22c55e',
+        wickDownColor: '#ef4444',
+        priceFormat: {
+          type: 'price',
+          precision: 2,
+          minMove: 0.01,
+        },
+      });
+
+      const volumeSeries = chart.addHistogramSeries({
+        color: 'rgba(148,163,184,0.3)',
+        priceFormat: {
+          type: 'volume',
+        },
+        priceScaleId: '',
         scaleMargins: {
-          top: 0.1,
-          bottom: 0.25,
+          top: 0.85,
+          bottom: 0,
         },
-      },
-      timeScale: {
-        borderColor: 'rgba(255,255,255,0.08)',
-        timeVisible: true,
-        secondsVisible: interval === '1m',
-        rightOffset: 5,
-      },
-      crosshair: {
-        mode: 0,
-        vertLine: {
-          width: 1,
-          color: 'rgba(255,255,255,0.2)',
-          style: 2,
-        },
-        horzLine: {
-          width: 1,
-          color: 'rgba(255,255,255,0.2)',
-          style: 2,
-        },
-      },
-    });
+      });
 
-    // Cast to any to access the methods
-    const chartAny = chart as any;
-    
-    const candleSeries = chartAny.addCandlestickSeries({
-      upColor: '#22c55e',
-      downColor: '#ef4444',
-      borderVisible: false,
-      wickUpColor: '#22c55e',
-      wickDownColor: '#ef4444',
-      priceFormat: {
-        type: 'price',
-        precision: 2,
-        minMove: 0.01,
-      },
-    });
+      chartRef.current = chart;
+      candleSeriesRef.current = candleSeries;
+      volumeSeriesRef.current = volumeSeries;
+      
+      // Set initial data if available
+      if (data && data.length > 0) {
+        const candleData = data.map(d => ({
+          time: d.time as any,
+          open: d.open,
+          high: d.high,
+          low: d.low,
+          close: d.close,
+        }));
 
-    const volumeSeries = chartAny.addHistogramSeries({
-      color: 'rgba(148,163,184,0.3)',
-      priceFormat: {
-        type: 'volume',
-      },
-      priceScaleId: '',
-      scaleMargins: {
-        top: 0.85,
-        bottom: 0,
-      },
-    });
+        const volumeData = data.map(d => ({
+          time: d.time as any,
+          value: d.volume,
+          color: d.close >= d.open ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)',
+        }));
 
-    chartRef.current = chart;
-    candleSeriesRef.current = candleSeries;
-    volumeSeriesRef.current = volumeSeries;
-    
-    setIsInitialized(true);
-    console.log('Chart initialized successfully');
-    
-    onReady?.({ candle: candleSeries });
-
-    // Handle resize
-    const handleResize = () => {
-      if (containerRef.current && chart) {
-        chart.applyOptions({ 
-          width: containerRef.current.clientWidth 
-        });
+        candleSeries.setData(candleData);
+        volumeSeries.setData(volumeData);
+        chart.timeScale().fitContent();
       }
-    };
-    
-    window.addEventListener('resize', handleResize);
+      
+      console.log('Chart initialized');
+      onReady?.({ candle: candleSeries });
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      chart.remove();
-      setIsInitialized(false);
-    };
+      // Handle resize
+      const handleResize = () => {
+        if (containerRef.current && chart) {
+          chart.applyOptions({ 
+            width: containerRef.current.clientWidth 
+          });
+        }
+      };
+      
+      window.addEventListener('resize', handleResize);
+
+      // Cleanup function
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        chart.remove();
+      };
+    }).catch(err => {
+      console.error('Failed to load lightweight-charts:', err);
+    });
   }, []); // Only run once on mount
 
-  // Update data
+  // Update data when it changes
   useEffect(() => {
-    if (!isInitialized || !candleSeriesRef.current || !volumeSeriesRef.current || !data.length) {
-      console.log('Skipping data update:', { isInitialized, hasData: data.length > 0 });
+    if (!candleSeriesRef.current || !volumeSeriesRef.current || !data || data.length === 0) {
       return;
     }
 
-    console.log('Updating chart with', data.length, 'candles');
+    console.log('Updating chart data:', data.length, 'candles');
 
     try {
-      // Convert data to chart format
       const candleData = data.map(d => ({
-        time: d.time as Time,
+        time: d.time as any,
         open: d.open,
         high: d.high,
         low: d.low,
@@ -137,25 +155,21 @@ export default function PriceChart({ data, interval, onReady }: Props) {
       }));
 
       const volumeData = data.map(d => ({
-        time: d.time as Time,
+        time: d.time as any,
         value: d.volume,
         color: d.close >= d.open ? 'rgba(34,197,94,0.3)' : 'rgba(239,68,68,0.3)',
       }));
 
-      // Update series
       candleSeriesRef.current.setData(candleData);
       volumeSeriesRef.current.setData(volumeData);
-
-      // Auto-fit content
+      
       if (chartRef.current) {
         chartRef.current.timeScale().fitContent();
       }
-
-      console.log('Chart updated successfully');
     } catch (error) {
       console.error('Error updating chart:', error);
     }
-  }, [data, isInitialized]);
+  }, [data]);
 
   return (
     <div 
@@ -169,17 +183,17 @@ export default function PriceChart({ data, interval, onReady }: Props) {
         position: 'relative',
       }}
     >
-      {!isInitialized && (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: '#6b7280',
-        }}>
-          Loading chart...
-        </div>
-      )}
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        color: '#6b7280',
+        fontSize: '14px',
+        display: chartRef.current ? 'none' : 'block',
+      }}>
+        Loading chart...
+      </div>
     </div>
   );
 }
