@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { 
-            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         .glass-card {
@@ -50,7 +50,7 @@
     <!-- Simple Header [[memory:7788592]] -->
     <div class="max-w-6xl mx-auto mb-8">
         <div class="glass-card rounded-xl p-6">
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent mb-4">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
                 Customer Churn Predictor
             </h1>
             <p class="text-gray-300 mb-4">
@@ -72,7 +72,7 @@
             <!-- Left: Interactive Customer Simulator -->
             <div class="glass-card rounded-xl p-6">
                 <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <i data-lucide="user-check" class="w-5 h-5 text-orange-400"></i>
+                    <i data-lucide="user-check" class="w-5 h-5 text-blue-400"></i>
                     Test a Customer Profile
                 </h2>
                 
@@ -90,10 +90,10 @@
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <label class="text-gray-300">Days Since Last Login</label>
-                            <span id="loginDaysValue" class="text-orange-400 font-bold">15 days</span>
+                            <span id="loginDaysValue" class="text-blue-400 font-bold">15 days</span>
                         </div>
                         <input type="range" id="loginDays" min="0" max="90" value="15" 
-                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-green-500 to-red-500"
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500"
                                oninput="updatePrediction()">
                         <div class="flex justify-between text-xs text-gray-500 mt-1">
                             <span>Active</span>
@@ -105,10 +105,10 @@
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <label class="text-gray-300">Support Tickets (Last 30 Days)</label>
-                            <span id="ticketsValue" class="text-orange-400 font-bold">2 tickets</span>
+                            <span id="ticketsValue" class="text-purple-400 font-bold">2 tickets</span>
                         </div>
                         <input type="range" id="tickets" min="0" max="15" value="2" 
-                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-green-500 to-red-500"
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500"
                                oninput="updatePrediction()">
                         <div class="flex justify-between text-xs text-gray-500 mt-1">
                             <span>None</span>
@@ -120,10 +120,10 @@
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <label class="text-gray-300">Feature Usage Score</label>
-                            <span id="usageValue" class="text-orange-400 font-bold">70%</span>
+                            <span id="usageValue" class="text-blue-400 font-bold">70%</span>
                         </div>
                         <input type="range" id="usage" min="0" max="100" value="70" 
-                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-red-500 to-green-500"
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500"
                                oninput="updatePrediction()">
                         <div class="flex justify-between text-xs text-gray-500 mt-1">
                             <span>Low</span>
@@ -135,10 +135,10 @@
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <label class="text-gray-300">Monthly Spend</label>
-                            <span id="spendValue" class="text-orange-400 font-bold">$2,500</span>
+                            <span id="spendValue" class="text-purple-400 font-bold">$2,500</span>
                         </div>
                         <input type="range" id="spend" min="100" max="10000" value="2500" step="100"
-                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-red-500 to-green-500"
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500"
                                oninput="updatePrediction()">
                         <div class="flex justify-between text-xs text-gray-500 mt-1">
                             <span>$100</span>
@@ -150,10 +150,10 @@
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <label class="text-gray-300">Months as Customer</label>
-                            <span id="tenureValue" class="text-orange-400 font-bold">12 months</span>
+                            <span id="tenureValue" class="text-blue-400 font-bold">12 months</span>
                         </div>
                         <input type="range" id="tenure" min="1" max="60" value="12" 
-                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-red-500 to-green-500"
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-blue-500"
                                oninput="updatePrediction()">
                         <div class="flex justify-between text-xs text-gray-500 mt-1">
                             <span>New</span>
@@ -197,7 +197,7 @@
                 <!-- Risk Gauge -->
                 <div class="glass-card rounded-xl p-6">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                        <i data-lucide="gauge" class="w-5 h-5 text-red-400"></i>
+                        <i data-lucide="gauge" class="w-5 h-5 text-purple-400"></i>
                         Risk Assessment
                     </h3>
                     <div class="chart-wrapper" style="height: 200px;">
@@ -222,7 +222,7 @@
                 <!-- Key Factors -->
                 <div class="glass-card rounded-xl p-6">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                        <i data-lucide="alert-triangle" class="w-5 h-5 text-orange-400"></i>
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400"></i>
                         Risk Factors for This Customer
                     </h3>
                     <div id="riskFactors" class="space-y-2">
