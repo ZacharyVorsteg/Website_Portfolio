@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Trading Terminal - Professional Demo</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #58a6ff, #79c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .demo-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 20px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #58a6ff;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .demo-text {
+            font-size: 0.75rem;
+            color: #58a6ff;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Account Stats */
+        .account-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat {
+            text-align: right;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .stat-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .stat-value.positive { color: #3fb950; }
+        .stat-value.negative { color: #f85149; }
+        .stat-value.neutral { color: #c9d1d9; }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            height: calc(100vh - 50px);
+        }
+
+        /* Watchlist Panel */
+        .watchlist-panel {
+            background: #0d1117;
+            border-right: 1px solid #21262d;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 12px 15px;
+            background: #161b22;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .panel-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 10px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 0.85rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.1);
+        }
+
+        .watchlist-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .watchlist-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #21262d;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
+        .watchlist-item:hover {
+            background: #161b22;
+        }
+
+        .watchlist-item.active {
+            background: #1f2937;
+            border-left: 2px solid #58a6ff;
+        }
+
+        .symbol-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ticker {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #c9d1d9;
+        }
+
+        .company {
+            font-size: 0.7rem;
+            color: #7d8590;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .price-section {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .last-price {
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .price-change {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .up { color: #3fb950; }
+        .down { color: #f85149; }
+
+        /* Chart Panel */
+        .chart-panel {
+            background: #0d1117;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            background: #161b22;
+            padding: 10px 20px;
+            border-bottom: 1px solid #21262d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .symbol-info {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .main-symbol {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #c9d1d9;
+        }
+
+        .main-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .main-change {
+            font-size: 0.95rem;
+        }
+
+        /* Chart Controls */
+        .chart-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .interval-group {
+            display: flex;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .interval-btn {
+            padding: 5px 12px;
+            background: transparent;
+            border: none;
+            color: #7d8590;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .interval-btn:hover {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .interval-btn.active {
+            background: #1f6feb;
+            color: white;
+        }
+
+        .indicator-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .indicator-btn {
+            padding: 5px 10px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            color: #7d8590;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .indicator-btn.active {
+            background: #1f6feb;
+            color: white;
+            border-color: #1f6feb;
+        }
+
+        /* Chart Container */
+        .chart-wrapper {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .price-chart-container {
+            flex: 3;
+            position: relative;
+            background: #161b22;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .volume-chart-container {
+            flex: 1;
+            background: #161b22;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Order Panel */
+        .order-panel {
+            background: #0d1117;
+            border-left: 1px solid #21262d;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: #161b22;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: #7d8590;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: #c9d1d9;
+        }
+
+        .tab-btn.active {
+            color: #58a6ff;
+            border-bottom-color: #58a6ff;
+        }
+
+        /* Order Form */
+        .order-form {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-label {
+            font-size: 0.75rem;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            padding: 8px 12px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #c9d1d9;
+            font-size: 0.9rem;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.1);
+        }
+
+        .order-types {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .order-type-btn {
+            padding: 8px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: #7d8590;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .order-type-btn:hover {
+            border-color: #58a6ff;
+            color: #c9d1d9;
+        }
+
+        .order-type-btn.active {
+            background: rgba(31, 111, 235, 0.2);
+            border-color: #1f6feb;
+            color: #58a6ff;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .buy-button, .sell-button {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .buy-button {
+            background: #238636;
+            color: white;
+        }
+
+        .buy-button:hover {
+            background: #2ea043;
+        }
+
+        .sell-button {
+            background: #da3633;
+            color: white;
+        }
+
+        .sell-button:hover {
+            background: #f85149;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #161b22;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.85rem;
+        }
+
+        .summary-label {
+            color: #7d8590;
+        }
+
+        .summary-value {
+            color: #c9d1d9;
+            font-weight: 500;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .summary-divider {
+            border-top: 1px solid #30363d;
+            margin: 8px 0;
+        }
+
+        .summary-total {
+            font-weight: 600;
+            color: #58a6ff;
+        }
+
+        /* Level 2 / Depth */
+        .depth-container {
+            padding: 15px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .depth-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .bid-header, .ask-header {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bid-header {
+            color: #3fb950;
+        }
+
+        .ask-header {
+            color: #f85149;
+            text-align: right;
+        }
+
+        .depth-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .depth-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.8rem;
+            font-family: 'SF Mono', monospace;
+        }
+
+        .bid-cell, .ask-cell {
+            padding: 3px 6px;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bid-cell {
+            background: rgba(63, 185, 80, 0.1);
+        }
+
+        .ask-cell {
+            background: rgba(248, 81, 73, 0.1);
+        }
+
+        .depth-size {
+            color: #7d8590;
+        }
+
+        .depth-price {
+            font-weight: 500;
+        }
+
+        /* Time & Sales */
+        .time-sales {
+            padding: 15px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .trade-row {
+            display: grid;
+            grid-template-columns: 60px 60px 60px 1fr;
+            gap: 10px;
+            padding: 4px 0;
+            font-size: 0.75rem;
+            font-family: 'SF Mono', monospace;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .trade-time {
+            color: #7d8590;
+        }
+
+        .trade-price {
+            font-weight: 500;
+        }
+
+        .trade-size {
+            text-align: right;
+            color: #7d8590;
+        }
+
+        .trade-side {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* Positions */
+        .positions-container {
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .position-row {
+            padding: 10px;
+            background: #161b22;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .position-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .position-symbol {
+            font-weight: 600;
+            color: #c9d1d9;
+        }
+
+        .position-pnl {
+            font-weight: 600;
+        }
+
+        .position-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+
+        .position-detail {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            color: #7d8590;
+        }
+
+        .detail-value {
+            color: #c9d1d9;
+            font-family: 'SF Mono', monospace;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">ProTerminal</div>
+            <div class="demo-indicator">
+                <div class="pulse-dot"></div>
+                <span class="demo-text">Demo Mode</span>
+            </div>
+        </div>
+        <div class="account-stats">
+            <div class="stat">
+                <div class="stat-label">Net Liquidation</div>
+                <div class="stat-value neutral" id="netLiq">$152,847.32</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Day P&L</div>
+                <div class="stat-value positive" id="dayPnl">+$3,241.18</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Buying Power</div>
+                <div class="stat-value neutral" id="buyingPower">$76,423.66</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Watchlist Panel -->
+        <div class="watchlist-panel">
+            <div class="panel-header">
+                <div class="panel-title">Watchlist</div>
+                <input type="text" class="search-input" placeholder="Search symbols..." id="symbolSearch">
+            </div>
+            <div class="watchlist-items" id="watchlistContainer"></div>
+        </div>
+
+        <!-- Chart Panel -->
+        <div class="chart-panel">
+            <div class="chart-header">
+                <div class="symbol-info">
+                    <span class="main-symbol" id="mainSymbol">AAPL</span>
+                    <span class="main-price up" id="mainPrice">$182.52</span>
+                    <span class="main-change up" id="mainChange">+1.47 (+0.81%)</span>
+                </div>
+                <div class="chart-controls">
+                    <div class="interval-group">
+                        <button class="interval-btn" data-interval="1">1m</button>
+                        <button class="interval-btn" data-interval="5">5m</button>
+                        <button class="interval-btn active" data-interval="15">15m</button>
+                        <button class="interval-btn" data-interval="60">1H</button>
+                        <button class="interval-btn" data-interval="D">D</button>
+                        <button class="interval-btn" data-interval="W">W</button>
+                    </div>
+                    <div class="indicator-group">
+                        <button class="indicator-btn" data-indicator="sma">SMA</button>
+                        <button class="indicator-btn" data-indicator="ema">EMA</button>
+                        <button class="indicator-btn" data-indicator="bb">BB</button>
+                        <button class="indicator-btn" data-indicator="volume">Vol</button>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-wrapper">
+                <div class="price-chart-container" id="priceChartContainer"></div>
+                <div class="volume-chart-container" id="volumeChartContainer"></div>
+            </div>
+        </div>
+
+        <!-- Order Panel -->
+        <div class="order-panel">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="order">Order</button>
+                <button class="tab-btn" data-tab="depth">Depth</button>
+                <button class="tab-btn" data-tab="time-sales">T&S</button>
+                <button class="tab-btn" data-tab="positions">Positions</button>
+            </div>
+
+            <!-- Order Tab -->
+            <div class="tab-content" id="orderTab">
+                <div class="order-form">
+                    <div class="input-group">
+                        <label class="input-label">Order Type</label>
+                        <div class="order-types">
+                            <button class="order-type-btn active" data-type="market">Market</button>
+                            <button class="order-type-btn" data-type="limit">Limit</button>
+                            <button class="order-type-btn" data-type="stop">Stop</button>
+                            <button class="order-type-btn" data-type="stop-limit">Stop Limit</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Quantity</label>
+                        <input type="number" class="input-field" id="quantity" value="100">
+                    </div>
+
+                    <div class="input-group" id="limitPriceGroup" style="display: none;">
+                        <label class="input-label">Limit Price</label>
+                        <input type="number" class="input-field" id="limitPrice" step="0.01">
+                    </div>
+
+                    <div class="input-group" id="stopPriceGroup" style="display: none;">
+                        <label class="input-label">Stop Price</label>
+                        <input type="number" class="input-field" id="stopPrice" step="0.01">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Time in Force</label>
+                        <select class="input-field">
+                            <option>DAY</option>
+                            <option>GTC</option>
+                            <option>IOC</option>
+                            <option>FOK</option>
+                            <option>GTD</option>
+                        </select>
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Symbol</span>
+                            <span class="summary-value" id="orderSymbol">AAPL</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Type</span>
+                            <span class="summary-value" id="orderType">Market</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Quantity</span>
+                            <span class="summary-value" id="orderQty">100</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Price</span>
+                            <span class="summary-value" id="orderPrice">$182.52</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row">
+                            <span class="summary-label summary-total">Est. Total</span>
+                            <span class="summary-value summary-total" id="orderTotal">$18,252.00</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="buy-button" onclick="placeOrder('BUY')">BUY</button>
+                        <button class="sell-button" onclick="placeOrder('SELL')">SELL</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Depth Tab -->
+            <div class="tab-content" id="depthTab" style="display: none;">
+                <div class="depth-container">
+                    <div class="depth-header">
+                        <div class="bid-header">BIDS</div>
+                        <div class="ask-header">ASKS</div>
+                    </div>
+                    <div class="depth-rows" id="depthRows"></div>
+                </div>
+            </div>
+
+            <!-- Time & Sales Tab -->
+            <div class="tab-content" id="timeSalesTab" style="display: none;">
+                <div class="time-sales" id="timeSalesContainer"></div>
+            </div>
+
+            <!-- Positions Tab -->
+            <div class="tab-content" id="positionsTab" style="display: none;">
+                <div class="positions-container" id="positionsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Market Data Engine with Realistic Price Action
+        class MarketDataEngine {
+            constructor() {
+                this.symbols = {
+                    'AAPL': { 
+                        price: 182.52, 
+                        prevClose: 181.05, 
+                        dayOpen: 181.25,
+                        dayHigh: 183.45,
+                        dayLow: 180.92,
+                        volume: 52847293,
+                        bid: 182.51, 
+                        ask: 182.53, 
+                        volatility: 0.0182,  // Daily volatility ~1.82%
+                        trend: 0.3,  // Slight uptrend
+                        momentum: 0
+                    },
+                    'MSFT': { 
+                        price: 378.85, 
+                        prevClose: 380.12, 
+                        dayOpen: 379.50,
+                        dayHigh: 381.23,
+                        dayLow: 377.45,
+                        volume: 18293847,
+                        bid: 378.84, 
+                        ask: 378.86, 
+                        volatility: 0.0145,
+                        trend: -0.2,
+                        momentum: 0
+                    },
+                    'GOOGL': { 
+                        price: 142.65, 
+                        prevClose: 140.12, 
+                        dayOpen: 140.45,
+                        dayHigh: 143.87,
+                        dayLow: 139.92,
+                        volume: 24738291,
+                        bid: 142.64, 
+                        ask: 142.66, 
+                        volatility: 0.0198,
+                        trend: 0.5,
+                        momentum: 0
+                    },
+                    'NVDA': { 
+                        price: 522.48, 
+                        prevClose: 515.23, 
+                        dayOpen: 516.75,
+                        dayHigh: 528.92,
+                        dayLow: 514.33,
+                        volume: 42847291,
+                        bid: 522.47, 
+                        ask: 522.49, 
+                        volatility: 0.0287,  // Higher volatility for NVDA
+                        trend: 0.6,
+                        momentum: 0
+                    },
+                    'TSLA': { 
+                        price: 238.45, 
+                        prevClose: 242.67, 
+                        dayOpen: 241.20,
+                        dayHigh: 244.55,
+                        dayLow: 236.78,
+                        volume: 98273648,
+                        bid: 238.44, 
+                        ask: 238.46, 
+                        volatility: 0.0412,  // Very high volatility for TSLA
+                        trend: -0.4,
+                        momentum: 0
+                    }
+                };
+                
+                // Add remaining symbols with realistic data
+                const otherSymbols = {
+                    'AMZN': { volatility: 0.0176, trend: 0.2 },
+                    'META': { volatility: 0.0234, trend: 0.4 },
+                    'JPM': { volatility: 0.0134, trend: 0.1 },
+                    'V': { volatility: 0.0098, trend: -0.1 },
+                    'WMT': { volatility: 0.0087, trend: 0.15 }
+                };
+                
+                Object.entries(otherSymbols).forEach(([symbol, data]) => {
+                    const basePrice = 150 + Math.random() * 350;
+                    this.symbols[symbol] = {
+                        price: basePrice,
+                        prevClose: basePrice * (1 - 0.01 + Math.random() * 0.02),
+                        dayOpen: basePrice * (1 - 0.005 + Math.random() * 0.01),
+                        dayHigh: basePrice * (1 + Math.random() * 0.03),
+                        dayLow: basePrice * (1 - Math.random() * 0.03),
+                        volume: Math.floor(10000000 + Math.random() * 50000000),
+                        bid: basePrice - 0.01,
+                        ask: basePrice + 0.01,
+                        volatility: data.volatility,
+                        trend: data.trend,
+                        momentum: 0
+                    };
+                });
+                
+                this.currentSymbol = 'AAPL';
+                this.candleData = {};
+                this.timeSales = [];
+                this.positions = [
+                    { symbol: 'AAPL', qty: 100, avgCost: 178.25 },
+                    { symbol: 'NVDA', qty: 25, avgCost: 498.75 },
+                    { symbol: 'TSLA', qty: -50, avgCost: 245.80 }
+                ];
+                
+                // Initialize historical data for all symbols
+                this.initializeHistoricalData();
+            }
+
+            initializeHistoricalData() {
+                Object.keys(this.symbols).forEach(symbol => {
+                    this.candleData[symbol] = this.generateHistoricalCandles(symbol, 200);
+                });
+            }
+
+            generateHistoricalCandles(symbol, count) {
+                const data = this.symbols[symbol];
+                const candles = [];
+                let currentPrice = data.prevClose;
+                const now = Date.now();
+                const intervalMs = 15 * 60 * 1000; // 15 minutes
+                
+                for (let i = count; i > 0; i--) {
+                    const timestamp = now - (i * intervalMs);
+                    const candle = this.generateRealisticCandle(currentPrice, data.volatility, data.trend);
+                    candle.time = Math.floor(timestamp / 1000);
+                    candles.push(candle);
+                    currentPrice = candle.close;
+                }
+                
+                // Ensure last candle close matches current price
+                if (candles.length > 0) {
+                    candles[candles.length - 1].close = data.price;
+                }
+                
+                return candles;
+            }
+
+            generateRealisticCandle(prevClose, volatility, trend) {
+                // Realistic intraday volatility (15-min candle)
+                const intradayVol = volatility * Math.sqrt(15 / (6.5 * 60)); // 15 min / trading day in minutes
+                
+                // Add trend component
+                const trendComponent = trend * intradayVol * 0.3;
+                
+                // Generate returns using normal distribution approximation
+                const randomComponent = this.generateNormalRandom() * intradayVol;
+                const totalReturn = trendComponent + randomComponent;
+                
+                // Calculate OHLC
+                const open = prevClose;
+                const close = open * (1 + totalReturn);
+                
+                // Generate realistic wicks
+                const wickMultiplier = 1 + Math.abs(this.generateNormalRandom()) * 0.5;
+                const range = Math.abs(close - open) * wickMultiplier;
+                
+                let high, low;
+                if (close > open) {
+                    // Bullish candle
+                    high = Math.max(open, close) + range * (0.2 + Math.random() * 0.3);
+                    low = Math.min(open, close) - range * (0.1 + Math.random() * 0.2);
+                } else {
+                    // Bearish candle
+                    high = Math.max(open, close) + range * (0.1 + Math.random() * 0.2);
+                    low = Math.min(open, close) - range * (0.2 + Math.random() * 0.3);
+                }
+                
+                // Generate realistic volume
+                const baseVolume = 500000 + Math.random() * 1000000;
+                const volumeMultiplier = 1 + Math.abs(totalReturn) * 50; // Higher volume on bigger moves
+                const volume = Math.floor(baseVolume * volumeMultiplier);
+                
+                return {
+                    open: parseFloat(open.toFixed(2)),
+                    high: parseFloat(high.toFixed(2)),
+                    low: parseFloat(low.toFixed(2)),
+                    close: parseFloat(close.toFixed(2)),
+                    volume: volume
+                };
+            }
+
+            // Box-Muller transform for normal distribution
+            generateNormalRandom() {
+                let u = 0, v = 0;
+                while (u === 0) u = Math.random();
+                while (v === 0) v = Math.random();
+                return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+            }
+
+            updateMarketData() {
+                Object.keys(this.symbols).forEach(symbol => {
+                    const data = this.symbols[symbol];
+                    
+                    // Update momentum (mean reversion)
+                    data.momentum = data.momentum * 0.9 + this.generateNormalRandom() * 0.1;
+                    
+                    // Calculate new price with momentum
+                    const tickSize = 0.01;
+                    const priceChange = (data.trend * 0.3 + data.momentum + this.generateNormalRandom() * 0.5) * data.volatility * tickSize;
+                    const newPrice = data.price + priceChange;
+                    
+                    // Update bid/ask with realistic spread
+                    const spreadBps = 1 + Math.floor(Math.random() * 3); // 1-3 basis points
+                    const spread = newPrice * spreadBps / 10000;
+                    
+                    data.bid = parseFloat((newPrice - spread/2).toFixed(2));
+                    data.ask = parseFloat((newPrice + spread/2).toFixed(2));
+                    data.price = parseFloat(newPrice.toFixed(2));
+                    
+                    // Update daily high/low
+                    data.dayHigh = Math.max(data.dayHigh, newPrice);
+                    data.dayLow = Math.min(data.dayLow, newPrice);
+                    
+                    // Generate time & sales
+                    if (Math.random() > 0.3) {
+                        const tradePrice = Math.random() > 0.5 ? data.bid : data.ask;
+                        const size = this.generateTradeSize();
+                        const side = tradePrice === data.ask ? 'BUY' : 'SELL';
+                        
+                        this.timeSales.unshift({
+                            time: new Date(),
+                            symbol: symbol,
+                            price: tradePrice,
+                            size: size,
+                            side: side
+                        });
+                        
+                        data.volume += size;
+                    }
+                });
+                
+                // Limit time & sales history
+                if (this.timeSales.length > 100) {
+                    this.timeSales = this.timeSales.slice(0, 100);
+                }
+            }
+
+            generateTradeSize() {
+                // Realistic trade size distribution
+                const rand = Math.random();
+                if (rand < 0.7) return Math.floor(Math.random() * 10) * 100; // Small trades (70%)
+                if (rand < 0.95) return Math.floor(Math.random() * 100) * 100; // Medium trades (25%)
+                return Math.floor(Math.random() * 1000) * 100; // Large trades (5%)
+            }
+
+            generateOrderBook(symbol) {
+                const data = this.symbols[symbol];
+                const levels = 15;
+                const bids = [];
+                const asks = [];
+                
+                for (let i = 0; i < levels; i++) {
+                    // Price levels with increasing spread
+                    const bidPrice = data.bid - (i * 0.01 * (1 + i * 0.1));
+                    const askPrice = data.ask + (i * 0.01 * (1 + i * 0.1));
+                    
+                    // Size decreases and becomes more random as we move away
+                    const depthFactor = Math.max(0.1, 1 - i * 0.06);
+                    const baseSize = this.generateTradeSize() * depthFactor;
+                    
+                    bids.push({
+                        price: parseFloat(bidPrice.toFixed(2)),
+                        size: Math.floor(baseSize * (0.5 + Math.random()))
+                    });
+                    
+                    asks.push({
+                        price: parseFloat(askPrice.toFixed(2)),
+                        size: Math.floor(baseSize * (0.5 + Math.random()))
+                    });
+                }
+                
+                return { bids, asks };
+            }
+
+            addNewCandle(symbol) {
+                const data = this.symbols[symbol];
+                const candles = this.candleData[symbol];
+                const lastCandle = candles[candles.length - 1];
+                
+                const newCandle = this.generateRealisticCandle(lastCandle.close, data.volatility, data.trend);
+                newCandle.time = Math.floor(Date.now() / 1000);
+                
+                candles.push(newCandle);
+                
+                // Keep only last 200 candles
+                if (candles.length > 200) {
+                    candles.shift();
+                }
+                
+                // Update current price to match latest candle
+                data.price = newCandle.close;
+                
+                return newCandle;
+            }
+        }
+
+        // Chart Management with TradingView Lightweight Charts
+        let priceChart = null;
+        let candleSeries = null;
+        let volumeSeries = null;
+        let volumeChart = null;
+        let smaLine = null;
+        let emaLine = null;
+        let currentInterval = 15;
+        const marketEngine = new MarketDataEngine();
+
+        function initializeCharts() {
+            // Price Chart
+            const priceContainer = document.getElementById('priceChartContainer');
+            priceContainer.innerHTML = '';
+            
+            priceChart = LightweightCharts.createChart(priceContainer, {
+                width: priceContainer.clientWidth,
+                height: priceContainer.clientHeight,
+                layout: {
+                    background: { color: '#161b22' },
+                    textColor: '#c9d1d9',
+                },
+                grid: {
+                    vertLines: { color: '#21262d' },
+                    horzLines: { color: '#21262d' },
+                },
+                crosshair: {
+                    mode: LightweightCharts.CrosshairMode.Normal,
+                },
+                rightPriceScale: {
+                    borderColor: '#21262d',
+                },
+                timeScale: {
+                    borderColor: '#21262d',
+                    timeVisible: true,
+                    secondsVisible: false,
+                },
+            });
+
+            candleSeries = priceChart.addCandlestickSeries({
+                upColor: '#3fb950',
+                downColor: '#f85149',
+                borderUpColor: '#3fb950',
+                borderDownColor: '#f85149',
+                wickUpColor: '#3fb950',
+                wickDownColor: '#f85149',
+            });
+
+            // Volume Chart
+            const volumeContainer = document.getElementById('volumeChartContainer');
+            volumeContainer.innerHTML = '';
+            
+            volumeChart = LightweightCharts.createChart(volumeContainer, {
+                width: volumeContainer.clientWidth,
+                height: volumeContainer.clientHeight,
+                layout: {
+                    background: { color: '#161b22' },
+                    textColor: '#c9d1d9',
+                },
+                grid: {
+                    vertLines: { color: '#21262d' },
+                    horzLines: { color: '#21262d' },
+                },
+                rightPriceScale: {
+                    borderColor: '#21262d',
+                    scaleMargins: {
+                        top: 0.1,
+                        bottom: 0,
+                    },
+                },
+                timeScale: {
+                    visible: false,
+                },
+            });
+
+            volumeSeries = volumeChart.addHistogramSeries({
+                color: '#3fb950',
+                priceFormat: {
+                    type: 'volume',
+                },
+            });
+
+            // Sync time scales
+            priceChart.timeScale().subscribeVisibleTimeRangeChange(() => {
+                volumeChart.timeScale().setVisibleRange(priceChart.timeScale().getVisibleRange());
+            });
+
+            volumeChart.timeScale().subscribeVisibleTimeRangeChange(() => {
+                priceChart.timeScale().setVisibleRange(volumeChart.timeScale().getVisibleRange());
+            });
+
+            // Load data
+            updateChartData();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                priceChart.applyOptions({ 
+                    width: priceContainer.clientWidth,
+                    height: priceContainer.clientHeight
+                });
+                volumeChart.applyOptions({ 
+                    width: volumeContainer.clientWidth,
+                    height: volumeContainer.clientHeight
+                });
+            });
+        }
+
+        function updateChartData() {
+            const symbol = marketEngine.currentSymbol;
+            const candles = marketEngine.candleData[symbol];
+            
+            // Update candlestick data
+            candleSeries.setData(candles);
+            
+            // Update volume data with colors
+            const volumeData = candles.map(candle => ({
+                time: candle.time,
+                value: candle.volume,
+                color: candle.close >= candle.open ? '#3fb950' : '#f85149'
+            }));
+            volumeSeries.setData(volumeData);
+            
+            // Add SMA if active
+            if (document.querySelector('.indicator-btn[data-indicator="sma"].active')) {
+                addSMA();
+            }
+            
+            // Add EMA if active
+            if (document.querySelector('.indicator-btn[data-indicator="ema"].active')) {
+                addEMA();
+            }
+        }
+
+        function addSMA() {
+            if (smaLine) priceChart.removeSeries(smaLine);
+            
+            smaLine = priceChart.addLineSeries({
+                color: '#58a6ff',
+                lineWidth: 2,
+            });
+            
+            const candles = marketEngine.candleData[marketEngine.currentSymbol];
+            const period = 20;
+            const smaData = [];
+            
+            for (let i = period - 1; i < candles.length; i++) {
+                let sum = 0;
+                for (let j = 0; j < period; j++) {
+                    sum += candles[i - j].close;
+                }
+                smaData.push({
+                    time: candles[i].time,
+                    value: sum / period
+                });
+            }
+            
+            smaLine.setData(smaData);
+        }
+
+        function addEMA() {
+            if (emaLine) priceChart.removeSeries(emaLine);
+            
+            emaLine = priceChart.addLineSeries({
+                color: '#f0ad4e',
+                lineWidth: 2,
+            });
+            
+            const candles = marketEngine.candleData[marketEngine.currentSymbol];
+            const period = 20;
+            const multiplier = 2 / (period + 1);
+            const emaData = [];
+            
+            // Start with SMA for first data point
+            let ema = candles.slice(0, period).reduce((sum, c) => sum + c.close, 0) / period;
+            
+            for (let i = period - 1; i < candles.length; i++) {
+                ema = (candles[i].close - ema) * multiplier + ema;
+                emaData.push({
+                    time: candles[i].time,
+                    value: ema
+                });
+            }
+            
+            emaLine.setData(emaData);
+        }
+
+        // Populate Watchlist
+        function populateWatchlist() {
+            const container = document.getElementById('watchlistContainer');
+            container.innerHTML = '';
+
+            Object.keys(marketEngine.symbols).forEach(symbol => {
+                const data = marketEngine.symbols[symbol];
+                const change = data.price - data.prevClose;
+                const changePercent = (change / data.prevClose * 100);
+                
+                const item = document.createElement('div');
+                item.className = `watchlist-item ${symbol === marketEngine.currentSymbol ? 'active' : ''}`;
+                item.onclick = () => selectSymbol(symbol);
+                
+                item.innerHTML = `
+                    <div class="symbol-section">
+                        <div class="ticker">${symbol}</div>
+                        <div class="company">${getCompanyName(symbol)}</div>
+                    </div>
+                    <div class="price-section">
+                        <div class="last-price">$${data.price.toFixed(2)}</div>
+                        <div class="price-change ${change >= 0 ? 'up' : 'down'}">
+                            ${change >= 0 ? '+' : ''}${change.toFixed(2)} (${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%)
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        function getCompanyName(symbol) {
+            const names = {
+                'AAPL': 'Apple Inc.',
+                'MSFT': 'Microsoft Corp.',
+                'GOOGL': 'Alphabet Inc.',
+                'AMZN': 'Amazon.com Inc.',
+                'NVDA': 'NVIDIA Corp.',
+                'TSLA': 'Tesla Inc.',
+                'META': 'Meta Platforms',
+                'JPM': 'JPMorgan Chase',
+                'V': 'Visa Inc.',
+                'WMT': 'Walmart Inc.'
+            };
+            return names[symbol] || symbol;
+        }
+
+        // Select Symbol
+        function selectSymbol(symbol) {
+            marketEngine.currentSymbol = symbol;
+            const data = marketEngine.symbols[symbol];
+            
+            // Update header
+            document.getElementById('mainSymbol').textContent = symbol;
+            document.getElementById('mainPrice').textContent = `$${data.price.toFixed(2)}`;
+            
+            const change = data.price - data.prevClose;
+            const changePercent = (change / data.prevClose * 100);
+            const changeElement = document.getElementById('mainChange');
+            changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)} (${changePercent >= 0 ? '+' : ''}${changePercent.toFixed(2)}%)`;
+            changeElement.className = `main-change ${change >= 0 ? 'up' : 'down'}`;
+            
+            document.getElementById('mainPrice').className = `main-price ${change >= 0 ? 'up' : 'down'}`;
+            
+            // Update order form
+            document.getElementById('orderSymbol').textContent = symbol;
+            updateOrderSummary();
+            
+            // Update watchlist active state
+            document.querySelectorAll('.watchlist-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update chart
+            updateChartData();
+        }
+
+        // Update Order Book
+        function updateOrderBook() {
+            const orderBook = marketEngine.generateOrderBook(marketEngine.currentSymbol);
+            const container = document.getElementById('depthRows');
+            container.innerHTML = '';
+
+            for (let i = 0; i < Math.min(orderBook.bids.length, orderBook.asks.length); i++) {
+                const bid = orderBook.bids[i];
+                const ask = orderBook.asks[i];
+                
+                const row = document.createElement('div');
+                row.className = 'depth-row';
+                row.innerHTML = `
+                    <div class="bid-cell">
+                        <span class="depth-size">${bid.size.toLocaleString()}</span>
+                        <span class="depth-price">$${bid.price.toFixed(2)}</span>
+                    </div>
+                    <div class="ask-cell">
+                        <span class="depth-price">$${ask.price.toFixed(2)}</span>
+                        <span class="depth-size">${ask.size.toLocaleString()}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            }
+        }
+
+        // Update Time & Sales
+        function updateTimeSales() {
+            const container = document.getElementById('timeSalesContainer');
+            container.innerHTML = '';
+
+            const symbolSales = marketEngine.timeSales.filter(t => t.symbol === marketEngine.currentSymbol).slice(0, 50);
+            
+            symbolSales.forEach(trade => {
+                const row = document.createElement('div');
+                row.className = 'trade-row';
+                row.innerHTML = `
+                    <div class="trade-time">${trade.time.toLocaleTimeString('en-US', { hour12: false })}</div>
+                    <div class="trade-price ${trade.side === 'BUY' ? 'up' : 'down'}">$${trade.price.toFixed(2)}</div>
+                    <div class="trade-size">${trade.size.toLocaleString()}</div>
+                    <div class="trade-side ${trade.side === 'BUY' ? 'up' : 'down'}">${trade.side}</div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Update Positions
+        function updatePositions() {
+            const container = document.getElementById('positionsContainer');
+            container.innerHTML = '';
+
+            marketEngine.positions.forEach(position => {
+                const currentPrice = marketEngine.symbols[position.symbol].price;
+                const pnl = (currentPrice - position.avgCost) * position.qty;
+                const pnlPercent = (pnl / (position.avgCost * Math.abs(position.qty))) * 100;
+                
+                const row = document.createElement('div');
+                row.className = 'position-row';
+                row.innerHTML = `
+                    <div class="position-header">
+                        <span class="position-symbol">${position.symbol}</span>
+                        <span class="position-pnl ${pnl >= 0 ? 'up' : 'down'}">
+                            ${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${pnlPercent >= 0 ? '+' : ''}${pnlPercent.toFixed(2)}%)
+                        </span>
+                    </div>
+                    <div class="position-details">
+                        <div class="position-detail">
+                            <span class="detail-label">Quantity</span>
+                            <span class="detail-value">${position.qty}</span>
+                        </div>
+                        <div class="position-detail">
+                            <span class="detail-label">Avg Cost</span>
+                            <span class="detail-value">$${position.avgCost.toFixed(2)}</span>
+                        </div>
+                        <div class="position-detail">
+                            <span class="detail-label">Current</span>
+                            <span class="detail-value">$${currentPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="position-detail">
+                            <span class="detail-label">Value</span>
+                            <span class="detail-value">$${(currentPrice * position.qty).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Order Management
+        function updateOrderSummary() {
+            const qty = document.getElementById('quantity').value || 100;
+            const symbol = marketEngine.currentSymbol;
+            const data = marketEngine.symbols[symbol];
+            const orderType = document.querySelector('.order-type-btn.active').dataset.type;
+            
+            let price = data.price;
+            if (orderType === 'limit' || orderType === 'stop-limit') {
+                price = parseFloat(document.getElementById('limitPrice').value) || price;
+            }
+            
+            document.getElementById('orderQty').textContent = qty;
+            document.getElementById('orderPrice').textContent = `$${price.toFixed(2)}`;
+            document.getElementById('orderTotal').textContent = `$${(price * qty).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            document.getElementById('orderType').textContent = orderType.charAt(0).toUpperCase() + orderType.slice(1);
+        }
+
+        function placeOrder(side) {
+            const symbol = marketEngine.currentSymbol;
+            const qty = document.getElementById('quantity').value;
+            const orderType = document.querySelector('.order-type-btn.active').dataset.type;
+            
+            alert(`Demo Order Placed:\n${side} ${qty} ${symbol}\nType: ${orderType.toUpperCase()}\n\nThis is a simulation - no real order was placed.`);
+        }
+
+        // Initialize and start updates
+        document.addEventListener('DOMContentLoaded', function() {
+            populateWatchlist();
+            initializeCharts();
+            updateOrderSummary();
+            
+            // Tab Navigation
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    const tabId = this.dataset.tab + 'Tab';
+                    document.getElementById(tabId).style.display = 'block';
+                    
+                    if (this.dataset.tab === 'depth') updateOrderBook();
+                    else if (this.dataset.tab === 'time-sales') updateTimeSales();
+                    else if (this.dataset.tab === 'positions') updatePositions();
+                });
+            });
+            
+            // Order Type Selection
+            document.querySelectorAll('.order-type-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.order-type-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const type = this.dataset.type;
+                    document.getElementById('limitPriceGroup').style.display = 
+                        (type === 'limit' || type === 'stop-limit') ? 'block' : 'none';
+                    document.getElementById('stopPriceGroup').style.display = 
+                        (type === 'stop' || type === 'stop-limit') ? 'block' : 'none';
+                    
+                    updateOrderSummary();
+                });
+            });
+            
+            // Interval Selection
+            document.querySelectorAll('.interval-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.interval-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentInterval = this.dataset.interval;
+                    // In production, this would reload data for the new interval
+                });
+            });
+            
+            // Indicator Selection
+            document.querySelectorAll('.indicator-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const indicator = this.dataset.indicator;
+                    
+                    if (indicator === 'sma') {
+                        if (this.classList.contains('active')) {
+                            addSMA();
+                        } else if (smaLine) {
+                            priceChart.removeSeries(smaLine);
+                            smaLine = null;
+                        }
+                    } else if (indicator === 'ema') {
+                        if (this.classList.contains('active')) {
+                            addEMA();
+                        } else if (emaLine) {
+                            priceChart.removeSeries(emaLine);
+                            emaLine = null;
+                        }
+                    }
+                });
+            });
+            
+            // Quantity change listener
+            document.getElementById('quantity').addEventListener('input', updateOrderSummary);
+            document.getElementById('limitPrice').addEventListener('input', updateOrderSummary);
+            
+            // Set initial limit price
+            document.getElementById('limitPrice').value = marketEngine.symbols[marketEngine.currentSymbol].price.toFixed(2);
+            
+            // Real-time updates
+            setInterval(() => {
+                marketEngine.updateMarketData();
+                populateWatchlist();
+                
+                // Update main price display
+                const symbol = marketEngine.currentSymbol;
+                const data = marketEngine.symbols[symbol];
+                document.getElementById('mainPrice').textContent = `$${data.price.toFixed(2)}`;
+                
+                // Update order book if visible
+                if (document.getElementById('depthTab').style.display !== 'none') {
+                    updateOrderBook();
+                }
+                
+                // Update time & sales if visible
+                if (document.getElementById('timeSalesTab').style.display !== 'none') {
+                    updateTimeSales();
+                }
+                
+                updateOrderSummary();
+            }, 1000);
+            
+            // Update charts with new candles
+            setInterval(() => {
+                const symbol = marketEngine.currentSymbol;
+                const newCandle = marketEngine.addNewCandle(symbol);
+                
+                // Update the last candle or add new one
+                candleSeries.update(newCandle);
+                
+                // Update volume
+                volumeSeries.update({
+                    time: newCandle.time,
+                    value: newCandle.volume,
+                    color: newCandle.close >= newCandle.open ? '#3fb950' : '#f85149'
+                });
+                
+                // Update indicators if active
+                if (smaLine) addSMA();
+                if (emaLine) addEMA();
+            }, 5000); // Add new candle every 5 seconds for demo
+        });
+    </script>
+</body>
+</html>

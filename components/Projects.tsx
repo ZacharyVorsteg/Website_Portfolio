@@ -47,7 +47,7 @@ const Projects = () => {
         data: 'Level 2',
         type: 'Demo'
       },
-      liveUrl: '/demos/market-analytics.html',
+      liveUrl: '/demos/trading-terminal.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       category: 'fintech',
       tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
