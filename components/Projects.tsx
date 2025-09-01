@@ -274,7 +274,7 @@ const Projects = () => {
                           </div>
                           <span className="text-xs text-gray-500">Live Preview</span>
                         </div>
-                        <div className="relative h-48 bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
+                        <div className="relative h-56 bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
                           {hoveredProject === project.id ? (
                             <iframe
                               src={project.liveUrl}
@@ -282,10 +282,10 @@ const Projects = () => {
                               title={project.title}
                               loading="lazy"
                               style={{ 
-                                transform: 'scale(0.25)', 
+                                transform: 'scale(0.18)', 
                                 transformOrigin: 'top left', 
-                                width: '400%', 
-                                height: '400%',
+                                width: '555%', 
+                                height: '555%',
                                 border: 'none',
                                 pointerEvents: 'none'
                               }}
