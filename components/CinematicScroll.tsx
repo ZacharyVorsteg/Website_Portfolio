@@ -8,35 +8,55 @@ export default function CinematicScroll() {
 
   useEffect(() => {
     if (reduced || typeof window === 'undefined') return;
-    ensureGSAP();
-
-    // Kill existing ScrollTriggers to avoid conflicts
-    ScrollTrigger.getAll().forEach(st => st.kill());
+    
+    // Delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      ensureGSAP();
+      
+      // Refresh ScrollTrigger after page loads
+      ScrollTrigger.refresh();
+      
+      // Kill existing ScrollTriggers to avoid conflicts
+      ScrollTrigger.getAll().forEach(st => st.kill());
 
     // CINEMATIC ZOOM EFFECT ON HERO
     const hero = document.querySelector('#hero');
     if (hero) {
+      console.log('Hero found, applying cinematic zoom');
+      
+      // Set initial state
+      gsap.set(hero, {
+        transformOrigin: 'center center',
+        willChange: 'transform, opacity'
+      });
+      
       gsap.timeline({
         scrollTrigger: {
           trigger: hero,
           start: 'top top',
-          end: 'bottom top',
-          scrub: 1.5,
+          end: '+=100%',
+          scrub: 1,
           pin: true,
-          pinSpacing: false,
+          pinSpacing: true,
+          markers: false, // Set to true to debug
+          onUpdate: (self) => {
+            console.log('Hero scroll progress:', self.progress);
+          }
         }
       })
       .to(hero, {
         scale: 1.5,
         opacity: 0.3,
-        duration: 1,
+        ease: 'power2.inOut',
       })
-      .to(hero.querySelectorAll('h1, p'), {
+      .to(hero.querySelectorAll('h1, p, div'), {
         y: -200,
         opacity: 0,
-        stagger: 0.1,
-        duration: 0.8,
-      }, '<');
+        stagger: 0.05,
+        ease: 'power2.inOut',
+      }, 0);
+    } else {
+      console.log('Hero not found!');
     }
 
     // 3D CARD FLIP ON PROJECTS
@@ -191,7 +211,10 @@ export default function CinematicScroll() {
       smoothScroll();
     }
 
+    }, 100); // Small delay for DOM
+    
     return () => {
+      clearTimeout(timer);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, [reduced]);
