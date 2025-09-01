@@ -265,3 +265,114 @@ html {
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
 }
+
+/* === CINEMATIC SCROLL EFFECTS === */
+.hero-cinematic {
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.project-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.project-card-3d:hover {
+  transform: translateZ(50px) rotateY(5deg) rotateX(-5deg);
+}
+
+.horizontal-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slide {
+  flex: 0 0 auto;
+  will-change: transform;
+}
+
+.clip-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  will-change: clip-path;
+}
+
+.split-text span {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.sticky-scale {
+  will-change: transform, opacity;
+}
+
+/* Smooth container for butter smooth scrolling */
+.smooth-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+/* Dynamic background transitions */
+body {
+  transition: background 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 3D perspective for depth */
+.perspective-deep {
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+/* Morph animations */
+@keyframes morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
+.morph-shape {
+  animation: morph 8s ease-in-out infinite;
+}
+
+/* Parallax layers */
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.parallax-layer-1 { transform: translateZ(-1px) scale(2); }
+.parallax-layer-2 { transform: translateZ(-2px) scale(3); }
+.parallax-layer-3 { transform: translateZ(-3px) scale(4); }
+
+/* Glitch effect on hover */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+.glitch:hover {
+  animation: glitch 0.3s infinite;
+}
+
+/* Liquid distortion */
+.liquid {
+  filter: url('#liquid');
+  will-change: filter;
+}
+
+/* Performance optimizations */
+* {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}

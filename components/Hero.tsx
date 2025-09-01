@@ -47,11 +47,13 @@ const Hero = () => {
     <motion.section 
       ref={heroRef}
       id="hero" 
-      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden hero-cinematic"
       style={{
         scale: shouldReduceMotion ? 1 : heroScale,
         opacity: shouldReduceMotion ? 1 : heroOpacity,
         y: shouldReduceMotion ? 0 : heroY,
+        transformStyle: 'preserve-3d',
+        perspective: '1000px',
       }}
     >
       {/* Animated particles */}

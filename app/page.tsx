@@ -12,6 +12,8 @@ import LoadingScreen from '@/components/LoadingScreen'
 import ScrollEffects from '@/components/ScrollEffects'
 import GSAPIntegration from '@/components/GSAPIntegration'
 import ScrollDemoButton from '@/components/ScrollDemoButton'
+import CinematicScroll from '@/components/CinematicScroll'
+import HorizontalShowcase from '@/components/HorizontalShowcase'
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +34,7 @@ export default function Home() {
   return (
     <>
       <ScrollEffects />
-      <GSAPIntegration />
+      <CinematicScroll />
       <Navigation />
       <main className="relative">
         {/* Animated background gradient */}
@@ -43,6 +45,7 @@ export default function Home() {
 
         {/* Content sections */}
         <Hero />
+        <HorizontalShowcase />
         <Projects />
         <Skills />
         <About />

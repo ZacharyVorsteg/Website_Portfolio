@@ -180,11 +180,12 @@ const Projects = () => {
           {filteredProjects.map((project, index) => (
             <Reveal key={project.id} delay={index * 0.1}>
               <motion.div
-                className="group relative"
+                className="group relative project-card-3d clip-reveal"
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                whileHover={{ y: -8 }}
+                whileHover={{ y: -8, rotateY: 5, rotateX: -5 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
               <div className="glass-card p-6 h-full project-card">
                 {/* Project Header */}
