@@ -30,7 +30,7 @@ const Projects = () => {
         tech: 'Streamlit',
         value: 'CFO-grade'
       },
-      liveUrl: '/demos/valuation-simulator-final.html',
+      liveUrl: '/demos/valuation-simulator-enhanced.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio/blob/main/demo-scripts/valuation_simulator.py',
       demoScript: '/demo-scripts/valuation_simulator.py',
       category: 'cfo',
@@ -93,7 +93,7 @@ const Projects = () => {
         confidence: '95% CI',
         method: 'Prophet'
       },
-      liveUrl: '/demos/revenue-forecast.html',
+      liveUrl: '/demos/revenue-forecast-enhanced.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       demoScript: '/demo-scripts/revenue_forecast.py',
       category: 'datascience',
