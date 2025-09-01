@@ -47,7 +47,7 @@ const Projects = () => {
         data: 'Level 2',
         type: 'Demo'
       },
-      liveUrl: '/demos/trading-terminal.html',
+      liveUrl: '/demos/market-analytics.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       category: 'fintech',
       tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
@@ -274,20 +274,18 @@ const Projects = () => {
                           </div>
                           <span className="text-xs text-gray-500">Live Preview</span>
                         </div>
-                        <div className="relative h-56 bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
+                        <div className="relative w-full aspect-video bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
                           {hoveredProject === project.id ? (
                             <iframe
                               src={project.liveUrl}
-                              className="absolute inset-0"
+                              className="absolute inset-0 w-full h-full"
                               title={project.title}
                               loading="lazy"
                               style={{ 
-                                transform: 'scale(0.18)', 
-                                transformOrigin: 'top left', 
-                                width: '555%', 
-                                height: '555%',
                                 border: 'none',
-                                pointerEvents: 'none'
+                                pointerEvents: 'none',
+                                transform: 'scale(1)',
+                                transformOrigin: 'center'
                               }}
                             />
                           ) : (
