@@ -263,6 +263,38 @@ const Projects = () => {
                       {project.description}
                     </p>
 
+                    {/* Live Preview Window */}
+                    {project.liveUrl !== '#' && (
+                      <div className="mb-6 rounded-xl overflow-hidden border border-white/10 bg-black/50">
+                        <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+                          </div>
+                          <span className="text-xs text-gray-500">Live Preview</span>
+                        </div>
+                        <div className="relative h-48 bg-gradient-to-br from-slate-900 to-slate-800">
+                          {hoveredProject === project.id ? (
+                            <iframe
+                              src={project.liveUrl}
+                              className="w-full h-full"
+                              title={project.title}
+                              loading="lazy"
+                              style={{ transform: 'scale(0.5)', transformOrigin: 'top left', width: '200%', height: '200%' }}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <div className="text-center">
+                                <Play className="w-10 h-10 text-gray-600 mx-auto mb-2" />
+                                <p className="text-sm text-gray-500">Hover to preview</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Metrics */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
                       {Object.entries(project.metrics).map(([key, value], index) => (
