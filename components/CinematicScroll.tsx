@@ -9,15 +9,17 @@ export default function CinematicScroll() {
   useEffect(() => {
     if (reduced || typeof window === 'undefined') return;
     
-    // Delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      ensureGSAP();
-      
-      // Refresh ScrollTrigger after page loads
-      ScrollTrigger.refresh();
-      
-      // Kill existing ScrollTriggers to avoid conflicts
-      ScrollTrigger.getAll().forEach(st => st.kill());
+    // Initialize immediately without delay
+    ensureGSAP();
+    
+    // Configure ScrollTrigger for better performance
+    ScrollTrigger.config({
+      limitCallbacks: true,
+      syncInterval: 40
+    });
+    
+    // Kill existing ScrollTriggers to avoid conflicts
+    ScrollTrigger.getAll().forEach(st => st.kill());
 
     // CINEMATIC ZOOM EFFECT ON HERO
     const hero = document.querySelector('#hero');
@@ -35,52 +37,78 @@ export default function CinematicScroll() {
           trigger: hero,
           start: 'top top',
           end: '+=100%',
-          scrub: 1,
+          scrub: 0.5, // Reduced scrub for more responsive feel
           pin: true,
           pinSpacing: true,
-          markers: false, // Set to true to debug
-          onUpdate: (self) => {
-            console.log('Hero scroll progress:', self.progress);
-          }
+          anticipatePin: 1, // Improves pin smoothness
+          fastScrollEnd: true,
+          preventOverlaps: true,
+          markers: false
         }
       })
       .to(hero, {
-        scale: 1.5,
-        opacity: 0.3,
-        ease: 'power2.inOut',
+        scale: 1.3, // Reduced scale for smoother animation
+        opacity: 0.4,
+        ease: 'none', // Linear for smooth scrubbing
+        duration: 1
       })
       .to(hero.querySelectorAll('h1, p, div'), {
-        y: -200,
+        y: -100, // Reduced movement
         opacity: 0,
-        stagger: 0.05,
-        ease: 'power2.inOut',
+        stagger: 0.02, // Faster stagger
+        ease: 'none',
+        duration: 1
       }, 0);
     } else {
       console.log('Hero not found!');
     }
 
-    // 3D CARD FLIP ON PROJECTS
-    const projectCards = gsap.utils.toArray('.project-card-3d');
-    projectCards.forEach((card: any, i) => {
-      gsap.set(card, {
-        transformPerspective: 1000,
-        transformStyle: 'preserve-3d',
-      });
-
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: 'top bottom-=100',
-          end: 'top center',
-          scrub: 1,
-        }
-      })
-      .from(card, {
-        rotateY: i % 2 === 0 ? -90 : 90,
+    // 3D CARD FLIP ON PROJECTS - Optimized for smoothness
+    const projectCards = gsap.utils.toArray('.project-card-3d') as Element[];
+    
+    // Use batch for better performance
+    ScrollTrigger.batch(projectCards as Element[], {
+      onEnter: (batch) => gsap.to(batch, {
+        opacity: 1,
+        y: 0,
+        rotateY: 0,
+        scale: 1,
+        stagger: 0.08,
+        duration: 0.5,
+        ease: 'power2.out',
+        overwrite: 'auto'
+      }),
+      onLeave: (batch) => gsap.to(batch, {
         opacity: 0,
-        scale: 0.8,
-        duration: 1,
-      });
+        y: 50,
+        duration: 0.3
+      }),
+      onEnterBack: (batch) => gsap.to(batch, {
+        opacity: 1,
+        y: 0,
+        rotateY: 0,
+        scale: 1,
+        stagger: 0.05,
+        duration: 0.3,
+        overwrite: 'auto'
+      }),
+      onLeaveBack: (batch) => gsap.to(batch, {
+        opacity: 0,
+        y: -50,
+        duration: 0.3
+      }),
+      start: 'top bottom-=100',
+      end: 'bottom top+=100'
+    });
+    
+    // Set initial state
+    gsap.set(projectCards, {
+      opacity: 0,
+      y: 60,
+      rotateY: -15,
+      scale: 0.95,
+      transformPerspective: 800,
+      transformStyle: 'preserve-3d'
     });
 
     // HORIZONTAL SCROLL SECTION
@@ -95,8 +123,15 @@ export default function CinematicScroll() {
         scrollTrigger: {
           trigger: horizontalSection,
           pin: true,
-          scrub: 1,
-          snap: 1 / (slides.length - 1),
+          scrub: 0.3, // Much more responsive
+          snap: {
+            snapTo: 1 / (slides.length - 1),
+            duration: { min: 0.2, max: 0.4 },
+            delay: 0,
+            ease: 'power1.inOut'
+          },
+          anticipatePin: 1,
+          fastScrollEnd: true,
           end: () => `+=${totalWidth}%`,
         }
       });
@@ -111,16 +146,16 @@ export default function CinematicScroll() {
       ).join('');
 
       gsap.from(text.children, {
-        scale: 0,
-        y: 100,
-        rotateZ: () => gsap.utils.random(-20, 20),
-        duration: 0.8,
-        stagger: 0.02,
-        ease: 'back.out(1.7)',
+        opacity: 0,
+        y: 30,
+        duration: 0.4,
+        stagger: 0.008, // Faster stagger
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: text,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
+          start: 'top 85%',
+          toggleActions: 'play none none none', // Only play once for performance
+          fastScrollEnd: true
         }
       });
     });
@@ -211,11 +246,14 @@ export default function CinematicScroll() {
       smoothScroll();
     }
 
-    }, 100); // Small delay for DOM
+    // Refresh after images load
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
+    });
     
     return () => {
-      clearTimeout(timer);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      window.removeEventListener('load', () => {});
     };
   }, [reduced]);
 

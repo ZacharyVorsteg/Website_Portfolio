@@ -18,11 +18,15 @@ function useLenisSmoothScroll() {
           // Avoid double init in fast refresh
           if (!LenisInstance) {
             const lenis = new Lenis({ 
-              lerp: 0.12, 
+              lerp: 0.08, // Faster lerp for more responsive scrolling
               smoothWheel: true,
-              wheelMultiplier: 1,
-              touchMultiplier: 2,
-              infinite: false
+              wheelMultiplier: 0.8, // Slightly reduced for better control
+              touchMultiplier: 1.5,
+              infinite: false,
+              duration: 1.2, // Smoother duration
+              easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
+              orientation: 'vertical',
+              gestureOrientation: 'vertical'
             })
             LenisInstance = lenis
             
