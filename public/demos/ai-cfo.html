@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CFO Assistant - Interactive Q&A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-6 lg:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    AI CFO Assistant
+                </h1>
+                <span class="inline-block px-3 py-1.5 bg-purple-500/20 text-purple-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Ask financial questions and get instant CFO-level insights. This demo uses mock company data to demonstrate 
+                how AI can provide real-time financial analysis, metrics calculation, and strategic recommendations.
+            </p>
+            <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 flex items-start gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                <div class="text-sm text-gray-300">
+                    <strong>Try asking:</strong> "What's my burn rate?", "How much runway do I have?", 
+                    "What's my CAC to LTV ratio?", "Should I raise funding now?"
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="glass-card rounded-xl p-6">
+            <div id="chatContainer" class="h-96 overflow-y-auto mb-4 space-y-4">
+                <!-- Initial message -->
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4 text-purple-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-sm text-gray-400 mb-1">AI CFO</div>
+                        <div class="bg-white/5 rounded-lg p-3 text-sm">
+                            Hello! I'm your AI CFO Assistant. I have access to your company's financial data. 
+                            Ask me anything about metrics, burn rate, runway, unit economics, or financial strategy.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="flex gap-2">
+                <input type="text" id="userInput" placeholder="Ask a financial question..." 
+                       class="flex-1 bg-white/10 rounded-lg px-4 py-2 text-white placeholder-gray-500"
+                       onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button onclick="sendMessage()" 
+                        class="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg transition-colors">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="mt-4 flex flex-wrap gap-2">
+                <button onclick="quickQuestion('burn')" 
+                        class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition-colors">
+                    Burn Rate
+                </button>
+                <button onclick="quickQuestion('runway')" 
+                        class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition-colors">
+                    Runway
+                </button>
+                <button onclick="quickQuestion('cac')" 
+                        class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition-colors">
+                    CAC/LTV
+                </button>
+                <button onclick="quickQuestion('margins')" 
+                        class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-xs transition-colors">
+                    Margins
+                </button>
+            </div>
+        </div>
+
+        <!-- Company Metrics (Mock Data) -->
+        <div class="glass-card rounded-xl p-6 mt-6">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i data-lucide="database" class="w-5 h-5 text-purple-400"></i>
+                Company Data (Mock)
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                <div>
+                    <div class="text-gray-400">MRR</div>
+                    <div class="text-purple-400 font-bold">$450K</div>
+                </div>
+                <div>
+                    <div class="text-gray-400">Cash</div>
+                    <div class="text-green-400 font-bold">$3.2M</div>
+                </div>
+                <div>
+                    <div class="text-gray-400">Customers</div>
+                    <div class="text-blue-400 font-bold">156</div>
+                </div>
+                <div>
+                    <div class="text-gray-400">Growth</div>
+                    <div class="text-pink-400 font-bold">18% MoM</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock financial data
+        const companyData = {
+            mrr: 450000,
+            arr: 5400000,
+            cash: 3200000,
+            monthlyBurn: 280000,
+            customers: 156,
+            avgContractValue: 2885,
+            cac: 8500,
+            ltv: 34620,
+            grossMargin: 0.72,
+            growthRate: 0.18,
+            churnRate: 0.08,
+            employees: 42,
+            lastFunding: 10000000,
+            valuation: 45000000
+        };
+
+        // AI responses based on questions
+        function getAIResponse(question) {
+            const q = question.toLowerCase();
+            
+            if (q.includes('burn') && q.includes('rate')) {
+                return `Your current monthly burn rate is **$${(companyData.monthlyBurn/1000).toFixed(0)}K**. 
+                        This is calculated from your operating expenses minus revenue. 
+                        At current growth rates, you should aim to reduce this to $200K within 6 months.`;
+            }
+            
+            if (q.includes('runway')) {
+                const runway = Math.floor(companyData.cash / companyData.monthlyBurn);
+                return `You have **${runway} months of runway** with $${(companyData.cash/1000000).toFixed(1)}M in cash 
+                        and a monthly burn of $${(companyData.monthlyBurn/1000).toFixed(0)}K. 
+                        I recommend starting fundraising conversations when you hit 9 months.`;
+            }
+            
+            if (q.includes('cac') || q.includes('ltv')) {
+                const ratio = (companyData.ltv / companyData.cac).toFixed(1);
+                return `Your CAC is **$${companyData.cac.toLocaleString()}** and LTV is **$${companyData.ltv.toLocaleString()}**, 
+                        giving you a **${ratio}x LTV/CAC ratio**. This is excellent - anything above 3x is healthy. 
+                        Focus on maintaining this while scaling.`;
+            }
+            
+            if (q.includes('margin')) {
+                return `Your gross margin is **${(companyData.grossMargin * 100).toFixed(0)}%**, which is strong for a SaaS business. 
+                        Industry benchmark is 70-80%. Your EBITDA margin is approximately 15% after all operating expenses.`;
+            }
+            
+            if (q.includes('raise') || q.includes('funding')) {
+                return `Based on your metrics: ${Math.floor(companyData.cash / companyData.monthlyBurn)} months runway, 
+                        ${(companyData.growthRate * 100).toFixed(0)}% monthly growth, and ${(companyData.ltv / companyData.cac).toFixed(1)}x LTV/CAC, 
+                        you're in a good position to raise. Start conversations now to close in 3-4 months.`;
+            }
+            
+            if (q.includes('valuation')) {
+                const multiple = (companyData.valuation / companyData.arr).toFixed(1);
+                return `Your last valuation was **$${(companyData.valuation/1000000).toFixed(0)}M** at ${multiple}x ARR. 
+                        With current growth, you could target $60-80M for Series A.`;
+            }
+            
+            if (q.includes('efficiency') || q.includes('magic number')) {
+                const magicNumber = 0.8;
+                return `Your SaaS Magic Number is **${magicNumber}**, indicating good sales efficiency. 
+                        Revenue per employee is $${Math.floor(companyData.arr / companyData.employees).toLocaleString()}. 
+                        Both metrics suggest efficient growth.`;
+            }
+            
+            // Default response
+            return `I can help you with metrics like burn rate, runway, CAC/LTV, margins, and funding strategy. 
+                    What specific financial insight would you like?`;
+        }
+
+        // Send message
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate thinking
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addMessage(response, 'ai');
+            }, 500);
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            const container = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex gap-3';
+            
+            const icon = sender === 'user' ? 'user' : 'bot';
+            const iconColor = sender === 'user' ? 'blue' : 'purple';
+            const name = sender === 'user' ? 'You' : 'AI CFO';
+            
+            // Format text with bold
+            const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
+            
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-${iconColor}-500/20 flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="${icon}" class="w-4 h-4 text-${iconColor}-400"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="text-sm text-gray-400 mb-1">${name}</div>
+                    <div class="bg-white/5 rounded-lg p-3 text-sm">${formattedText}</div>
+                </div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+            
+            // Reinitialize icons
+            lucide.createIcons();
+        }
+
+        // Quick questions
+        function quickQuestion(type) {
+            const questions = {
+                burn: "What's my current burn rate?",
+                runway: "How much runway do I have?",
+                cac: "What's my CAC to LTV ratio?",
+                margins: "What are my gross margins?"
+            };
+            
+            document.getElementById('userInput').value = questions[type];
+            sendMessage();
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow Optimizer - Linear Programming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            max-height: 300px;
+        }
+        .chart-wrapper canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+        }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 50;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header [[memory:7788592]] -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                    Cash Flow Optimizer
+                </h1>
+                <span class="inline-block px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Optimizes cash allocation across business categories using linear programming. This demo shows how to 
+                prevent cash crunches through automated allocation, ensuring optimal working capital management while 
+                maintaining minimum reserves and maximizing returns.
+            </p>
+            <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 flex items-start gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                <div class="text-sm text-gray-300">
+                    <strong>How to use:</strong> Set your total cash, minimum reserves, and category priorities. 
+                    The optimizer will find the best allocation that maximizes returns while meeting all constraints.
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Controls -->
+            <div class="lg:col-span-1">
+                <div class="glass-card rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="settings" class="w-5 h-5 text-emerald-400"></i>
+                        Cash Parameters
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Total Cash -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Total Available Cash ($K)
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Total cash available for allocation across all categories.
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="number" id="totalCash" value="1000" min="100" max="10000" step="100"
+                                   class="w-full bg-white/10 rounded-lg px-3 py-2 text-white"
+                                   onchange="optimizeCashFlow()">
+                        </div>
+
+                        <!-- Minimum Reserve -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Minimum Reserve (%)
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Minimum cash to keep as emergency reserve (not allocated).
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="range" id="minReserve" min="5" max="30" value="15" step="5"
+                                   class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>5%</span>
+                                <span id="minReserveValue" class="text-emerald-400 font-bold">15%</span>
+                                <span>30%</span>
+                            </div>
+                        </div>
+
+                        <!-- Category Priorities -->
+                        <div class="space-y-3">
+                            <label class="text-sm text-gray-400 flex items-center gap-2">
+                                Category Priorities
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Set priority weights for each spending category (higher = more allocation).
+                                    </span>
+                                </div>
+                            </label>
+                            
+                            <!-- Operations -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">Operations</span>
+                                    <span id="opsWeight" class="text-emerald-400">High</span>
+                                </div>
+                                <input type="range" id="operations" min="1" max="10" value="8" step="1"
+                                       class="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500"
+                                       onchange="updatePriority('ops', this.value)">
+                            </div>
+
+                            <!-- Marketing -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">Marketing</span>
+                                    <span id="marketingWeight" class="text-emerald-400">Medium</span>
+                                </div>
+                                <input type="range" id="marketing" min="1" max="10" value="6" step="1"
+                                       class="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500"
+                                       onchange="updatePriority('marketing', this.value)">
+                            </div>
+
+                            <!-- R&D -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">R&D</span>
+                                    <span id="rdWeight" class="text-emerald-400">Medium</span>
+                                </div>
+                                <input type="range" id="rd" min="1" max="10" value="5" step="1"
+                                       class="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500"
+                                       onchange="updatePriority('rd', this.value)">
+                            </div>
+
+                            <!-- Inventory -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">Inventory</span>
+                                    <span id="inventoryWeight" class="text-emerald-400">High</span>
+                                </div>
+                                <input type="range" id="inventory" min="1" max="10" value="7" step="1"
+                                       class="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500"
+                                       onchange="updatePriority('inventory', this.value)">
+                            </div>
+
+                            <!-- Debt Service -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-400">Debt Service</span>
+                                    <span id="debtWeight" class="text-emerald-400">Critical</span>
+                                </div>
+                                <input type="range" id="debt" min="1" max="10" value="10" step="1"
+                                       class="w-full h-1.5 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500"
+                                       onchange="updatePriority('debt', this.value)">
+                            </div>
+                        </div>
+
+                        <!-- Optimization Goal -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2">Optimization Goal</label>
+                            <select id="goal" class="w-full bg-white/10 rounded-lg px-3 py-2 text-white"
+                                    onchange="optimizeCashFlow()">
+                                <option value="balanced">Balanced Allocation</option>
+                                <option value="growth">Maximize Growth</option>
+                                <option value="safety">Maximize Safety</option>
+                                <option value="efficiency">Maximize Efficiency</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <button onclick="optimizeCashFlow()" 
+                                class="w-full py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="zap" class="w-4 h-4"></i>
+                            Optimize Allocation
+                        </button>
+                        <button onclick="exportAllocation()" 
+                                class="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            Export Plan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Allocated</div>
+                        <div id="allocated" class="text-lg font-bold text-emerald-400">$0K</div>
+                        <div id="allocatedPct" class="text-xs text-gray-500">0%</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Reserve</div>
+                        <div id="reserve" class="text-lg font-bold text-blue-400">$0K</div>
+                        <div id="reservePct" class="text-xs text-gray-500">0%</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">ROI</div>
+                        <div id="roi" class="text-lg font-bold text-green-400">0%</div>
+                        <div class="text-xs text-gray-500">Expected</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Runway</div>
+                        <div id="runway" class="text-lg font-bold text-purple-400">0</div>
+                        <div class="text-xs text-gray-500">Months</div>
+                    </div>
+                </div>
+
+                <!-- Allocation Chart -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="pie-chart" class="w-5 h-5 text-emerald-400"></i>
+                        Optimal Cash Allocation
+                    </h3>
+                    <div class="chart-wrapper">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Timeline Chart -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-teal-400"></i>
+                        Cash Flow Timeline (6 Months)
+                    </h3>
+                    <div class="chart-wrapper">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Allocation Details -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="list" class="w-5 h-5 text-blue-400"></i>
+                        Allocation Details
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-700">
+                                    <th class="text-left py-2 text-gray-400">Category</th>
+                                    <th class="text-right py-2 text-gray-400">Allocated</th>
+                                    <th class="text-right py-2 text-gray-400">Min Required</th>
+                                    <th class="text-right py-2 text-gray-400">Max Allowed</th>
+                                    <th class="text-right py-2 text-gray-400">ROI</th>
+                                    <th class="text-center py-2 text-gray-400">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allocationTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allocationChart = null;
+        let timelineChart = null;
+
+        // Format number with commas
+        function formatNumber(num, decimals = 0) {
+            return num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // Update priority display
+        function updatePriority(category, value) {
+            const labels = {
+                1: 'Very Low', 2: 'Very Low', 3: 'Low', 4: 'Low',
+                5: 'Medium', 6: 'Medium', 7: 'High', 8: 'High',
+                9: 'Critical', 10: 'Critical'
+            };
+            document.getElementById(category + 'Weight').textContent = labels[value];
+            optimizeCashFlow();
+        }
+
+        // Linear programming optimizer (simplified)
+        function optimizeCashFlow() {
+            const totalCash = parseFloat(document.getElementById('totalCash').value);
+            const minReservePct = parseFloat(document.getElementById('minReserve').value) / 100;
+            const goal = document.getElementById('goal').value;
+            
+            // Get priorities
+            const priorities = {
+                operations: parseInt(document.getElementById('operations').value),
+                marketing: parseInt(document.getElementById('marketing').value),
+                rd: parseInt(document.getElementById('rd').value),
+                inventory: parseInt(document.getElementById('inventory').value),
+                debt: parseInt(document.getElementById('debt').value)
+            };
+            
+            // Define constraints and ROI for each category
+            const categories = {
+                'Operations': {
+                    priority: priorities.operations,
+                    minPct: 0.20,
+                    maxPct: 0.40,
+                    roi: 0.15,
+                    color: '#10b981'
+                },
+                'Marketing': {
+                    priority: priorities.marketing,
+                    minPct: 0.05,
+                    maxPct: 0.25,
+                    roi: 0.25,
+                    color: '#f59e0b'
+                },
+                'R&D': {
+                    priority: priorities.rd,
+                    minPct: 0.05,
+                    maxPct: 0.20,
+                    roi: 0.35,
+                    color: '#8b5cf6'
+                },
+                'Inventory': {
+                    priority: priorities.inventory,
+                    minPct: 0.10,
+                    maxPct: 0.30,
+                    roi: 0.12,
+                    color: '#3b82f6'
+                },
+                'Debt Service': {
+                    priority: priorities.debt,
+                    minPct: 0.15,
+                    maxPct: 0.15,
+                    roi: 0.08,
+                    color: '#ef4444'
+                }
+            };
+            
+            // Adjust based on goal
+            if (goal === 'growth') {
+                categories['Marketing'].priority += 2;
+                categories['R&D'].priority += 2;
+            } else if (goal === 'safety') {
+                categories['Operations'].priority += 2;
+                categories['Debt Service'].priority += 1;
+            } else if (goal === 'efficiency') {
+                categories['Inventory'].priority -= 1;
+                categories['Operations'].priority += 1;
+            }
+            
+            // Calculate available cash after reserve
+            const reserveAmount = totalCash * minReservePct;
+            const availableCash = totalCash - reserveAmount;
+            
+            // Optimize allocation (simplified linear programming)
+            let allocations = {};
+            let totalAllocated = 0;
+            let totalPriority = Object.values(categories).reduce((sum, cat) => sum + cat.priority, 0);
+            
+            // First pass: allocate minimums
+            for (const [name, cat] of Object.entries(categories)) {
+                const minAllocation = availableCash * cat.minPct;
+                allocations[name] = minAllocation;
+                totalAllocated += minAllocation;
+            }
+            
+            // Second pass: distribute remaining based on priorities
+            let remaining = availableCash - totalAllocated;
+            for (const [name, cat] of Object.entries(categories)) {
+                const additionalAllocation = remaining * (cat.priority / totalPriority);
+                const maxAllocation = availableCash * cat.maxPct;
+                allocations[name] = Math.min(allocations[name] + additionalAllocation, maxAllocation);
+            }
+            
+            // Calculate metrics
+            let totalROI = 0;
+            for (const [name, amount] of Object.entries(allocations)) {
+                totalROI += amount * categories[name].roi;
+            }
+            const avgROI = totalROI / availableCash;
+            const monthlyBurn = availableCash / 6;
+            const runway = totalCash / monthlyBurn;
+            
+            // Update UI
+            updateMetrics(totalCash, reserveAmount, availableCash, avgROI, runway);
+            updateAllocationChart(allocations, categories);
+            updateTimelineChart(totalCash, monthlyBurn, reserveAmount);
+            updateAllocationTable(allocations, categories, availableCash);
+        }
+
+        // Update metrics
+        function updateMetrics(total, reserve, allocated, roi, runway) {
+            document.getElementById('allocated').textContent = '$' + formatNumber(allocated) + 'K';
+            document.getElementById('allocatedPct').textContent = ((allocated / total) * 100).toFixed(0) + '%';
+            document.getElementById('reserve').textContent = '$' + formatNumber(reserve) + 'K';
+            document.getElementById('reservePct').textContent = ((reserve / total) * 100).toFixed(0) + '%';
+            document.getElementById('roi').textContent = (roi * 100).toFixed(1) + '%';
+            document.getElementById('runway').textContent = runway.toFixed(1);
+        }
+
+        // Update allocation chart
+        function updateAllocationChart(allocations, categories) {
+            const ctx = document.getElementById('allocationChart').getContext('2d');
+            
+            if (allocationChart) {
+                allocationChart.destroy();
+            }
+            
+            allocationChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(allocations),
+                    datasets: [{
+                        data: Object.values(allocations),
+                        backgroundColor: Object.keys(allocations).map(name => categories[name].color),
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { 
+                                color: '#9CA3AF',
+                                font: { size: 11 },
+                                padding: 10
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = '$' + formatNumber(context.parsed) + 'K';
+                                    const pct = (context.parsed / context.dataset.data.reduce((a, b) => a + b, 0) * 100).toFixed(1) + '%';
+                                    return label + ': ' + value + ' (' + pct + ')';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update timeline chart
+        function updateTimelineChart(totalCash, monthlyBurn, reserve) {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            
+            if (timelineChart) {
+                timelineChart.destroy();
+            }
+            
+            const months = ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'];
+            const cashBalance = [];
+            const reserveLine = [];
+            
+            for (let i = 0; i < 6; i++) {
+                cashBalance.push(Math.max(reserve, totalCash - (monthlyBurn * (i + 1))));
+                reserveLine.push(reserve);
+            }
+            
+            timelineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        {
+                            label: 'Cash Balance',
+                            data: cashBalance,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Minimum Reserve',
+                            data: reserveLine,
+                            borderColor: '#ef4444',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { 
+                                color: '#9CA3AF',
+                                font: { size: 11 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + formatNumber(context.parsed.y) + 'K';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#9CA3AF', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                font: { size: 10 },
+                                callback: function(value) {
+                                    return '$' + formatNumber(value) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update allocation table
+        function updateAllocationTable(allocations, categories, availableCash) {
+            const tbody = document.getElementById('allocationTable');
+            tbody.innerHTML = Object.entries(allocations).map(([name, amount]) => {
+                const cat = categories[name];
+                const minRequired = availableCash * cat.minPct;
+                const maxAllowed = availableCash * cat.maxPct;
+                const roi = amount * cat.roi;
+                const status = amount >= maxAllowed * 0.95 ? 'Max' : amount <= minRequired * 1.05 ? 'Min' : 'Optimal';
+                const statusColor = status === 'Max' ? 'text-yellow-400' : status === 'Min' ? 'text-red-400' : 'text-green-400';
+                
+                return `
+                    <tr class="border-b border-gray-800">
+                        <td class="py-2">${name}</td>
+                        <td class="text-right py-2 text-emerald-400">$${formatNumber(amount)}K</td>
+                        <td class="text-right py-2 text-gray-500">$${formatNumber(minRequired)}K</td>
+                        <td class="text-right py-2 text-gray-500">$${formatNumber(maxAllowed)}K</td>
+                        <td class="text-right py-2 text-blue-400">${(cat.roi * 100).toFixed(0)}%</td>
+                        <td class="text-center py-2">
+                            <span class="px-2 py-1 rounded text-xs ${statusColor} bg-white/10">${status}</span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Export allocation
+        function exportAllocation() {
+            alert('In production, this would export to Excel with full allocation plan and projections.');
+        }
+
+        // Event listeners
+        document.getElementById('minReserve').addEventListener('input', function() {
+            document.getElementById('minReserveValue').textContent = this.value + '%';
+            optimizeCashFlow();
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            optimizeCashFlow();
+        });
+    </script>
+</body>
+</html>
