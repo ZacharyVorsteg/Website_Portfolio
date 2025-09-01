@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import { ExternalLink, Github, Play, Code, Layers, Zap } from 'lucide-react'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { Reveal, Parallax, ScaleIn } from './ScrollEffects'
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -176,15 +178,14 @@ const Projects = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {filteredProjects.map((project, index) => (
-            <div
-              key={project.id}
-              className="group relative"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-              style={{
-                animation: `fadeUp 0.5s ease-out ${index * 0.1}s both`,
-              }}
-            >
+            <Reveal key={project.id} delay={index * 0.1}>
+              <motion.div
+                className="group relative"
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
               <div className="glass-card p-6 h-full project-card">
                 {/* Project Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -288,7 +289,8 @@ const Projects = () => {
                   </a>
                 </div>
               </div>
-            </div>
+              </motion.div>
+            </Reveal>
           ))}
         </div>
 

@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { Code2, Database, Palette, Wrench, TrendingUp, Users } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Reveal, FadeIn } from './ScrollEffects'
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('frontend')
@@ -102,13 +104,12 @@ const Skills = () => {
         {/* Skills Display */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => (
-            <div
-              key={skill.name}
-              className="glass-card p-6"
-              style={{
-                animation: `fadeUp 0.5s ease-out ${index * 0.1}s both`,
-              }}
-            >
+            <Reveal key={skill.name} delay={index * 0.05}>
+              <motion.div
+                className="glass-card p-6"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">{skill.name}</h3>
@@ -131,7 +132,8 @@ const Skills = () => {
                   style={{ width: `${skill.level}%` }}
                 />
               </div>
-            </div>
+              </motion.div>
+            </Reveal>
           ))}
         </div>
 

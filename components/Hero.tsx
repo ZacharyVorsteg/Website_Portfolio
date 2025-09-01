@@ -2,10 +2,24 @@
 
 import { useEffect, useRef } from 'react'
 import { ArrowDown, Sparkles } from 'lucide-react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import Typed from 'typed.js'
+import { FadeIn } from './ScrollEffects'
 
 const Hero = () => {
   const typedRef = useRef(null)
+  const heroRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+  
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start']
+  })
+  
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0.3])
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 100])
 
   useEffect(() => {
     const typed = new Typed(typedRef.current, {
@@ -30,7 +44,16 @@ const Hero = () => {
   }, [])
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative px-4">
+    <motion.section 
+      ref={heroRef}
+      id="hero" 
+      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden"
+      style={{
+        scale: shouldReduceMotion ? 1 : heroScale,
+        opacity: shouldReduceMotion ? 1 : heroOpacity,
+        y: shouldReduceMotion ? 0 : heroY,
+      }}
+    >
       {/* Animated particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -51,27 +74,27 @@ const Hero = () => {
 
       <div className="max-w-4xl mx-auto text-center z-10">
         {/* Main heading with animation */}
-        <div className="animate-fade-down">
+        <FadeIn direction="down">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="block text-foreground mb-2">Hi, I'm</span>
             <span className="gradient-text text-6xl md:text-8xl">Zachary Vorsteg</span>
           </h1>
-        </div>
+        </FadeIn>
 
         {/* Typed text */}
-        <div className="animate-fade-up animation-delay-200">
+        <FadeIn delay={0.2}>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             <span ref={typedRef}></span>
           </p>
-        </div>
+        </FadeIn>
 
         {/* Description */}
-        <div className="animate-fade-up animation-delay-400">
+        <FadeIn delay={0.4}>
           <p className="text-lg text-secondary-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
             Bridging finance and technology with a unique perspective. FAU Finance graduate (2020) 
             turned Full-Stack Developer, specializing in FinTech solutions and data-driven applications.
           </p>
-        </div>
+        </FadeIn>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-600">
@@ -111,7 +134,7 @@ const Hero = () => {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
         <ArrowDown className="w-6 h-6 text-muted-foreground" />
       </div>
-    </section>
+    </motion.section>
   )
 }
 
