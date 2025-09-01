@@ -39,12 +39,12 @@ const Projects = () => {
     },
     {
       id: 2,
-      title: 'Trading Signal Dashboard',
-      subtitle: 'Algorithmic Trading Demo',
-      description: 'Simulated trading terminal showcasing signal generation, order book visualization, and P&L tracking interfaces.',
+      title: 'Professional Trading Terminal',
+      subtitle: 'Interactive Trading Platform Demo',
+      description: 'Full-featured trading terminal with real-time charts, Level 2 data, order entry system, and portfolio management.',
       metrics: {
-        signals: 'Simulated',
-        charts: 'Real-time',
+        features: 'Order Entry',
+        data: 'Level 2',
         type: 'Demo'
       },
       liveUrl: '/demos/market-analytics.html',
