@@ -1,19 +1,19 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { createChart, ColorType, ISeriesApi, IChartApi, Time } from 'lightweight-charts';
+import { createChart, ColorType, IChartApi, Time } from 'lightweight-charts';
 import type { Candle, Interval } from '@/lib/proterminal/sim';
 
 type Props = {
   data: Candle[];
   interval: Interval;
-  onReady?: (apis: { candle: ISeriesApi<'Candlestick'> }) => void;
+  onReady?: (apis: { candle: any }) => void;
 };
 
 export default function PriceChart({ data, interval, onReady }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
-  const candleSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
-  const volumeSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
+  const candleSeriesRef = useRef<any>(null);
+  const volumeSeriesRef = useRef<any>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Initialize chart
@@ -62,7 +62,10 @@ export default function PriceChart({ data, interval, onReady }: Props) {
       },
     });
 
-    const candleSeries = (chart as any).addCandlestickSeries({
+    // Cast to any to access the methods
+    const chartAny = chart as any;
+    
+    const candleSeries = chartAny.addCandlestickSeries({
       upColor: '#22c55e',
       downColor: '#ef4444',
       borderVisible: false,
@@ -75,7 +78,7 @@ export default function PriceChart({ data, interval, onReady }: Props) {
       },
     });
 
-    const volumeSeries = (chart as any).addHistogramSeries({
+    const volumeSeries = chartAny.addHistogramSeries({
       color: 'rgba(148,163,184,0.3)',
       priceFormat: {
         type: 'volume',
