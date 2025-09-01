@@ -1,73 +1,102 @@
 'use client'
 
 import { useState } from 'react'
-import { Code2, Database, Palette, Wrench, TrendingUp, Users } from 'lucide-react'
+import { Code2, Database, Brain, TrendingUp, Calculator, BarChart, Users, Briefcase, Shield, DollarSign, LineChart, Target } from 'lucide-react'
 import { motion } from 'framer-motion'
 import BatchReveal from './scroll/BatchReveal'
 
 const Skills = () => {
-  const [activeCategory, setActiveCategory] = useState('frontend')
+  const [activeCategory, setActiveCategory] = useState('finance')
 
   const skillCategories = {
-    frontend: {
-      title: 'Frontend Development',
-      icon: <Code2 className="w-5 h-5" />,
-      color: 'from-blue-500 to-cyan-500',
+    finance: {
+      title: 'CFO & Finance',
+      icon: <Calculator className="w-5 h-5" />,
+      color: 'from-emerald-500 to-teal-500',
       skills: [
-        { name: 'React', level: 90, experience: '3+ years' },
-        { name: 'TypeScript', level: 85, experience: '2+ years' },
-        { name: 'Next.js', level: 80, experience: '2+ years' },
-        { name: 'Tailwind CSS', level: 95, experience: '3+ years' },
-        { name: 'JavaScript', level: 92, experience: '4+ years' },
-        { name: 'HTML/CSS', level: 95, experience: '4+ years' },
+        { name: 'Financial Modeling', level: 95, experience: 'Expert - SaaS, Real Estate, M&A' },
+        { name: 'FP&A / Budgeting', level: 92, experience: 'Expert - OneStream, Excel, Python' },
+        { name: 'Cash Flow Management', level: 90, experience: 'Expert - 13-week rolling forecasts' },
+        { name: 'GAAP / Accounting', level: 85, experience: 'Advanced - Revenue recognition, accruals' },
+        { name: 'Fundraising / VC', level: 88, experience: 'Advanced - Pitch decks, data rooms' },
+        { name: 'M&A Due Diligence', level: 85, experience: 'Advanced - Buy & sell-side' },
       ],
     },
-    backend: {
-      title: 'Backend & Database',
-      icon: <Database className="w-5 h-5" />,
-      color: 'from-green-500 to-emerald-500',
+    strategy: {
+      title: 'CEO & Strategy',
+      icon: <Target className="w-5 h-5" />,
+      color: 'from-blue-500 to-indigo-500',
       skills: [
-        { name: 'Node.js', level: 75, experience: '2+ years' },
-        { name: 'Express.js', level: 70, experience: '2+ years' },
-        { name: 'PostgreSQL', level: 65, experience: '1+ year' },
-        { name: 'MongoDB', level: 60, experience: '1+ year' },
-        { name: 'Supabase', level: 70, experience: '1+ year' },
-        { name: 'REST APIs', level: 80, experience: '2+ years' },
+        { name: 'Go-to-Market Strategy', level: 90, experience: 'Expert - B2B SaaS, PLG' },
+        { name: 'Product Management', level: 85, experience: 'Advanced - Roadmaps, prioritization' },
+        { name: 'Operations & Scaling', level: 88, experience: 'Expert - 0→1, 1→10 growth' },
+        { name: 'Team Building', level: 85, experience: 'Advanced - Hiring, culture, retention' },
+        { name: 'Board Management', level: 82, experience: 'Advanced - Reporting, governance' },
+        { name: 'Strategic Partnerships', level: 87, experience: 'Advanced - BD, channel sales' },
       ],
     },
-    web3: {
-      title: 'Web3 & Blockchain',
-      icon: <TrendingUp className="w-5 h-5" />,
+    datascience: {
+      title: 'Data Science & ML',
+      icon: <Brain className="w-5 h-5" />,
       color: 'from-purple-500 to-pink-500',
       skills: [
-        { name: 'Solidity', level: 60, experience: '1+ year' },
-        { name: 'Ethers.js', level: 65, experience: '1+ year' },
-        { name: 'Smart Contracts', level: 55, experience: '1+ year' },
-        { name: 'DeFi Protocols', level: 50, experience: '6+ months' },
-        { name: 'Hardhat', level: 55, experience: '6+ months' },
-        { name: 'Web3 Integration', level: 70, experience: '1+ year' },
+        { name: 'Python (Pandas/NumPy)', level: 92, experience: 'Expert - Data analysis, automation' },
+        { name: 'Machine Learning', level: 85, experience: 'Advanced - Scikit-learn, XGBoost' },
+        { name: 'Statistical Analysis', level: 88, experience: 'Expert - Regression, time series' },
+        { name: 'Data Visualization', level: 90, experience: 'Expert - Plotly, D3.js, Tableau' },
+        { name: 'SQL / Database', level: 87, experience: 'Advanced - PostgreSQL, BigQuery' },
+        { name: 'Deep Learning', level: 75, experience: 'Intermediate - TensorFlow, PyTorch' },
       ],
     },
-    tools: {
-      title: 'Tools & Others',
-      icon: <Wrench className="w-5 h-5" />,
+    development: {
+      title: 'Full-Stack Development',
+      icon: <Code2 className="w-5 h-5" />,
       color: 'from-orange-500 to-red-500',
       skills: [
-        { name: 'Git & GitHub', level: 85, experience: '3+ years' },
-        { name: 'VS Code', level: 90, experience: '4+ years' },
-        { name: 'Figma', level: 70, experience: '2+ years' },
-        { name: 'Vercel/Netlify', level: 80, experience: '2+ years' },
-        { name: 'Docker', level: 50, experience: '6+ months' },
-        { name: 'CI/CD', level: 60, experience: '1+ year' },
+        { name: 'React / Next.js', level: 90, experience: 'Expert - 3+ years production' },
+        { name: 'TypeScript / JavaScript', level: 88, experience: 'Expert - ES6+, async patterns' },
+        { name: 'Python (FastAPI/Flask)', level: 85, experience: 'Advanced - REST APIs, microservices' },
+        { name: 'Node.js / Express', level: 82, experience: 'Advanced - Backend services' },
+        { name: 'PostgreSQL / Supabase', level: 80, experience: 'Advanced - Schema design, optimization' },
+        { name: 'DevOps / CI/CD', level: 75, experience: 'Intermediate - Docker, GitHub Actions' },
       ],
     },
   }
 
-  const softSkills = [
-    { icon: <Users className="w-6 h-6" />, title: 'Team Collaboration', description: 'Effective communication and teamwork' },
-    { icon: <Palette className="w-6 h-6" />, title: 'UI/UX Design', description: 'Creating intuitive user experiences' },
-    { icon: <TrendingUp className="w-6 h-6" />, title: 'Problem Solving', description: 'Analytical thinking and debugging' },
-    { icon: <Code2 className="w-6 h-6" />, title: 'Clean Code', description: 'Writing maintainable, scalable code' },
+  const crossFunctionalSkills = [
+    { 
+      icon: <DollarSign className="w-6 h-6" />, 
+      title: 'Financial Engineering', 
+      description: 'Building financial models as production software with APIs and UIs' 
+    },
+    { 
+      icon: <BarChart className="w-6 h-6" />, 
+      title: 'Data-Driven Leadership', 
+      description: 'Making strategic decisions backed by quantitative analysis and ML insights' 
+    },
+    { 
+      icon: <Shield className="w-6 h-6" />, 
+      title: 'Risk Management', 
+      description: 'Quantifying and mitigating financial, operational, and technical risks' 
+    },
+    { 
+      icon: <Users className="w-6 h-6" />, 
+      title: 'Stakeholder Communication', 
+      description: 'Translating between technical teams, executives, and investors' 
+    },
+  ]
+
+  const toolsAndPlatforms = [
+    // Finance Tools
+    'Excel (Advanced)', 'OneStream', 'NetSuite', 'QuickBooks',
+    // Data Science
+    'Jupyter', 'Streamlit', 'Plotly', 'Scikit-learn',
+    // Development
+    'VS Code', 'Git', 'Docker', 'Vercel',
+    // Cloud & APIs
+    'AWS', 'Supabase', 'Stripe', 'SendGrid',
+    // Collaboration
+    'Slack', 'Notion', 'Linear', 'Figma'
   ]
 
   return (
@@ -78,8 +107,9 @@ const Skills = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="gradient-text">Skills & Expertise</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A comprehensive overview of my technical skills and proficiencies across various technologies.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Unique combination of financial acumen, strategic vision, data science capabilities, 
+            and full-stack development skills. The rare executive who can model it, code it, and scale it.
           </p>
         </div>
 
@@ -138,13 +168,13 @@ const Skills = () => {
           </div>
         </BatchReveal>
 
-        {/* Soft Skills */}
+        {/* Cross-Functional Skills */}
         <div className="mt-20">
           <h3 className="text-2xl font-bold text-center mb-12">
-            <span className="gradient-text">Soft Skills</span>
+            <span className="gradient-text">Cross-Functional Expertise</span>
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {softSkills.map((skill, index) => (
+            {crossFunctionalSkills.map((skill, index) => (
               <div
                 key={skill.title}
                 className="glass-card p-6 text-center hover:scale-105 transition-transform duration-200"
@@ -162,20 +192,40 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* Learning Journey */}
+        {/* Tools & Platforms */}
+        <div className="mt-20">
+          <div className="glass-card p-8 max-w-5xl mx-auto">
+            <h3 className="text-2xl font-bold text-center mb-6">
+              <span className="gradient-text">Tools & Platforms</span>
+            </h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {toolsAndPlatforms.map((tool) => (
+                <span 
+                  key={tool} 
+                  className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg text-sm font-medium text-foreground border border-primary/20 hover:scale-105 transition-transform duration-200"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Current Focus */}
         <div className="mt-20 text-center">
           <div className="glass-card p-8 max-w-3xl mx-auto">
             <h3 className="text-2xl font-bold mb-4">
-              <span className="gradient-text">Always Learning</span>
+              <span className="gradient-text">Current Focus Areas</span>
             </h3>
             <p className="text-muted-foreground mb-6">
-              Currently exploring advanced React patterns, Web3 development, and AI integration.
-              Committed to staying at the forefront of web technology.
+              Actively exploring the intersection of AI and financial operations, building autonomous 
+              financial systems, and developing next-generation CFO tools that leverage ML for 
+              predictive insights and automated decision-making.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {['React Native', 'GraphQL', 'Rust', 'AI/ML', 'Advanced Solidity'].map((tech) => (
+              {['AI-Powered FP&A', 'Autonomous Accounting', 'Real-time Financial APIs', 'Predictive Cash Flow', 'Smart Contract Finance'].map((tech) => (
                 <span key={tech} className="px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg text-sm font-medium text-foreground border border-primary/20">
-                  📚 {tech}
+                  🚀 {tech}
                 </span>
               ))}
             </div>

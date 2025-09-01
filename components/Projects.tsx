@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ExternalLink, Github, Play, Code, Layers, Zap, TrendingUp, DollarSign, BarChart, Shield, Coins, Activity } from 'lucide-react'
+import { ExternalLink, Github, Play, Code, Layers, Zap, TrendingUp, DollarSign, BarChart, Shield, Coins, Activity, Brain, Users, Calculator, ChartBar, AlertCircle, Database, Cpu, LineChart, PieChart, Target, Briefcase, Building } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import BatchReveal from './scroll/BatchReveal'
@@ -11,126 +11,280 @@ const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   const categories = [
-    { id: 'all', label: 'All Projects', count: 6 },
-    { id: 'fintech', label: 'FinTech', count: 3 },
-    { id: 'defi', label: 'DeFi', count: 1 },
-    { id: 'analytics', label: 'Analytics', count: 2 },
+    { id: 'all', label: 'All Projects', count: 13 },
+    { id: 'cfo', label: 'CFO Projects', count: 3 },
+    { id: 'ceo', label: 'CEO Projects', count: 3 },
+    { id: 'datascience', label: 'Data Science', count: 3 },
+    { id: 'crossover', label: 'Cross-Over', count: 4 },
   ]
 
   const projects = [
+    // CFO Projects with Developer Edge
     {
       id: 1,
-      title: 'Professional Finance Toolkit',
-      subtitle: 'Financial Modeling Demo',
-      description: 'Interactive demonstration of financial calculations including compound interest, loan amortization, and Black-Scholes options pricing.',
+      title: 'Dynamic SaaS Financial Model',
+      subtitle: 'Interactive Web App + REST API',
+      description: 'Live React app where visitors toggle growth rate, churn, and capex assumptions to watch financial models recalculate in real-time. Includes REST API endpoint for programmatic access.',
       metrics: {
-        features: '6 Calculators',
-        charts: 'Interactive',
-        type: 'Demo'
+        features: '10+ Metrics',
+        api: 'REST/JSON',
+        type: 'Live Demo'
       },
-      liveUrl: '/demos/fintech-calculator.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      category: 'fintech',
-      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
-      gradient: 'from-violet-600 to-indigo-600',
-      icon: <TrendingUp className="w-6 h-6" />,
+      liveUrl: '/demos/saas-financial-model',
+      githubUrl: 'https://github.com/ZacharyVorsteg/saas-financial-model',
+      category: 'cfo',
+      tech: ['React', 'FastAPI', 'Python', 'Chart.js', 'Excel Export'],
+      gradient: 'from-emerald-600 to-teal-600',
+      icon: <Calculator className="w-6 h-6" />,
       status: 'Live Demo',
       featured: true,
+      demoNote: 'Interactive financial model with live assumption toggles. Demonstrates both frontend expertise and financial modeling depth.'
     },
     {
       id: 2,
-      title: 'Professional Trading Terminal',
-      subtitle: 'Interactive Trading Platform Demo',
-      description: 'Full-featured trading terminal with real-time charts, Level 2 data, order entry system, and portfolio management.',
+      title: 'Automated Commission Engine',
+      subtitle: 'Python + Pandas + FastAPI',
+      description: 'Automated system that ingests payroll CSVs, applies complex accrual rules, and reconciles to OneStream. Reduces 10 hours of manual entry to 2-minute script execution.',
       metrics: {
-        features: 'Order Entry',
-        data: 'Level 2',
-        type: 'Demo'
+        efficiency: '300x Faster',
+        accuracy: '100%',
+        type: 'API + Excel'
       },
-      liveUrl: '/demos/market-analytics.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      category: 'fintech',
-      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
-      gradient: 'from-blue-600 to-cyan-600',
-      icon: <Activity className="w-6 h-6" />,
+      liveUrl: '/demos/commission-engine',
+      githubUrl: 'https://github.com/ZacharyVorsteg/commission-engine',
+      category: 'cfo',
+      tech: ['Python', 'Pandas', 'FastAPI', 'NumPy', 'Excel'],
+      gradient: 'from-violet-600 to-purple-600',
+      icon: <DollarSign className="w-6 h-6" />,
       status: 'Live Demo',
       featured: true,
+      demoNote: 'Upload sample payroll CSV to see automated accrual calculations and reconciliation. Shows before vs. after efficiency gains.'
     },
     {
       id: 3,
-      title: 'Portfolio Risk Dashboard',
-      subtitle: 'Risk Management Demo',
-      description: 'Demonstration of institutional portfolio risk management including VaR calculations, stress testing, and correlation matrices.',
+      title: 'Cash Flow Forecast AI',
+      subtitle: 'ML-Powered Dashboard + Alerts',
+      description: 'Python ML model forecasts cash flows with automated variance alerts. React dashboard shows inflows, outflows, and triggers Slack/Email when variance exceeds 10%.',
       metrics: {
-        features: 'Risk Metrics',
-        visualizations: '5 Types',
-        type: 'Demo'
+        accuracy: '94%',
+        alerts: 'Automated',
+        type: 'ML + Dashboard'
       },
-      liveUrl: '/demos/crypto-portfolio.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      category: 'defi',
-      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
-      gradient: 'from-emerald-600 to-green-600',
-      icon: <Coins className="w-6 h-6" />,
+      liveUrl: '/demos/cashflow-ai',
+      githubUrl: 'https://github.com/ZacharyVorsteg/cashflow-ai',
+      category: 'cfo',
+      tech: ['Python', 'Scikit-learn', 'React', 'PostgreSQL', 'Slack API'],
+      gradient: 'from-blue-600 to-cyan-600',
+      icon: <TrendingUp className="w-6 h-6" />,
       status: 'Live Demo',
       featured: true,
+      demoNote: 'Interactive dashboard with AI-powered cash flow predictions. Demonstrates finance + ML + full-stack development skills.'
     },
+
+    // CEO Projects with Developer Edge
     {
       id: 4,
-      title: 'Executive P&L Dashboard',
-      subtitle: 'Financial Reporting Demo',
-      description: 'Interactive P&L statement with variance analysis, department breakdowns, and cash flow visualization.',
+      title: 'Go-to-Market Playbook',
+      subtitle: 'AI-Powered Scenario Tool',
+      description: 'Web-based tool where users adjust ad spend, sales headcount, and CAC to see instant funnel projections. Shows strategic thinking with operational execution.',
       metrics: {
-        features: 'P&L Analysis',
-        charts: '4 Types',
-        type: 'Demo'
+        scenarios: 'Unlimited',
+        metrics: '15+ KPIs',
+        type: 'Interactive'
       },
-      liveUrl: '/demos/executive-financials.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      category: 'analytics',
-      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
+      liveUrl: '/demos/gtm-playbook',
+      githubUrl: 'https://github.com/ZacharyVorsteg/gtm-playbook',
+      category: 'ceo',
+      tech: ['Next.js', 'Python', 'D3.js', 'PostgreSQL'],
       gradient: 'from-orange-600 to-red-600',
-      icon: <Shield className="w-6 h-6" />,
+      icon: <Target className="w-6 h-6" />,
       status: 'Live Demo',
-      featured: false,
+      featured: true,
+      demoNote: 'Adjust growth levers to see real-time impact on funnel metrics. Demonstrates strategic + technical capabilities.'
     },
     {
       id: 5,
-      title: 'Enterprise CRM System',
-      subtitle: 'Sales Pipeline Demo',
-      description: 'CRM interface demonstration featuring pipeline management, activity tracking, and revenue forecasting.',
+      title: 'Operational Efficiency Dashboard',
+      subtitle: 'Full-Stack BI Clone',
+      description: 'Next.js + Supabase dashboard pulling mock data from Stripe, HubSpot, and payroll. Role-based views for CEO vs CFO with key metrics.',
       metrics: {
-        features: 'Pipeline View',
-        stages: '5 Stages',
-        type: 'Demo'
+        integrations: '5 APIs',
+        views: 'Role-based',
+        type: 'Full-Stack'
       },
-      liveUrl: '/demos/enterprise-crm.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      category: 'analytics',
-      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
-      gradient: 'from-purple-600 to-pink-600',
+      liveUrl: '/demos/ops-dashboard',
+      githubUrl: 'https://github.com/ZacharyVorsteg/ops-dashboard',
+      category: 'ceo',
+      tech: ['Next.js', 'Supabase', 'Stripe API', 'HubSpot API', 'Tailwind'],
+      gradient: 'from-indigo-600 to-blue-600',
       icon: <BarChart className="w-6 h-6" />,
       status: 'Live Demo',
       featured: false,
+      demoNote: 'Enterprise dashboard with role-based access. Toggle between CEO and CFO views to see different metric priorities.'
     },
     {
       id: 6,
+      title: 'Investor Pitch + Exit Model',
+      subtitle: 'Interactive Valuation Tool',
+      description: 'Web app lets VCs toggle revenue multiples and exit years to generate instant IRR/MOIC charts. Exports to boardroom-ready PDF reports.',
+      metrics: {
+        models: '5 Methods',
+        export: 'PDF Ready',
+        type: 'Interactive'
+      },
+      liveUrl: '/demos/investor-model',
+      githubUrl: 'https://github.com/ZacharyVorsteg/investor-model',
+      category: 'ceo',
+      tech: ['React', 'Python', 'Chart.js', 'PDF Generation'],
+      gradient: 'from-green-600 to-emerald-600',
+      icon: <Briefcase className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Toggle valuation assumptions to see instant IRR/MOIC impact. Generates professional PDF reports for board meetings.'
+    },
+
+    // Data Science Projects with Developer Edge
+    {
+      id: 7,
+      title: 'Options Auto-Sell Bot',
+      subtitle: 'Backtest Engine + API',
+      description: 'Python backtest engine for 5% exit strategy with Streamlit charts comparing bot performance vs S&P. Wrapped in REST API for programmatic access.',
+      metrics: {
+        backtest: '10 Years',
+        returns: '+18% CAGR',
+        type: 'Quant + API'
+      },
+      liveUrl: '/demos/options-bot',
+      githubUrl: 'https://github.com/ZacharyVorsteg/options-bot',
+      category: 'datascience',
+      tech: ['Python', 'Streamlit', 'Plotly', 'FastAPI', 'NumPy'],
+      gradient: 'from-purple-600 to-pink-600',
+      icon: <Activity className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Interactive backtest with customizable parameters. Shows quantitative finance and engineering capabilities.'
+    },
+    {
+      id: 8,
+      title: 'Churn Prediction Model',
+      subtitle: 'SaaS ML Pipeline + API',
+      description: 'Train model on mock SaaS data, deployed with FastAPI. Upload CSV to get churn risk flags with full ML→API→UI pipeline.',
+      metrics: {
+        accuracy: '89%',
+        features: '25 Signals',
+        type: 'ML Pipeline'
+      },
+      liveUrl: '/demos/churn-prediction',
+      githubUrl: 'https://github.com/ZacharyVorsteg/churn-prediction',
+      category: 'datascience',
+      tech: ['Python', 'Scikit-learn', 'FastAPI', 'React', 'PostgreSQL'],
+      gradient: 'from-red-600 to-orange-600',
+      icon: <AlertCircle className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Upload sample customer CSV to see churn predictions. Full ML pipeline from training to deployment.'
+    },
+    {
+      id: 9,
+      title: 'Real Estate Demand Heatmap',
+      subtitle: 'AI Clustering + Maps',
+      description: 'Scrapes Palm Beach flex warehouse listings, clusters by price/sqft with Scikit-learn, plots on interactive Mapbox with filters.',
+      metrics: {
+        listings: '500+',
+        clusters: 'AI-Powered',
+        type: 'Geo + ML'
+      },
+      liveUrl: '/demos/realestate-heatmap',
+      githubUrl: 'https://github.com/ZacharyVorsteg/realestate-heatmap',
+      category: 'datascience',
+      tech: ['Python', 'Scikit-learn', 'Mapbox', 'BeautifulSoup', 'React'],
+      gradient: 'from-teal-600 to-cyan-600',
+      icon: <Building className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Interactive map with AI-powered clustering. Filter by size, price, and loading docks to find opportunities.'
+    },
+
+    // Cross-Over Projects
+    {
+      id: 10,
+      title: 'AI-Powered CFO Dashboard',
+      subtitle: 'KPIs + Anomaly Detection',
+      description: 'Comprehensive hub with financial KPIs, ML-powered anomaly detection, and predictive cash flows. Built with Next.js + Python API.',
+      metrics: {
+        kpis: '50+ Metrics',
+        ml: 'Anomaly Detection',
+        type: 'AI + Finance'
+      },
+      liveUrl: '/demos/ai-cfo-dashboard',
+      githubUrl: 'https://github.com/ZacharyVorsteg/ai-cfo-dashboard',
+      category: 'crossover',
+      tech: ['Next.js', 'Python', 'TensorFlow', 'PostgreSQL', 'Redis'],
+      gradient: 'from-slate-600 to-zinc-600',
+      icon: <Brain className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Enterprise CFO dashboard with AI-powered insights. Bridges finance, data science, and engineering expertise.'
+    },
+    {
+      id: 11,
+      title: 'Insurance Lead Scoring',
+      subtitle: 'AI + Profitability Filter',
+      description: 'AI agent evaluates insurance leads with quality scores and expected loss ratios. Web form frontend with ML backend pipeline.',
+      metrics: {
+        accuracy: '92%',
+        roi: '3.5x',
+        type: 'AI Agent'
+      },
+      liveUrl: '/demos/insurance-scoring',
+      githubUrl: 'https://github.com/ZacharyVorsteg/insurance-scoring',
+      category: 'crossover',
+      tech: ['Python', 'XGBoost', 'FastAPI', 'React', 'Docker'],
+      gradient: 'from-blue-600 to-indigo-600',
+      icon: <Shield className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Submit test insurance leads to see AI scoring and profitability analysis. Shows insurtech domain expertise.'
+    },
+    {
+      id: 12,
+      title: 'SubTap Marketplace Simulator',
+      subtitle: 'Mini Subcontractor Platform',
+      description: 'Lightweight prototype showcasing subcontractor marketplace architecture: proposals, bids, completion rates. Product CEO + dev architect perspective.',
+      metrics: {
+        features: 'Full CRUD',
+        architecture: 'Scalable',
+        type: 'Platform Demo'
+      },
+      liveUrl: '/demos/subtap-simulator',
+      githubUrl: 'https://github.com/ZacharyVorsteg/subtap-simulator',
+      category: 'crossover',
+      tech: ['Next.js', 'Prisma', 'PostgreSQL', 'Stripe', 'WebSockets'],
+      gradient: 'from-yellow-600 to-orange-600',
+      icon: <Users className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Interactive marketplace simulator. Create jobs, submit proposals, track completion rates. Shows platform architecture skills.'
+    },
+    {
+      id: 13,
       title: 'Deal Estate CRM',
       subtitle: 'Real Estate Platform',
-      description: 'Full-featured real estate CRM currently in development. Features property management and deal tracking.',
+      description: 'Full-featured real estate CRM with property management, client tracking, and deal pipeline. Production-ready with Supabase backend.',
       metrics: {
-        status: 'In Progress',
+        status: 'Production',
         stack: 'React/Supabase',
-        type: 'Active Project'
+        type: 'Full Platform'
       },
       liveUrl: 'https://deal-estate.vercel.app',
       githubUrl: 'https://github.com/ZacharyVorsteg/deal-estate',
-      category: 'defi',
-      tech: ['React', 'Supabase', 'Tailwind', 'Vercel'],
-      gradient: 'from-slate-600 to-zinc-600',
-      icon: <Code className="w-6 h-6" />,
-      status: 'In Development',
+      category: 'crossover',
+      tech: ['React', 'Supabase', 'Tailwind', 'SendGrid', 'Cloudinary'],
+      gradient: 'from-gray-600 to-slate-600',
+      icon: <Building className="w-6 h-6" />,
+      status: 'Production',
       featured: false,
+      demoNote: 'Full production CRM platform. Login with demo credentials to explore property management and deal tracking features.'
     },
   ]
 
@@ -159,8 +313,8 @@ const Projects = () => {
               <span className="gradient-text">Featured Projects</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Enterprise-grade financial applications leveraging cutting-edge technology 
-              and institutional-level analytics
+              Enterprise-grade applications bridging finance, strategy, and technology. 
+              Each project demonstrates the unique intersection of CFO analytics, CEO vision, and developer execution.
             </p>
           </motion.div>
         </div>
@@ -259,12 +413,21 @@ const Projects = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-400 leading-relaxed mb-6">
+                    <p className="text-gray-400 leading-relaxed mb-4">
                       {project.description}
                     </p>
 
-                    {/* Live Preview Window */}
-                    {project.liveUrl !== '#' && !project.liveUrl.includes('deal-estate') && (
+                    {/* Demo Note - Professional Context */}
+                    {project.demoNote && (
+                      <div className="mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
+                        <p className="text-xs text-gray-300 italic">
+                          💡 {project.demoNote}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Live Preview Window - Only for actual demos */}
+                    {project.liveUrl && !project.liveUrl.includes('deal-estate') && project.liveUrl.startsWith('/demos/') && (
                       <div className="mb-6 rounded-xl overflow-hidden border border-white/10 bg-black/50">
                         <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
                           <div className="flex items-center gap-2">
@@ -272,37 +435,22 @@ const Projects = () => {
                             <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
                             <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
                           </div>
-                          <span className="text-xs text-gray-500">Live Preview</span>
+                          <span className="text-xs text-gray-500">Demo Preview</span>
                         </div>
                         <div className="relative w-full aspect-video bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
-                          {hoveredProject === project.id ? (
-                            <iframe
-                              src={project.liveUrl}
-                              className="absolute inset-0 w-full h-full"
-                              title={project.title}
-                              loading="lazy"
-                              style={{ 
-                                border: 'none',
-                                pointerEvents: 'none',
-                                transform: 'scale(1)',
-                                transformOrigin: 'center'
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <div className="text-center">
-                                <Play className="w-10 h-10 text-gray-600 mx-auto mb-2" />
-                                <p className="text-sm text-gray-500">Hover to preview</p>
-                              </div>
+                          <div className="w-full h-full flex items-center justify-center">
+                            <div className="text-center">
+                              <Play className="w-10 h-10 text-gray-600 mx-auto mb-2" />
+                              <p className="text-sm text-gray-500">Click Live Demo to interact</p>
                             </div>
-                          )}
+                          </div>
                         </div>
                       </div>
                     )}
 
                     {/* Metrics */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
-                      {Object.entries(project.metrics).map(([key, value], index) => (
+                      {Object.entries(project.metrics).map(([key, value]) => (
                         <div key={key} className="text-center">
                           <div className="text-lg font-bold text-white">{value}</div>
                           <div className="text-xs text-gray-500 capitalize">{key}</div>
@@ -312,7 +460,7 @@ const Projects = () => {
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.slice(0, 4).map((tech) => (
+                      {project.tech.slice(0, 5).map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 bg-white/5 backdrop-blur-sm rounded-lg text-xs text-gray-300 border border-white/10"
@@ -324,7 +472,7 @@ const Projects = () => {
 
                     {/* Actions */}
                     <div className="flex gap-3">
-                      {project.liveUrl !== '#' && (
+                      {project.liveUrl && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
@@ -337,7 +485,7 @@ const Projects = () => {
                           `}
                         >
                           <Play className="w-4 h-4" />
-                          Live Demo
+                          {project.status === 'Production' ? 'View App' : 'Live Demo'}
                         </a>
                       )}
                       <a

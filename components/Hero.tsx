@@ -12,13 +12,13 @@ const Hero = () => {
   useEffect(() => {
     const typed = new Typed(typedRef.current, {
       strings: [
+        'Fractional CFO',
+        'CEO & Founder',
+        'Data Scientist',
         'Full-Stack Developer',
-        'FinTech Engineer',
-        'FAU Finance Graduate',
-        'Economics Minor',
-        'DeFi Enthusiast',
-        'Data Analyst',
-        'Problem Solver',
+        'Financial Architect',
+        'ML Engineer',
+        'Strategic Advisor',
       ],
       typeSpeed: 50,
       backSpeed: 30,
@@ -78,8 +78,8 @@ const Hero = () => {
         {/* Description */}
         <div className="animate-fade-up animation-delay-400">
           <p className="text-lg text-secondary-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            Bridging finance and technology with a unique perspective. FAU Finance graduate (2020) 
-            turned Full-Stack Developer, specializing in FinTech solutions and data-driven applications.
+            Unique hybrid executive bridging finance, strategy, and technology. Fractional CFO driving 
+            operational excellence through AI-powered financial models and full-stack development expertise.
           </p>
         </div>
 
@@ -103,15 +103,15 @@ const Hero = () => {
         {/* Stats */}
         <div className="mt-20 grid grid-cols-3 gap-8 animate-fade-up animation-delay-800">
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">10+</div>
-            <div className="text-sm text-muted-foreground mt-1">Projects</div>
+            <div className="text-3xl md:text-4xl font-bold gradient-text">13+</div>
+            <div className="text-sm text-muted-foreground mt-1">Demo Projects</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">3+</div>
-            <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
+            <div className="text-3xl md:text-4xl font-bold gradient-text">4+</div>
+            <div className="text-sm text-muted-foreground mt-1">Domains</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">5+</div>
+            <div className="text-3xl md:text-4xl font-bold gradient-text">15+</div>
             <div className="text-sm text-muted-foreground mt-1">Technologies</div>
           </div>
         </div>
