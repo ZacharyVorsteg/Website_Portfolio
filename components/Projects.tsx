@@ -72,7 +72,7 @@ const Projects = () => {
         features: '15 signals',
         output: 'Risk scores'
       },
-      liveUrl: '/demos/churn-predictor-optimized.html',
+      liveUrl: '/demos/churn-predictor-simple.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       demoScript: '/demo-scripts/churn_predictor.py',
       category: 'datascience',
