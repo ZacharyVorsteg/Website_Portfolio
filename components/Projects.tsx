@@ -264,7 +264,7 @@ const Projects = () => {
                     </p>
 
                     {/* Live Preview Window */}
-                    {project.liveUrl !== '#' && (
+                    {project.liveUrl !== '#' && !project.liveUrl.includes('deal-estate') && (
                       <div className="mb-6 rounded-xl overflow-hidden border border-white/10 bg-black/50">
                         <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/10">
                           <div className="flex items-center gap-2">
@@ -274,14 +274,20 @@ const Projects = () => {
                           </div>
                           <span className="text-xs text-gray-500">Live Preview</span>
                         </div>
-                        <div className="relative h-48 bg-gradient-to-br from-slate-900 to-slate-800">
+                        <div className="relative h-64 bg-gradient-to-br from-slate-900 to-slate-800 overflow-hidden">
                           {hoveredProject === project.id ? (
                             <iframe
                               src={project.liveUrl}
-                              className="w-full h-full"
+                              className="absolute inset-0 w-full h-full"
                               title={project.title}
                               loading="lazy"
-                              style={{ transform: 'scale(0.5)', transformOrigin: 'top left', width: '200%', height: '200%' }}
+                              style={{ 
+                                transform: 'scale(0.35)', 
+                                transformOrigin: 'top left', 
+                                width: '285.7%', 
+                                height: '285.7%',
+                                border: 'none'
+                              }}
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
