@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { ExternalLink, Github, Play, Code, Layers, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Reveal, Parallax, ScaleIn } from './ScrollEffects'
+import BatchReveal from './scroll/BatchReveal'
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -176,11 +176,12 @@ const Projects = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {filteredProjects.map((project, index) => (
-            <Reveal key={project.id} delay={index * 0.1}>
+        <BatchReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {filteredProjects.map((project, index) => (
               <motion.div
-                className="group relative project-card-3d clip-reveal"
+                key={project.id}
+                className="group relative project-card-3d clip-reveal reveal"
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
                 whileHover={{ y: -8, rotateY: 5, rotateX: -5 }}
@@ -291,9 +292,9 @@ const Projects = () => {
                 </div>
               </div>
               </motion.div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </BatchReveal>
 
         {/* View More */}
         <div className="text-center mt-12">

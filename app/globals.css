@@ -266,14 +266,78 @@ html {
   .grid { grid-template-columns: 1fr; }
 }
 
-/* === PERFORMANCE OPTIMIZATIONS === */
-html {
-  scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
+/* === ULTRA PERFORMANCE OPTIMIZATIONS === */
+html, body {
+  scroll-behavior: auto !important; /* Lenis handles smoothing */
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* GPU acceleration only for animated elements */
+.gpu {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Remove will-change from non-animating elements */
+* {
+  will-change: auto;
+}
+
+/* Optimize paint performance */
+.hero-section,
+.section {
+  contain: layout style paint;
+}
+
+/* Hero styles - optimized */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(1200px 600px at 50% 40%, #10224a, #0b1020 60%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-inner {
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: clamp(40px, 9vw, 110px);
+  line-height: 0.95;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: #9fb2d1;
+  margin-bottom: 1rem;
+}
+
+.hero-description {
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: #9fb2d1;
+  opacity: 0.8;
 }
 
 /* === CINEMATIC SCROLL EFFECTS === */
