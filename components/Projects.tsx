@@ -30,7 +30,7 @@ const Projects = () => {
         tech: 'Streamlit',
         value: 'CFO-grade'
       },
-      liveUrl: '/demos/valuation-simulator.html',
+      liveUrl: '/demos/valuation-simulator-v2.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio/blob/main/demo-scripts/valuation_simulator.py',
       demoScript: '/demo-scripts/valuation_simulator.py',
       category: 'cfo',
