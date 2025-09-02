@@ -218,14 +218,14 @@ const Projects = () => {
     : projects.filter(p => p.category === selectedCategory)
 
   return (
-    <section id="projects" className="py-20 px-4 relative">
+    <section id="projects" className="py-20 px-4 relative color-section" data-bgcolor="#0f172a">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto reveal">
         {/* Section Header */}
         <div className="text-center mb-16">
           <motion.div
@@ -234,12 +234,12 @@ const Projects = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="gradient-text">Demo-Ready Projects</span>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+              <span className="split-text gradient-text-animated">Demo-Ready Projects</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed fade-in">
               Tight, modular demos with synthetic data baked in. Each project runs in under a minute, 
-              showcasing the intersection of financial expertise and technical execution.
+              showcasing the intersection of <span className="text-primary font-medium">financial expertise</span> and <span className="text-accent font-medium">technical execution</span>.
             </p>
             <div className="mt-4 flex justify-center gap-4 text-sm">
               <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg">
@@ -264,9 +264,9 @@ const Projects = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`
-                relative px-6 py-3 rounded-2xl font-medium transition-all duration-300
+                relative px-6 py-3 rounded-2xl font-medium transition-all duration-300 magnetic
                 ${selectedCategory === category.id
-                  ? 'text-white'
+                  ? 'text-white shadow-lg shadow-primary/30'
                   : 'text-muted-foreground hover:text-white'
                 }
               `}
@@ -300,14 +300,17 @@ const Projects = () => {
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
-                className="group relative reveal"
+                className="group relative reveal project-card-3d"
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 50, rotateY: 15 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
+                viewport={{ once: true }}
               >
-                <div className="relative h-full bg-gradient-to-br from-slate-900/50 to-slate-800/50 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                <div className="relative h-full glass-card rounded-3xl overflow-hidden transform-gpu">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                   
                   {/* Status Badge */}
                   <div className="absolute top-6 right-6 z-10">
@@ -325,14 +328,15 @@ const Projects = () => {
                     <div className={`
                       w-14 h-14 rounded-2xl bg-gradient-to-br ${project.gradient} 
                       flex items-center justify-center text-white mb-6
-                      shadow-lg shadow-black/20
+                      shadow-lg shadow-black/20 transform transition-all duration-300
+                      ${hoveredProject === project.id ? 'rotate-12 scale-110' : ''}
                     `}>
                       {project.icon}
                     </div>
 
                     {/* Title & Subtitle */}
                     <div className="mb-4">
-                      <h3 className="text-2xl font-bold text-white mb-1">
+                      <h3 className="text-2xl font-bold text-white mb-1 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent group-hover:bg-clip-text group-hover:text-transparent">
                         {project.title}
                       </h3>
                       <p className="text-sm text-muted-foreground font-medium">
@@ -364,10 +368,14 @@ const Projects = () => {
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.map((tech) => (
+                      {project.tech.map((tech, i) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-white/5 backdrop-blur-sm rounded-lg text-xs text-gray-300 border border-white/10"
+                          className="px-3 py-1 bg-white/5 backdrop-blur-sm rounded-lg text-xs text-gray-300 border border-white/10 tech-badge transition-all duration-300 hover:bg-white/10 hover:border-white/20"
+                          style={{
+                            animationDelay: `${i * 0.05}s`,
+                            transform: hoveredProject === project.id ? 'translateY(-2px)' : 'translateY(0)'
+                          }}
                         >
                           {tech}
                         </span>
@@ -386,6 +394,7 @@ const Projects = () => {
                             bg-gradient-to-r ${project.gradient} text-white
                             hover:shadow-lg transition-all duration-300
                             flex items-center justify-center gap-2
+                            magnetic relative overflow-hidden group/btn
                           `}
                         >
                           <Play className="w-4 h-4" />
@@ -401,6 +410,7 @@ const Projects = () => {
                           bg-white/5 text-gray-300 border border-white/10
                           hover:bg-white/10 transition-all duration-300
                           flex items-center justify-center gap-2
+                          magnetic relative overflow-hidden group/btn
                         "
                       >
                         <Code className="w-4 h-4" />

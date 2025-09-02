@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react'
 import { ArrowDown, Sparkles } from 'lucide-react'
 import Typed from 'typed.js'
-// import { FadeIn } from './ScrollEffects'
 
 const Hero = () => {
   const typedRef = useRef(null)
@@ -35,18 +34,20 @@ const Hero = () => {
     <section 
       ref={heroRef}
       id="hero" 
-      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden hero-cinematic"
-      style={{
-        transformStyle: 'preserve-3d',
-        perspective: '1000px',
-      }}
+      className="hero-section color-section"
+      data-bgcolor="#0A0A0B"
     >
+      {/* Background with parallax */}
+      <div className="hero-bg absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+      </div>
+
       {/* Animated particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute animate-float"
+            className="absolute animate-float opacity-0 animate-fade-in"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -54,72 +55,97 @@ const Hero = () => {
               animationDuration: `${10 + Math.random() * 20}s`,
             }}
           >
-            <Sparkles className="w-3 h-3 text-primary/20" />
+            <Sparkles className="w-2 h-2 md:w-3 md:h-3 text-primary/30" />
           </div>
         ))}
       </div>
 
-      <div className="max-w-4xl mx-auto text-center z-10">
-        {/* Main heading with animation */}
-        <div className="animate-fade-up">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            <span className="block text-foreground mb-2">Hi, I'm</span>
-            <span className="gradient-text text-6xl md:text-8xl">Zachary Vorsteg</span>
+      <div className="hero-content max-w-6xl mx-auto text-center z-10 px-4">
+        {/* Main heading with split text animation */}
+        <div className="mb-8">
+          <h1 className="hero-title">
+            <span className="block text-4xl md:text-5xl lg:text-6xl font-light text-muted-foreground mb-4 reveal">
+              Hi, I'm
+            </span>
+            <span className="split-text gradient-text-animated text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight">
+              Zachary Vorsteg
+            </span>
           </h1>
         </div>
 
-        {/* Typed text */}
-        <div className="animate-fade-up animation-delay-200">
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+        {/* Typed text with enhanced styling */}
+        <div className="hero-subtitle mb-8 reveal">
+          <p className="text-xl md:text-2xl lg:text-3xl text-primary/80 font-light">
             <span ref={typedRef}></span>
           </p>
         </div>
 
-        {/* Description */}
-        <div className="animate-fade-up animation-delay-400">
-          <p className="text-lg text-secondary-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            Unique hybrid executive bridging finance, strategy, and technology. Fractional CFO driving 
-            operational excellence through AI-powered financial models and full-stack development expertise.
+        {/* Description with fade in */}
+        <div className="hero-description max-w-3xl mx-auto mb-12 fade-in">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            Unique hybrid executive bridging finance, strategy, and technology. 
+            <span className="text-foreground font-medium"> Fractional CFO</span> driving 
+            operational excellence through 
+            <span className="text-primary font-medium"> AI-powered financial models</span> and 
+            <span className="text-accent font-medium"> full-stack development</span> expertise.
           </p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up animation-delay-600">
+        {/* CTA Buttons with magnetic effect */}
+        <div className="hero-buttons flex flex-col sm:flex-row gap-4 justify-center mb-20">
           <a
             href="#projects"
-            className="btn-primary inline-flex items-center justify-center gap-2"
+            className="btn-primary magnetic inline-flex items-center justify-center gap-2 relative overflow-hidden group"
           >
-            View My Work
-            <ArrowDown className="w-4 h-4 animate-bounce" />
+            <span className="relative z-10">View My Work</span>
+            <ArrowDown className="w-4 h-4 animate-bounce relative z-10" />
           </a>
           <a
             href="#contact"
-            className="btn-secondary inline-flex items-center justify-center"
+            className="btn-secondary magnetic inline-flex items-center justify-center relative overflow-hidden group"
           >
-            Get In Touch
+            <span className="relative z-10">Get In Touch</span>
           </a>
         </div>
 
-        {/* Stats */}
-        <div className="mt-20 grid grid-cols-3 gap-8 animate-fade-up animation-delay-800">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">13+</div>
-            <div className="text-sm text-muted-foreground mt-1">Demo Projects</div>
+        {/* Stats with stagger animation */}
+        <div className="grid grid-cols-3 gap-8 md:gap-12">
+          <div className="text-center reveal">
+            <div className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text-animated mb-2">
+              13+
+            </div>
+            <div className="text-sm md:text-base text-muted-foreground">
+              Demo Projects
+            </div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">4+</div>
-            <div className="text-sm text-muted-foreground mt-1">Domains</div>
+          <div className="text-center reveal" style={{animationDelay: '0.1s'}}>
+            <div className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text-animated mb-2">
+              4+
+            </div>
+            <div className="text-sm md:text-base text-muted-foreground">
+              Domains
+            </div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold gradient-text">15+</div>
-            <div className="text-sm text-muted-foreground mt-1">Technologies</div>
+          <div className="text-center reveal" style={{animationDelay: '0.2s'}}>
+            <div className="text-4xl md:text-5xl lg:text-6xl font-bold gradient-text-animated mb-2">
+              15+
+            </div>
+            <div className="text-sm md:text-base text-muted-foreground">
+              Technologies
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ArrowDown className="w-6 h-6 text-muted-foreground" />
+      {/* Enhanced scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-xs text-muted-foreground uppercase tracking-widest">
+            Scroll
+          </span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-muted-foreground to-transparent" />
+          <ArrowDown className="w-5 h-5 text-muted-foreground animate-bounce" />
+        </div>
       </div>
     </section>
   )
