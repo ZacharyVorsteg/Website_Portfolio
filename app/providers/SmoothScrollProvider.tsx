@@ -226,8 +226,8 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
         setTimeout(() => {
           setupHeroAnimations();
           setupSplitTextAnimations();
-          setupRevealAnimations();
-          setupProjectAnimations();
+          // setupRevealAnimations(); // Disabled - conflicts with Framer Motion
+          // setupProjectAnimations(); // Disabled - conflicts with Framer Motion
           setupColorTransitions();
           setupMagneticButtons();
           ScrollTrigger.refresh();

@@ -215,6 +215,8 @@ const Projects = () => {
   const filteredProjects = selectedCategory === 'all' 
     ? projects 
     : projects.filter(p => p.category === selectedCategory)
+  
+  console.log('Projects:', projects.length, 'Filtered:', filteredProjects.length)
 
   return (
     <section id="projects" className="py-20 px-4 relative color-section" data-bgcolor="#0f172a">
@@ -236,7 +238,7 @@ const Projects = () => {
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
               <span className="split-text gradient-text-animated">Demo-Ready Projects</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed fade-in">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Tight, modular demos with synthetic data baked in. Each project runs in under a minute, 
               showcasing the intersection of <span className="text-primary font-medium">financial expertise</span> and <span className="text-accent font-medium">technical execution</span>.
             </p>
@@ -298,7 +300,8 @@ const Projects = () => {
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              className="group relative project-card-3d"
+              className="group relative"
+              style={{ opacity: 1, visibility: 'visible' }}
               onMouseEnter={() => setHoveredProject(project.id)}
               onMouseLeave={() => setHoveredProject(null)}
               initial={{ opacity: 0, y: 50 }}
