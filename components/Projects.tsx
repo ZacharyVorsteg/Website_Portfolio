@@ -11,204 +11,197 @@ const Projects = () => {
 
   const categories = [
     { id: 'all', label: 'All Projects', count: 9 },
-    { id: 'cfo', label: 'CFO Tools', count: 3 },
-    { id: 'ceo', label: 'CEO Strategy', count: 2 },
+    { id: 'cfo', label: 'CFO Tools', count: 6 },
+    { id: 'ceo', label: 'CEO Strategy', count: 1 },
     { id: 'datascience', label: 'Data Science', count: 2 },
-    { id: 'crossover', label: 'AI + Finance', count: 2 },
+    { id: 'crossover', label: 'Cross-functional', count: 0 },
   ]
 
   const projects = [
-    // TOP PRIORITY - Most Visual & Impactful
+    // FINANCIAL STATEMENTS - Core CFO Competency
     {
       id: 1,
-      title: 'Valuation Simulator',
-      subtitle: 'DCF + Multiples Analysis',
-      description: 'Interactive valuation tool with DCF modeling and comparable company analysis. Sliders adjust assumptions in real-time.',
+      title: 'P&L Statement',
+      subtitle: 'Hierarchical Chart of Accounts',
+      description: 'Interactive Income Statement with proper GAAP account hierarchy, real-time consolidation, and drill-down capabilities.',
       metrics: {
-        runtime: '< 1 min',
-        tech: 'Streamlit',
-        value: 'CFO-grade'
+        accounts: '25+',
+        views: '3 modes',
+        metrics: 'Auto-calc'
       },
-      liveUrl: '/demos/valuation-simulator-enhanced.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio/blob/main/demo-scripts/valuation_simulator.py',
-      demoScript: '/demo-scripts/valuation_simulator.py',
+      liveUrl: '/demos/pnl-statement.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       category: 'cfo',
-      tech: ['Python', 'Streamlit', 'Plotly', 'Pandas'],
+      tech: ['JavaScript', 'Chart.js', 'HTML5', 'CSS3'],
       gradient: 'from-emerald-600 to-teal-600',
-      icon: <Calculator className="w-6 h-6" />,
+      icon: <TrendingUp className="w-6 h-6" />,
       status: 'Live Demo',
       featured: true,
-      demoNote: 'DCF valuation with sensitivity analysis. Calculates enterprise value using multiple methods. Single Python file, runs instantly.'
+      demoNote: 'Full P&L with expandable account categories. Shows revenue → gross profit → operating income → net income flow. Includes variance analysis.'
     },
     {
       id: 2,
+      title: 'Balance Sheet',
+      subtitle: 'Financial Position Analysis',
+      description: 'Complete Balance Sheet with automated ratio calculations, liquidity analysis, and working capital metrics.',
+      metrics: {
+        ratios: '12 KPIs',
+        views: 'Multi-period',
+        accuracy: 'Self-balancing'
+      },
+      liveUrl: '/demos/balance-sheet.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'cfo',
+      tech: ['JavaScript', 'Chart.js', 'Financial Modeling'],
+      gradient: 'from-blue-600 to-indigo-600',
+      icon: <DollarSign className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Assets = Liabilities + Equity with automatic balance checking. Calculates current ratio, quick ratio, debt-to-equity, and more.'
+    },
+    {
+      id: 3,
+      title: 'Cash Flow Statement',
+      subtitle: 'Direct & Indirect Methods',
+      description: 'Sophisticated cash flow analysis with operating, investing, and financing activities. Includes reconciliation.',
+      metrics: {
+        methods: 'Both',
+        sections: '3 activities',
+        fcf: 'Auto-calc'
+      },
+      liveUrl: '/demos/cashflow-statement.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'cfo',
+      tech: ['JavaScript', 'Chart.js', 'GAAP Standards'],
+      gradient: 'from-purple-600 to-pink-600',
+      icon: <LineChart className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Shows both indirect (from Net Income) and direct (cash receipts/payments) methods. Auto-reconciles to Balance Sheet cash.'
+    },
+    
+    // SECOND ROW - Technical Financial Tools
+    {
+      id: 4,
+      title: 'Working Capital Optimizer',
+      subtitle: 'Cash Conversion Cycle Analysis',
+      description: 'Interactive dashboard for optimizing DSO, DIO, and DPO. Shows real-time cash release potential.',
+      metrics: {
+        impact: 'Cash release',
+        sliders: 'Real-time',
+        benchmarks: 'Industry'
+      },
+      liveUrl: '/demos/working-capital-optimizer.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'cfo',
+      tech: ['JavaScript', 'Chart.js', 'Financial Analytics'],
+      gradient: 'from-cyan-600 to-teal-600',
+      icon: <Zap className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Adjust payment terms and see immediate cash impact. Calculates CCC and provides optimization recommendations.'
+    },
+    {
+      id: 5,
+      title: 'Budget Variance Analysis',
+      subtitle: 'Real-time Performance Tracking',
+      description: 'Comprehensive budget vs actual analysis with drill-down capabilities, threshold alerts, and action items.',
+      metrics: {
+        views: 'Heatmap',
+        alerts: 'Threshold',
+        export: 'PDF/Excel'
+      },
+      liveUrl: '/demos/budget-variance-analysis.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'cfo',
+      tech: ['JavaScript', 'Chart.js', 'Data Visualization'],
+      gradient: 'from-indigo-600 to-purple-600',
+      icon: <BarChart className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Identifies variances exceeding thresholds. Includes forecast accuracy metrics and required action items.'
+    },
+    {
+      id: 6,
+      title: 'Valuation Simulator',
+      subtitle: 'DCF + Multiples Analysis',
+      description: 'Advanced valuation tool with DCF modeling, comparable company analysis, and Monte Carlo simulation.',
+      metrics: {
+        methods: 'DCF + Comps',
+        sensitivity: 'Real-time',
+        scenarios: 'Monte Carlo'
+      },
+      liveUrl: '/demos/valuation-simulator-enhanced.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'cfo',
+      tech: ['JavaScript', 'Financial Modeling', 'Statistics'],
+      gradient: 'from-emerald-600 to-green-600',
+      icon: <Calculator className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: true,
+      demoNote: 'Enterprise valuation with WACC calculation, terminal value, and football field chart. Includes CAPM and sensitivity tables.'
+    },
+    
+    // THIRD ROW - Cross-functional Tools
+    {
+      id: 7,
       title: 'Growth Funnel Simulator',
       subtitle: 'Marketing → MRR Projections',
       description: 'Visualize how marketing spend and conversion rates cascade through your funnel to MRR. Real-time funnel charts.',
       metrics: {
-        runtime: 'Instant',
-        tech: 'Streamlit',
-        value: 'Scale-ready'
+        stages: '5 funnel',
+        metrics: 'CAC/LTV',
+        output: 'MRR forecast'
       },
       liveUrl: '/demos/growth-funnel.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio/blob/main/demo-scripts/growth_funnel.py',
-      demoScript: '/demo-scripts/growth_funnel.py',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
       category: 'ceo',
-      tech: ['Python', 'Streamlit', 'Plotly'],
+      tech: ['JavaScript', 'Chart.js', 'Growth Modeling'],
       gradient: 'from-blue-600 to-indigo-600',
       icon: <Target className="w-6 h-6" />,
       status: 'Live Demo',
-      featured: true,
+      featured: false,
       demoNote: 'Adjust CAC, conversion rates, and see instant MRR impact. Shows strategic thinking + technical execution.'
     },
     {
-      id: 3,
+      id: 8,
       title: 'Customer Churn Predictor',
-      subtitle: 'ML with ROC Curves',
-      description: 'Logistic regression model predicting customer churn. Includes feature importance and ROC curve visualization.',
+      subtitle: 'ML with Business Impact',
+      description: 'Machine learning model predicting customer churn with direct revenue impact calculations and intervention strategies.',
       metrics: {
         accuracy: '89%',
-        features: '15 signals',
-        output: 'Risk scores'
+        saved: '$612k/mo',
+        roi: '551%'
       },
       liveUrl: '/demos/churn-predictor-simple.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/churn_predictor.py',
       category: 'datascience',
-      tech: ['Python', 'Scikit-learn', 'Matplotlib'],
+      tech: ['JavaScript', 'ML Algorithms', 'Predictive Analytics'],
       gradient: 'from-red-600 to-orange-600',
       icon: <AlertCircle className="w-6 h-6" />,
       status: 'Live Demo',
-      featured: true,
-      demoNote: 'Train/test on synthetic data. Outputs churn probability per customer + ROC curve. Pure Python, no external APIs.'
-    },
-    {
-      id: 4,
-      title: 'Revenue Forecast',
-      subtitle: 'Time Series + Confidence Bands',
-      description: 'ARIMA/Prophet forecasting with uncertainty intervals. Predicts next 12 months of revenue with confidence bands.',
-      metrics: {
-        horizon: '12 months',
-        confidence: '95% CI',
-        method: 'Prophet'
-      },
-      liveUrl: '/demos/revenue-forecast-enhanced.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/revenue_forecast.py',
-      category: 'datascience',
-      tech: ['Python', 'Prophet', 'Plotly'],
-      gradient: 'from-purple-600 to-pink-600',
-      icon: <TrendingUp className="w-6 h-6" />,
-      status: 'Live Demo',
-      featured: true,
-      demoNote: 'Synthetic time series → fit Prophet model → beautiful forecast charts with uncertainty bands. CFO + Data Science credibility.'
-    },
-
-    // ADDITIONAL HIGH-IMPACT DEMOS
-    {
-      id: 5,
-      title: 'Cash Flow Optimizer',
-      subtitle: 'Allocation + Projections',
-      description: 'Optimizes cash allocation across categories with linear programming. Shows surplus/deficit timeline.',
-      metrics: {
-        optimization: 'PuLP',
-        categories: '8 types',
-        horizon: '6 months'
-      },
-      liveUrl: '/demos/cashflow-optimizer.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/cashflow_optimizer.py',
-      category: 'cfo',
-      tech: ['Python', 'PuLP', 'Streamlit', 'Plotly'],
-      gradient: 'from-green-600 to-emerald-600',
-      icon: <DollarSign className="w-6 h-6" />,
-      status: 'Live Demo',
       featured: false,
-      demoNote: 'Linear optimization for cash management. Prevents cash crunches through automated allocation.'
-    },
-    {
-      id: 6,
-      title: 'Exit Scenario Calculator',
-      subtitle: 'IRR/MOIC Analysis',
-      description: 'Calculate investor returns based on exit multiples and timing. Generates IRR/MOIC charts instantly.',
-      metrics: {
-        scenarios: 'Unlimited',
-        metrics: 'IRR + MOIC',
-        export: 'PNG charts'
-      },
-      liveUrl: '/demos/exit-calculator-optimized.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/exit_calculator.py',
-      category: 'ceo',
-      tech: ['Python', 'Matplotlib', 'NumPy'],
-      gradient: 'from-indigo-600 to-blue-600',
-      icon: <BarChart className="w-6 h-6" />,
-      status: 'Live Demo',
-      featured: false,
-      demoNote: 'Single Python file. Input exit year/multiple → outputs investor return metrics. Shows VC/PE math fluency.'
-    },
-    {
-      id: 7,
-      title: 'AI CFO Assistant',
-      subtitle: 'Chat-based Q&A',
-      description: 'Ask financial questions, get instant calculated answers. "What\'s my burn rate?" → computed response.',
-      metrics: {
-        queries: 'Natural language',
-        data: 'Mock P&L',
-        response: 'Instant'
-      },
-      liveUrl: '/demos/ai-cfo.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/ai_cfo_assistant.py',
-      category: 'crossover',
-      tech: ['Python', 'LangChain', 'Streamlit'],
-      gradient: 'from-violet-600 to-purple-600',
-      icon: <Brain className="w-6 h-6" />,
-      status: 'Live Demo',
-      featured: false,
-      demoNote: 'Lightweight NLP for financial Q&A. Hard-coded mock data, no external LLM needed. Shows AI + finance fusion.'
-    },
-    {
-      id: 8,
-      title: 'M&A Target Screener',
-      subtitle: 'Strategic Filtering',
-      description: 'Screen 50 mock companies by growth, margin, and valuation. Outputs ranked acquisition targets.',
-      metrics: {
-        companies: '50 targets',
-        filters: '6 criteria',
-        output: 'Ranked list'
-      },
-      liveUrl: '/demos/ma-screener.html',
-      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/ma_screener.py',
-      category: 'crossover',
-      tech: ['Python', 'Pandas', 'Streamlit'],
-      gradient: 'from-orange-600 to-red-600',
-      icon: <Zap className="w-6 h-6" />,
-      status: 'Live Demo',
-      featured: false,
-      demoNote: 'Strategic analysis meets code. Filter/sort potential acquisitions. All synthetic data baked in.'
+      demoNote: 'Interactive risk gauge shows churn probability. Calculates revenue at risk and optimal intervention strategies.'
     },
     {
       id: 9,
-      title: 'KPI Report Generator',
-      subtitle: 'Automated PDF Reports',
-      description: 'Load mock P&L data, calculate EBITDA/burn/runway, export polished PDF. Shows automation prowess.',
+      title: 'Revenue Forecast Engine',
+      subtitle: 'Advanced Time Series Analysis',
+      description: 'Sophisticated forecasting with Holt-Winters, cohort modeling, and seasonal decomposition. Includes confidence intervals.',
       metrics: {
-        metrics: '15+ KPIs',
-        format: 'PDF export',
-        time: '< 10 sec'
+        horizon: '12 months',
+        methods: '3 models',
+        accuracy: 'Backtested'
       },
-      liveUrl: '/demos/kpi-generator.html',
+      liveUrl: '/demos/revenue-forecast-enhanced.html',
       githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
-      demoScript: '/demo-scripts/kpi_generator.py',
-      category: 'cfo',
-      tech: ['Python', 'ReportLab', 'Pandas'],
-      gradient: 'from-slate-600 to-zinc-600',
-      icon: <LineChart className="w-6 h-6" />,
-      status: 'Script Only',
+      category: 'datascience',
+      tech: ['JavaScript', 'Statistics', 'Time Series'],
+      gradient: 'from-purple-600 to-pink-600',
+      icon: <TrendingUp className="w-6 h-6" />,
+      status: 'Live Demo',
       featured: false,
-      demoNote: 'Python script that generates professional financial reports. Demonstrates automation + financial rigor.'
+      demoNote: 'Triple exponential smoothing with cohort-based revenue modeling. Shows seasonal patterns and growth trends.'
     },
   ]
 

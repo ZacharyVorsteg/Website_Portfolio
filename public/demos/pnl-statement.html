@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive P&L Statement - CFO Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .account-row {
+            transition: all 0.2s ease;
+        }
+        .account-row:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .expandable {
+            cursor: pointer;
+        }
+        .child-account {
+            display: none;
+        }
+        .expanded .child-account {
+            display: table-row;
+        }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #ef4444; }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header with controls -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">
+                        Income Statement (P&L)
+                    </h1>
+                    <p class="text-gray-400">Hierarchical Chart of Accounts with Real-Time Consolidation</p>
+                </div>
+                <div class="info-tooltip">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="tooltip-text">
+                        Click on account categories to expand/collapse. All calculations update in real-time. 
+                        Demonstrates proper GAAP account hierarchy and consolidation logic.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Period Selector and Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Reporting Period</label>
+                    <select id="periodSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="q1">Q1 2024</option>
+                        <option value="q2">Q2 2024</option>
+                        <option value="q3" selected>Q3 2024</option>
+                        <option value="ytd">YTD 2024</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Comparison</label>
+                    <select id="comparisonSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="budget">vs Budget</option>
+                        <option value="prior">vs Prior Year</option>
+                        <option value="forecast">vs Forecast</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="toggleView('table')" class="view-btn px-4 py-2 bg-emerald-600 text-white rounded-lg">Table</button>
+                        <button onclick="toggleView('waterfall')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Waterfall</button>
+                        <button onclick="toggleView('trend')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Trend</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main P&L Table -->
+        <div id="tableView" class="glass-card rounded-xl p-6 mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Account</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Actual</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Budget</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Variance</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Var %</th>
+                            <th class="text-right py-3 px-2 text-gray-300">% of Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pnlTableBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Waterfall Chart View -->
+        <div id="waterfallView" class="glass-card rounded-xl p-6 mb-6 hidden">
+            <canvas id="waterfallChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Trend Analysis View -->
+        <div id="trendView" class="glass-card rounded-xl p-6 mb-6 hidden">
+            <canvas id="trendChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Gross Margin</h3>
+                <div class="text-2xl font-bold text-emerald-400" id="grossMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="grossMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Operating Margin</h3>
+                <div class="text-2xl font-bold text-blue-400" id="operatingMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="operatingMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">EBITDA Margin</h3>
+                <div class="text-2xl font-bold text-purple-400" id="ebitdaMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="ebitdaMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Net Margin</h3>
+                <div class="text-2xl font-bold text-orange-400" id="netMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="netMarginTrend">--</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hierarchical Chart of Accounts with proper GAAP structure
+        const chartOfAccounts = {
+            revenue: {
+                name: 'Revenue',
+                level: 0,
+                children: {
+                    '4000': { name: 'Product Revenue', level: 1, children: {
+                        '4100': { name: 'Software Licenses', level: 2 },
+                        '4200': { name: 'SaaS Subscriptions', level: 2 },
+                        '4300': { name: 'Maintenance & Support', level: 2 }
+                    }},
+                    '4500': { name: 'Service Revenue', level: 1, children: {
+                        '4510': { name: 'Professional Services', level: 2 },
+                        '4520': { name: 'Training & Education', level: 2 }
+                    }},
+                    '4900': { name: 'Other Revenue', level: 1 }
+                }
+            },
+            cogs: {
+                name: 'Cost of Goods Sold',
+                level: 0,
+                children: {
+                    '5000': { name: 'Product Costs', level: 1, children: {
+                        '5100': { name: 'Direct Labor', level: 2 },
+                        '5200': { name: 'Materials & Licenses', level: 2 },
+                        '5300': { name: 'Hosting & Infrastructure', level: 2 }
+                    }},
+                    '5500': { name: 'Service Costs', level: 1, children: {
+                        '5510': { name: 'Consultant Costs', level: 2 },
+                        '5520': { name: 'Contractor Fees', level: 2 }
+                    }}
+                }
+            },
+            opex: {
+                name: 'Operating Expenses',
+                level: 0,
+                children: {
+                    '6000': { name: 'Sales & Marketing', level: 1, children: {
+                        '6100': { name: 'Sales Salaries & Commissions', level: 2 },
+                        '6200': { name: 'Marketing Programs', level: 2 },
+                        '6300': { name: 'Travel & Entertainment', level: 2 }
+                    }},
+                    '7000': { name: 'Research & Development', level: 1, children: {
+                        '7100': { name: 'Engineering Salaries', level: 2 },
+                        '7200': { name: 'Product Development', level: 2 },
+                        '7300': { name: 'Patents & IP', level: 2 }
+                    }},
+                    '8000': { name: 'General & Administrative', level: 1, children: {
+                        '8100': { name: 'Executive Salaries', level: 2 },
+                        '8200': { name: 'Legal & Professional', level: 2 },
+                        '8300': { name: 'Office & Facilities', level: 2 },
+                        '8400': { name: 'Insurance', level: 2 }
+                    }}
+                }
+            },
+            other: {
+                name: 'Other Income/Expenses',
+                level: 0,
+                children: {
+                    '9000': { name: 'Interest Income', level: 1 },
+                    '9100': { name: 'Interest Expense', level: 1 },
+                    '9200': { name: 'Foreign Exchange', level: 1 },
+                    '9300': { name: 'Other Income/Expense', level: 1 }
+                }
+            }
+        };
+
+        // Financial data by period
+        const financialData = {
+            q3: {
+                '4100': { actual: 3250000, budget: 3000000 },
+                '4200': { actual: 2850000, budget: 2700000 },
+                '4300': { actual: 890000, budget: 900000 },
+                '4510': { actual: 750000, budget: 800000 },
+                '4520': { actual: 125000, budget: 150000 },
+                '4900': { actual: 85000, budget: 100000 },
+                '5100': { actual: 980000, budget: 950000 },
+                '5200': { actual: 450000, budget: 480000 },
+                '5300': { actual: 320000, budget: 300000 },
+                '5510': { actual: 420000, budget: 400000 },
+                '5520': { actual: 180000, budget: 200000 },
+                '6100': { actual: 1250000, budget: 1200000 },
+                '6200': { actual: 680000, budget: 700000 },
+                '6300': { actual: 120000, budget: 150000 },
+                '7100': { actual: 1850000, budget: 1800000 },
+                '7200': { actual: 420000, budget: 400000 },
+                '7300': { actual: 85000, budget: 100000 },
+                '8100': { actual: 650000, budget: 650000 },
+                '8200': { actual: 280000, budget: 300000 },
+                '8300': { actual: 340000, budget: 350000 },
+                '8400': { actual: 95000, budget: 100000 },
+                '9000': { actual: 12000, budget: 10000 },
+                '9100': { actual: -45000, budget: -50000 },
+                '9200': { actual: -8000, budget: 0 },
+                '9300': { actual: 5000, budget: 0 }
+            }
+        };
+
+        let currentPeriod = 'q3';
+        let currentView = 'table';
+        let waterfallChart = null;
+        let trendChart = null;
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function calculateTotals(accounts, data) {
+            let total = 0;
+            for (const [code, account] of Object.entries(accounts)) {
+                if (account.children) {
+                    total += calculateTotals(account.children, data);
+                } else if (data[code]) {
+                    total += data[code].actual;
+                }
+            }
+            return total;
+        }
+
+        function renderPnLTable() {
+            const tbody = document.getElementById('pnlTableBody');
+            const data = financialData[currentPeriod];
+            tbody.innerHTML = '';
+
+            // Calculate totals
+            const revenueTotal = calculateTotals(chartOfAccounts.revenue.children, data);
+            const cogsTotal = calculateTotals(chartOfAccounts.cogs.children, data);
+            const opexTotal = calculateTotals(chartOfAccounts.opex.children, data);
+            const otherTotal = calculateTotals(chartOfAccounts.other.children, data);
+
+            const grossProfit = revenueTotal - cogsTotal;
+            const operatingIncome = grossProfit - opexTotal;
+            const netIncome = operatingIncome + otherTotal;
+
+            // Render each section
+            renderSection(tbody, chartOfAccounts.revenue, data, revenueTotal);
+            renderTotalRow(tbody, 'Total Revenue', revenueTotal, calculateBudgetTotal(chartOfAccounts.revenue.children, data), revenueTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            renderSection(tbody, chartOfAccounts.cogs, data, revenueTotal);
+            renderTotalRow(tbody, 'Total COGS', cogsTotal, calculateBudgetTotal(chartOfAccounts.cogs.children, data), revenueTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Gross Profit', grossProfit, 0, revenueTotal, true);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            renderSection(tbody, chartOfAccounts.opex, data, revenueTotal);
+            renderTotalRow(tbody, 'Total Operating Expenses', opexTotal, calculateBudgetTotal(chartOfAccounts.opex.children, data), revenueTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Operating Income', operatingIncome, 0, revenueTotal, true);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            renderSection(tbody, chartOfAccounts.other, data, revenueTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Net Income', netIncome, 0, revenueTotal, true);
+
+            // Update metrics
+            updateMetrics(revenueTotal, grossProfit, operatingIncome, netIncome);
+        }
+
+        function calculateBudgetTotal(accounts, data) {
+            let total = 0;
+            for (const [code, account] of Object.entries(accounts)) {
+                if (account.children) {
+                    total += calculateBudgetTotal(account.children, data);
+                } else if (data[code]) {
+                    total += data[code].budget;
+                }
+            }
+            return total;
+        }
+
+        function renderSection(tbody, section, data, revenueTotal) {
+            const row = document.createElement('tr');
+            row.className = 'account-row font-semibold text-gray-200 expandable';
+            row.innerHTML = `
+                <td class="py-2 px-2">
+                    <span class="cursor-pointer">▶ ${section.name}</span>
+                </td>
+                <td colspan="5"></td>
+            `;
+            row.onclick = () => toggleExpand(row);
+            tbody.appendChild(row);
+
+            renderAccounts(tbody, section.children, data, 1, revenueTotal, row);
+        }
+
+        function renderAccounts(tbody, accounts, data, level, revenueTotal, parentRow) {
+            for (const [code, account] of Object.entries(accounts)) {
+                const row = document.createElement('tr');
+                row.className = `account-row child-account text-gray-300`;
+                row.style.paddingLeft = `${level * 20}px`;
+
+                if (account.children) {
+                    const subtotal = calculateTotals({ [code]: account }, data);
+                    const budgetSubtotal = calculateBudgetTotal({ [code]: account }, data);
+                    
+                    row.innerHTML = `
+                        <td class="py-1 px-2" style="padding-left: ${level * 20}px">
+                            <span class="cursor-pointer expandable">▶ ${account.name}</span>
+                        </td>
+                        <td class="text-right py-1 px-2">${formatCurrency(subtotal)}</td>
+                        <td class="text-right py-1 px-2">${formatCurrency(budgetSubtotal)}</td>
+                        <td class="text-right py-1 px-2 ${subtotal - budgetSubtotal >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            ${formatCurrency(subtotal - budgetSubtotal)}
+                        </td>
+                        <td class="text-right py-1 px-2 ${subtotal - budgetSubtotal >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            ${budgetSubtotal !== 0 ? ((subtotal / budgetSubtotal - 1) * 100).toFixed(1) + '%' : '--'}
+                        </td>
+                        <td class="text-right py-1 px-2">${(subtotal / revenueTotal * 100).toFixed(1)}%</td>
+                    `;
+                    row.onclick = () => toggleExpand(row);
+                    tbody.appendChild(row);
+                    
+                    renderAccounts(tbody, account.children, data, level + 1, revenueTotal, row);
+                } else if (data[code]) {
+                    const actual = data[code].actual;
+                    const budget = data[code].budget;
+                    const variance = actual - budget;
+                    
+                    row.innerHTML = `
+                        <td class="py-1 px-2" style="padding-left: ${level * 20}px">${account.name}</td>
+                        <td class="text-right py-1 px-2">${formatCurrency(actual)}</td>
+                        <td class="text-right py-1 px-2">${formatCurrency(budget)}</td>
+                        <td class="text-right py-1 px-2 ${variance >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            ${formatCurrency(variance)}
+                        </td>
+                        <td class="text-right py-1 px-2 ${variance >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            ${budget !== 0 ? ((actual / budget - 1) * 100).toFixed(1) + '%' : '--'}
+                        </td>
+                        <td class="text-right py-1 px-2">${(actual / revenueTotal * 100).toFixed(1)}%</td>
+                    `;
+                    tbody.appendChild(row);
+                }
+            }
+        }
+
+        function renderTotalRow(tbody, label, actual, budget, revenueTotal, isHighlight = false) {
+            const row = document.createElement('tr');
+            row.className = `${isHighlight ? 'font-bold text-white bg-slate-800' : 'font-semibold text-gray-200'} border-t border-gray-600`;
+            
+            const variance = actual - budget;
+            row.innerHTML = `
+                <td class="py-2 px-2">${label}</td>
+                <td class="text-right py-2 px-2">${formatCurrency(actual)}</td>
+                <td class="text-right py-2 px-2">${budget ? formatCurrency(budget) : '--'}</td>
+                <td class="text-right py-2 px-2 ${!budget || variance >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                    ${budget ? formatCurrency(variance) : '--'}
+                </td>
+                <td class="text-right py-2 px-2 ${!budget || variance >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                    ${budget && budget !== 0 ? ((actual / budget - 1) * 100).toFixed(1) + '%' : '--'}
+                </td>
+                <td class="text-right py-2 px-2">${(actual / revenueTotal * 100).toFixed(1)}%</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function toggleExpand(row) {
+            row.classList.toggle('expanded');
+            const arrow = row.querySelector('span');
+            if (arrow) {
+                arrow.textContent = row.classList.contains('expanded') ? 
+                    arrow.textContent.replace('▶', '▼') : 
+                    arrow.textContent.replace('▼', '▶');
+            }
+        }
+
+        function updateMetrics(revenue, grossProfit, operatingIncome, netIncome) {
+            const grossMargin = (grossProfit / revenue * 100).toFixed(1);
+            const operatingMargin = (operatingIncome / revenue * 100).toFixed(1);
+            const ebitdaMargin = ((operatingIncome + 250000) / revenue * 100).toFixed(1); // Adding back D&A
+            const netMargin = (netIncome / revenue * 100).toFixed(1);
+
+            document.getElementById('grossMargin').textContent = grossMargin + '%';
+            document.getElementById('operatingMargin').textContent = operatingMargin + '%';
+            document.getElementById('ebitdaMargin').textContent = ebitdaMargin + '%';
+            document.getElementById('netMargin').textContent = netMargin + '%';
+
+            // Add trend indicators
+            document.getElementById('grossMarginTrend').innerHTML = '<span class="trend-up">↑ 2.3%</span> vs prior year';
+            document.getElementById('operatingMarginTrend').innerHTML = '<span class="trend-up">↑ 1.8%</span> vs prior year';
+            document.getElementById('ebitdaMarginTrend').innerHTML = '<span class="trend-down">↓ 0.5%</span> vs prior year';
+            document.getElementById('netMarginTrend').innerHTML = '<span class="trend-up">↑ 1.2%</span> vs prior year';
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-slate-700', 'text-gray-300');
+            event.target.classList.add('bg-emerald-600', 'text-white');
+
+            document.getElementById('tableView').classList.toggle('hidden', view !== 'table');
+            document.getElementById('waterfallView').classList.toggle('hidden', view !== 'waterfall');
+            document.getElementById('trendView').classList.toggle('hidden', view !== 'trend');
+
+            if (view === 'waterfall') {
+                renderWaterfallChart();
+            } else if (view === 'trend') {
+                renderTrendChart();
+            }
+        }
+
+        function renderWaterfallChart() {
+            const ctx = document.getElementById('waterfallChart').getContext('2d');
+            
+            if (waterfallChart) {
+                waterfallChart.destroy();
+            }
+
+            const data = financialData[currentPeriod];
+            const revenue = calculateTotals(chartOfAccounts.revenue.children, data);
+            const cogs = calculateTotals(chartOfAccounts.cogs.children, data);
+            const opex = calculateTotals(chartOfAccounts.opex.children, data);
+            const other = calculateTotals(chartOfAccounts.other.children, data);
+
+            waterfallChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Revenue', 'COGS', 'Gross Profit', 'OpEx', 'Operating Income', 'Other', 'Net Income'],
+                    datasets: [{
+                        data: [revenue, -cogs, revenue - cogs, -opex, revenue - cogs - opex, other, revenue - cogs - opex + other],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            other >= 0 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)',
+                            'rgba(251, 146, 60, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => formatCurrency(Math.abs(context.raw))
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => formatCurrency(value),
+                                color: '#9ca3af'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            if (trendChart) {
+                trendChart.destroy();
+            }
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [6500000, 6800000, 7200000, 7000000, 7300000, 7500000, 7800000, 7950000, 8000000],
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Gross Profit',
+                        data: [4550000, 4760000, 5040000, 4900000, 5110000, 5250000, 5460000, 5565000, 5600000],
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Net Income',
+                        data: [650000, 714000, 756000, 735000, 766500, 787500, 819000, 834750, 840000],
+                        borderColor: 'rgba(251, 146, 60, 1)',
+                        backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            labels: { color: '#9ca3af' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => context.dataset.label + ': ' + formatCurrency(context.raw)
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => formatCurrency(value),
+                                color: '#9ca3af'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPnLTable();
+            
+            document.getElementById('periodSelect').addEventListener('change', (e) => {
+                currentPeriod = e.target.value;
+                renderPnLTable();
+                if (currentView === 'waterfall') renderWaterfallChart();
+                if (currentView === 'trend') renderTrendChart();
+            });
+        });
+    </script>
+</body>
+</html>

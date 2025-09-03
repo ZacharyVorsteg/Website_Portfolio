@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow Statement - CFO Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cash-inflow { color: #10b981; }
+        .cash-outflow { color: #ef4444; }
+        .expandable {
+            cursor: pointer;
+            user-select: none;
+        }
+        .child-row {
+            display: none;
+        }
+        .expanded .child-row {
+            display: table-row;
+        }
+        .reconciliation-item {
+            transition: all 0.3s ease;
+        }
+        .reconciliation-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                        Statement of Cash Flows
+                    </h1>
+                    <p class="text-gray-400">Direct & Indirect Method with Real-Time Reconciliation</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-400">Free Cash Flow:</span>
+                    <span id="fcf" class="text-2xl font-bold text-emerald-400">--</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Period</label>
+                    <select id="periodSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="q3">Q3 2024</option>
+                        <option value="q2">Q2 2024</option>
+                        <option value="q1">Q1 2024</option>
+                        <option value="ytd">YTD 2024</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Method</label>
+                    <div class="flex gap-2">
+                        <button onclick="setMethod('indirect')" class="method-btn px-4 py-2 bg-purple-600 text-white rounded-lg">Indirect</button>
+                        <button onclick="setMethod('direct')" class="method-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Direct</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="setView('detailed')" class="view-btn px-4 py-2 bg-purple-600 text-white rounded-lg">Detailed</button>
+                        <button onclick="setView('summary')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Summary</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Analysis</label>
+                    <button onclick="toggleWaterfall()" class="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg w-full">Waterfall</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Cash Flow Statement -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Indirect Method View -->
+            <div id="indirectView" class="lg:col-span-2 glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Cash Flow Statement - Indirect Method</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-600">
+                                <th class="text-left py-3 px-2 text-gray-300">Line Item</th>
+                                <th class="text-right py-3 px-2 text-gray-300">Q3 2024</th>
+                                <th class="text-right py-3 px-2 text-gray-300">Q2 2024</th>
+                                <th class="text-right py-3 px-2 text-gray-300">Change</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cashFlowBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Direct Method View (Hidden by default) -->
+            <div id="directView" class="lg:col-span-2 glass-card rounded-xl p-6 hidden">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Cash Flow Statement - Direct Method</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-600">
+                                <th class="text-left py-3 px-2 text-gray-300">Cash Flows</th>
+                                <th class="text-right py-3 px-2 text-gray-300">Amount</th>
+                                <th class="text-right py-3 px-2 text-gray-300">% of Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="directCashFlowBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cash Flow Reconciliation -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Reconciliation</h3>
+                <div class="space-y-3">
+                    <div class="reconciliation-item p-3 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm text-gray-400">Beginning Cash</span>
+                            <span class="font-semibold" id="beginCash">$3,800,000</span>
+                        </div>
+                    </div>
+                    <div class="reconciliation-item p-3 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm text-gray-400">+ Operating Activities</span>
+                            <span class="font-semibold cash-inflow" id="operatingTotal">--</span>
+                        </div>
+                    </div>
+                    <div class="reconciliation-item p-3 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm text-gray-400">+ Investing Activities</span>
+                            <span class="font-semibold cash-outflow" id="investingTotal">--</span>
+                        </div>
+                    </div>
+                    <div class="reconciliation-item p-3 rounded-lg bg-slate-800/50">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm text-gray-400">+ Financing Activities</span>
+                            <span class="font-semibold cash-outflow" id="financingTotal">--</span>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-600 pt-3 mt-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300 font-semibold">Ending Cash</span>
+                            <span class="text-xl font-bold text-blue-400" id="endCash">--</span>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg p-3 mt-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-emerald-400">Balance Sheet Cash</span>
+                            <span class="font-semibold text-emerald-400">$4,250,000</span>
+                        </div>
+                        <div class="text-xs text-gray-400 mt-1" id="reconciliationStatus">✓ Reconciled</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waterfall Chart -->
+        <div id="waterfallChart" class="glass-card rounded-xl p-6 mb-6 hidden">
+            <h3 class="text-lg font-semibold text-gray-200 mb-4">Cash Flow Waterfall</h3>
+            <canvas id="waterfallCanvas" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Operating Cash Flow</h3>
+                <div class="text-2xl font-bold text-emerald-400" id="ocf">--</div>
+                <div class="text-xs text-gray-500 mt-1">
+                    <span id="ocfMargin">--</span> margin
+                </div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Cash Conversion Ratio</h3>
+                <div class="text-2xl font-bold text-blue-400" id="ccr">--</div>
+                <div class="text-xs text-gray-500 mt-1">OCF / Net Income</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">CapEx as % of Revenue</h3>
+                <div class="text-2xl font-bold text-purple-400" id="capexRatio">--</div>
+                <div class="text-xs text-gray-500 mt-1">Capital intensity</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Days Cash on Hand</h3>
+                <div class="text-2xl font-bold text-orange-400" id="daysOnHand">--</div>
+                <div class="text-xs text-gray-500 mt-1">Cash runway</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cash Flow Data Structure
+        const cashFlowData = {
+            q3: {
+                operating: {
+                    netIncome: 840000,
+                    adjustments: {
+                        depreciation: 165000,
+                        amortization: 85000,
+                        stockComp: 120000,
+                        deferredTax: 35000,
+                        other: -15000
+                    },
+                    workingCapital: {
+                        receivables: -250000,
+                        inventory: 200000,
+                        prepaid: -50000,
+                        payables: 150000,
+                        accrued: 60000,
+                        deferredRevenue: 300000
+                    }
+                },
+                investing: {
+                    capex: -700000,
+                    acquisitions: 0,
+                    investments: -200000,
+                    assetSales: 50000
+                },
+                financing: {
+                    debtProceeds: 0,
+                    debtRepayment: -500000,
+                    equityProceeds: 500000,
+                    dividends: 0,
+                    stockBuyback: -200000
+                }
+            },
+            q2: {
+                operating: {
+                    netIncome: 780000,
+                    adjustments: {
+                        depreciation: 160000,
+                        amortization: 85000,
+                        stockComp: 100000,
+                        deferredTax: 40000,
+                        other: -10000
+                    },
+                    workingCapital: {
+                        receivables: -180000,
+                        inventory: 50000,
+                        prepaid: -30000,
+                        payables: 100000,
+                        accrued: 40000,
+                        deferredRevenue: 200000
+                    }
+                },
+                investing: {
+                    capex: -550000,
+                    acquisitions: -1000000,
+                    investments: -100000,
+                    assetSales: 0
+                },
+                financing: {
+                    debtProceeds: 1000000,
+                    debtRepayment: -250000,
+                    equityProceeds: 0,
+                    dividends: 0,
+                    stockBuyback: -100000
+                }
+            }
+        };
+
+        // Direct method cash receipts/payments
+        const directMethodData = {
+            q3: {
+                receipts: {
+                    customers: 7750000,
+                    interest: 12000,
+                    other: 85000
+                },
+                payments: {
+                    suppliers: -2180000,
+                    employees: -3850000,
+                    interest: -45000,
+                    taxes: -380000,
+                    other: -282000
+                }
+            }
+        };
+
+        let currentMethod = 'indirect';
+        let currentView = 'detailed';
+        let waterfallChart = null;
+
+        function formatCurrency(value) {
+            const isNegative = value < 0;
+            const absValue = Math.abs(value);
+            const formatted = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(absValue);
+            
+            return isNegative ? `(${formatted})` : formatted;
+        }
+
+        function renderIndirectMethod() {
+            const tbody = document.getElementById('cashFlowBody');
+            tbody.innerHTML = '';
+            
+            const period = document.getElementById('periodSelect').value;
+            const data = cashFlowData[period];
+            const priorData = cashFlowData.q2; // For comparison
+            
+            // Operating Activities
+            renderSectionHeader(tbody, 'CASH FLOWS FROM OPERATING ACTIVITIES');
+            renderLineItem(tbody, 'Net Income', data.operating.netIncome, priorData.operating.netIncome);
+            
+            // Adjustments
+            renderSubsectionHeader(tbody, 'Adjustments to reconcile net income to cash:', true);
+            Object.entries(data.operating.adjustments).forEach(([key, value]) => {
+                const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                renderLineItem(tbody, label, value, priorData.operating.adjustments[key], 1);
+            });
+            
+            // Working Capital Changes
+            renderSubsectionHeader(tbody, 'Changes in working capital:', true);
+            Object.entries(data.operating.workingCapital).forEach(([key, value]) => {
+                const label = getWorkingCapitalLabel(key);
+                renderLineItem(tbody, label, value, priorData.operating.workingCapital[key], 1);
+            });
+            
+            const operatingTotal = calculateSectionTotal(data.operating);
+            renderTotalRow(tbody, 'Net cash provided by operating activities', operatingTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="4" class="py-2"></td></tr>';
+            
+            // Investing Activities
+            renderSectionHeader(tbody, 'CASH FLOWS FROM INVESTING ACTIVITIES');
+            Object.entries(data.investing).forEach(([key, value]) => {
+                const label = getInvestingLabel(key);
+                renderLineItem(tbody, label, value, priorData.investing[key]);
+            });
+            
+            const investingTotal = calculateInvestingTotal(data.investing);
+            renderTotalRow(tbody, 'Net cash used in investing activities', investingTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="4" class="py-2"></td></tr>';
+            
+            // Financing Activities
+            renderSectionHeader(tbody, 'CASH FLOWS FROM FINANCING ACTIVITIES');
+            Object.entries(data.financing).forEach(([key, value]) => {
+                const label = getFinancingLabel(key);
+                renderLineItem(tbody, label, value, priorData.financing[key]);
+            });
+            
+            const financingTotal = calculateFinancingTotal(data.financing);
+            renderTotalRow(tbody, 'Net cash used in financing activities', financingTotal);
+            
+            tbody.innerHTML += '<tr><td colspan="4" class="py-2"></td></tr>';
+            
+            // Net increase in cash
+            const netIncrease = operatingTotal + investingTotal + financingTotal;
+            renderTotalRow(tbody, 'Net increase in cash', netIncrease, 'font-bold text-white bg-slate-800');
+            
+            // Update reconciliation
+            updateReconciliation(operatingTotal, investingTotal, financingTotal);
+            
+            // Update metrics
+            updateMetrics(operatingTotal, data.operating.netIncome, investingTotal);
+        }
+
+        function renderDirectMethod() {
+            const tbody = document.getElementById('directCashFlowBody');
+            tbody.innerHTML = '';
+            
+            const data = directMethodData.q3;
+            
+            // Cash Receipts
+            renderDirectSectionHeader(tbody, 'CASH RECEIPTS');
+            let totalReceipts = 0;
+            Object.entries(data.receipts).forEach(([key, value]) => {
+                const label = 'Cash received from ' + key;
+                renderDirectLineItem(tbody, label, value);
+                totalReceipts += value;
+            });
+            renderDirectTotalRow(tbody, 'Total cash receipts', totalReceipts);
+            
+            tbody.innerHTML += '<tr><td colspan="3" class="py-2"></td></tr>';
+            
+            // Cash Payments
+            renderDirectSectionHeader(tbody, 'CASH PAYMENTS');
+            let totalPayments = 0;
+            Object.entries(data.payments).forEach(([key, value]) => {
+                const label = 'Cash paid to ' + key;
+                renderDirectLineItem(tbody, label, value);
+                totalPayments += value;
+            });
+            renderDirectTotalRow(tbody, 'Total cash payments', totalPayments);
+            
+            tbody.innerHTML += '<tr><td colspan="3" class="py-2"></td></tr>';
+            
+            const netOperating = totalReceipts + totalPayments;
+            renderDirectTotalRow(tbody, 'Net cash from operating activities', netOperating, 'font-bold text-white bg-slate-800');
+        }
+
+        function calculateSectionTotal(section) {
+            let total = section.netIncome || 0;
+            
+            if (section.adjustments) {
+                Object.values(section.adjustments).forEach(value => {
+                    total += value;
+                });
+            }
+            
+            if (section.workingCapital) {
+                Object.values(section.workingCapital).forEach(value => {
+                    total += value;
+                });
+            }
+            
+            return total;
+        }
+
+        function calculateInvestingTotal(investing) {
+            return Object.values(investing).reduce((sum, value) => sum + value, 0);
+        }
+
+        function calculateFinancingTotal(financing) {
+            return Object.values(financing).reduce((sum, value) => sum + value, 0);
+        }
+
+        function getWorkingCapitalLabel(key) {
+            const labels = {
+                receivables: '(Increase) decrease in accounts receivable',
+                inventory: '(Increase) decrease in inventory',
+                prepaid: '(Increase) decrease in prepaid expenses',
+                payables: 'Increase (decrease) in accounts payable',
+                accrued: 'Increase (decrease) in accrued expenses',
+                deferredRevenue: 'Increase (decrease) in deferred revenue'
+            };
+            return labels[key] || key;
+        }
+
+        function getInvestingLabel(key) {
+            const labels = {
+                capex: 'Capital expenditures',
+                acquisitions: 'Business acquisitions',
+                investments: 'Purchases of investments',
+                assetSales: 'Proceeds from asset sales'
+            };
+            return labels[key] || key;
+        }
+
+        function getFinancingLabel(key) {
+            const labels = {
+                debtProceeds: 'Proceeds from debt issuance',
+                debtRepayment: 'Repayment of debt',
+                equityProceeds: 'Proceeds from equity issuance',
+                dividends: 'Dividends paid',
+                stockBuyback: 'Stock repurchases'
+            };
+            return labels[key] || key;
+        }
+
+        function renderSectionHeader(tbody, title) {
+            const row = document.createElement('tr');
+            row.className = 'font-bold text-blue-400';
+            row.innerHTML = `<td colspan="4" class="py-2 px-2">${title}</td>`;
+            tbody.appendChild(row);
+        }
+
+        function renderSubsectionHeader(tbody, title, expandable = false) {
+            const row = document.createElement('tr');
+            row.className = 'font-semibold text-gray-300';
+            if (expandable) {
+                row.classList.add('expandable');
+                row.onclick = () => toggleExpand(row);
+            }
+            row.innerHTML = `<td colspan="4" class="py-1 px-2 pl-4">${expandable ? '▶ ' : ''}${title}</td>`;
+            tbody.appendChild(row);
+        }
+
+        function renderLineItem(tbody, label, current, prior, indent = 0) {
+            const row = document.createElement('tr');
+            row.className = indent > 0 ? 'text-gray-400 child-row' : 'text-gray-300';
+            const change = current - (prior || 0);
+            
+            row.innerHTML = `
+                <td class="py-1 px-2" style="padding-left: ${16 + indent * 20}px">${label}</td>
+                <td class="text-right py-1 px-2 ${current >= 0 ? 'cash-inflow' : 'cash-outflow'}">${formatCurrency(current)}</td>
+                <td class="text-right py-1 px-2">${prior ? formatCurrency(prior) : '--'}</td>
+                <td class="text-right py-1 px-2 ${change >= 0 ? 'text-emerald-400' : 'text-red-400'}">${formatCurrency(change)}</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function renderTotalRow(tbody, label, total, className = 'font-semibold text-gray-200 border-t border-gray-600') {
+            const row = document.createElement('tr');
+            row.className = className;
+            
+            row.innerHTML = `
+                <td class="py-2 px-2">${label}</td>
+                <td class="text-right py-2 px-2 ${total >= 0 ? 'cash-inflow' : 'cash-outflow'} font-bold">${formatCurrency(total)}</td>
+                <td colspan="2"></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function renderDirectSectionHeader(tbody, title) {
+            const row = document.createElement('tr');
+            row.className = 'font-bold text-blue-400';
+            row.innerHTML = `<td colspan="3" class="py-2 px-2">${title}</td>`;
+            tbody.appendChild(row);
+        }
+
+        function renderDirectLineItem(tbody, label, amount) {
+            const row = document.createElement('tr');
+            row.className = 'text-gray-300';
+            const totalCash = 7847000; // Total receipts for percentage calculation
+            
+            row.innerHTML = `
+                <td class="py-1 px-2 pl-4">${label}</td>
+                <td class="text-right py-1 px-2 ${amount >= 0 ? 'cash-inflow' : 'cash-outflow'}">${formatCurrency(amount)}</td>
+                <td class="text-right py-1 px-2">${(Math.abs(amount) / totalCash * 100).toFixed(1)}%</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function renderDirectTotalRow(tbody, label, total, className = 'font-semibold text-gray-200 border-t border-gray-600') {
+            const row = document.createElement('tr');
+            row.className = className;
+            
+            row.innerHTML = `
+                <td class="py-2 px-2">${label}</td>
+                <td class="text-right py-2 px-2 ${total >= 0 ? 'cash-inflow' : 'cash-outflow'} font-bold">${formatCurrency(total)}</td>
+                <td></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function toggleExpand(row) {
+            row.classList.toggle('expanded');
+            const arrow = row.querySelector('td');
+            if (arrow) {
+                arrow.innerHTML = arrow.innerHTML.replace('▶', '▼').replace('▼', '▶');
+            }
+        }
+
+        function updateReconciliation(operating, investing, financing) {
+            const beginCash = 3800000;
+            const netChange = operating + investing + financing;
+            const endCash = beginCash + netChange;
+            
+            document.getElementById('operatingTotal').textContent = formatCurrency(operating);
+            document.getElementById('investingTotal').textContent = formatCurrency(investing);
+            document.getElementById('financingTotal').textContent = formatCurrency(financing);
+            document.getElementById('endCash').textContent = formatCurrency(endCash);
+            
+            // Update reconciliation status
+            const balanceSheetCash = 4250000;
+            const difference = Math.abs(endCash - balanceSheetCash);
+            const reconciled = difference < 1000;
+            
+            document.getElementById('reconciliationStatus').textContent = reconciled ? '✓ Reconciled' : `⚠ Difference: ${formatCurrency(difference)}`;
+            document.getElementById('reconciliationStatus').className = reconciled ? 'text-xs text-emerald-400 mt-1' : 'text-xs text-red-400 mt-1';
+        }
+
+        function updateMetrics(operatingCF, netIncome, investing) {
+            // Operating Cash Flow
+            document.getElementById('ocf').textContent = formatCurrency(operatingCF);
+            
+            // OCF Margin (OCF / Revenue)
+            const revenue = 8000000; // Q3 revenue
+            const ocfMargin = (operatingCF / revenue * 100).toFixed(1);
+            document.getElementById('ocfMargin').textContent = ocfMargin + '%';
+            
+            // Cash Conversion Ratio
+            const ccr = (operatingCF / netIncome).toFixed(2);
+            document.getElementById('ccr').textContent = ccr + 'x';
+            
+            // CapEx as % of Revenue
+            const capex = Math.abs(investing);
+            const capexRatio = (capex / revenue * 100).toFixed(1);
+            document.getElementById('capexRatio').textContent = capexRatio + '%';
+            
+            // Days Cash on Hand
+            const dailyBurn = 240000; // Daily operating expenses
+            const cashBalance = 4250000;
+            const daysOnHand = Math.round(cashBalance / dailyBurn);
+            document.getElementById('daysOnHand').textContent = daysOnHand + ' days';
+            
+            // Free Cash Flow
+            const fcf = operatingCF + investing;
+            document.getElementById('fcf').textContent = formatCurrency(fcf);
+        }
+
+        function setMethod(method) {
+            currentMethod = method;
+            document.querySelectorAll('.method-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-slate-700', 'text-gray-300');
+            event.target.classList.add('bg-purple-600', 'text-white');
+            
+            document.getElementById('indirectView').classList.toggle('hidden', method !== 'indirect');
+            document.getElementById('directView').classList.toggle('hidden', method !== 'direct');
+            
+            if (method === 'indirect') {
+                renderIndirectMethod();
+            } else {
+                renderDirectMethod();
+            }
+        }
+
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-600', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-slate-700', 'text-gray-300');
+            event.target.classList.add('bg-purple-600', 'text-white');
+            
+            // In summary view, collapse all expandable sections
+            if (view === 'summary') {
+                document.querySelectorAll('.expanded').forEach(row => {
+                    row.classList.remove('expanded');
+                    const arrow = row.querySelector('td');
+                    if (arrow) {
+                        arrow.innerHTML = arrow.innerHTML.replace('▼', '▶');
+                    }
+                });
+            }
+        }
+
+        function toggleWaterfall() {
+            const chartDiv = document.getElementById('waterfallChart');
+            chartDiv.classList.toggle('hidden');
+            
+            if (!chartDiv.classList.contains('hidden')) {
+                renderWaterfallChart();
+            }
+        }
+
+        function renderWaterfallChart() {
+            const ctx = document.getElementById('waterfallCanvas').getContext('2d');
+            
+            if (waterfallChart) {
+                waterfallChart.destroy();
+            }
+            
+            const data = cashFlowData.q3;
+            const beginCash = 3800000;
+            const operating = calculateSectionTotal(data.operating);
+            const investing = calculateInvestingTotal(data.investing);
+            const financing = calculateFinancingTotal(data.financing);
+            const endCash = beginCash + operating + investing + financing;
+            
+            waterfallChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Beginning Cash', 'Operating', 'Investing', 'Financing', 'Ending Cash'],
+                    datasets: [{
+                        data: [beginCash, operating, investing, financing, endCash],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(139, 92, 246, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => formatCurrency(context.raw)
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => '$' + (value / 1000000).toFixed(1) + 'M',
+                                color: '#9ca3af'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderIndirectMethod();
+            
+            document.getElementById('periodSelect').addEventListener('change', () => {
+                if (currentMethod === 'indirect') {
+                    renderIndirectMethod();
+                } else {
+                    renderDirectMethod();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
