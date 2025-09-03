@@ -37,7 +37,10 @@
         }
         .trend-up { color: #10b981; }
         .trend-down { color: #ef4444; }
-        .negative-value { color: #ef4444; }
+        .negative-value { 
+            color: #f87171;
+            font-weight: 500;
+        }
         .positive-variance { color: #10b981; }
         .negative-variance { color: #ef4444; }
         .editable-value {
@@ -130,123 +133,139 @@
         .monthly-pnl-table {
             border-collapse: separate;
             border-spacing: 0;
-            font-size: 11px;
+            font-size: 12px;
+            color: #e2e8f0;
         }
         .sticky-header {
             position: sticky;
             top: 0;
             z-index: 20;
+            background: #0f172a;
         }
         .sticky-column {
             position: sticky;
             left: 0;
             z-index: 10;
             background: #0f172a !important;
-            min-width: 200px;
+            min-width: 220px;
             font-weight: 600;
+            color: #f1f5f9;
         }
         .monthly-pnl-table tbody tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
         }
         .monthly-pnl-table tbody tr {
             min-height: 36px;
         }
         .monthly-pnl-table td {
-            padding: 4px 6px;
+            padding: 6px 8px;
             white-space: nowrap;
+            color: #e2e8f0;
         }
         .month-cell {
-            width: 65px;
+            width: 75px;
             text-align: right;
+            font-size: 11px;
         }
         .editable-cell {
             cursor: pointer;
             position: relative;
         }
         .editable-cell:hover {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.2);
         }
         .edited-cell {
             border: 1px solid #fbbf24 !important;
         }
         .variance-high-positive {
-            color: #10b981;
-            opacity: 1;
+            color: #4ade80;
+            font-weight: 600;
         }
         .variance-med-positive {
-            color: #10b981;
-            opacity: 0.75;
+            color: #22c55e;
+            font-weight: 500;
         }
         .variance-low-positive {
-            color: #10b981;
-            opacity: 0.5;
+            color: #16a34a;
+            font-weight: 400;
         }
         .variance-high-negative {
-            color: #ef4444;
-            opacity: 1;
+            color: #f87171;
+            font-weight: 600;
         }
         .variance-med-negative {
             color: #ef4444;
-            opacity: 0.75;
+            font-weight: 500;
         }
         .variance-low-negative {
-            color: #ef4444;
-            opacity: 0.5;
+            color: #dc2626;
+            font-weight: 400;
         }
         .section-divider {
             height: 2px;
-            background: #4b5563;
+            background: #334155;
         }
         .sub-account {
             padding-left: 20px !important;
+            color: #cbd5e1;
         }
         .sub-sub-account {
             padding-left: 40px !important;
-            font-size: 10px;
+            font-size: 11px;
+            color: #94a3b8;
         }
         .main-section-header {
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(30, 41, 59, 0.9);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
+            color: #f1f5f9;
         }
         .total-row {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.15);
             font-weight: 700;
             border-top: 1px solid #3b82f6;
             border-bottom: 1px solid #3b82f6;
+            color: #f1f5f9;
         }
         .margin-row {
-            background: rgba(156, 163, 175, 0.05);
+            background: rgba(156, 163, 175, 0.08);
             font-style: italic;
-            color: #9ca3af;
+            color: #cbd5e1;
         }
         .ebitda-row {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(139, 92, 246, 0.15);
             font-weight: 700;
+            color: #f1f5f9;
         }
         .ebit-row {
-            background: rgba(236, 72, 153, 0.1);
+            background: rgba(236, 72, 153, 0.15);
             font-weight: 700;
+            color: #f1f5f9;
         }
         .ebt-row {
-            background: rgba(251, 146, 60, 0.1);
+            background: rgba(251, 146, 60, 0.15);
             font-weight: 700;
+            color: #f1f5f9;
         }
         .net-income-row {
-            background: rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.2);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
             border: 2px solid #10b981;
+            color: #f1f5f9;
         }
         .actuals-section {
-            background: rgba(30, 64, 175, 0.05);
+            background: rgba(30, 64, 175, 0.08);
+            border-right: 1px solid #1e3a8a;
         }
         .budget-section {
-            background: rgba(55, 65, 81, 0.05);
+            background: rgba(55, 65, 81, 0.08);
+            border-right: 1px solid #374151;
         }
         .variance-section {
-            background: rgba(107, 33, 168, 0.05);
+            background: rgba(107, 33, 168, 0.08);
+            border-right: 1px solid #6b21a8;
         }
         .expand-icon {
             cursor: pointer;
@@ -273,22 +292,34 @@
             display: flex;
             gap: 8px;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
+            z-index: 25;
+        }
+        @media (max-width: 1024px) {
+            .export-buttons {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 16px;
+                flex-wrap: wrap;
+            }
         }
         .export-button {
-            padding: 6px 12px;
+            padding: 8px 14px;
             background: #1e293b;
-            border: 1px solid #334155;
-            color: #e2e8f0;
+            border: 1px solid #475569;
+            color: #f1f5f9;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
         .export-button:hover {
             background: #334155;
             transform: translateY(-1px);
+            border-color: #64748b;
         }
         .summary-bar {
             position: sticky;
@@ -456,78 +487,80 @@
                 </button>
             </div>
             
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-200">12-Month Income Statement - Complete P&L View</h3>
+            <div class="mb-6">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <h3 class="text-xl font-semibold text-gray-100">12-Month Income Statement - Complete P&L View</h3>
+                </div>
                 <!-- Quick Actions Bar -->
-                <div class="flex gap-2">
-                    <button onclick="applyMonthlyScenario('growth')" class="text-xs px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700">
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <button onclick="applyMonthlyScenario('growth')" class="text-xs px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors">
                         Apply 5% Growth
                     </button>
-                    <button onclick="applyMonthlyScenario('cost-cut')" class="text-xs px-3 py-1 bg-orange-600 text-white rounded hover:bg-orange-700">
+                    <button onclick="applyMonthlyScenario('cost-cut')" class="text-xs px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors">
                         Cut 10% Costs
                     </button>
-                    <button onclick="applyMonthlyScenario('copy-budget')" class="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <button onclick="applyMonthlyScenario('copy-budget')" class="text-xs px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                         Copy Budget to Actuals
                     </button>
-                    <button onclick="resetMonthlyData()" class="text-xs px-3 py-1 bg-slate-600 text-white rounded hover:bg-slate-700">
+                    <button onclick="resetMonthlyData()" class="text-xs px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors">
                         Reset All Changes
                     </button>
                 </div>
             </div>
             
             <div class="overflow-x-auto relative">
-                <div class="min-w-[1800px]">
+                <div class="min-w-[2400px]">
                     <table class="w-full text-xs monthly-pnl-table">
                         <thead class="sticky-header">
                             <!-- Section Headers -->
                             <tr class="border-b border-gray-700">
                                 <th class="sticky-column text-left py-2 px-3 bg-slate-900 font-semibold text-gray-300" rowspan="2">Account</th>
-                                <th colspan="12" class="text-center py-2 px-2 bg-[#1e293b] text-blue-300 font-semibold border-l border-gray-600">ACTUALS</th>
-                                <th colspan="12" class="text-center py-2 px-2 bg-[#374151] text-gray-300 font-semibold border-l border-gray-600">BUDGET</th>
-                                <th colspan="12" class="text-center py-2 px-2 bg-[#4c1d95] text-purple-300 font-semibold border-l border-gray-600">VARIANCE (Act vs Bud)</th>
-                                <th class="text-center py-2 px-3 bg-slate-800 text-emerald-300 font-semibold border-l border-gray-600" rowspan="2">YTD Total</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#1e3a8a] text-white font-semibold border-l border-gray-600">ACTUALS</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#475569] text-white font-semibold border-l border-gray-600">BUDGET</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#7c3aed] text-white font-semibold border-l border-gray-600">VARIANCE (Act vs Bud)</th>
+                                <th class="text-center py-2 px-3 bg-[#065f46] text-white font-semibold border-l border-gray-600" rowspan="2">YTD Total</th>
                             </tr>
                             <!-- Month Names -->
                             <tr class="border-b border-gray-700">
                                 <!-- Actuals Months -->
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400 border-l border-gray-600">Jan</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Feb</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Mar</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Apr</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">May</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Jun</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Jul</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Aug</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Sep</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Oct</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Nov</th>
-                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Dec</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Dec</th>
                                 <!-- Budget Months -->
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400 border-l border-gray-600">Jan</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Feb</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Mar</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Apr</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">May</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Jun</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Jul</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Aug</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Sep</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Oct</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Nov</th>
-                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Dec</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Dec</th>
                                 <!-- Variance Months -->
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400 border-l border-gray-600">Jan</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Feb</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Mar</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Apr</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">May</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Jun</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Jul</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Aug</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Sep</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Oct</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Nov</th>
-                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Dec</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Dec</th>
                             </tr>
                         </thead>
                         <tbody id="monthTableBody">
