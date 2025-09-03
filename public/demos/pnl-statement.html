@@ -125,6 +125,71 @@
         .standard-view.hidden {
             display: none;
         }
+        
+        /* 12-Month Table Styles */
+        .monthly-pnl-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .sticky-column {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background: #0f172a !important;
+            min-width: 150px;
+        }
+        .monthly-pnl-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .monthly-pnl-table tbody tr {
+            min-height: 36px;
+        }
+        .editable-cell {
+            cursor: pointer;
+            position: relative;
+        }
+        .editable-cell:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .edited-cell {
+            border: 1px solid #fbbf24 !important;
+        }
+        .variance-high-positive {
+            color: #10b981;
+            opacity: 1;
+        }
+        .variance-med-positive {
+            color: #10b981;
+            opacity: 0.75;
+        }
+        .variance-low-positive {
+            color: #10b981;
+            opacity: 0.5;
+        }
+        .variance-high-negative {
+            color: #ef4444;
+            opacity: 1;
+        }
+        .variance-med-negative {
+            color: #ef4444;
+            opacity: 0.75;
+        }
+        .variance-low-negative {
+            color: #ef4444;
+            opacity: 0.5;
+        }
+        .section-divider {
+            border-top: 2px solid #4b5563;
+            border-bottom: 2px solid #4b5563;
+        }
+        .sub-account {
+            padding-left: 20px !important;
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
@@ -251,30 +316,108 @@
 
         <!-- 12-Month View -->
         <div id="monthView" class="month-view glass-card rounded-xl p-6 mb-6">
-            <h3 class="text-lg font-semibold text-gray-200 mb-4">12-Month P&L Trend</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-xs">
-                    <thead>
-                        <tr class="border-b border-gray-600">
-                            <th class="text-left py-2 px-1 text-gray-300">Month</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Jan</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Feb</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Mar</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Apr</th>
-                            <th class="text-right py-2 px-1 text-gray-300">May</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Jun</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Jul</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Aug</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Sep</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Oct</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Nov</th>
-                            <th class="text-right py-2 px-1 text-gray-300">Dec</th>
-                        </tr>
-                    </thead>
-                    <tbody id="monthTableBody">
-                        <!-- Dynamic monthly content -->
-                    </tbody>
-                </table>
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-200">12-Month Income Statement</h3>
+                <!-- Quick Actions Bar -->
+                <div class="flex gap-2">
+                    <button onclick="applyMonthlyScenario('growth')" class="text-xs px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700">
+                        Apply 5% Growth
+                    </button>
+                    <button onclick="applyMonthlyScenario('cost-cut')" class="text-xs px-3 py-1 bg-orange-600 text-white rounded hover:bg-orange-700">
+                        Cut 10% Costs
+                    </button>
+                    <button onclick="applyMonthlyScenario('copy-budget')" class="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Copy Budget to Actuals
+                    </button>
+                    <button onclick="resetMonthlyData()" class="text-xs px-3 py-1 bg-slate-600 text-white rounded hover:bg-slate-700">
+                        Reset All Changes
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto relative">
+                <div class="min-w-[1800px]">
+                    <table class="w-full text-xs monthly-pnl-table">
+                        <thead class="sticky-header">
+                            <!-- Section Headers -->
+                            <tr class="border-b border-gray-700">
+                                <th class="sticky-column text-left py-2 px-3 bg-slate-900 font-semibold text-gray-300" rowspan="2">Account</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#1e293b] text-blue-300 font-semibold border-l border-gray-600">ACTUALS</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#374151] text-gray-300 font-semibold border-l border-gray-600">BUDGET</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#4c1d95] text-purple-300 font-semibold border-l border-gray-600">VARIANCE (Act vs Bud)</th>
+                                <th class="text-center py-2 px-3 bg-slate-800 text-emerald-300 font-semibold border-l border-gray-600" rowspan="2">YTD Total</th>
+                            </tr>
+                            <!-- Month Names -->
+                            <tr class="border-b border-gray-700">
+                                <!-- Actuals Months -->
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">May</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#1e293b] text-gray-400">Dec</th>
+                                <!-- Budget Months -->
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">May</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#374151] text-gray-400">Dec</th>
+                                <!-- Variance Months -->
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">May</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#4c1d95] text-gray-400">Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthTableBody">
+                            <!-- Dynamic monthly content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Summary Row -->
+            <div class="mt-4 p-4 bg-slate-800/50 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-400">Average Monthly Burn:</span>
+                        <span id="avgBurnActual" class="font-semibold text-red-400 ml-2">--</span>
+                        <span class="text-gray-500 mx-2">vs</span>
+                        <span id="avgBurnBudget" class="font-semibold text-yellow-400">--</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Best Month:</span>
+                        <span id="bestMonth" class="font-semibold text-emerald-400 ml-2">--</span>
+                        <span class="text-gray-500 mx-2">|</span>
+                        <span class="text-gray-400">Worst:</span>
+                        <span id="worstMonth" class="font-semibold text-red-400 ml-2">--</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Months to Breakeven:</span>
+                        <span id="monthsToBreakeven" class="font-semibold text-blue-400 ml-2">--</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -365,21 +508,62 @@
             other: -36000
         };
 
-        // Monthly data for 12-month view
-        const monthlyData = {
+        // Comprehensive monthly data structure
+        const monthlyDataOriginal = {
             revenue: {
-                actual: [650000, 680000, 720000, 700000, 730000, 750000, 780000, 795000, 800000, 820000, 840000, 860000],
-                budget: [640000, 660000, 700000, 700000, 720000, 740000, 760000, 780000, 790000, 800000, 820000, 840000]
+                actuals: [650000, 680000, 720000, 700000, 730000, 750000, 780000, 795000, 800000, 820000, 840000, 860000],
+                budget: [640000, 660000, 700000, 700000, 720000, 740000, 760000, 780000, 790000, 800000, 820000, 840000],
+                children: {
+                    saas: { 
+                        actuals: [390000, 408000, 432000, 420000, 438000, 450000, 468000, 477000, 480000, 492000, 504000, 516000],
+                        budget: [384000, 396000, 420000, 420000, 432000, 444000, 456000, 468000, 474000, 480000, 492000, 504000]
+                    },
+                    services: {
+                        actuals: [260000, 272000, 288000, 280000, 292000, 300000, 312000, 318000, 320000, 328000, 336000, 344000],
+                        budget: [256000, 264000, 280000, 280000, 288000, 296000, 304000, 312000, 316000, 320000, 328000, 336000]
+                    }
+                }
             },
             cogs: {
-                actual: [195000, 204000, 216000, 210000, 219000, 225000, 234000, 238500, 240000, 246000, 252000, 258000],
-                budget: [192000, 198000, 210000, 210000, 216000, 222000, 228000, 234000, 237000, 240000, 246000, 252000]
+                actuals: [192000, 201000, 213000, 207000, 216000, 222000, 231000, 235500, 237000, 243000, 249000, 255000],
+                budget: [190000, 196000, 208000, 208000, 214000, 220000, 226000, 232000, 235000, 238000, 244000, 250000],
+                children: {
+                    direct: {
+                        actuals: [115200, 120600, 127800, 124200, 129600, 133200, 138600, 141300, 142200, 145800, 149400, 153000],
+                        budget: [114000, 117600, 124800, 124800, 128400, 132000, 135600, 139200, 141000, 142800, 146400, 150000]
+                    },
+                    materials: {
+                        actuals: [76800, 80400, 85200, 82800, 86400, 88800, 92400, 94200, 94800, 97200, 99600, 102000],
+                        budget: [76000, 78400, 83200, 83200, 85600, 88000, 90400, 92800, 94000, 95200, 97600, 100000]
+                    }
+                }
             },
             opex: {
-                actual: [470000, 480000, 490000, 485000, 495000, 500000, 510000, 515000, 520000, 525000, 530000, 535000],
-                budget: [460000, 465000, 470000, 475000, 480000, 485000, 490000, 495000, 500000, 505000, 510000, 515000]
+                actuals: [476000, 486000, 496000, 491000, 501000, 506000, 516000, 521000, 526000, 531000, 536000, 541000],
+                budget: [470000, 480000, 490000, 485000, 495000, 500000, 510000, 515000, 520000, 525000, 530000, 535000],
+                children: {
+                    salaries: {
+                        actuals: [309400, 315900, 322400, 319150, 325650, 328900, 335400, 338650, 341900, 345150, 348400, 351650],
+                        budget: [305500, 312000, 318500, 315250, 321750, 325000, 331500, 334750, 338000, 341250, 344500, 347750]
+                    },
+                    marketing: {
+                        actuals: [95200, 97200, 99200, 98200, 100200, 101200, 103200, 104200, 105200, 106200, 107200, 108200],
+                        budget: [94000, 96000, 98000, 97000, 99000, 100000, 102000, 103000, 104000, 105000, 106000, 107000]
+                    },
+                    other: {
+                        actuals: [71400, 72900, 74400, 73650, 75150, 75900, 77400, 78150, 78900, 79650, 80400, 81150],
+                        budget: [70500, 72000, 73500, 72750, 74250, 75000, 76500, 77250, 78000, 78750, 79500, 80250]
+                    }
+                }
+            },
+            other: {
+                actuals: [-3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000],
+                budget: [-3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000, -3000]
             }
         };
+
+        // Create mutable copy
+        let monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
 
         let currentPeriod = 'q3';
         let currentView = 'table';
@@ -686,47 +870,37 @@
             const tbody = document.getElementById('monthTableBody');
             tbody.innerHTML = '';
             
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            // Revenue section
+            renderMonthlyAccountRow(tbody, 'Revenue', 'revenue', true);
             
-            // Revenue rows
-            const revenueRow = document.createElement('tr');
-            revenueRow.className = 'border-b border-gray-700';
-            revenueRow.innerHTML = '<td class="py-2 px-1 font-semibold">Revenue (Actual)</td>';
-            monthlyData.revenue.actual.forEach(val => {
-                revenueRow.innerHTML += `<td class="text-right py-2 px-1 text-xs">${formatCurrency(val)}</td>`;
-            });
-            tbody.appendChild(revenueRow);
+            // COGS section
+            renderMonthlyAccountRow(tbody, 'Cost of Goods Sold', 'cogs', true);
             
-            const revenueBudgetRow = document.createElement('tr');
-            revenueBudgetRow.className = 'border-b border-gray-700';
-            revenueBudgetRow.innerHTML = '<td class="py-2 px-1 text-gray-400">Revenue (Budget)</td>';
-            monthlyData.revenue.budget.forEach(val => {
-                revenueBudgetRow.innerHTML += `<td class="text-right py-2 px-1 text-xs text-gray-400">${formatCurrency(val)}</td>`;
-            });
-            tbody.appendChild(revenueBudgetRow);
+            // Gross Profit
+            renderMonthlySectionDivider(tbody);
+            renderMonthlyCalculatedRow(tbody, 'Gross Profit', calculateMonthlyGrossProfit());
+            renderMonthlyMarginRow(tbody, 'Gross Margin %', calculateMonthlyGrossMargin());
             
-            // Variance row
-            const varianceRow = document.createElement('tr');
-            varianceRow.className = 'border-b border-gray-700';
-            varianceRow.innerHTML = '<td class="py-2 px-1 text-gray-400">Revenue Variance</td>';
-            monthlyData.revenue.actual.forEach((val, i) => {
-                const variance = val - monthlyData.revenue.budget[i];
-                varianceRow.innerHTML += `<td class="text-right py-2 px-1 text-xs ${variance >= 0 ? 'positive-variance' : 'negative-variance'}">${variance >= 0 ? '+' : ''}${formatNumber(variance)}</td>`;
-            });
-            tbody.appendChild(varianceRow);
+            // Operating Expenses
+            renderMonthlySectionDivider(tbody);
+            renderMonthlyAccountRow(tbody, 'Operating Expenses', 'opex', true);
             
-            // Add spacing
-            tbody.innerHTML += '<tr><td colspan="13" class="py-2"></td></tr>';
+            // Operating Income
+            renderMonthlySectionDivider(tbody);
+            renderMonthlyCalculatedRow(tbody, 'Operating Income', calculateMonthlyOperatingIncome());
+            renderMonthlyMarginRow(tbody, 'Operating Margin %', calculateMonthlyOperatingMargin());
             
-            // Net Income row
-            const netIncomeRow = document.createElement('tr');
-            netIncomeRow.className = 'font-bold text-white bg-slate-800';
-            netIncomeRow.innerHTML = '<td class="py-2 px-1">Net Income</td>';
-            monthlyData.revenue.actual.forEach((revenue, i) => {
-                const netIncome = revenue - monthlyData.cogs.actual[i] - monthlyData.opex.actual[i] - 3000;
-                netIncomeRow.innerHTML += `<td class="text-right py-2 px-1 text-xs ${netIncome < 0 ? 'negative-value' : ''}">${formatCurrency(netIncome)}</td>`;
-            });
-            tbody.appendChild(netIncomeRow);
+            // Other Income/Expenses
+            renderMonthlySectionDivider(tbody);
+            renderMonthlyAccountRow(tbody, 'Other Income/Expenses', 'other', false);
+            
+            // Net Income
+            renderMonthlySectionDivider(tbody);
+            renderMonthlyCalculatedRow(tbody, 'Net Income', calculateMonthlyNetIncome(), true);
+            renderMonthlyMarginRow(tbody, 'Net Margin %', calculateMonthlyNetMargin());
+            
+            // Update summary metrics
+            updateMonthlySummary();
         }
 
         function toggleView(view) {
@@ -886,6 +1060,323 @@
                     }
                 }
             });
+        }
+
+        // Monthly view helper functions
+        function renderMonthlyAccountRow(tbody, label, category, expandable) {
+            const row = document.createElement('tr');
+            row.className = 'account-row';
+            
+            // Account name column
+            let accountCell = `<td class="sticky-column py-2 px-3 font-semibold text-gray-200">`;
+            if (expandable) {
+                accountCell += `<span class="expandable cursor-pointer" onclick="toggleMonthlyExpand('${category}')">
+                    ${chartOfAccounts[category].expandedMonthly ? '▼' : '▶'} ${label}
+                </span>`;
+            } else {
+                accountCell += label;
+            }
+            accountCell += '</td>';
+            
+            row.innerHTML = accountCell;
+            
+            // Add actual values
+            monthlyData[category].actuals.forEach((value, i) => {
+                row.innerHTML += `<td class="text-right py-2 px-1 border-l border-gray-700 editable-cell" 
+                    onclick="editMonthlyCell('${category}', 'actuals', ${i})" 
+                    id="${category}-actual-${i}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Add budget values
+            monthlyData[category].budget.forEach((value, i) => {
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} editable-cell" 
+                    onclick="editMonthlyCell('${category}', 'budget', ${i})"
+                    id="${category}-budget-${i}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Add variance values
+            monthlyData[category].actuals.forEach((actual, i) => {
+                const budget = monthlyData[category].budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, category === 'cogs' || category === 'opex');
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // Add YTD total
+            const ytdActual = monthlyData[category].actuals.reduce((sum, val) => sum + val, 0);
+            row.innerHTML += `<td class="text-right py-2 px-3 border-l border-gray-600 font-semibold text-emerald-300">
+                ${formatMonthlyValue(ytdActual)}
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyCalculatedRow(tbody, label, values, isNetIncome = false) {
+            const row = document.createElement('tr');
+            row.className = isNetIncome ? 'font-bold text-white bg-slate-800' : 'font-semibold text-gray-200';
+            
+            row.innerHTML = `<td class="sticky-column py-2 px-3">${label}</td>`;
+            
+            // Actuals
+            values.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-2 px-1 border-l border-gray-700 ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Budget
+            values.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Variance
+            values.actuals.forEach((actual, i) => {
+                const budget = values.budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, false);
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // YTD
+            const ytd = values.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdClass = ytd < 0 ? 'text-red-400' : 'text-emerald-300';
+            row.innerHTML += `<td class="text-right py-2 px-3 border-l border-gray-600 font-semibold ${ytdClass}">
+                ${formatMonthlyValue(ytd)}
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyMarginRow(tbody, label, values) {
+            const row = document.createElement('tr');
+            row.className = 'text-gray-400';
+            
+            row.innerHTML = `<td class="sticky-column py-1 px-3">${label}</td>`;
+            
+            // Actuals
+            values.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-1 px-1 border-l border-gray-700 text-xs ${valueClass}">
+                    ${value.toFixed(1)}%
+                </td>`;
+            });
+            
+            // Budget
+            values.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-1 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} text-xs ${valueClass}">
+                    ${value.toFixed(1)}%
+                </td>`;
+            });
+            
+            // Variance
+            values.actuals.forEach((actual, i) => {
+                const budget = values.budget[i];
+                const variance = actual - budget;
+                const varianceClass = variance >= 0 ? 'positive-variance' : 'negative-variance';
+                row.innerHTML += `<td class="text-right py-1 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} text-xs ${varianceClass}">
+                    ${variance >= 0 ? '+' : ''}${variance.toFixed(1)}%
+                </td>`;
+            });
+            
+            // YTD
+            row.innerHTML += `<td class="text-right py-1 px-3 border-l border-gray-600 text-xs">
+                ${values.ytd.toFixed(1)}%
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlySectionDivider(tbody) {
+            const row = document.createElement('tr');
+            row.className = 'section-divider';
+            row.innerHTML = '<td colspan="38" class="py-1"></td>';
+            tbody.appendChild(row);
+        }
+
+        // Calculation functions
+        function calculateMonthlyGrossProfit() {
+            return {
+                actuals: monthlyData.revenue.actuals.map((rev, i) => rev - monthlyData.cogs.actuals[i]),
+                budget: monthlyData.revenue.budget.map((rev, i) => rev - monthlyData.cogs.budget[i])
+            };
+        }
+
+        function calculateMonthlyGrossMargin() {
+            const grossProfit = calculateMonthlyGrossProfit();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdGrossProfit = grossProfit.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: grossProfit.actuals.map((gp, i) => (gp / monthlyData.revenue.actuals[i] * 100)),
+                budget: grossProfit.budget.map((gp, i) => (gp / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdGrossProfit / ytdRevenue * 100)
+            };
+        }
+
+        function calculateMonthlyOperatingIncome() {
+            const grossProfit = calculateMonthlyGrossProfit();
+            return {
+                actuals: grossProfit.actuals.map((gp, i) => gp - monthlyData.opex.actuals[i]),
+                budget: grossProfit.budget.map((gp, i) => gp - monthlyData.opex.budget[i])
+            };
+        }
+
+        function calculateMonthlyOperatingMargin() {
+            const operatingIncome = calculateMonthlyOperatingIncome();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdOperatingIncome = operatingIncome.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: operatingIncome.actuals.map((oi, i) => (oi / monthlyData.revenue.actuals[i] * 100)),
+                budget: operatingIncome.budget.map((oi, i) => (oi / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdOperatingIncome / ytdRevenue * 100)
+            };
+        }
+
+        function calculateMonthlyNetIncome() {
+            const operatingIncome = calculateMonthlyOperatingIncome();
+            return {
+                actuals: operatingIncome.actuals.map((oi, i) => oi + monthlyData.other.actuals[i]),
+                budget: operatingIncome.budget.map((oi, i) => oi + monthlyData.other.budget[i])
+            };
+        }
+
+        function calculateMonthlyNetMargin() {
+            const netIncome = calculateMonthlyNetIncome();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdNetIncome = netIncome.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: netIncome.actuals.map((ni, i) => (ni / monthlyData.revenue.actuals[i] * 100)),
+                budget: netIncome.budget.map((ni, i) => (ni / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdNetIncome / ytdRevenue * 100)
+            };
+        }
+
+        // Formatting functions
+        function formatMonthlyValue(value) {
+            if (value === 0) return '$0';
+            const absValue = Math.abs(value);
+            const formatted = absValue >= 1000000 ? 
+                `$${(absValue / 1000000).toFixed(1)}M` : 
+                `$${(absValue / 1000).toFixed(0)}k`;
+            return value < 0 ? `(${formatted})` : formatted;
+        }
+
+        function formatVariance(variance) {
+            if (variance === 0) return '$0';
+            const formatted = formatMonthlyValue(Math.abs(variance));
+            return variance > 0 ? `+${formatted}` : `-${formatted.replace(/[()]/g, '')}`;
+        }
+
+        function getVarianceClass(variance, budget, isExpense) {
+            const percentVariance = budget !== 0 ? Math.abs(variance / budget * 100) : 0;
+            const isPositive = isExpense ? variance < 0 : variance > 0;
+            
+            if (percentVariance > 10) {
+                return isPositive ? 'variance-high-positive' : 'variance-high-negative';
+            } else if (percentVariance > 5) {
+                return isPositive ? 'variance-med-positive' : 'variance-med-negative';
+            } else {
+                return isPositive ? 'variance-low-positive' : 'variance-low-negative';
+            }
+        }
+
+        // Interactive functions
+        function editMonthlyCell(category, type, monthIndex) {
+            const cellId = `${category}-${type}-${monthIndex}`;
+            const cell = document.getElementById(cellId);
+            const currentValue = monthlyData[category][type][monthIndex];
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'editing-input';
+            input.value = formatNumber(currentValue);
+            
+            input.onblur = function() {
+                const newValue = parseInt(input.value.replace(/,/g, '')) || currentValue;
+                monthlyData[category][type][monthIndex] = newValue;
+                cell.classList.add('edited-cell');
+                renderMonthlyView();
+            };
+            
+            input.onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+            };
+            
+            cell.innerHTML = '';
+            cell.appendChild(input);
+            input.focus();
+            input.select();
+        }
+
+        function toggleMonthlyExpand(category) {
+            chartOfAccounts[category].expandedMonthly = !chartOfAccounts[category].expandedMonthly;
+            renderMonthlyView();
+        }
+
+        function applyMonthlyScenario(scenario) {
+            if (scenario === 'growth') {
+                monthlyData.revenue.actuals = monthlyData.revenue.actuals.map(val => Math.round(val * 1.05));
+            } else if (scenario === 'cost-cut') {
+                monthlyData.opex.actuals = monthlyData.opex.actuals.map(val => Math.round(val * 0.9));
+            } else if (scenario === 'copy-budget') {
+                monthlyData.revenue.actuals = [...monthlyData.revenue.budget];
+                monthlyData.cogs.actuals = [...monthlyData.cogs.budget];
+                monthlyData.opex.actuals = [...monthlyData.opex.budget];
+            }
+            renderMonthlyView();
+        }
+
+        function resetMonthlyData() {
+            monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
+            document.querySelectorAll('.edited-cell').forEach(cell => {
+                cell.classList.remove('edited-cell');
+            });
+            renderMonthlyView();
+        }
+
+        function updateMonthlySummary() {
+            const netIncome = calculateMonthlyNetIncome();
+            
+            // Average monthly burn
+            const avgBurnActual = netIncome.actuals.reduce((sum, val) => sum + val, 0) / 12;
+            const avgBurnBudget = netIncome.budget.reduce((sum, val) => sum + val, 0) / 12;
+            
+            document.getElementById('avgBurnActual').textContent = formatCurrency(avgBurnActual) + '/mo';
+            document.getElementById('avgBurnBudget').textContent = formatCurrency(avgBurnBudget) + '/mo';
+            
+            // Best and worst months
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const bestMonthIndex = netIncome.actuals.indexOf(Math.max(...netIncome.actuals));
+            const worstMonthIndex = netIncome.actuals.indexOf(Math.min(...netIncome.actuals));
+            
+            document.getElementById('bestMonth').textContent = `${monthNames[bestMonthIndex]} (${formatCurrency(netIncome.actuals[bestMonthIndex])})`;
+            document.getElementById('worstMonth').textContent = `${monthNames[worstMonthIndex]} (${formatCurrency(netIncome.actuals[worstMonthIndex])})`;
+            
+            // Months to breakeven
+            if (avgBurnActual < 0) {
+                const currentCash = 4250000; // From balance sheet
+                const monthsToBreakeven = Math.round(currentCash / Math.abs(avgBurnActual));
+                document.getElementById('monthsToBreakeven').textContent = monthsToBreakeven + ' months';
+            } else {
+                document.getElementById('monthsToBreakeven').textContent = 'Already profitable';
+            }
         }
 
         // Initialize
