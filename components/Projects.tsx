@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ExternalLink, Github, Play, Code, TrendingUp, DollarSign, BarChart, Brain, Calculator, AlertCircle, LineChart, Target, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import BatchReveal from './scroll/BatchReveal'
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -225,7 +224,7 @@ const Projects = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
       </div>
 
-      <div className="max-w-7xl mx-auto reveal">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
           <motion.div
@@ -295,20 +294,22 @@ const Projects = () => {
         </div>
 
         {/* Projects Grid */}
-        <BatchReveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                className="group relative reveal project-card-3d"
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-                initial={{ opacity: 0, y: 50, rotateY: 15 }}
-                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }}
-                viewport={{ once: true }}
-              >
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          {filteredProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              className="group relative project-card-3d"
+              onMouseEnter={() => setHoveredProject(project.id)}
+              onMouseLeave={() => setHoveredProject(null)}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.1,
+                ease: [0.215, 0.61, 0.355, 1] 
+              }}
+              whileHover={{ y: -8, scale: 1.02 }}
+            >
                 <div className="relative h-full glass-card rounded-3xl overflow-hidden transform-gpu">
                   <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                   
@@ -429,7 +430,6 @@ const Projects = () => {
               </motion.div>
             ))}
           </div>
-        </BatchReveal>
 
         {/* Call to Action */}
         <motion.div 
