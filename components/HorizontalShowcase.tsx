@@ -58,11 +58,12 @@ export default function HorizontalShowcase() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top top',
-            end: () => `+=${slides.length * 100}%`,
+            end: () => `+=${slides.length * 50}%`, // Reduced from 100% to 50% per slide
             scrub: 0.5,
             pin: true,
             anticipatePin: 1,
             fastScrollEnd: true,
+            pinSpacing: true, // Ensure proper spacing after pinned section
           }
         });
 

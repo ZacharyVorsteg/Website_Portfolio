@@ -42,7 +42,7 @@ export default function Home() {
 
         {/* Content sections */}
         <PinnedHero />
-        {/* <HorizontalShowcase /> */}
+        <HorizontalShowcase />
         <Projects />
         <Skills />
         <About />
