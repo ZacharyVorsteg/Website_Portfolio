@@ -218,8 +218,13 @@ const Projects = () => {
   
   console.log('Projects:', projects.length, 'Filtered:', filteredProjects.length)
 
+  // Debug: Check if component is rendering
+  if (typeof window !== 'undefined') {
+    console.log('Projects component is rendering!')
+  }
+
   return (
-    <section id="projects" className="py-20 px-4 relative color-section" data-bgcolor="#0f172a">
+    <section id="projects" className="py-20 px-4 relative" style={{ backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
@@ -227,6 +232,11 @@ const Projects = () => {
       </div>
 
       <div className="max-w-7xl mx-auto">
+        {/* Debug: Simple test element */}
+        <div style={{ color: 'white', fontSize: '24px', textAlign: 'center', marginBottom: '20px' }}>
+          PROJECTS SECTION TEST - Can you see this?
+        </div>
+        
         {/* Section Header */}
         <div className="text-center mb-16">
           <motion.div
