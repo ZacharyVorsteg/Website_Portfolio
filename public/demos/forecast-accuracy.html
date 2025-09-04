@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecast Accuracy Tracker - Sales Prediction Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.1) 0%, rgba(13, 148, 136, 0.05) 100%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+        .accuracy-excellent { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .accuracy-good { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .accuracy-fair { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .accuracy-poor { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .rep-row:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(2px);
+            transition: all 0.2s ease;
+        }
+        .variance-positive { color: #10b981; }
+        .variance-negative { color: #ef4444; }
+        .accuracy-score {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 auto;
+        }
+        .score-a { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .score-b { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .score-c { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .score-d { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #ef4444; }
+        .trend-stable { color: #6b7280; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent mb-2">
+                        Forecast Accuracy Tracker
+                    </h1>
+                    <p class="text-gray-400">Track and improve forecast accuracy with variance analysis and predictive insights</p>
+                </div>
+                <div class="flex gap-2 mt-4 md:mt-0">
+                    <select id="periodFilter" onchange="filterByPeriod()" class="px-3 py-2 bg-slate-700 text-white rounded-lg text-sm">
+                        <option value="12">Last 12 Months</option>
+                        <option value="6">Last 6 Months</option>
+                        <option value="3">Last 3 Months</option>
+                    </select>
+                    <button onclick="generateNewData()" class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors">
+                        Update Forecasts
+                    </button>
+                </div>
+            </div>
+
+            <!-- Forecast Accuracy Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Overall Accuracy</h3>
+                    <div class="text-2xl font-bold text-teal-400" id="overallAccuracy">91.3%</div>
+                    <div class="text-xs text-gray-500 mt-1">12-month average</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Best Forecaster</h3>
+                    <div class="text-2xl font-bold text-green-400" id="bestForecaster">Sarah J.</div>
+                    <div class="text-xs text-gray-500 mt-1" id="bestAccuracy">96.7% accuracy</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Avg Variance</h3>
+                    <div class="text-2xl font-bold text-blue-400" id="avgVariance">±8.7%</div>
+                    <div class="text-xs text-gray-500 mt-1">Forecast vs actual</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Trend</h3>
+                    <div class="text-2xl font-bold text-purple-400" id="accuracyTrend">↗ +2.4%</div>
+                    <div class="text-xs text-gray-500 mt-1">Improving</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Forecast vs Actual Trend -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-gray-200 mb-4">Forecast vs Actual Revenue</h3>
+                <canvas id="forecastChart" width="400" height="300"></canvas>
+                <div class="mt-4 flex justify-between text-sm">
+                    <div>
+                        <span class="text-gray-400">Current Month Variance: </span>
+                        <span class="font-semibold text-green-400" id="currentVariance">+3.2%</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Confidence Level: </span>
+                        <span class="font-semibold text-blue-400">94.8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rep Accuracy Comparison -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-gray-200 mb-4">Rep Accuracy Comparison</h3>
+                <canvas id="accuracyChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+
+        <!-- Rep Reliability Ranking -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-200">Forecast Reliability Rankings</h3>
+                <div class="text-sm text-gray-400">
+                    <span>🎯 = Consistently accurate • ⚠️ = Needs improvement • 📈 = Improving trend</span>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-center py-3 px-2 text-gray-300">Rank</th>
+                            <th class="text-left py-3 px-2 text-gray-300">Rep Name</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Accuracy Score</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Avg Variance</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Forecast</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Actual</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Trend</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Reliability</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Insights</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reliabilityTable">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Monthly Variance Analysis -->
+        <div class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-gray-200 mb-4">Monthly Variance Analysis</h3>
+            <canvas id="varianceChart" width="400" height="250"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let forecastData = [];
+        let forecastChart = null;
+        let accuracyChart = null;
+        let varianceChart = null;
+
+        const repNames = [
+            'Sarah Johnson', 'Mike Chen', 'Emily Rodriguez', 'David Kim', 
+            'Jessica Taylor', 'Alex Thompson', 'Lisa Wang', 'Robert Martinez'
+        ];
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        function generateForecastData() {
+            const data = [];
+            
+            repNames.forEach(name => {
+                const repData = {
+                    name,
+                    monthlyForecasts: [],
+                    monthlyActuals: [],
+                    accuracyScore: 0,
+                    avgVariance: 0,
+                    trend: 'stable'
+                };
+                
+                // Generate 12 months of forecast vs actual data
+                for (let i = 0; i < 12; i++) {
+                    const baseAmount = Math.random() * 80000 + 40000; // $40K-120K
+                    const forecast = Math.floor(baseAmount);
+                    
+                    // Add some realistic variance (most reps are somewhat accurate)
+                    const variance = (Math.random() - 0.5) * 0.3; // ±15% variance
+                    const actual = Math.floor(forecast * (1 + variance));
+                    
+                    repData.monthlyForecasts.push(forecast);
+                    repData.monthlyActuals.push(actual);
+                }
+                
+                // Calculate accuracy metrics
+                const variances = repData.monthlyForecasts.map((forecast, i) => {
+                    const actual = repData.monthlyActuals[i];
+                    return Math.abs((actual - forecast) / forecast);
+                });
+                
+                repData.avgVariance = variances.reduce((sum, v) => sum + v, 0) / variances.length;
+                repData.accuracyScore = Math.max(0, 100 - repData.avgVariance * 100);
+                
+                // Determine trend (comparing first 6 months vs last 6 months)
+                const firstHalf = variances.slice(0, 6).reduce((sum, v) => sum + v, 0) / 6;
+                const secondHalf = variances.slice(6).reduce((sum, v) => sum + v, 0) / 6;
+                
+                if (secondHalf < firstHalf * 0.9) repData.trend = 'improving';
+                else if (secondHalf > firstHalf * 1.1) repData.trend = 'declining';
+                else repData.trend = 'stable';
+                
+                data.push(repData);
+            });
+            
+            // Sort by accuracy score
+            data.sort((a, b) => b.accuracyScore - a.accuracyScore);
+            return data;
+        }
+
+        function getAccuracyGrade(score) {
+            if (score >= 95) return { grade: 'A+', class: 'score-a' };
+            if (score >= 90) return { grade: 'A', class: 'score-a' };
+            if (score >= 85) return { grade: 'B+', class: 'score-b' };
+            if (score >= 80) return { grade: 'B', class: 'score-b' };
+            if (score >= 75) return { grade: 'C+', class: 'score-c' };
+            if (score >= 70) return { grade: 'C', class: 'score-c' };
+            return { grade: 'D', class: 'score-d' };
+        }
+
+        function getTrendIcon(trend) {
+            if (trend === 'improving') return '<span class="trend-up">📈</span>';
+            if (trend === 'declining') return '<span class="trend-down">📉</span>';
+            return '<span class="trend-stable">➡️</span>';
+        }
+
+        function getReliabilityLevel(score) {
+            if (score >= 95) return { level: 'Excellent', class: 'accuracy-excellent', icon: '🎯' };
+            if (score >= 85) return { level: 'Good', class: 'accuracy-good', icon: '✅' };
+            if (score >= 75) return { level: 'Fair', class: 'accuracy-fair', icon: '⚠️' };
+            return { level: 'Needs Work', class: 'accuracy-poor', icon: '❌' };
+        }
+
+        function generateNewData() {
+            forecastData = generateForecastData();
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Calculate overall metrics
+            const overallAccuracy = forecastData.reduce((sum, rep) => sum + rep.accuracyScore, 0) / forecastData.length;
+            const overallVariance = forecastData.reduce((sum, rep) => sum + rep.avgVariance, 0) / forecastData.length;
+            const bestRep = forecastData[0];
+            
+            document.getElementById('overallAccuracy').textContent = overallAccuracy.toFixed(1) + '%';
+            document.getElementById('bestForecaster').textContent = bestRep.name.split(' ')[0] + ' ' + bestRep.name.split(' ')[1][0] + '.';
+            document.getElementById('bestAccuracy').textContent = bestRep.accuracyScore.toFixed(1) + '% accuracy';
+            document.getElementById('avgVariance').textContent = '±' + (overallVariance * 100).toFixed(1) + '%';
+            
+            // Calculate trend
+            const improvingReps = forecastData.filter(rep => rep.trend === 'improving').length;
+            const totalReps = forecastData.length;
+            const trendPercentage = (improvingReps / totalReps * 100).toFixed(1);
+            document.getElementById('accuracyTrend').textContent = `↗ +${trendPercentage}%`;
+            
+            renderReliabilityTable();
+            updateCharts();
+        }
+
+        function renderReliabilityTable() {
+            const tbody = document.getElementById('reliabilityTable');
+            tbody.innerHTML = '';
+            
+            forecastData.forEach((rep, index) => {
+                const grade = getAccuracyGrade(rep.accuracyScore);
+                const reliability = getReliabilityLevel(rep.accuracyScore);
+                const totalForecast = rep.monthlyForecasts.reduce((sum, f) => sum + f, 0);
+                const totalActual = rep.monthlyActuals.reduce((sum, a) => sum + a, 0);
+                
+                const row = document.createElement('tr');
+                row.className = 'rep-row border-b border-gray-700';
+                
+                row.innerHTML = `
+                    <td class="py-3 px-2 text-center font-bold text-lg">${index + 1}</td>
+                    <td class="py-3 px-2 font-semibold text-gray-200">${rep.name}</td>
+                    <td class="py-3 px-2 text-center">
+                        <div class="accuracy-score ${grade.class}">
+                            ${grade.grade}
+                        </div>
+                    </td>
+                    <td class="py-3 px-2 text-right font-semibold ${rep.avgVariance < 0.1 ? 'text-green-400' : rep.avgVariance < 0.15 ? 'text-yellow-400' : 'text-red-400'}">
+                        ±${(rep.avgVariance * 100).toFixed(1)}%
+                    </td>
+                    <td class="py-3 px-2 text-right">$${(totalForecast / 1000).toFixed(0)}K</td>
+                    <td class="py-3 px-2 text-right">$${(totalActual / 1000).toFixed(0)}K</td>
+                    <td class="py-3 px-2 text-center">${getTrendIcon(rep.trend)}</td>
+                    <td class="py-3 px-2 text-center">
+                        <span class="px-2 py-1 rounded text-xs font-medium ${reliability.class}">
+                            ${reliability.icon} ${reliability.level}
+                        </span>
+                    </td>
+                    <td class="py-3 px-2 text-center">
+                        <button onclick="showInsights('${rep.name}')" class="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                            View Details
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateCharts() {
+            createForecastChart();
+            createAccuracyChart();
+            createVarianceChart();
+        }
+
+        function createForecastChart() {
+            const ctx = document.getElementById('forecastChart').getContext('2d');
+            
+            if (forecastChart) forecastChart.destroy();
+            
+            // Use team totals for the main chart
+            const teamForecasts = months.map((_, i) => 
+                forecastData.reduce((sum, rep) => sum + rep.monthlyForecasts[i], 0) / 1000
+            );
+            const teamActuals = months.map((_, i) => 
+                forecastData.reduce((sum, rep) => sum + rep.monthlyActuals[i], 0) / 1000
+            );
+            
+            forecastChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Forecasted Revenue',
+                        data: teamForecasts,
+                        borderColor: '#14b8a6',
+                        backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointBackgroundColor: '#14b8a6',
+                        pointBorderColor: '#1e293b',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }, {
+                        label: 'Actual Revenue',
+                        data: teamActuals,
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointBackgroundColor: '#3b82f6',
+                        pointBorderColor: '#1e293b',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            labels: { color: '#9ca3af' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Revenue ($K)', color: '#9ca3af' },
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function createAccuracyChart() {
+            const ctx = document.getElementById('accuracyChart').getContext('2d');
+            
+            if (accuracyChart) accuracyChart.destroy();
+            
+            const sortedReps = [...forecastData].sort((a, b) => b.accuracyScore - a.accuracyScore);
+            
+            accuracyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sortedReps.map(rep => rep.name.split(' ')[0]), // First names
+                    datasets: [{
+                        label: 'Accuracy Score (%)',
+                        data: sortedReps.map(rep => rep.accuracyScore),
+                        backgroundColor: sortedReps.map(rep => {
+                            if (rep.accuracyScore >= 95) return '#10b981';
+                            if (rep.accuracyScore >= 85) return '#22c55e';
+                            if (rep.accuracyScore >= 75) return '#f59e0b';
+                            return '#ef4444';
+                        }),
+                        borderWidth: 1,
+                        borderColor: '#374151'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createVarianceChart() {
+            const ctx = document.getElementById('varianceChart').getContext('2d');
+            
+            if (varianceChart) varianceChart.destroy();
+            
+            // Calculate monthly variance percentages
+            const monthlyVariances = months.map((_, i) => {
+                const totalForecast = forecastData.reduce((sum, rep) => sum + rep.monthlyForecasts[i], 0);
+                const totalActual = forecastData.reduce((sum, rep) => sum + rep.monthlyActuals[i], 0);
+                return totalForecast > 0 ? ((totalActual - totalForecast) / totalForecast * 100) : 0;
+            });
+            
+            varianceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Variance (%)',
+                        data: monthlyVariances,
+                        backgroundColor: monthlyVariances.map(v => v >= 0 ? '#10b981' : '#ef4444'),
+                        borderWidth: 1,
+                        borderColor: '#374151'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            title: { display: true, text: 'Variance (%)', color: '#9ca3af' },
+                            ticks: { 
+                                color: '#9ca3af',
+                                callback: function(value) {
+                                    return (value >= 0 ? '+' : '') + value.toFixed(1) + '%';
+                                }
+                            },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function showInsights(repName) {
+            const rep = forecastData.find(r => r.name === repName);
+            if (!rep) return;
+            
+            const insights = [];
+            
+            if (rep.accuracyScore >= 95) {
+                insights.push("🎯 Consistently accurate forecaster - use as coaching example");
+            } else if (rep.accuracyScore < 75) {
+                insights.push("⚠️ Needs forecasting training and closer pipeline review");
+            }
+            
+            if (rep.trend === 'improving') {
+                insights.push("📈 Showing improvement - current coaching is working");
+            } else if (rep.trend === 'declining') {
+                insights.push("📉 Accuracy declining - investigate pipeline management");
+            }
+            
+            if (rep.avgVariance > 0.15) {
+                insights.push("🔍 High variance suggests inconsistent pipeline visibility");
+            }
+            
+            const avgForecast = rep.monthlyForecasts.reduce((sum, f) => sum + f, 0) / 12;
+            const avgActual = rep.monthlyActuals.reduce((sum, a) => sum + a, 0) / 12;
+            
+            if (avgActual > avgForecast * 1.1) {
+                insights.push("🚀 Consistently under-forecasts - may be sandbagging");
+            } else if (avgActual < avgForecast * 0.9) {
+                insights.push("⚡ Consistently over-forecasts - may be too optimistic");
+            }
+            
+            alert(`Forecast Analysis for ${repName}:\n\n` + insights.join('\n\n'));
+        }
+
+        function filterByPeriod() {
+            const period = parseInt(document.getElementById('periodFilter').value);
+            // This would filter the data by time period
+            // For demo purposes, we'll just update the charts
+            updateCharts();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateNewData();
+        });
+    </script>
+</body>
+</html>

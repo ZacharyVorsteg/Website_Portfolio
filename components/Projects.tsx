@@ -10,11 +10,11 @@ const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   const categories = [
-    { id: 'all', label: 'All Projects', count: 9 },
+    { id: 'all', label: 'All Projects', count: 15 },
     { id: 'cfo', label: 'CFO Tools', count: 6 },
     { id: 'ceo', label: 'CEO Strategy', count: 1 },
-    { id: 'datascience', label: 'Data Science', count: 2 },
-    { id: 'crossover', label: 'Cross-functional', count: 0 },
+    { id: 'datascience', label: 'Data Science', count: 5 },
+    { id: 'rsm', label: 'Sales Management', count: 3 },
   ]
 
   const projects = [
@@ -202,6 +202,130 @@ const Projects = () => {
       status: 'Live Demo',
       featured: false,
       demoNote: 'Triple exponential smoothing with cohort-based revenue modeling. Shows seasonal patterns and growth trends.'
+    },
+
+    // DATA SCIENTIST PROJECTS - Advanced Analytics
+    {
+      id: 10,
+      title: 'Predictive Healthcare Outcomes',
+      subtitle: 'Heart Disease Risk Prediction',
+      description: 'ML model analyzing patient data to predict heart disease risk using logistic regression with interactive ROC curves and feature importance.',
+      metrics: {
+        accuracy: '89.2%',
+        patients: '500 records',
+        features: '6 variables'
+      },
+      liveUrl: '/demos/healthcare-prediction.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'datascience',
+      tech: ['JavaScript', 'ML.js', 'Chart.js', 'Statistics'],
+      gradient: 'from-green-600 to-emerald-600',
+      icon: <Brain className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Interactive thresholds, ROC analysis, and SHAP-like feature importance. Demonstrates clinical ML applications.'
+    },
+    {
+      id: 11,
+      title: 'Fraud Detection System',
+      subtitle: 'Anomaly Detection Engine',
+      description: 'Real-time fraud detection using Isolation Forest algorithm on credit card transactions with interactive anomaly scoring.',
+      metrics: {
+        precision: '94.7%',
+        transactions: '1000+ daily',
+        detection: 'Real-time'
+      },
+      liveUrl: '/demos/fraud-detection.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'datascience',
+      tech: ['JavaScript', 'Anomaly Detection', 'Data Visualization'],
+      gradient: 'from-red-600 to-pink-600',
+      icon: <AlertCircle className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Isolation Forest implementation with transaction scoring and interactive threshold adjustment for fraud detection.'
+    },
+    {
+      id: 12,
+      title: 'Startup Survival Predictor',
+      subtitle: '3-Year Survival Analysis',
+      description: 'Random Forest model predicting startup survival based on funding, burn rate, team size, and growth metrics.',
+      metrics: {
+        accuracy: '87.4%',
+        startups: '300 companies',
+        features: '5 key metrics'
+      },
+      liveUrl: '/demos/startup-survival.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'datascience',
+      tech: ['JavaScript', 'Random Forest', 'Business Analytics'],
+      gradient: 'from-purple-600 to-indigo-600',
+      icon: <TrendingUp className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Feature importance analysis and survival probability calculator with interactive input sliders.'
+    },
+
+    // RSM PROJECTS - Sales Management Analytics
+    {
+      id: 13,
+      title: 'Territory Performance Dashboard',
+      subtitle: 'Sales Rep Analytics',
+      description: 'Comprehensive sales performance tracking across territories with quota attainment, revenue analysis, and rep leaderboards.',
+      metrics: {
+        territories: '3 regions',
+        reps: '10 active',
+        metrics: 'Real-time'
+      },
+      liveUrl: '/demos/territory-dashboard.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'rsm',
+      tech: ['JavaScript', 'Chart.js', 'Sales Analytics'],
+      gradient: 'from-blue-600 to-cyan-600',
+      icon: <BarChart className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Interactive territory comparison with attainment tracking, revenue breakdowns, and performance rankings.'
+    },
+    {
+      id: 14,
+      title: 'Pipeline Health Analyzer',
+      subtitle: 'Opportunity Management',
+      description: 'Advanced pipeline analysis with stage progression funnels, weighted forecasting, and win-rate optimization insights.',
+      metrics: {
+        opportunities: '200+ deals',
+        stages: '6 pipeline',
+        forecasting: 'Weighted'
+      },
+      liveUrl: '/demos/pipeline-analyzer.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'rsm',
+      tech: ['JavaScript', 'Pipeline Analytics', 'Forecasting'],
+      gradient: 'from-orange-600 to-yellow-600',
+      icon: <Target className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Funnel visualization with conversion rates, deal velocity analysis, and quota vs pipeline tracking.'
+    },
+    {
+      id: 15,
+      title: 'Forecast Accuracy Tracker',
+      subtitle: 'Sales Prediction Analytics',
+      description: 'Track and improve forecast accuracy with variance analysis, rep reliability scoring, and predictive insights.',
+      metrics: {
+        accuracy: '91.3%',
+        periods: '12 months',
+        reps: 'Individual'
+      },
+      liveUrl: '/demos/forecast-accuracy.html',
+      githubUrl: 'https://github.com/ZacharyVorsteg/Website_Portfolio',
+      category: 'rsm',
+      tech: ['JavaScript', 'Time Series', 'Forecast Analytics'],
+      gradient: 'from-teal-600 to-green-600',
+      icon: <LineChart className="w-6 h-6" />,
+      status: 'Live Demo',
+      featured: false,
+      demoNote: 'Forecast vs actual variance tracking with rep reliability rankings and accuracy improvement insights.'
     },
   ]
 
