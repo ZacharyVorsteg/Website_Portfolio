@@ -502,14 +502,14 @@ const Projects = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
                       {project.liveUrl !== '#' && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className={`
-                            flex-1 py-3 px-4 rounded-xl font-medium text-sm
+                            flex-1 py-3 px-3 rounded-xl font-medium text-sm
                             bg-gradient-to-r ${project.gradient} text-white
                             hover:shadow-lg transition-all duration-300
                             flex items-center justify-center gap-2
@@ -517,7 +517,7 @@ const Projects = () => {
                           `}
                         >
                           <Play className="w-4 h-4" />
-                          Try Demo
+                          Demo
                         </a>
                       )}
                       <a
@@ -525,7 +525,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="
-                          flex-1 py-3 px-4 rounded-xl font-medium text-sm
+                          flex-1 py-3 px-3 rounded-xl font-medium text-sm
                           bg-white/5 text-gray-300 border border-white/10
                           hover:bg-white/10 transition-all duration-300
                           flex items-center justify-center gap-2
@@ -533,7 +533,7 @@ const Projects = () => {
                         "
                       >
                         <Code className="w-4 h-4" />
-                        View Code
+                        Source
                       </a>
                     </div>
                   </div>
