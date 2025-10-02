@@ -13,6 +13,22 @@ const PLApp = {
     comparisonData: budgetData,
     comparisonLabel: 'Budget',
     
+    // Period-specific data storage
+    periodData: {
+        q1: { ...quarterlyData.q1 },
+        q2: { ...quarterlyData.q2 },
+        q3: { ...quarterlyData.q3 },
+        ytd: { ...originalData }
+    },
+    
+    // Original period data for resets
+    originalPeriodData: {
+        q1: { ...quarterlyData.q1 },
+        q2: { ...quarterlyData.q2 },
+        q3: { ...quarterlyData.q3 },
+        ytd: { ...originalData }
+    },
+    
     // Initialize the application
     init() {
         // Check for shared data on load
@@ -79,28 +95,28 @@ const PLApp = {
     
     // Handle period changes
     handlePeriodChange() {
-        const period = document.getElementById('periodSelect').value;
+        const newPeriod = document.getElementById('periodSelect').value;
         
-        // Reset to original data first if we have edits
+        // Save current period's data before switching
         if (this.hasEdits) {
-            Object.assign(financialData, originalData);
-            this.hasEdits = false;
+            this.periodData[this.currentPeriod] = { ...financialData };
+        }
+        
+        // Load data for new period
+        this.currentPeriod = newPeriod;
+        Object.assign(financialData, this.periodData[newPeriod]);
+        
+        // Check if this period has edits
+        const originalData = this.originalPeriodData[newPeriod];
+        this.hasEdits = JSON.stringify(financialData) !== JSON.stringify(originalData);
+        
+        // Update reset button visibility
+        if (this.hasEdits) {
+            document.getElementById('resetButton').classList.remove('hidden');
+        } else {
             document.getElementById('resetButton').classList.add('hidden');
         }
         
-        // Set current period data
-        if (period === 'ytd') {
-            // Use full year data
-            Object.assign(financialData, originalData);
-        } else {
-            // Use quarterly data
-            const quarterData = quarterlyData[period];
-            if (quarterData) {
-                Object.assign(financialData, quarterData);
-            }
-        }
-        
-        this.currentPeriod = period;
         this.renderPnLTable();
         this.updateMetrics();
         this.updateWarningBanner();
@@ -193,14 +209,14 @@ const PLApp = {
         const variance = calculateVariance(actual, budget);
         const percentOfRevenue = calculatePercentOfRevenue(actual, financialData.revenue);
         
-        const expandIcon = expandable ? 
-            `<span class="expand-icon mr-2" onclick="PLApp.toggleExpand('${category}')">${isExpanded ? '▼' : '▶'}</span>` : '';
+        // Remove expand icons for now since sub-accounts aren't fully implemented
+        const expandIcon = '';
         
         const editableClass = chartOfAccounts[category]?.editable ? 'editable-value' : '';
         const clickHandler = chartOfAccounts[category]?.editable ? `onclick="PLApp.editValue('${category}')"` : '';
         
         row.innerHTML = `
-            <td class="py-2 px-2 expandable" ${expandable ? `onclick="PLApp.toggleExpand('${category}')"` : ''}>
+            <td class="py-2 px-2">
                 ${expandIcon}${label}
             </td>
             <td class="py-2 px-2 text-right ${editableClass}" ${clickHandler}>
@@ -288,6 +304,10 @@ const PLApp = {
             const newValue = parseInt(input.value.replace(/[^0-9-]/g, '')) || currentValue;
             if (newValue !== currentValue) {
                 financialData[category] = newValue;
+                
+                // Save to period data storage
+                this.periodData[this.currentPeriod] = { ...financialData };
+                
                 this.hasEdits = true;
                 document.getElementById('resetButton').classList.remove('hidden');
             }
@@ -346,14 +366,25 @@ const PLApp = {
     applyScenario(scenarioName) {
         if (!scenarios[scenarioName]) return;
         
-        this.hasEdits = true;
-        document.getElementById('resetButton').classList.remove('hidden');
+        // Warn if user has existing edits
+        if (this.hasEdits) {
+            if (!confirm('Applying this scenario will overwrite your current edits. Continue?')) {
+                return;
+            }
+        }
         
         const scenario = scenarios[scenarioName];
-        const adjustedData = applyScenario(originalData, scenario);
+        const baseData = this.originalPeriodData[this.currentPeriod];
+        const adjustedData = applyScenario(baseData, scenario);
         
-        // Update financial data
+        // Update financial data for current period
         Object.assign(financialData, adjustedData);
+        
+        // Save to period data storage
+        this.periodData[this.currentPeriod] = { ...adjustedData };
+        
+        this.hasEdits = true;
+        document.getElementById('resetButton').classList.remove('hidden');
         
         // Update UI
         this.renderPnLTable();
@@ -361,21 +392,19 @@ const PLApp = {
         this.updateWarningBanner();
         this.updateInsights();
         this.updateAllCharts();
+        
+        // Show confirmation
+        this.showToast(`✓ ${scenario.name} applied to ${this.currentPeriod.toUpperCase()}`, 'success');
     },
     
     // Reset to original values
     resetValues() {
-        // Reset to the correct period's original data
-        if (this.currentPeriod === 'ytd') {
-            Object.assign(financialData, originalData);
-        } else {
-            const quarterData = quarterlyData[this.currentPeriod];
-            if (quarterData) {
-                Object.assign(financialData, quarterData);
-            } else {
-                Object.assign(financialData, originalData);
-            }
-        }
+        // Reset current period to its original data
+        const originalData = this.originalPeriodData[this.currentPeriod];
+        Object.assign(financialData, originalData);
+        
+        // Update period data storage
+        this.periodData[this.currentPeriod] = { ...originalData };
         
         this.hasEdits = false;
         document.getElementById('resetButton').classList.add('hidden');
@@ -815,6 +844,7 @@ const PLApp = {
         XLSX.utils.book_append_sheet(wb, ws2, "Monthly P&L");
         
         XLSX.writeFile(wb, `PL_Statement_${new Date().toISOString().split('T')[0]}.xlsx`);
+        this.showToast('✓ Excel file downloaded successfully', 'success');
     },
     
     exportToPDF() {
@@ -848,6 +878,7 @@ const PLApp = {
         doc.text(`OpEx Variance: ${formatCurrency(opexVar)} (${opexVar < 0 ? 'Favorable' : 'Unfavorable'})`, 14, 107);
         
         doc.save(`PL_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+        this.showToast('✓ PDF report downloaded successfully', 'success');
     },
     
     emailReport() {
