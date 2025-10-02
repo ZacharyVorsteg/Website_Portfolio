@@ -461,3 +461,10 @@ tr.child-account {
     overflow-x: auto;
     overflow-y: visible;
 }
+
+/* Toast notifications */
+.toast-notification {
+    transform: translateX(100%);
+    opacity: 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}

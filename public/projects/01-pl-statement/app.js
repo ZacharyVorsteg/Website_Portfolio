@@ -8,6 +8,7 @@ const PLApp = {
     // Current view state
     currentView: 'table',
     hasEdits: false,
+    currentPeriod: 'q3',
     currentData: financialData,
     comparisonData: budgetData,
     comparisonLabel: 'Budget',
@@ -80,15 +81,30 @@ const PLApp = {
     handlePeriodChange() {
         const period = document.getElementById('periodSelect').value;
         
-        if (period === 'ytd') {
-            // Use full year data
-            this.currentData = financialData;
-        } else {
-            // Use quarterly data
-            this.currentData = quarterlyData[period] || financialData;
+        // Reset to original data first if we have edits
+        if (this.hasEdits) {
+            Object.assign(financialData, originalData);
+            this.hasEdits = false;
+            document.getElementById('resetButton').classList.add('hidden');
         }
         
+        // Set current period data
+        if (period === 'ytd') {
+            // Use full year data
+            Object.assign(financialData, originalData);
+        } else {
+            // Use quarterly data
+            const quarterData = quarterlyData[period];
+            if (quarterData) {
+                Object.assign(financialData, quarterData);
+            }
+        }
+        
+        this.currentPeriod = period;
         this.renderPnLTable();
+        this.updateMetrics();
+        this.updateWarningBanner();
+        this.updateInsights();
         this.updateAllCharts();
     },
     
@@ -349,7 +365,18 @@ const PLApp = {
     
     // Reset to original values
     resetValues() {
-        Object.assign(financialData, originalData);
+        // Reset to the correct period's original data
+        if (this.currentPeriod === 'ytd') {
+            Object.assign(financialData, originalData);
+        } else {
+            const quarterData = quarterlyData[this.currentPeriod];
+            if (quarterData) {
+                Object.assign(financialData, quarterData);
+            } else {
+                Object.assign(financialData, originalData);
+            }
+        }
+        
         this.hasEdits = false;
         document.getElementById('resetButton').classList.add('hidden');
         
@@ -722,6 +749,23 @@ const PLApp = {
     updateAllCharts() {
         const metrics = calculateKeyMetrics(financialData);
         updateAllCharts(metrics, monthlyData);
+        
+        // Force render additional charts
+        setTimeout(() => {
+            const expenseData = {
+                'Sales & Marketing': financialData.opex * 0.45,
+                'R&D': financialData.opex * 0.30,
+                'G&A': financialData.opex * 0.25
+            };
+            renderExpenseBreakdown(expenseData, 'expenseBreakdownChart');
+            
+            renderVarianceChart(
+                monthlyData.revenue.actuals, 
+                monthlyData.revenue.budget, 
+                'varianceChart', 
+                'Monthly Revenue: Actual vs Budget'
+            );
+        }, 200);
     },
     
     // Export functions (fully implemented)
@@ -823,7 +867,13 @@ const PLApp = {
             `Generated: ${new Date().toLocaleString()}`
         );
         
-        window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        // Try to open email client, but show toast regardless
+        try {
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            this.showToast('✓ Email client opened with P&L report', 'success');
+        } catch (e) {
+            this.showToast('Email functionality requires a configured email client', 'info');
+        }
     },
     
     shareLink() {
@@ -842,25 +892,11 @@ const PLApp = {
         const shareUrl = `${baseUrl}?shared=${Date.now()}`;
         
         navigator.clipboard.writeText(shareUrl).then(() => {
-            // Show temporary success message without reloading
-            const btn = event.target.closest('button');
-            const originalText = btn.textContent;
-            btn.textContent = '✓ Link Copied!';
-            btn.style.background = '#10b981';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-            }, 2000);
+            // Show toast notification instead of button change
+            this.showToast('✓ Link copied to clipboard!', 'success');
         }).catch(() => {
-            // Fallback for browsers that don't support clipboard API
-            const btn = event.target.closest('button');
-            const originalText = btn.textContent;
-            btn.textContent = '✓ Link Ready';
-            btn.style.background = '#10b981';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '';
-            }, 2000);
+            // Fallback - show the URL in a prompt
+            this.showToast('Copy this link: ' + shareUrl, 'info');
         });
     },
     
@@ -907,6 +943,43 @@ const PLApp = {
         monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
         this.renderMonthlyView();
         this.updateAllCharts();
+    },
+    
+    // Show toast notification
+    showToast(message, type = 'info') {
+        // Remove existing toast
+        const existingToast = document.querySelector('.toast-notification');
+        if (existingToast) {
+            existingToast.remove();
+        }
+        
+        // Create toast
+        const toast = document.createElement('div');
+        toast.className = `toast-notification fixed top-6 right-6 px-6 py-3 rounded-lg text-white font-medium z-50 transition-all duration-300 ${
+            type === 'success' ? 'bg-emerald-600' : 
+            type === 'error' ? 'bg-red-600' : 
+            'bg-blue-600'
+        }`;
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        // Animate in
+        setTimeout(() => {
+            toast.style.transform = 'translateX(0)';
+            toast.style.opacity = '1';
+        }, 10);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.transform = 'translateX(100%)';
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }, 3000);
     }
 };
 
