@@ -14,6 +14,9 @@ const PLApp = {
     
     // Initialize the application
     init() {
+        // Check for shared data on load
+        this.loadSharedData();
+        
         this.renderPnLTable();
         this.updateMetrics();
         this.updateWarningBanner();
@@ -25,6 +28,33 @@ const PLApp = {
         this.setupEventListeners();
         
         console.log('P&L Statement application initialized');
+    },
+    
+    // Load shared data if available
+    loadSharedData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sharedParam = urlParams.get('shared');
+        
+        if (sharedParam) {
+            const sharedData = localStorage.getItem('sharedPLData');
+            if (sharedData) {
+                try {
+                    const data = JSON.parse(sharedData);
+                    // Restore financial data
+                    Object.assign(financialData, data.financialData);
+                    Object.assign(monthlyData, data.monthlyData);
+                    this.hasEdits = data.hasEdits || false;
+                    
+                    if (this.hasEdits) {
+                        document.getElementById('resetButton').classList.remove('hidden');
+                    }
+                    
+                    console.log('Loaded shared P&L data');
+                } catch (e) {
+                    console.warn('Failed to load shared data:', e);
+                }
+            }
+        }
     },
     
     // Set up event listeners
@@ -653,24 +683,26 @@ const PLApp = {
             if (chartsView) {
                 chartsView.style.display = 'block';
                 
-                // Show only selected chart grid
-                const firstGrid = chartsView.querySelector('.grid');
-                const secondGrid = chartsView.querySelector('.grid:nth-child(2)');
+                // Show only selected chart
+                const waterfallContainer = document.querySelector('#waterfallChart').closest('div');
+                const trendContainer = document.querySelector('#trendChart').closest('div');
+                const expenseContainer = document.querySelector('#expenseBreakdownChart').closest('div');
+                const varianceContainer = document.querySelector('#varianceChart').closest('div');
                 
-                if (view === 'waterfall') {
-                    if (firstGrid) firstGrid.style.display = 'grid';
-                    if (secondGrid) secondGrid.style.display = 'none';
-                    
-                    // Hide trend chart specifically
-                    const trendContainer = document.querySelector('#trendChart').closest('div');
-                    if (trendContainer) trendContainer.style.display = 'none';
-                } else if (view === 'trend') {
-                    if (firstGrid) firstGrid.style.display = 'grid';
-                    if (secondGrid) secondGrid.style.display = 'none';
-                    
-                    // Hide waterfall chart specifically
-                    const waterfallContainer = document.querySelector('#waterfallChart').closest('div');
-                    if (waterfallContainer) waterfallContainer.style.display = 'none';
+                // Hide all charts first
+                [waterfallContainer, trendContainer, expenseContainer, varianceContainer].forEach(container => {
+                    if (container) container.style.display = 'none';
+                });
+                
+                // Show only selected chart
+                if (view === 'waterfall' && waterfallContainer) {
+                    waterfallContainer.style.display = 'block';
+                    waterfallContainer.parentElement.style.display = 'grid';
+                    waterfallContainer.parentElement.style.gridTemplateColumns = '1fr';
+                } else if (view === 'trend' && trendContainer) {
+                    trendContainer.style.display = 'block';
+                    trendContainer.parentElement.style.display = 'grid';
+                    trendContainer.parentElement.style.gridTemplateColumns = '1fr';
                 }
                 
                 // Smooth scroll to charts without jumping
@@ -794,18 +826,21 @@ const PLApp = {
         const shareData = {
             financialData: financialData,
             monthlyData: monthlyData,
+            hasEdits: this.hasEdits,
             timestamp: Date.now()
         };
         
         localStorage.setItem('sharedPLData', JSON.stringify(shareData));
         
-        // Copy link to clipboard
-        const shareUrl = window.location.href;
+        // Create shareable URL with state parameter
+        const baseUrl = window.location.href.split('?')[0];
+        const shareUrl = `${baseUrl}?shared=${Date.now()}`;
+        
         navigator.clipboard.writeText(shareUrl).then(() => {
-            // Show temporary success message
+            // Show temporary success message without reloading
             const btn = event.target.closest('button');
             const originalText = btn.textContent;
-            btn.textContent = '✓ Copied!';
+            btn.textContent = '✓ Link Copied!';
             btn.style.background = '#10b981';
             setTimeout(() => {
                 btn.textContent = originalText;
@@ -813,7 +848,14 @@ const PLApp = {
             }, 2000);
         }).catch(() => {
             // Fallback for browsers that don't support clipboard API
-            alert('Link copied to clipboard: ' + shareUrl);
+            const btn = event.target.closest('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Link Ready';
+            btn.style.background = '#10b981';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
         });
     },
     

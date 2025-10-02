@@ -9,6 +9,7 @@ const chartOfAccounts = {
         name: 'Revenue',
         level: 0,
         editable: true,
+        expanded: false,
         children: {
             'saas': { name: 'SaaS Revenue', level: 1, percentage: 60 },
             'services': { name: 'Professional Services', level: 1, percentage: 40 }
@@ -18,6 +19,7 @@ const chartOfAccounts = {
         name: 'Cost of Goods Sold',
         level: 0,
         editable: true,
+        expanded: false,
         children: {
             'hosting': { name: 'Cloud Infrastructure', level: 1, percentage: 45 },
             'support': { name: 'Customer Success', level: 1, percentage: 35 },
@@ -28,6 +30,7 @@ const chartOfAccounts = {
         name: 'Operating Expenses',
         level: 0,
         editable: true,
+        expanded: false,
         children: {
             'sales_marketing': { name: 'Sales & Marketing', level: 1, percentage: 45 },
             'rd': { name: 'Research & Development', level: 1, percentage: 30 },

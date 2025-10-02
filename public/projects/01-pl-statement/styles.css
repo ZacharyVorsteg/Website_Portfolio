@@ -160,18 +160,25 @@ body {
 .sticky-header {
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 30;
     background: #0f172a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .sticky-column {
     position: sticky;
     left: 0;
-    z-index: 10;
+    z-index: 20;
     background: #0f172a !important;
     min-width: 220px;
     font-weight: 600;
     color: #f1f5f9;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Improve sticky header intersection */
+.sticky-header .sticky-column {
+    z-index: 40;
 }
 
 .monthly-pnl-table tbody tr:nth-child(even) {

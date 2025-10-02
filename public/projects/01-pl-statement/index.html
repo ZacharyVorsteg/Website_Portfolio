@@ -42,16 +42,16 @@
 
             <!-- Scenario Buttons -->
             <div class="flex flex-wrap gap-3 mb-6">
-                <button onclick="PLApp.applyScenario('growth')" class="scenario-button px-4 py-2 bg-emerald-600 text-white rounded-lg flex items-center gap-2">
+                <button onclick="PLApp.applyScenario('growth')" class="scenario-button px-4 py-2 bg-emerald-600 text-white rounded-lg flex items-center gap-2" title="Increase revenue by 15%, COGS by 10%, OpEx by 5%">
                     📈 Growth Case (+15%)
                 </button>
-                <button onclick="PLApp.applyScenario('cost-cut')" class="scenario-button px-4 py-2 bg-orange-600 text-white rounded-lg flex items-center gap-2">
+                <button onclick="PLApp.applyScenario('cost-cut')" class="scenario-button px-4 py-2 bg-orange-600 text-white rounded-lg flex items-center gap-2" title="Reduce operating expenses by 10% while maintaining revenue">
                     ✂️ Cut Costs (-10%)
                 </button>
-                <button onclick="PLApp.resetValues()" id="resetButton" class="scenario-button px-4 py-2 bg-slate-600 text-white rounded-lg flex items-center gap-2 hidden">
+                <button onclick="PLApp.resetValues()" id="resetButton" class="scenario-button px-4 py-2 bg-slate-600 text-white rounded-lg flex items-center gap-2 hidden" title="Restore all values to original baseline">
                     🔄 Reset to Original
                 </button>
-                <button onclick="PLApp.toggleMonthView()" class="scenario-button px-4 py-2 bg-purple-600 text-white rounded-lg flex items-center gap-2">
+                <button onclick="PLApp.toggleMonthView()" class="scenario-button px-4 py-2 bg-purple-600 text-white rounded-lg flex items-center gap-2" title="Switch between annual summary and detailed 12-month view">
                     📊 Toggle 12-Month View
                 </button>
             </div>
@@ -146,13 +146,13 @@
                     <h3 class="text-xl font-semibold text-gray-100">12-Month Income Statement - Complete P&L View</h3>
                 </div>
                 <div class="flex flex-wrap gap-2 mt-4">
-                    <button onclick="PLApp.applyMonthlyScenario('growth')" class="text-xs px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors">
+                    <button onclick="PLApp.applyMonthlyScenario('growth')" class="text-xs px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors" title="Apply 5% revenue growth and 3% COGS increase to all months">
                         Apply 5% Growth
                     </button>
-                    <button onclick="PLApp.applyMonthlyScenario('cost-cut')" class="text-xs px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors">
+                    <button onclick="PLApp.applyMonthlyScenario('cost-cut')" class="text-xs px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors" title="Reduce operating expenses by 10% across all months">
                         Cut OpEx 10%
                     </button>
-                    <button onclick="PLApp.resetMonthlyData()" class="text-xs px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors">
+                    <button onclick="PLApp.resetMonthlyData()" class="text-xs px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors" title="Restore all monthly data to original baseline values">
                         Reset Data
                     </button>
                 </div>
