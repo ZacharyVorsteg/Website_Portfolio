@@ -31,20 +31,67 @@ const PLApp = {
     
     // Initialize the application
     init() {
-        // Check for shared data on load
-        this.loadSharedData();
+        try {
+            // Initialize period data properly
+            this.initializePeriodData();
+            
+            // Check for shared data on load
+            this.loadSharedData();
+            
+            // Set initial period data
+            this.loadPeriodData();
+            
+            this.renderPnLTable();
+            this.updateMetrics();
+            this.updateWarningBanner();
+            this.updateInsights();
+            this.renderMonthlyView();
+            this.updateAllCharts();
+            
+            // Set up event listeners
+            this.setupEventListeners();
+            
+            console.log('P&L Statement application initialized successfully');
+        } catch (error) {
+            console.error('Failed to initialize P&L application:', error);
+            this.showToast('⚠️ Application initialization failed. Please refresh the page.', 'error');
+        }
+    },
+    
+    // Initialize period data structure
+    initializePeriodData() {
+        // Ensure quarterly data exists
+        if (!quarterlyData.q1 || !quarterlyData.q2 || !quarterlyData.q3) {
+            console.warn('Quarterly data missing, using defaults');
+            this.periodData = {
+                q1: { revenue: 2000000, cogs: 600000, opex: 1400000, other: -10000 },
+                q2: { revenue: 2200000, cogs: 660000, opex: 1450000, other: -12000 },
+                q3: { revenue: 2400000, cogs: 720000, opex: 1500000, other: -15000 },
+                ytd: { ...originalData }
+            };
+        } else {
+            this.periodData = {
+                q1: { ...quarterlyData.q1 },
+                q2: { ...quarterlyData.q2 },
+                q3: { ...quarterlyData.q3 },
+                ytd: { ...originalData }
+            };
+        }
         
-        this.renderPnLTable();
-        this.updateMetrics();
-        this.updateWarningBanner();
-        this.updateInsights();
-        this.renderMonthlyView();
-        this.updateAllCharts();
+        // Create deep copy for original data
+        this.originalPeriodData = JSON.parse(JSON.stringify(this.periodData));
+    },
+    
+    // Load data for current period
+    loadPeriodData() {
+        const periodSelect = document.getElementById('periodSelect');
+        this.currentPeriod = periodSelect ? periodSelect.value : 'q3';
         
-        // Set up event listeners
-        this.setupEventListeners();
-        
-        console.log('P&L Statement application initialized');
+        // Load current period's data
+        const currentPeriodData = this.periodData[this.currentPeriod];
+        if (currentPeriodData) {
+            Object.assign(financialData, currentPeriodData);
+        }
     },
     
     // Load shared data if available
@@ -166,14 +213,24 @@ const PLApp = {
     
     // Render the main P&L table
     renderPnLTable() {
-        const tbody = document.getElementById('pnlTableBody');
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
-        
-        // Use current data (could be quarterly or YTD) - always use modified financialData for scenarios
-        const currentData = financialData; // Always use the modified financialData for scenarios
-        const comparisonData = this.comparisonData || budgetData;
+        try {
+            const tbody = document.getElementById('pnlTableBody');
+            if (!tbody) {
+                console.error('P&L table body not found');
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            
+            // Validate financial data
+            if (!financialData || typeof financialData.revenue === 'undefined') {
+                console.error('Invalid financial data, reinitializing...');
+                this.loadPeriodData();
+            }
+            
+            // Use current financial data
+            const currentData = financialData;
+            const comparisonData = this.comparisonData || budgetData;
         
         // Calculate current metrics
         const metrics = calculateKeyMetrics(currentData);
@@ -198,6 +255,14 @@ const PLApp = {
         
         // Render net income
         this.renderTotalRow(tbody, 'Net Income', metrics.netIncome, comparisonData.revenue - comparisonData.cogs - comparisonData.opex + comparisonData.other);
+        
+        } catch (error) {
+            console.error('Error rendering P&L table:', error);
+            const tbody = document.getElementById('pnlTableBody');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-red-400 py-8">Error loading P&L data. Please refresh the page.</td></tr>';
+            }
+        }
     },
     
     // Render a main account row with expand/collapse functionality
@@ -776,25 +841,41 @@ const PLApp = {
     
     // Update all charts
     updateAllCharts() {
-        const metrics = calculateKeyMetrics(financialData);
-        updateAllCharts(metrics, monthlyData);
-        
-        // Force render additional charts
-        setTimeout(() => {
-            const expenseData = {
-                'Sales & Marketing': financialData.opex * 0.45,
-                'R&D': financialData.opex * 0.30,
-                'G&A': financialData.opex * 0.25
-            };
-            renderExpenseBreakdown(expenseData, 'expenseBreakdownChart');
+        try {
+            const metrics = calculateKeyMetrics(financialData);
+            updateAllCharts(metrics, monthlyData);
             
-            renderVarianceChart(
-                monthlyData.revenue.actuals, 
-                monthlyData.revenue.budget, 
-                'varianceChart', 
-                'Monthly Revenue: Actual vs Budget'
-            );
-        }, 200);
+            // Force render additional charts with error handling
+            setTimeout(() => {
+                try {
+                    // Check if canvas elements exist
+                    const expenseCanvas = document.getElementById('expenseBreakdownChart');
+                    const varianceCanvas = document.getElementById('varianceChart');
+                    
+                    if (expenseCanvas) {
+                        const expenseData = {
+                            'Sales & Marketing': financialData.opex * 0.45,
+                            'R&D': financialData.opex * 0.30,
+                            'G&A': financialData.opex * 0.25
+                        };
+                        renderExpenseBreakdown(expenseData, 'expenseBreakdownChart');
+                    }
+                    
+                    if (varianceCanvas && monthlyData.revenue?.actuals && monthlyData.revenue?.budget) {
+                        renderVarianceChart(
+                            monthlyData.revenue.actuals, 
+                            monthlyData.revenue.budget, 
+                            'varianceChart', 
+                            'Monthly Revenue: Actual vs Budget'
+                        );
+                    }
+                } catch (chartError) {
+                    console.warn('Chart rendering error:', chartError);
+                }
+            }, 300);
+        } catch (error) {
+            console.error('Error updating charts:', error);
+        }
     },
     
     // Export functions (fully implemented)
@@ -1030,7 +1111,28 @@ function calculateMonthlyOperatingIncome() {
     };
 }
 
+// Global error handler
+window.addEventListener('error', function(event) {
+    console.error('Global error caught:', event.error);
+    PLApp.showToast('⚠️ An error occurred. The page may need to be refreshed.', 'error');
+});
+
 // Initialize application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    PLApp.init();
+    try {
+        PLApp.init();
+    } catch (error) {
+        console.error('Critical initialization error:', error);
+        document.body.innerHTML = `
+            <div class="fixed inset-0 bg-slate-900 flex items-center justify-center text-white">
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold mb-4 text-red-400">Application Error</h1>
+                    <p class="mb-4">The P&L Statement failed to initialize properly.</p>
+                    <button onclick="window.location.reload()" class="px-4 py-2 bg-blue-600 text-white rounded">
+                        Refresh Page
+                    </button>
+                </div>
+            </div>
+        `;
+    }
 });
