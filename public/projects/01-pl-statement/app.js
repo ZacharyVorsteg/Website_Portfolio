@@ -60,26 +60,39 @@ const PLApp = {
     
     // Initialize period data structure
     initializePeriodData() {
-        // Ensure quarterly data exists
-        if (!quarterlyData.q1 || !quarterlyData.q2 || !quarterlyData.q3) {
-            console.warn('Quarterly data missing, using defaults');
-            this.periodData = {
-                q1: { revenue: 2000000, cogs: 600000, opex: 1400000, other: -10000 },
-                q2: { revenue: 2200000, cogs: 660000, opex: 1450000, other: -12000 },
-                q3: { revenue: 2400000, cogs: 720000, opex: 1500000, other: -15000 },
-                ytd: { ...originalData }
-            };
-        } else {
+        try {
+            // Use quarterly data with validation
             this.periodData = {
                 q1: { ...quarterlyData.q1 },
                 q2: { ...quarterlyData.q2 },
-                q3: { ...quarterlyData.q3 },
+                q3: { ...quarterlyData.q3 }, // Now matches YTD data
                 ytd: { ...originalData }
             };
+            
+            // Validate data integrity
+            Object.keys(this.periodData).forEach(period => {
+                const data = this.periodData[period];
+                if (!data.revenue || data.revenue <= 0) {
+                    console.error(`Invalid revenue for ${period}:`, data.revenue);
+                    throw new Error(`Data corruption detected in ${period}`);
+                }
+            });
+            
+            // Create deep copy for original data
+            this.originalPeriodData = JSON.parse(JSON.stringify(this.periodData));
+            
+            console.log('Period data initialized successfully:', this.periodData);
+        } catch (error) {
+            console.error('Failed to initialize period data:', error);
+            // Fallback to safe defaults
+            this.periodData = {
+                q1: { revenue: 2000000, cogs: 600000, opex: 1400000, other: -10000 },
+                q2: { revenue: 4200000, cogs: 1260000, opex: 2850000, other: -22000 },
+                q3: { revenue: 7950000, cogs: 2350000, opex: 5770000, other: -36000 },
+                ytd: { revenue: 7950000, cogs: 2350000, opex: 5770000, other: -36000 }
+            };
+            this.originalPeriodData = JSON.parse(JSON.stringify(this.periodData));
         }
-        
-        // Create deep copy for original data
-        this.originalPeriodData = JSON.parse(JSON.stringify(this.periodData));
     },
     
     // Load data for current period
@@ -429,37 +442,56 @@ const PLApp = {
     
     // Apply predefined scenarios
     applyScenario(scenarioName) {
-        if (!scenarios[scenarioName]) return;
-        
-        // Warn if user has existing edits
-        if (this.hasEdits) {
-            if (!confirm('Applying this scenario will overwrite your current edits. Continue?')) {
+        try {
+            if (!scenarios[scenarioName]) {
+                console.error('Unknown scenario:', scenarioName);
                 return;
             }
+            
+            // Validate current period data
+            const baseData = this.originalPeriodData[this.currentPeriod];
+            if (!baseData || !baseData.revenue) {
+                console.error('Invalid base data for period:', this.currentPeriod);
+                this.showToast('⚠️ Data error. Please refresh the page.', 'error');
+                return;
+            }
+            
+            // Warn if user has existing edits
+            if (this.hasEdits) {
+                if (!confirm(`Applying this scenario will overwrite your current edits for ${this.currentPeriod.toUpperCase()}. Continue?`)) {
+                    return;
+                }
+            }
+            
+            const scenario = scenarios[scenarioName];
+            const adjustedData = applyScenario(baseData, scenario);
+            
+            // Validate adjusted data
+            if (!adjustedData || !adjustedData.revenue) {
+                console.error('Scenario produced invalid data:', adjustedData);
+                this.showToast('⚠️ Scenario calculation failed.', 'error');
+                return;
+            }
+            
+            // Update financial data for current period
+            Object.assign(financialData, adjustedData);
+            
+            // Save to period data storage
+            this.periodData[this.currentPeriod] = { ...adjustedData };
+            
+            this.hasEdits = true;
+            document.getElementById('resetButton').classList.remove('hidden');
+            
+            // Update UI with error handling
+            this.safeUpdateUI();
+            
+            // Show confirmation
+            this.showToast(`✓ ${scenario.name} applied to ${this.currentPeriod.toUpperCase()} - Revenue: ${formatCurrency(adjustedData.revenue)}`, 'success');
+            
+        } catch (error) {
+            console.error('Scenario application failed:', error);
+            this.showToast('⚠️ Scenario failed to apply. Please try again.', 'error');
         }
-        
-        const scenario = scenarios[scenarioName];
-        const baseData = this.originalPeriodData[this.currentPeriod];
-        const adjustedData = applyScenario(baseData, scenario);
-        
-        // Update financial data for current period
-        Object.assign(financialData, adjustedData);
-        
-        // Save to period data storage
-        this.periodData[this.currentPeriod] = { ...adjustedData };
-        
-        this.hasEdits = true;
-        document.getElementById('resetButton').classList.remove('hidden');
-        
-        // Update UI
-        this.renderPnLTable();
-        this.updateMetrics();
-        this.updateWarningBanner();
-        this.updateInsights();
-        this.updateAllCharts();
-        
-        // Show confirmation
-        this.showToast(`✓ ${scenario.name} applied to ${this.currentPeriod.toUpperCase()}`, 'success');
     },
     
     // Reset to original values
@@ -479,6 +511,20 @@ const PLApp = {
         this.updateWarningBanner();
         this.updateInsights();
         this.updateAllCharts();
+    },
+    
+    // Safe UI update with error handling
+    safeUpdateUI() {
+        try {
+            this.renderPnLTable();
+            this.updateMetrics();
+            this.updateWarningBanner();
+            this.updateInsights();
+            this.updateAllCharts();
+        } catch (error) {
+            console.error('UI update failed:', error);
+            this.showToast('⚠️ Display update failed. Some data may not be current.', 'error');
+        }
     },
     
     // Toggle insights panel
@@ -1092,6 +1138,22 @@ const PLApp = {
                 }
             }, 300);
         }, 3000);
+    },
+    
+    // Emergency data reset - clears all stored data
+    emergencyReset() {
+        try {
+            localStorage.removeItem('sharedPLData');
+            this.initializePeriodData();
+            this.loadPeriodData();
+            this.hasEdits = false;
+            document.getElementById('resetButton').classList.add('hidden');
+            this.safeUpdateUI();
+            this.showToast('✓ All data reset to original state', 'success');
+        } catch (error) {
+            console.error('Emergency reset failed:', error);
+            window.location.reload();
+        }
     }
 };
 

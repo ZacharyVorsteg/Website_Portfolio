@@ -195,11 +195,11 @@ const budgetData = {
     other: -40000
 };
 
-// Quarterly breakdowns
+// Quarterly breakdowns (cumulative through each quarter)
 const quarterlyData = {
     q1: { revenue: 2000000, cogs: 600000, opex: 1400000, other: -10000 },
-    q2: { revenue: 2200000, cogs: 660000, opex: 1450000, other: -12000 },
-    q3: { revenue: 2400000, cogs: 720000, opex: 1500000, other: -15000 },
+    q2: { revenue: 4200000, cogs: 1260000, opex: 2850000, other: -22000 }, // Q1 + Q2
+    q3: { revenue: 7950000, cogs: 2350000, opex: 5770000, other: -36000 }, // Q1 + Q2 + Q3 (matches YTD)
     ytd: { revenue: 7950000, cogs: 2350000, opex: 5770000, other: -36000 }
 };
 

@@ -27,7 +27,7 @@
                     <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">
                         Income Statement (P&L)
                     </h1>
-                    <p class="text-gray-400">Click revenue or expenses to edit • Expand categories for details</p>
+                    <p class="text-gray-400">Click revenue or expenses to edit • Use scenarios for quick analysis</p>
                 </div>
                 <div class="info-tooltip">
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,6 +53,9 @@
                 </button>
                 <button onclick="PLApp.toggleMonthView()" class="scenario-button px-4 py-2 bg-purple-600 text-white rounded-lg flex items-center gap-2" title="Switch between annual summary and detailed 12-month view">
                     📊 Toggle 12-Month View
+                </button>
+                <button onclick="PLApp.emergencyReset()" class="scenario-button px-4 py-2 bg-red-600 text-white rounded-lg flex items-center gap-2" title="Clear all data and reset to original state (use if experiencing issues)">
+                    🚨 Emergency Reset
                 </button>
             </div>
 
