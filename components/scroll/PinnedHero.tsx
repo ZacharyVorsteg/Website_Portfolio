@@ -16,22 +16,6 @@ export default function PinnedHero() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    // Initialize Typed.js
-    const typed = new Typed(typedRef.current, {
-      strings: [
-        'Full-Stack Developer',
-        'FinTech Innovator',
-        'React Specialist',
-        'Problem Solver',
-        'Finance + Tech Expert'
-      ],
-      typeSpeed: 50,
-      backSpeed: 30,
-      backDelay: 2000,
-      loop: true,
-      showCursor: true,
-      cursorChar: '|'
-    });
 
     // GSAP Timeline for smooth scrubbed animations
     const ctx = gsap.context(() => {
@@ -63,7 +47,6 @@ export default function PinnedHero() {
     }, sectionRef);
 
     return () => {
-      typed.destroy();
       ctx.revert();
     };
   }, []);
@@ -81,7 +64,7 @@ export default function PinnedHero() {
             Zachary Vorsteg
           </h1>
           <p ref={subRef} className="hero-subtitle">
-            <span ref={typedRef}></span>
+            Full-Stack Developer | FinTech Innovator | Real Estate Tech
           </p>
           <p className="hero-description">
             Transforming finance expertise into innovative tech solutions
@@ -89,14 +72,18 @@ export default function PinnedHero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-60">
+      {/* Scroll indicator - clickable with pulse animation */}
+      <button 
+        onClick={() => document.getElementById('fintech-expertise')?.scrollIntoView({ behavior: 'smooth' })}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer p-2"
+        aria-label="Scroll to next section"
+      >
         <div className="animate-bounce">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="animate-pulse">
             <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-      </div>
+      </button>
     </section>
   );
 }

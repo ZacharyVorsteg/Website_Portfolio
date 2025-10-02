@@ -8,6 +8,7 @@ import Image from 'next/image'
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  const [showAllProjects, setShowAllProjects] = useState(false)
 
   const categories = [
     { id: 'all', label: 'All Projects', count: 15 },
@@ -333,6 +334,11 @@ const Projects = () => {
     ? projects 
     : projects.filter(p => p.category === selectedCategory)
   
+  // Show only featured projects initially, or all if expanded
+  const displayedProjects = showAllProjects 
+    ? filteredProjects 
+    : filteredProjects.filter(p => p.featured)
+  
   return (
     <section id="projects" className="py-20 px-4 relative" style={{ backgroundColor: '#0f172a' }}>
       {/* Background decoration */}
@@ -412,7 +418,7 @@ const Projects = () => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <motion.div
               key={project.id}
               className="group relative"
@@ -442,7 +448,7 @@ const Projects = () => {
                     </span>
                   </div>
 
-                  <div className="p-8">
+                  <div className="p-6">
                     {/* Icon */}
                     <div className={`
                       w-14 h-14 rounded-2xl bg-gradient-to-br ${project.gradient} 
@@ -548,6 +554,40 @@ const Projects = () => {
               </motion.div>
             ))}
           </div>
+
+        {/* View All Projects Button */}
+        {!showAllProjects && filteredProjects.length > displayedProjects.length && (
+          <div className="text-center mt-12">
+            <motion.button
+              onClick={() => setShowAllProjects(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl text-white font-medium hover:shadow-lg transition-all duration-300 flex items-center gap-3 mx-auto"
+            >
+              <span>View All {filteredProjects.length} Projects</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </motion.button>
+          </div>
+        )}
+
+        {/* Collapse Button */}
+        {showAllProjects && (
+          <div className="text-center mt-12">
+            <motion.button
+              onClick={() => setShowAllProjects(false)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 bg-slate-700 text-gray-300 rounded-2xl font-medium hover:bg-slate-600 transition-all duration-300 flex items-center gap-3 mx-auto"
+            >
+              <span>Show Featured Projects Only</span>
+              <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </motion.button>
+          </div>
+        )}
 
         {/* Call to Action */}
         <motion.div 

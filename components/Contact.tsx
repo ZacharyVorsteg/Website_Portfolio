@@ -83,7 +83,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 bg-muted/50 border border-border rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                   />
                 </div>
                 <div>

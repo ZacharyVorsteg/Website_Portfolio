@@ -1,14 +1,9 @@
 'use client';
-import React, { useLayoutEffect, useRef } from 'react';
+import React from 'react';
 import { TrendingUp, DollarSign, BarChart3, Coins, Calculator, PieChart } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion } from 'framer-motion';
 
 export default function HorizontalShowcase() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const showcases = [
     {
@@ -48,94 +43,54 @@ export default function HorizontalShowcase() {
     },
   ];
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const slides = gsap.utils.toArray('.showcase-slide');
-      
-      if (slides.length > 0) {
-        // Create horizontal scroll
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: () => `+=${slides.length * 50}%`, // Reduced from 100% to 50% per slide
-            scrub: 0.5,
-            pin: true,
-            anticipatePin: 1,
-            fastScrollEnd: true,
-            pinSpacing: true, // Ensure proper spacing after pinned section
-          }
-        });
-
-        // Animate slides horizontally
-        tl.to(slides, {
-          xPercent: -100 * (slides.length - 1),
-          ease: 'none',
-        });
-
-        // Add parallax effect to each card
-        slides.forEach((slide: any, i) => {
-          const card = slide.querySelector('.showcase-card');
-          const icon = slide.querySelector('.showcase-icon');
-          
-          gsap.timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: () => `top+=${i * window.innerHeight} top`,
-              end: () => `top+=${(i + 1) * window.innerHeight} top`,
-              scrub: 0.5,
-            }
-          })
-          .fromTo(card, 
-            { scale: 0.8, opacity: 0.5 },
-            { scale: 1, opacity: 1, ease: 'power2.out' }
-          )
-          .fromTo(icon,
-            { rotate: -10 },
-            { rotate: 10, ease: 'power2.inOut' },
-            0
-          );
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
-    <section ref={sectionRef} className="horizontal-showcase-section relative h-screen overflow-hidden">
+    <section id="fintech-expertise" className="py-20 px-4 relative">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background" />
       
-      {/* Title that stays fixed */}
-      <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-20 text-center">
-        <h2 className="text-4xl md:text-5xl font-bold mb-2">
-          <span className="gradient-text">FinTech Expertise</span>
-        </h2>
-        <p className="text-muted-foreground">Scroll to explore my specialized areas</p>
-      </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="gradient-text">FinTech Expertise</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Specialized areas where finance meets technology
+            </p>
+          </motion.div>
+        </div>
 
-      {/* Horizontal container */}
-      <div ref={containerRef} className="absolute inset-0 flex items-center">
-        <div className="flex">
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {showcases.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="showcase-slide flex-shrink-0 w-screen h-screen flex items-center justify-center px-8"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group relative"
             >
-              <div className="showcase-card relative max-w-md w-full">
+              <div className="relative h-full">
                 {/* Glow effect */}
                 <div 
-                  className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-20 blur-3xl`}
-                  style={{ transform: 'scale(1.2)' }}
+                  className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500`}
                 />
                 
                 {/* Card content */}
-                <div className="relative bg-background/80 backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center">
-                  {/* Focal point - Icon */}
-                  <div className="showcase-icon mx-auto mb-8">
+                <div className="relative bg-background/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 text-center h-full">
+                  {/* Icon */}
+                  <div className="mx-auto mb-6">
                     <div 
-                      className={`inline-flex p-8 rounded-3xl bg-gradient-to-br ${item.gradient} text-white shadow-2xl`}
+                      className={`inline-flex p-6 rounded-3xl bg-gradient-to-br ${item.gradient} text-white shadow-xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}
                       style={{
                         boxShadow: `0 20px 40px ${item.bgColor}`,
                       }}
@@ -144,45 +99,31 @@ export default function HorizontalShowcase() {
                     </div>
                   </div>
 
-                  {/* Title - Secondary focal point */}
-                  <h3 className="text-3xl md:text-4xl font-bold mb-4">
+                  {/* Title */}
+                  <h3 className="text-xl md:text-2xl font-bold mb-4">
                     <span className={`bg-gradient-to-r ${item.gradient} bg-clip-text text-transparent`}>
                       {item.title}
                     </span>
                   </h3>
 
                   {/* Description */}
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {item.description}
                   </p>
 
                   {/* Card number indicator */}
-                  <div className="absolute top-6 right-6 text-4xl font-bold text-white/5">
+                  <div className="absolute top-4 right-4 text-2xl font-bold text-white/5">
                     0{index + 1}
                   </div>
 
                   {/* Decorative elements */}
-                  <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl" />
-                  <div className="absolute -top-4 -left-4 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-xl" />
+                  <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-lg" />
+                  <div className="absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-lg" />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
-
-      {/* Progress indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="flex items-center gap-3">
-          {showcases.map((_, index) => (
-            <div
-              key={index}
-              className="w-2 h-2 rounded-full bg-white/30 transition-all duration-300 showcase-dot"
-              data-index={index}
-            />
-          ))}
-        </div>
-        <p className="text-center text-xs text-muted-foreground mt-2">Scroll horizontally →</p>
       </div>
     </section>
   );

@@ -18,16 +18,33 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading time
+    // Check if visited recently (within 24 hours)
+    const hasVisitedRecently = localStorage.getItem('lastVisit')
+    const now = Date.now()
+    
+    if (hasVisitedRecently && (now - parseInt(hasVisitedRecently)) < 86400000) {
+      // Skip animation if visited recently
+      setIsLoading(false)
+      return
+    }
+    
+    // Set last visit time
+    localStorage.setItem('lastVisit', now.toString())
+    
+    // Reduced loading time to 1.5 seconds
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000)
+    }, 1500)
 
     return () => clearTimeout(timer)
   }, [])
 
+  const handleSkipLoading = () => {
+    setIsLoading(false)
+  }
+
   if (isLoading) {
-    return <LoadingScreen />
+    return <LoadingScreen onSkip={handleSkipLoading} />
   }
 
   return (

@@ -8,18 +8,24 @@ import BatchReveal from './scroll/BatchReveal'
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('finance')
 
+  const proficiencyLevels = {
+    'Expert': { color: '#10b981', bgColor: 'bg-emerald-500/20', textColor: 'text-emerald-400', description: '5+ years' },
+    'Advanced': { color: '#3b82f6', bgColor: 'bg-blue-500/20', textColor: 'text-blue-400', description: '3-5 years' },
+    'Proficient': { color: '#8b5cf6', bgColor: 'bg-purple-500/20', textColor: 'text-purple-400', description: '1-3 years' }
+  }
+
   const skillCategories = {
     finance: {
       title: 'CFO & Finance',
       icon: <Calculator className="w-5 h-5" />,
       color: 'from-emerald-500 to-teal-500',
       skills: [
-        { name: 'Financial Modeling', level: 95, experience: 'Expert - SaaS, Real Estate, M&A' },
-        { name: 'FP&A / Budgeting', level: 92, experience: 'Expert - OneStream, Excel, Python' },
-        { name: 'Cash Flow Management', level: 90, experience: 'Expert - 13-week rolling forecasts' },
-        { name: 'GAAP / Accounting', level: 85, experience: 'Advanced - Revenue recognition, accruals' },
-        { name: 'Fundraising / VC', level: 88, experience: 'Advanced - Pitch decks, data rooms' },
-        { name: 'M&A Due Diligence', level: 85, experience: 'Advanced - Buy & sell-side' },
+        { name: 'Financial Modeling', proficiency: 'Expert', experience: 'SaaS, Real Estate, M&A' },
+        { name: 'FP&A / Budgeting', proficiency: 'Expert', experience: 'OneStream, Excel, Python' },
+        { name: 'Cash Flow Management', proficiency: 'Expert', experience: '13-week rolling forecasts' },
+        { name: 'GAAP / Accounting', proficiency: 'Advanced', experience: 'Revenue recognition, accruals' },
+        { name: 'Fundraising / VC', proficiency: 'Advanced', experience: 'Pitch decks, data rooms' },
+        { name: 'M&A Due Diligence', proficiency: 'Advanced', experience: 'Buy & sell-side' },
       ],
     },
     strategy: {
@@ -27,12 +33,12 @@ const Skills = () => {
       icon: <Target className="w-5 h-5" />,
       color: 'from-blue-500 to-indigo-500',
       skills: [
-        { name: 'Go-to-Market Strategy', level: 90, experience: 'Expert - B2B SaaS, PLG' },
-        { name: 'Product Management', level: 85, experience: 'Advanced - Roadmaps, prioritization' },
-        { name: 'Operations & Scaling', level: 88, experience: 'Expert - 0→1, 1→10 growth' },
-        { name: 'Team Building', level: 85, experience: 'Advanced - Hiring, culture, retention' },
-        { name: 'Board Management', level: 82, experience: 'Advanced - Reporting, governance' },
-        { name: 'Strategic Partnerships', level: 87, experience: 'Advanced - BD, channel sales' },
+        { name: 'Go-to-Market Strategy', proficiency: 'Expert', experience: 'B2B SaaS, PLG' },
+        { name: 'Product Management', proficiency: 'Advanced', experience: 'Roadmaps, prioritization' },
+        { name: 'Operations & Scaling', proficiency: 'Expert', experience: '0→1, 1→10 growth' },
+        { name: 'Team Building', proficiency: 'Advanced', experience: 'Hiring, culture, retention' },
+        { name: 'Board Management', proficiency: 'Advanced', experience: 'Reporting, governance' },
+        { name: 'Strategic Partnerships', proficiency: 'Advanced', experience: 'BD, channel sales' },
       ],
     },
     datascience: {
@@ -40,12 +46,12 @@ const Skills = () => {
       icon: <Brain className="w-5 h-5" />,
       color: 'from-purple-500 to-pink-500',
       skills: [
-        { name: 'Python (Pandas/NumPy)', level: 92, experience: 'Expert - Data analysis, automation' },
-        { name: 'Machine Learning', level: 85, experience: 'Advanced - Scikit-learn, XGBoost' },
-        { name: 'Statistical Analysis', level: 88, experience: 'Expert - Regression, time series' },
-        { name: 'Data Visualization', level: 90, experience: 'Expert - Plotly, D3.js, Tableau' },
-        { name: 'SQL / Database', level: 87, experience: 'Advanced - PostgreSQL, BigQuery' },
-        { name: 'Deep Learning', level: 75, experience: 'Intermediate - TensorFlow, PyTorch' },
+        { name: 'Python (Pandas/NumPy)', proficiency: 'Expert', experience: 'Data analysis, automation' },
+        { name: 'Machine Learning', proficiency: 'Advanced', experience: 'Scikit-learn, XGBoost' },
+        { name: 'Statistical Analysis', proficiency: 'Expert', experience: 'Regression, time series' },
+        { name: 'Data Visualization', proficiency: 'Expert', experience: 'Plotly, D3.js, Tableau' },
+        { name: 'SQL / Database', proficiency: 'Advanced', experience: 'PostgreSQL, BigQuery' },
+        { name: 'Deep Learning', proficiency: 'Proficient', experience: 'TensorFlow, PyTorch' },
       ],
     },
     development: {
@@ -53,12 +59,12 @@ const Skills = () => {
       icon: <Code2 className="w-5 h-5" />,
       color: 'from-orange-500 to-red-500',
       skills: [
-        { name: 'React / Next.js', level: 90, experience: 'Expert - 3+ years production' },
-        { name: 'TypeScript / JavaScript', level: 88, experience: 'Expert - ES6+, async patterns' },
-        { name: 'Python (FastAPI/Flask)', level: 85, experience: 'Advanced - REST APIs, microservices' },
-        { name: 'Node.js / Express', level: 82, experience: 'Advanced - Backend services' },
-        { name: 'PostgreSQL / Supabase', level: 80, experience: 'Advanced - Schema design, optimization' },
-        { name: 'DevOps / CI/CD', level: 75, experience: 'Intermediate - Docker, GitHub Actions' },
+        { name: 'React / Next.js', proficiency: 'Expert', experience: '3+ years production' },
+        { name: 'TypeScript / JavaScript', proficiency: 'Expert', experience: 'ES6+, async patterns' },
+        { name: 'Python (FastAPI/Flask)', proficiency: 'Advanced', experience: 'REST APIs, microservices' },
+        { name: 'Node.js / Express', proficiency: 'Advanced', experience: 'Backend services' },
+        { name: 'PostgreSQL / Supabase', proficiency: 'Advanced', experience: 'Schema design, optimization' },
+        { name: 'DevOps / CI/CD', proficiency: 'Proficient', experience: 'Docker, GitHub Actions' },
       ],
     },
   }
@@ -134,37 +140,32 @@ const Skills = () => {
         {/* Skills Display */}
         <BatchReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                className="glass-card p-6 reveal"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-              >
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">{skill.name}</h3>
-                  <p className="text-sm text-muted-foreground">{skill.experience}</p>
+            {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => {
+              const proficiency = proficiencyLevels[skill.proficiency as keyof typeof proficiencyLevels];
+              return (
+                <motion.div
+                  key={skill.name}
+                  className="glass-card p-6 reveal"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{skill.experience}</p>
+                  </div>
+                  <div className="ml-4 text-right">
+                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${proficiency.bgColor} ${proficiency.textColor} border border-current/30`}>
+                      {skill.proficiency}
+                    </span>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {proficiency.description}
+                    </div>
+                  </div>
                 </div>
-                <span className="text-2xl font-bold gradient-text">{skill.level}%</span>
-              </div>
-              
-              {/* Progress Bar */}
-              <div className="relative h-3 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-1000 ease-out"
-                  style={{
-                    width: `${skill.level}%`,
-                    animation: `slideIn 1s ease-out ${index * 0.1}s both`,
-                  }}
-                />
-                <div
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"
-                  style={{ width: `${skill.level}%` }}
-                />
-              </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </BatchReveal>
 
