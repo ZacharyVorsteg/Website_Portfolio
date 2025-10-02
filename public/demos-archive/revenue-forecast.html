@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Forecast with Confidence Bands</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            max-height: 350px;
+        }
+        .chart-wrapper canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+        }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 50;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header [[memory:7788592]] -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Revenue Forecast with Confidence Bands
+                </h1>
+                <span class="inline-block px-3 py-1.5 bg-purple-500/20 text-purple-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                ARIMA/Prophet forecasting with uncertainty intervals. This demo uses synthetic time series data to predict 
+                next 12 months of revenue with 95% confidence bands, demonstrating how statistical forecasting can guide 
+                business planning and risk assessment.
+            </p>
+            <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 flex items-start gap-2">
+                <i data-lucide="info" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                <div class="text-sm text-gray-300">
+                    <strong>How to use:</strong> Adjust historical data patterns and forecast parameters. The model automatically 
+                    generates predictions with confidence intervals. Wider bands indicate higher uncertainty.
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Controls -->
+            <div class="lg:col-span-1">
+                <div class="glass-card rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="settings" class="w-5 h-5 text-purple-400"></i>
+                        Forecast Parameters
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <!-- Base Revenue -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Base Monthly Revenue ($K)
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Starting point for historical data generation. Higher values create larger scale forecasts.
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="number" id="baseRevenue" value="500" min="100" max="5000" step="50"
+                                   class="w-full bg-white/10 rounded-lg px-3 py-2 text-white"
+                                   onchange="generateForecast()">
+                        </div>
+
+                        <!-- Growth Trend -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Growth Trend (% Monthly)
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Underlying growth rate in the historical data. Affects forecast trajectory.
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="range" id="growthTrend" min="-2" max="10" value="3" step="0.5"
+                                   class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>-2%</span>
+                                <span id="growthTrendValue" class="text-purple-400 font-bold">3%</span>
+                                <span>10%</span>
+                            </div>
+                        </div>
+
+                        <!-- Seasonality -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Seasonality Strength
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        How pronounced seasonal patterns are (e.g., holiday peaks).
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="range" id="seasonality" min="0" max="100" value="30" step="10"
+                                   class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>None</span>
+                                <span id="seasonalityValue" class="text-purple-400 font-bold">30%</span>
+                                <span>Strong</span>
+                            </div>
+                        </div>
+
+                        <!-- Volatility -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Data Volatility
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Random variation in historical data. Higher = wider confidence bands.
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="range" id="volatility" min="5" max="50" value="15" step="5"
+                                   class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>Low</span>
+                                <span id="volatilityValue" class="text-purple-400 font-bold">15%</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+
+                        <!-- Forecast Horizon -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Forecast Horizon (Months)
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        How far into the future to predict. Longer = more uncertainty.
+                                    </span>
+                                </div>
+                            </label>
+                            <input type="range" id="horizon" min="3" max="24" value="12" step="3"
+                                   class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-purple-500 to-pink-500">
+                            <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                <span>3</span>
+                                <span id="horizonValue" class="text-purple-400 font-bold">12</span>
+                                <span>24</span>
+                            </div>
+                        </div>
+
+                        <!-- Confidence Level -->
+                        <div>
+                            <label class="text-sm text-gray-400 mb-2 flex items-center gap-2">
+                                Confidence Level
+                                <div class="info-tooltip">
+                                    <i data-lucide="help-circle" class="w-3 h-3 text-gray-500 cursor-help"></i>
+                                    <span class="tooltip-text">
+                                        Statistical confidence for prediction intervals.
+                                    </span>
+                                </div>
+                            </label>
+                            <select id="confidence" class="w-full bg-white/10 rounded-lg px-3 py-2 text-white"
+                                    onchange="generateForecast()">
+                                <option value="80">80% CI</option>
+                                <option value="90">90% CI</option>
+                                <option value="95" selected>95% CI</option>
+                                <option value="99">99% CI</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <button onclick="generateForecast()" 
+                                class="w-full py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            Regenerate Forecast
+                        </button>
+                        <button onclick="exportForecast()" 
+                                class="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            Export Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Next Month</div>
+                        <div id="nextMonth" class="text-lg font-bold text-purple-400">$0K</div>
+                        <div id="nextMonthCI" class="text-xs text-gray-500">±0K</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Q1 Total</div>
+                        <div id="q1Total" class="text-lg font-bold text-pink-400">$0K</div>
+                        <div id="q1CI" class="text-xs text-gray-500">±0K</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">12M Total</div>
+                        <div id="yearTotal" class="text-lg font-bold text-blue-400">$0M</div>
+                        <div id="yearCI" class="text-xs text-gray-500">±0M</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-3">
+                        <div class="text-xs text-gray-400 mb-1">Growth Rate</div>
+                        <div id="growthRate" class="text-lg font-bold text-green-400">0%</div>
+                        <div class="text-xs text-gray-500">YoY</div>
+                    </div>
+                </div>
+
+                <!-- Forecast Chart -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-purple-400"></i>
+                        Revenue Forecast with Confidence Bands
+                    </h3>
+                    <div class="chart-wrapper">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Forecast Table -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="table" class="w-5 h-5 text-pink-400"></i>
+                        Monthly Forecast Details
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-700">
+                                    <th class="text-left py-2 text-gray-400">Month</th>
+                                    <th class="text-right py-2 text-gray-400">Forecast</th>
+                                    <th class="text-right py-2 text-gray-400">Lower Bound</th>
+                                    <th class="text-right py-2 text-gray-400">Upper Bound</th>
+                                    <th class="text-right py-2 text-gray-400">Range</th>
+                                </tr>
+                            </thead>
+                            <tbody id="forecastTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let forecastChart = null;
+
+        // Format number with commas
+        function formatNumber(num, decimals = 0) {
+            return num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // Generate synthetic historical data
+        function generateHistoricalData(months = 24) {
+            const baseRevenue = parseFloat(document.getElementById('baseRevenue').value);
+            const growthTrend = parseFloat(document.getElementById('growthTrend').value) / 100;
+            const seasonality = parseFloat(document.getElementById('seasonality').value) / 100;
+            const volatility = parseFloat(document.getElementById('volatility').value) / 100;
+            
+            const data = [];
+            const now = new Date();
+            
+            for (let i = months - 1; i >= 0; i--) {
+                const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                const monthIndex = date.getMonth();
+                
+                // Base value with growth
+                let value = baseRevenue * Math.pow(1 + growthTrend, months - i);
+                
+                // Add seasonality (peaks in Nov-Dec, dips in Jan-Feb)
+                const seasonalFactor = 1 + seasonality * 0.3 * Math.sin((monthIndex - 3) * Math.PI / 6);
+                value *= seasonalFactor;
+                
+                // Add random variation
+                value *= (1 + (Math.random() - 0.5) * volatility);
+                
+                data.push({
+                    date: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+                    value: Math.max(0, value)
+                });
+            }
+            
+            return data;
+        }
+
+        // Generate forecast with confidence bands
+        function generateForecast() {
+            const historical = generateHistoricalData(24);
+            const horizon = parseInt(document.getElementById('horizon').value);
+            const confidence = parseFloat(document.getElementById('confidence').value) / 100;
+            const growthTrend = parseFloat(document.getElementById('growthTrend').value) / 100;
+            const volatility = parseFloat(document.getElementById('volatility').value) / 100;
+            
+            // Calculate trend from historical data
+            const values = historical.map(d => d.value);
+            const n = values.length;
+            const avgGrowth = (values[n-1] - values[0]) / values[0] / n;
+            
+            // Generate forecast
+            const forecast = [];
+            const lastValue = values[n-1];
+            const now = new Date();
+            
+            for (let i = 1; i <= horizon; i++) {
+                const date = new Date(now.getFullYear(), now.getMonth() + i, 1);
+                
+                // Point forecast with trend
+                const trend = lastValue * Math.pow(1 + growthTrend, i);
+                
+                // Confidence interval widens over time
+                const zScore = getZScore(confidence);
+                const uncertainty = volatility * Math.sqrt(i) * lastValue * 0.1;
+                const lower = trend - zScore * uncertainty;
+                const upper = trend + zScore * uncertainty;
+                
+                forecast.push({
+                    date: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+                    value: trend,
+                    lower: Math.max(0, lower),
+                    upper: upper
+                });
+            }
+            
+            updateChart(historical, forecast);
+            updateMetrics(forecast);
+            updateTable(forecast);
+        }
+
+        // Get Z-score for confidence level
+        function getZScore(confidence) {
+            const zScores = {
+                0.80: 1.28,
+                0.90: 1.645,
+                0.95: 1.96,
+                0.99: 2.576
+            };
+            return zScores[confidence] || 1.96;
+        }
+
+        // Update chart
+        function updateChart(historical, forecast) {
+            const ctx = document.getElementById('forecastChart').getContext('2d');
+            
+            if (forecastChart) {
+                forecastChart.destroy();
+            }
+            
+            // Combine labels
+            const labels = [...historical.map(d => d.date), ...forecast.map(d => d.date)];
+            
+            // Historical data
+            const historicalData = [...historical.map(d => d.value), ...Array(forecast.length).fill(null)];
+            
+            // Forecast data
+            const forecastData = [...Array(historical.length).fill(null), ...forecast.map(d => d.value)];
+            
+            // Confidence bands
+            const lowerBand = [...Array(historical.length).fill(null), ...forecast.map(d => d.lower)];
+            const upperBand = [...Array(historical.length).fill(null), ...forecast.map(d => d.upper)];
+            
+            forecastChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Historical',
+                            data: historicalData,
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            tension: 0.4,
+                            pointRadius: 2
+                        },
+                        {
+                            label: 'Forecast',
+                            data: forecastData,
+                            borderColor: '#ec4899',
+                            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            pointRadius: 2
+                        },
+                        {
+                            label: 'Upper Bound',
+                            data: upperBand,
+                            borderColor: 'rgba(236, 72, 153, 0.3)',
+                            backgroundColor: 'rgba(236, 72, 153, 0.05)',
+                            borderDash: [2, 2],
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: '+1'
+                        },
+                        {
+                            label: 'Lower Bound',
+                            data: lowerBand,
+                            borderColor: 'rgba(236, 72, 153, 0.3)',
+                            backgroundColor: 'rgba(236, 72, 153, 0.05)',
+                            borderDash: [2, 2],
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: '-1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { 
+                                color: '#9CA3AF',
+                                font: { size: 11 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': $';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += formatNumber(context.parsed.y) + 'K';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                font: { size: 10 },
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                font: { size: 10 },
+                                callback: function(value) {
+                                    return '$' + formatNumber(value) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update metrics
+        function updateMetrics(forecast) {
+            if (forecast.length === 0) return;
+            
+            // Next month
+            const nextMonth = forecast[0];
+            document.getElementById('nextMonth').textContent = '$' + formatNumber(nextMonth.value) + 'K';
+            document.getElementById('nextMonthCI').textContent = '±' + formatNumber(nextMonth.upper - nextMonth.value) + 'K';
+            
+            // Q1 (first 3 months)
+            const q1 = forecast.slice(0, 3).reduce((sum, f) => ({
+                value: sum.value + f.value,
+                range: sum.range + (f.upper - f.lower)
+            }), { value: 0, range: 0 });
+            document.getElementById('q1Total').textContent = '$' + formatNumber(q1.value) + 'K';
+            document.getElementById('q1CI').textContent = '±' + formatNumber(q1.range / 6) + 'K';
+            
+            // Full year
+            const year = forecast.slice(0, 12).reduce((sum, f) => ({
+                value: sum.value + f.value,
+                range: sum.range + (f.upper - f.lower)
+            }), { value: 0, range: 0 });
+            document.getElementById('yearTotal').textContent = '$' + formatNumber(year.value / 1000, 1) + 'M';
+            document.getElementById('yearCI').textContent = '±' + formatNumber(year.range / 12000, 1) + 'M';
+            
+            // Growth rate
+            const growthRate = parseFloat(document.getElementById('growthTrend').value);
+            document.getElementById('growthRate').textContent = (growthRate * 12).toFixed(1) + '%';
+        }
+
+        // Update table
+        function updateTable(forecast) {
+            const tbody = document.getElementById('forecastTable');
+            tbody.innerHTML = forecast.slice(0, 12).map(f => `
+                <tr class="border-b border-gray-800">
+                    <td class="py-2">${f.date}</td>
+                    <td class="text-right py-2 text-purple-400">$${formatNumber(f.value)}K</td>
+                    <td class="text-right py-2 text-gray-500">$${formatNumber(f.lower)}K</td>
+                    <td class="text-right py-2 text-gray-500">$${formatNumber(f.upper)}K</td>
+                    <td class="text-right py-2 text-pink-400">$${formatNumber(f.upper - f.lower)}K</td>
+                </tr>
+            `).join('');
+        }
+
+        // Export forecast
+        function exportForecast() {
+            alert('In production, this would export to Excel with full forecast details and charts.');
+        }
+
+        // Event listeners
+        document.getElementById('growthTrend').addEventListener('input', function() {
+            document.getElementById('growthTrendValue').textContent = this.value + '%';
+            generateForecast();
+        });
+
+        document.getElementById('seasonality').addEventListener('input', function() {
+            document.getElementById('seasonalityValue').textContent = this.value + '%';
+            generateForecast();
+        });
+
+        document.getElementById('volatility').addEventListener('input', function() {
+            document.getElementById('volatilityValue').textContent = this.value + '%';
+            generateForecast();
+        });
+
+        document.getElementById('horizon').addEventListener('input', function() {
+            document.getElementById('horizonValue').textContent = this.value;
+            generateForecast();
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            generateForecast();
+        });
+    </script>
+</body>
+</html>

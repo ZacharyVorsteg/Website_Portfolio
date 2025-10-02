@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Funnel Simulator - Marketing to MRR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .funnel-stage {
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-8">
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto mb-8">
+        <div class="glass-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Growth Funnel Simulator
+                </h1>
+                <span class="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Visualize how marketing spend and conversion rates cascade through your funnel to MRR. 
+                Adjust inputs to see real-time impact on growth metrics and unit economics.
+            </p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">CEO Strategy</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Growth Modeling</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">CAC/LTV Analysis</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Instant Results</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left Panel - Growth Levers -->
+        <div class="lg:col-span-1">
+            <div class="glass-card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="sliders" class="w-5 h-5 text-blue-400"></i>
+                    Growth Levers
+                </h2>
+                
+                <!-- Marketing Spend -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-semibold text-gray-400 mb-3">Monthly Marketing Spend</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-xs text-gray-500">Paid Search ($k)</label>
+                            <input type="range" id="paidSearch" min="0" max="100" value="25" step="5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400">$<span id="paidSearchValue">25</span>k</div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Content Marketing ($k)</label>
+                            <input type="range" id="content" min="0" max="50" value="15" step="5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400">$<span id="contentValue">15</span>k</div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Social Media ($k)</label>
+                            <input type="range" id="social" min="0" max="50" value="10" step="5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400">$<span id="socialValue">10</span>k</div>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-2 bg-white/5 rounded-lg">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Total Spend:</span>
+                            <span id="totalSpend" class="text-blue-400 font-bold">$50k</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conversion Rates -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-semibold text-gray-400 mb-3">Funnel Conversion Rates</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-xs text-gray-500">Visitor → Lead (%)</label>
+                            <input type="range" id="visitorToLead" min="1" max="10" value="3" step="0.5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400"><span id="visitorToLeadValue">3</span>%</div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Lead → Trial (%)</label>
+                            <input type="range" id="leadToTrial" min="10" max="40" value="20" step="5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400"><span id="leadToTrialValue">20</span>%</div>
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Trial → Paid (%)</label>
+                            <input type="range" id="trialToPaid" min="10" max="50" value="25" step="5"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400"><span id="trialToPaidValue">25</span>%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 mb-3">Pricing & Retention</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-xs text-gray-500">ACV per Customer ($)</label>
+                            <input type="number" id="acv" value="150" min="50" max="500" step="10"
+                                   class="w-full bg-white/10 rounded-lg px-3 py-2 text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Monthly Retention (%)</label>
+                            <input type="range" id="retention" min="85" max="98" value="95" step="1"
+                                   class="w-full h-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">
+                            <div class="text-right text-sm text-blue-400"><span id="retentionValue">95</span>%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Results -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">Monthly MRR</div>
+                    <div id="mrr" class="text-2xl font-bold text-blue-400">$0</div>
+                    <div id="mrrGrowth" class="text-xs text-gray-500 mt-1">New this month</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">CAC</div>
+                    <div id="cac" class="text-2xl font-bold text-indigo-400">$0</div>
+                    <div class="text-xs text-gray-500 mt-1">Per customer</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">LTV:CAC</div>
+                    <div id="ltvCac" class="text-2xl font-bold text-green-400">0.0x</div>
+                    <div id="ltvCacStatus" class="text-xs mt-1">-</div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">Payback</div>
+                    <div id="payback" class="text-2xl font-bold text-purple-400">0</div>
+                    <div class="text-xs text-gray-500 mt-1">months</div>
+                </div>
+            </div>
+
+            <!-- Funnel Visualization -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="filter" class="w-5 h-5 text-blue-400"></i>
+                    Marketing Funnel Flow
+                </h3>
+                <div class="space-y-2">
+                    <div class="relative">
+                        <div class="funnel-stage h-16 flex items-center justify-center text-white font-bold">
+                            <span id="visitors">0 Visitors</span>
+                        </div>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400">100%</div>
+                    </div>
+                    <div class="relative" style="width: 85%; margin: 0 auto;">
+                        <div class="funnel-stage h-16 flex items-center justify-center text-white font-bold bg-gradient-to-r from-indigo-500 to-blue-500">
+                            <span id="leads">0 Leads</span>
+                        </div>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" id="leadConv">0%</div>
+                    </div>
+                    <div class="relative" style="width: 70%; margin: 0 auto;">
+                        <div class="funnel-stage h-16 flex items-center justify-center text-white font-bold bg-gradient-to-r from-purple-500 to-indigo-500">
+                            <span id="trials">0 Trials</span>
+                        </div>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" id="trialConv">0%</div>
+                    </div>
+                    <div class="relative" style="width: 55%; margin: 0 auto;">
+                        <div class="funnel-stage h-16 flex items-center justify-center text-white font-bold bg-gradient-to-r from-green-500 to-emerald-500">
+                            <span id="customers">0 Customers</span>
+                        </div>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400" id="custConv">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel Performance -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart" class="w-5 h-5 text-indigo-400"></i>
+                    Channel Performance
+                </h3>
+                <canvas id="channelChart" height="80"></canvas>
+            </div>
+
+            <!-- Growth Projection -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="trending-up" class="w-5 h-5 text-green-400"></i>
+                    12-Month MRR Projection
+                </h3>
+                <canvas id="projectionChart" height="80"></canvas>
+                <div class="mt-4 grid grid-cols-3 gap-4 text-sm">
+                    <div class="text-center">
+                        <div class="text-gray-400">Month 3</div>
+                        <div id="month3" class="text-lg font-bold text-blue-400">$0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-400">Month 6</div>
+                        <div id="month6" class="text-lg font-bold text-indigo-400">$0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-400">Month 12</div>
+                        <div id="month12" class="text-lg font-bold text-green-400">$0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Chart instances
+        let channelChart, projectionChart;
+
+        // Initialize charts
+        function initCharts() {
+            // Channel Performance Chart
+            const channelCtx = document.getElementById('channelChart').getContext('2d');
+            channelChart = new Chart(channelCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Paid Search', 'Content', 'Social'],
+                    datasets: [
+                        {
+                            label: 'Spend ($k)',
+                            data: [],
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Customers',
+                            data: [],
+                            backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                            borderColor: '#10b981',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#9CA3AF' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#9CA3AF' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#9CA3AF' }
+                        }
+                    }
+                }
+            });
+
+            // MRR Projection Chart
+            const projectionCtx = document.getElementById('projectionChart').getContext('2d');
+            projectionChart = new Chart(projectionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11', 'M12'],
+                    datasets: [{
+                        label: 'MRR',
+                        data: [],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#9CA3AF' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                callback: function(value) {
+                                    return '$' + (value/1000).toFixed(0) + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calculate funnel metrics
+        function calculateFunnel() {
+            // Get inputs
+            const paidSearch = parseFloat(document.getElementById('paidSearch').value) * 1000;
+            const content = parseFloat(document.getElementById('content').value) * 1000;
+            const social = parseFloat(document.getElementById('social').value) * 1000;
+            const totalSpend = paidSearch + content + social;
+
+            const visitorToLead = parseFloat(document.getElementById('visitorToLead').value) / 100;
+            const leadToTrial = parseFloat(document.getElementById('leadToTrial').value) / 100;
+            const trialToPaid = parseFloat(document.getElementById('trialToPaid').value) / 100;
+            const acv = parseFloat(document.getElementById('acv').value);
+            const retention = parseFloat(document.getElementById('retention').value) / 100;
+
+            // Calculate visitors (mock CPCs)
+            const paidVisitors = paidSearch / 2; // $2 CPC
+            const contentVisitors = content / 0.5; // $0.50 per visitor
+            const socialVisitors = social / 1; // $1 per visitor
+            const totalVisitors = paidVisitors + contentVisitors + socialVisitors;
+
+            // Funnel calculations
+            const leads = totalVisitors * visitorToLead;
+            const trials = leads * leadToTrial;
+            const customers = trials * trialToPaid;
+            const mrr = customers * acv;
+
+            // Unit economics
+            const cac = totalSpend / customers || 0;
+            const ltv = acv / (1 - retention) || 0;
+            const ltvCacRatio = ltv / cac || 0;
+            const paybackMonths = cac / acv || 0;
+
+            // Update display
+            document.getElementById('totalSpend').textContent = `$${(totalSpend/1000).toFixed(0)}k`;
+            document.getElementById('visitors').textContent = `${Math.round(totalVisitors).toLocaleString()} Visitors`;
+            document.getElementById('leads').textContent = `${Math.round(leads).toLocaleString()} Leads`;
+            document.getElementById('trials').textContent = `${Math.round(trials).toLocaleString()} Trials`;
+            document.getElementById('customers').textContent = `${Math.round(customers).toLocaleString()} Customers`;
+
+            document.getElementById('leadConv').textContent = `${(visitorToLead * 100).toFixed(1)}%`;
+            document.getElementById('trialConv').textContent = `${(leadToTrial * 100).toFixed(1)}%`;
+            document.getElementById('custConv').textContent = `${(trialToPaid * 100).toFixed(1)}%`;
+
+            document.getElementById('mrr').textContent = `$${mrr.toFixed(0)}`;
+            document.getElementById('mrrGrowth').textContent = `+$${mrr.toFixed(0)} new`;
+            document.getElementById('cac').textContent = `$${cac.toFixed(0)}`;
+            document.getElementById('ltvCac').textContent = `${ltvCacRatio.toFixed(1)}x`;
+            document.getElementById('payback').textContent = Math.ceil(paybackMonths);
+
+            // LTV:CAC status
+            const ltvCacStatus = document.getElementById('ltvCacStatus');
+            if (ltvCacRatio >= 3) {
+                ltvCacStatus.textContent = '✅ Healthy';
+                ltvCacStatus.className = 'text-xs mt-1 text-green-400';
+            } else if (ltvCacRatio >= 1) {
+                ltvCacStatus.textContent = '⚠️ Needs work';
+                ltvCacStatus.className = 'text-xs mt-1 text-yellow-400';
+            } else {
+                ltvCacStatus.textContent = '❌ Unsustainable';
+                ltvCacStatus.className = 'text-xs mt-1 text-red-400';
+            }
+
+            // Update channel chart
+            channelChart.data.datasets[0].data = [paidSearch/1000, content/1000, social/1000];
+            channelChart.data.datasets[1].data = [
+                customers * (paidVisitors/totalVisitors),
+                customers * (contentVisitors/totalVisitors),
+                customers * (socialVisitors/totalVisitors)
+            ];
+            channelChart.update();
+
+            // Calculate projection
+            const projectionData = [];
+            let currentMRR = mrr;
+            for (let i = 0; i < 12; i++) {
+                if (i > 0) {
+                    const retained = currentMRR * retention;
+                    currentMRR = retained + mrr; // Add new MRR each month
+                }
+                projectionData.push(currentMRR);
+            }
+            projectionChart.data.datasets[0].data = projectionData;
+            projectionChart.update();
+
+            document.getElementById('month3').textContent = `$${(projectionData[2]/1000).toFixed(0)}k`;
+            document.getElementById('month6').textContent = `$${(projectionData[5]/1000).toFixed(0)}k`;
+            document.getElementById('month12').textContent = `$${(projectionData[11]/1000).toFixed(0)}k`;
+        }
+
+        // Event listeners
+        document.getElementById('paidSearch').addEventListener('input', function() {
+            document.getElementById('paidSearchValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('content').addEventListener('input', function() {
+            document.getElementById('contentValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('social').addEventListener('input', function() {
+            document.getElementById('socialValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('visitorToLead').addEventListener('input', function() {
+            document.getElementById('visitorToLeadValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('leadToTrial').addEventListener('input', function() {
+            document.getElementById('leadToTrialValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('trialToPaid').addEventListener('input', function() {
+            document.getElementById('trialToPaidValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('retention').addEventListener('input', function() {
+            document.getElementById('retentionValue').textContent = this.value;
+            calculateFunnel();
+        });
+        document.getElementById('acv').addEventListener('input', calculateFunnel);
+
+        // Initialize
+        window.addEventListener('load', function() {
+            initCharts();
+            calculateFunnel();
+        });
+    </script>
+</body>
+</html>

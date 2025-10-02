@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Capital Optimization Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent mb-2">
+                        Working Capital Optimization
+                    </h1>
+                    <p class="text-gray-400">Real-time scenario modeling with cash impact analysis</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-400">Cash Release Potential</div>
+                        <div id="cashRelease" class="text-2xl font-bold text-emerald-400">$0</div>
+                    </div>
+                    <button onclick="WCApp.resetScenario()" class="px-4 py-2 bg-slate-700 text-gray-300 rounded-lg hover:bg-slate-600">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scenario Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Industry Benchmark</label>
+                    <select id="industrySelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="saas">SaaS</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="retail">Retail</option>
+                        <option value="services">Professional Services</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Optimization Goal</label>
+                    <select id="goalSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="balanced">Balanced</option>
+                        <option value="aggressive">Aggressive Cash Release</option>
+                        <option value="conservative">Conservative Growth</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Time Horizon</label>
+                    <select id="timeSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="3">3 Months</option>
+                        <option value="6">6 Months</option>
+                        <option value="12">12 Months</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Working Capital Components -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Days Sales Outstanding (DSO)</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Current DSO</span>
+                        <span id="currentDSO" class="font-semibold">45 days</span>
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-400 block mb-2">Target DSO</label>
+                        <input type="range" id="dsoSlider" min="20" max="60" value="45" class="range-slider w-full">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>20</span>
+                            <span id="dsoValue">45</span>
+                            <span>60</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <span class="text-gray-400">Cash Impact: </span>
+                        <span id="dsoCashImpact" class="font-semibold text-emerald-400">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Days Inventory Outstanding (DIO)</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Current DIO</span>
+                        <span id="currentDIO" class="font-semibold">60 days</span>
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-400 block mb-2">Target DIO</label>
+                        <input type="range" id="dioSlider" min="30" max="90" value="60" class="range-slider w-full">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>30</span>
+                            <span id="dioValue">60</span>
+                            <span>90</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <span class="text-gray-400">Cash Impact: </span>
+                        <span id="dioCashImpact" class="font-semibold text-emerald-400">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Days Payable Outstanding (DPO)</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400">Current DPO</span>
+                        <span id="currentDPO" class="font-semibold">30 days</span>
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-400 block mb-2">Target DPO</label>
+                        <input type="range" id="dpoSlider" min="15" max="60" value="30" class="range-slider w-full">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>15</span>
+                            <span id="dpoValue">30</span>
+                            <span>60</span>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <span class="text-gray-400">Cash Impact: </span>
+                        <span id="dpoCashImpact" class="font-semibold text-emerald-400">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cash Conversion Cycle Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Cash Conversion Cycle</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Current CCC</span>
+                        <span id="currentCCC" class="font-semibold">75 days</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Optimized CCC</span>
+                        <span id="optimizedCCC" class="font-semibold">75 days</span>
+                    </div>
+                    <div class="flex justify-between border-t border-gray-600 pt-2">
+                        <span class="text-gray-400">Improvement</span>
+                        <span id="cccImprovement" class="font-semibold text-emerald-400">0 days</span>
+                    </div>
+                </div>
+                <canvas id="cccChart" width="400" height="200" class="mt-4"></canvas>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Optimization Recommendations</h3>
+                <div id="recommendations" class="space-y-3">
+                    <!-- Dynamic recommendations -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Cash Impact Analysis</h3>
+                <canvas id="impactChart" width="400" height="300"></canvas>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Industry Benchmarks</h3>
+                <canvas id="benchmarkChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="data.js"></script>
+    <script src="ccc-calculator.js"></script>
+    <script src="optimization.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

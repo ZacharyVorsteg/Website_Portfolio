@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&A Target Screener - Strategic Filtering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header [[memory:7788592]] -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                M&A Target Screener
+            </h1>
+            <p class="text-gray-400">
+                Screen and rank potential acquisition targets based on strategic fit. This demo uses a mock dataset of 50 
+                companies to demonstrate how to filter by revenue, growth, margins, and strategic alignment to identify 
+                the best M&A opportunities.
+            </p>
+        </div>
+
+        <!-- Filters -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <h3 class="text-lg font-bold mb-4">Screening Criteria</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400">Min Revenue ($M)</label>
+                    <input type="number" id="minRevenue" value="10" class="w-full bg-white/10 rounded px-3 py-2 mt-1">
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400">Min Growth (%)</label>
+                    <input type="number" id="minGrowth" value="20" class="w-full bg-white/10 rounded px-3 py-2 mt-1">
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400">Max Valuation ($M)</label>
+                    <input type="number" id="maxValuation" value="500" class="w-full bg-white/10 rounded px-3 py-2 mt-1">
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400">Industry</label>
+                    <select id="industry" class="w-full bg-white/10 rounded px-3 py-2 mt-1">
+                        <option value="all">All Industries</option>
+                        <option value="saas">SaaS</option>
+                        <option value="fintech">FinTech</option>
+                        <option value="healthcare">Healthcare</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="screenTargets()" class="mt-4 px-4 py-2 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-400 rounded-lg">
+                Run Screening
+            </button>
+        </div>
+
+        <!-- Results -->
+        <div class="glass-card rounded-xl p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Qualified Targets</h3>
+                <span id="resultCount" class="text-sm text-gray-400">0 companies found</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-700 text-sm">
+                            <th class="text-left py-2">Company</th>
+                            <th class="text-right py-2">Revenue</th>
+                            <th class="text-right py-2">Growth</th>
+                            <th class="text-right py-2">EBITDA</th>
+                            <th class="text-right py-2">Valuation</th>
+                            <th class="text-center py-2">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="targetsList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate mock companies
+        const companies = Array.from({length: 50}, (_, i) => ({
+            name: `Target ${String.fromCharCode(65 + Math.floor(i/2))}${i % 2 + 1}`,
+            industry: ['saas', 'fintech', 'healthcare'][Math.floor(Math.random() * 3)],
+            revenue: Math.floor(Math.random() * 200) + 5,
+            growth: Math.floor(Math.random() * 80) + 10,
+            ebitda: Math.floor(Math.random() * 30) + 5,
+            valuation: Math.floor(Math.random() * 800) + 50
+        }));
+
+        function screenTargets() {
+            const minRev = parseFloat(document.getElementById('minRevenue').value);
+            const minGrowth = parseFloat(document.getElementById('minGrowth').value);
+            const maxVal = parseFloat(document.getElementById('maxValuation').value);
+            const industry = document.getElementById('industry').value;
+            
+            const filtered = companies.filter(c => 
+                c.revenue >= minRev && 
+                c.growth >= minGrowth && 
+                c.valuation <= maxVal &&
+                (industry === 'all' || c.industry === industry)
+            ).map(c => ({
+                ...c,
+                score: (c.growth * 0.4 + c.ebitda * 0.3 + (100 - c.valuation/10) * 0.3)
+            })).sort((a, b) => b.score - a.score);
+            
+            document.getElementById('resultCount').textContent = `${filtered.length} companies found`;
+            document.getElementById('targetsList').innerHTML = filtered.slice(0, 10).map(c => `
+                <tr class="border-b border-gray-800 text-sm">
+                    <td class="py-2">${c.name} <span class="text-xs text-gray-500">(${c.industry})</span></td>
+                    <td class="text-right py-2">$${c.revenue}M</td>
+                    <td class="text-right py-2 text-green-400">${c.growth}%</td>
+                    <td class="text-right py-2">${c.ebitda}%</td>
+                    <td class="text-right py-2">$${c.valuation}M</td>
+                    <td class="text-center py-2">
+                        <span class="px-2 py-1 rounded text-xs ${c.score > 70 ? 'bg-green-500/20 text-green-400' : c.score > 50 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-gray-500/20 text-gray-400'}">
+                            ${c.score.toFixed(0)}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        screenTargets();
+        lucide.createIcons();
+    </script>
+</body>
+</html>

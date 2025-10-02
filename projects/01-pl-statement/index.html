@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive P&L Statement - CFO Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Warning Banner -->
+        <div id="warningBanner" class="warning-banner bg-yellow-900/50 border border-yellow-500/50 rounded-lg p-4 mb-6 flex items-center gap-3">
+            <span class="text-2xl">⚠️</span>
+            <span class="text-yellow-200 text-sm font-medium">
+                Operating Expenses (<span id="opexAmount">$5.77M</span>) exceed Gross Profit (<span id="grossProfitAmount">$5.60M</span>) by <span id="lossAmount">$170k</span> - Reduce OpEx by 3% to break even
+            </span>
+        </div>
+
+        <!-- Header with controls -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">
+                        Income Statement (P&L)
+                    </h1>
+                    <p class="text-gray-400">Click revenue or expenses to edit • Expand categories for details</p>
+                </div>
+                <div class="info-tooltip">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="tooltip-text">
+                        Click on Revenue or OpEx values to edit and see real-time impact. 
+                        Click arrows to expand categories. Try scenario buttons for quick analysis.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Scenario Buttons -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button onclick="PLApp.applyScenario('growth')" class="scenario-button px-4 py-2 bg-emerald-600 text-white rounded-lg flex items-center gap-2">
+                    📈 Growth Case (+15%)
+                </button>
+                <button onclick="PLApp.applyScenario('cost-cut')" class="scenario-button px-4 py-2 bg-orange-600 text-white rounded-lg flex items-center gap-2">
+                    ✂️ Cut Costs (-10%)
+                </button>
+                <button onclick="PLApp.resetValues()" id="resetButton" class="scenario-button px-4 py-2 bg-slate-600 text-white rounded-lg flex items-center gap-2 hidden">
+                    🔄 Reset to Original
+                </button>
+                <button onclick="PLApp.toggleMonthView()" class="scenario-button px-4 py-2 bg-purple-600 text-white rounded-lg flex items-center gap-2">
+                    📊 Toggle 12-Month View
+                </button>
+            </div>
+
+            <!-- Period Selector and Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Reporting Period</label>
+                    <select id="periodSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="q1">Q1 2024</option>
+                        <option value="q2">Q2 2024</option>
+                        <option value="q3" selected>Q3 2024</option>
+                        <option value="ytd">YTD 2024</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Comparison</label>
+                    <select id="comparisonSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="budget">vs Budget</option>
+                        <option value="prior">vs Prior Year</option>
+                        <option value="forecast">vs Forecast</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="PLApp.toggleView('table')" class="view-btn px-4 py-2 bg-emerald-600 text-white rounded-lg">Table</button>
+                        <button onclick="PLApp.toggleView('waterfall')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Waterfall</button>
+                        <button onclick="PLApp.toggleView('trend')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Trend</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main P&L Table -->
+        <div id="tableView" class="standard-view glass-card rounded-xl p-6 mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Account</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Actual</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Budget</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Variance</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Var %</th>
+                            <th class="text-right py-3 px-2 text-gray-300">% of Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pnlTableBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Smart Insights Box -->
+            <div class="mt-4">
+                <button onclick="PLApp.toggleInsights()" class="text-sm text-gray-400 hover:text-white flex items-center gap-2">
+                    <span id="insightsToggle">▶</span> Smart Insights
+                </button>
+                <div id="insightsBox" class="insights-box mt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Burn rate: <span id="burnRate" class="font-semibold text-red-400">$68.7k/month</span> at current loss level</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-yellow-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Need <span id="breakEvenAmount" class="font-semibold text-yellow-400">$170k</span> in cuts or <span id="revenueIncrease" class="font-semibold text-yellow-400">3%</span> revenue increase to reach operating breakeven</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Despite <span id="grossMarginPercent" class="font-semibold text-emerald-400">70%</span> gross margins, OpEx efficiency is killing profitability</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12-Month View -->
+        <div id="monthView" class="month-view glass-card rounded-xl p-6 mb-6 relative">
+            <div class="export-buttons">
+                <button onclick="PLApp.exportToExcel()" class="export-button">📊 Export Excel</button>
+                <button onclick="PLApp.exportToPDF()" class="export-button">📄 Export PDF</button>
+                <button onclick="PLApp.emailReport()" class="export-button">📧 Email Report</button>
+                <button onclick="PLApp.shareLink()" class="export-button">🔗 Share Link</button>
+            </div>
+            
+            <div class="mb-6">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <h3 class="text-xl font-semibold text-gray-100">12-Month Income Statement - Complete P&L View</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <button onclick="PLApp.applyMonthlyScenario('growth')" class="text-xs px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors">
+                        Apply 5% Growth
+                    </button>
+                    <button onclick="PLApp.applyMonthlyScenario('cost-cut')" class="text-xs px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors">
+                        Cut OpEx 10%
+                    </button>
+                    <button onclick="PLApp.resetMonthlyData()" class="text-xs px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors">
+                        Reset Data
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="monthly-pnl-table w-full">
+                    <thead class="sticky-header">
+                        <tr>
+                            <th class="sticky-column text-left py-2 px-3 text-gray-300 font-semibold">Account</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Jan</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Feb</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Mar</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Apr</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">May</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Jun</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Jul</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Aug</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Sep</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Oct</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Nov</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">Dec</th>
+                            <th class="text-center py-2 px-2 text-gray-300 font-semibold month-cell">YTD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthTableBody">
+                        <!-- Dynamic monthly content -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Summary Bar -->
+            <div class="summary-bar">
+                <div class="summary-metric">
+                    <label>YTD Revenue</label>
+                    <value id="summaryRevenue">$9.52M</value>
+                </div>
+                <div class="summary-metric">
+                    <label>YTD Gross Profit</label>
+                    <value id="summaryGrossProfit">$6.67M</value>
+                </div>
+                <div class="summary-metric">
+                    <label>YTD Operating Income</label>
+                    <value id="summaryOperatingIncome">-$203k</value>
+                </div>
+                <div class="summary-metric">
+                    <label>YTD Net Income</label>
+                    <value id="summaryNetIncome">-$239k</value>
+                </div>
+                <div class="summary-metric">
+                    <label>Months to Breakeven</label>
+                    <value id="monthsToBreakeven">4.2</value>
+                </div>
+                <div class="summary-metric">
+                    <label>Cash Runway</label>
+                    <value id="summaryRunway">18 months</value>
+                </div>
+                <div class="summary-metric">
+                    <label>Breakeven Date</label>
+                    <value id="summaryBreakeven">Mar 2025</value>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div id="chartsView" class="glass-card rounded-xl p-6 mb-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-100 mb-4">Revenue Waterfall</h3>
+                    <canvas id="waterfallChart" width="400" height="300"></canvas>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-100 mb-4">Performance Trend</h3>
+                    <canvas id="trendChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card rounded-xl p-4">
+                <div class="text-sm text-gray-400">Gross Margin</div>
+                <div id="grossMarginMetric" class="text-2xl font-bold text-emerald-400">70.4%</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <div class="text-sm text-gray-400">Operating Margin</div>
+                <div id="operatingMarginMetric" class="text-2xl font-bold text-red-400">-2.1%</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <div class="text-sm text-gray-400">EBITDA Margin</div>
+                <div id="ebitdaMarginMetric" class="text-2xl font-bold text-yellow-400">1.0%</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <div class="text-sm text-gray-400">Net Margin</div>
+                <div id="netMarginMetric" class="text-2xl font-bold text-red-400">-2.6%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="data.js"></script>
+    <script src="calculations.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

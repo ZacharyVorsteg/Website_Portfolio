@@ -1,0 +1,88 @@
+/* Balance Sheet Styles */
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.glass-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.account-row {
+    transition: all 0.2s ease;
+}
+
+.account-row:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.expandable {
+    cursor: pointer;
+}
+
+.child-account {
+    display: none;
+}
+
+.expanded .child-account {
+    display: table-row;
+}
+
+.health-good { color: #10b981; }
+.health-warning { color: #f59e0b; }
+.health-critical { color: #ef4444; }
+
+.balance-check {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.section-header {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.total-row {
+    background: rgba(59, 130, 246, 0.15);
+    border-top: 1px solid #3b82f6;
+    border-bottom: 1px solid #3b82f6;
+}
+
+.ratio-card {
+    transition: all 0.3s ease;
+}
+
+.ratio-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.view-btn {
+    transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .glass-card {
+        margin: 0 -1rem;
+        border-radius: 0;
+    }
+    
+    table {
+        font-size: 0.875rem;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}

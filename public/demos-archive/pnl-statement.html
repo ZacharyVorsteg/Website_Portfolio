@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive P&L Statement - CFO Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .account-row {
+            transition: all 0.2s ease;
+        }
+        .account-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .expandable {
+            cursor: pointer;
+            user-select: none;
+        }
+        .child-account {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .expanded .child-account {
+            display: table-row;
+            opacity: 1;
+        }
+        .trend-up { color: #10b981; }
+        .trend-down { color: #ef4444; }
+        .negative-value { 
+            color: #f87171;
+            font-weight: 500;
+        }
+        .positive-variance { color: #10b981; }
+        .negative-variance { color: #ef4444; }
+        .editable-value {
+            cursor: pointer;
+            text-decoration: underline dotted;
+            text-underline-offset: 2px;
+            transition: all 0.2s ease;
+        }
+        .editable-value:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 4px;
+            padding: 0 4px;
+            margin: 0 -4px;
+        }
+        .editing-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #3b82f6;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            width: 120px;
+        }
+        .delta-indicator {
+            font-size: 11px;
+            margin-left: 4px;
+            font-weight: normal;
+        }
+        .scenario-button {
+            transition: all 0.2s ease;
+        }
+        .scenario-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .number-transition {
+            transition: all 0.3s ease;
+        }
+        .warning-banner {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        .info-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .insights-box {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .insights-box.expanded {
+            max-height: 200px;
+        }
+        .month-view {
+            display: none;
+        }
+        .month-view.active {
+            display: block;
+        }
+        .standard-view.hidden {
+            display: none;
+        }
+        
+        /* 12-Month Table Styles */
+        .monthly-pnl-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 12px;
+            color: #e2e8f0;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: #0f172a;
+        }
+        .sticky-column {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background: #0f172a !important;
+            min-width: 220px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .monthly-pnl-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .monthly-pnl-table tbody tr {
+            min-height: 36px;
+        }
+        .monthly-pnl-table td {
+            padding: 6px 8px;
+            white-space: nowrap;
+            color: #e2e8f0;
+        }
+        .month-cell {
+            width: 75px;
+            text-align: right;
+            font-size: 11px;
+        }
+        .editable-cell {
+            cursor: pointer;
+            position: relative;
+        }
+        .editable-cell:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+        .edited-cell {
+            border: 1px solid #fbbf24 !important;
+        }
+        .variance-high-positive {
+            color: #4ade80;
+            font-weight: 600;
+        }
+        .variance-med-positive {
+            color: #22c55e;
+            font-weight: 500;
+        }
+        .variance-low-positive {
+            color: #16a34a;
+            font-weight: 400;
+        }
+        .variance-high-negative {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .variance-med-negative {
+            color: #ef4444;
+            font-weight: 500;
+        }
+        .variance-low-negative {
+            color: #dc2626;
+            font-weight: 400;
+        }
+        .section-divider {
+            height: 2px;
+            background: #334155;
+        }
+        .sub-account {
+            padding-left: 20px !important;
+            color: #cbd5e1;
+        }
+        .sub-sub-account {
+            padding-left: 40px !important;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .main-section-header {
+            background: rgba(30, 41, 59, 0.9);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #f1f5f9;
+        }
+        .total-row {
+            background: rgba(59, 130, 246, 0.15);
+            font-weight: 700;
+            border-top: 1px solid #3b82f6;
+            border-bottom: 1px solid #3b82f6;
+            color: #f1f5f9;
+        }
+        .margin-row {
+            background: rgba(156, 163, 175, 0.08);
+            font-style: italic;
+            color: #cbd5e1;
+        }
+        .ebitda-row {
+            background: rgba(139, 92, 246, 0.15);
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .ebit-row {
+            background: rgba(236, 72, 153, 0.15);
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .ebt-row {
+            background: rgba(251, 146, 60, 0.15);
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .net-income-row {
+            background: rgba(16, 185, 129, 0.2);
+            font-weight: 700;
+            font-size: 13px;
+            border: 2px solid #10b981;
+            color: #f1f5f9;
+        }
+        .actuals-section {
+            background: rgba(30, 64, 175, 0.08);
+            border-right: 1px solid #1e3a8a;
+        }
+        .budget-section {
+            background: rgba(55, 65, 81, 0.08);
+            border-right: 1px solid #374151;
+        }
+        .variance-section {
+            background: rgba(107, 33, 168, 0.08);
+            border-right: 1px solid #6b21a8;
+        }
+        .expand-icon {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: inline-block;
+            width: 16px;
+        }
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+        .cell-tooltip {
+            position: absolute;
+            background: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .export-buttons {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 25;
+        }
+        @media (max-width: 1024px) {
+            .export-buttons {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 16px;
+                flex-wrap: wrap;
+            }
+        }
+        .export-button {
+            padding: 8px 14px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #f1f5f9;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .export-button:hover {
+            background: #334155;
+            transform: translateY(-1px);
+            border-color: #64748b;
+        }
+        .summary-bar {
+            position: sticky;
+            bottom: 0;
+            background: #0f172a;
+            border-top: 2px solid #334155;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-around;
+            font-size: 12px;
+            z-index: 15;
+        }
+        .summary-metric {
+            text-align: center;
+        }
+        .summary-metric label {
+            color: #64748b;
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+        .summary-metric value {
+            color: #f1f5f9;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Warning Banner -->
+        <div id="warningBanner" class="warning-banner bg-yellow-900/50 border border-yellow-500/50 rounded-lg p-4 mb-6 flex items-center gap-3">
+            <span class="text-2xl">⚠️</span>
+            <span class="text-yellow-200 text-sm font-medium">
+                Operating Expenses (<span id="opexAmount">$5.77M</span>) exceed Gross Profit (<span id="grossProfitAmount">$5.60M</span>) by <span id="lossAmount">$170k</span> - Reduce OpEx by 3% to break even
+            </span>
+        </div>
+
+        <!-- Header with controls -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-2">
+                        Income Statement (P&L)
+                    </h1>
+                    <p class="text-gray-400">Click revenue or expenses to edit • Expand categories for details</p>
+                </div>
+                <div class="info-tooltip">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="tooltip-text">
+                        Click on Revenue or OpEx values to edit and see real-time impact. 
+                        Click arrows to expand categories. Try scenario buttons for quick analysis.
+                    </span>
+                </div>
+            </div>
+
+            <!-- Scenario Buttons -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button onclick="applyScenario('growth')" class="scenario-button px-4 py-2 bg-emerald-600 text-white rounded-lg flex items-center gap-2">
+                    📈 Growth Case (+15%)
+                </button>
+                <button onclick="applyScenario('cost-cut')" class="scenario-button px-4 py-2 bg-orange-600 text-white rounded-lg flex items-center gap-2">
+                    ✂️ Cut Costs (-10%)
+                </button>
+                <button onclick="resetValues()" id="resetButton" class="scenario-button px-4 py-2 bg-slate-600 text-white rounded-lg flex items-center gap-2 hidden">
+                    🔄 Reset to Original
+                </button>
+                <button onclick="toggleMonthView()" class="scenario-button px-4 py-2 bg-purple-600 text-white rounded-lg flex items-center gap-2">
+                    📊 Toggle 12-Month View
+                </button>
+            </div>
+
+            <!-- Period Selector and Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Reporting Period</label>
+                    <select id="periodSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="q1">Q1 2024</option>
+                        <option value="q2">Q2 2024</option>
+                        <option value="q3" selected>Q3 2024</option>
+                        <option value="ytd">YTD 2024</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Comparison</label>
+                    <select id="comparisonSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="budget">vs Budget</option>
+                        <option value="prior">vs Prior Year</option>
+                        <option value="forecast">vs Forecast</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="toggleView('table')" class="view-btn px-4 py-2 bg-emerald-600 text-white rounded-lg">Table</button>
+                        <button onclick="toggleView('waterfall')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Waterfall</button>
+                        <button onclick="toggleView('trend')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Trend</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main P&L Table -->
+        <div id="tableView" class="standard-view glass-card rounded-xl p-6 mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Account</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Actual</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Budget</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Variance</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Var %</th>
+                            <th class="text-right py-3 px-2 text-gray-300">% of Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pnlTableBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Smart Insights Box -->
+            <div class="mt-4">
+                <button onclick="toggleInsights()" class="text-sm text-gray-400 hover:text-white flex items-center gap-2">
+                    <span id="insightsToggle">▶</span> Smart Insights
+                </button>
+                <div id="insightsBox" class="insights-box mt-3">
+                    <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Burn rate: <span id="burnRate" class="font-semibold text-red-400">$68.7k/month</span> at current loss level</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-yellow-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Need <span id="breakEvenAmount" class="font-semibold text-yellow-400">$170k</span> in cuts or <span id="revenueIncrease" class="font-semibold text-yellow-400">3%</span> revenue increase to reach operating breakeven</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-red-500 mt-0.5">●</span>
+                                <span class="text-gray-300 text-sm">Despite <span id="grossMarginPercent" class="font-semibold text-emerald-400">70%</span> gross margins, OpEx efficiency is killing profitability</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12-Month View -->
+        <div id="monthView" class="month-view glass-card rounded-xl p-6 mb-6 relative">
+            <!-- Export Options -->
+            <div class="export-buttons">
+                <button onclick="exportToExcel()" class="export-button">
+                    📊 Export Excel
+                </button>
+                <button onclick="exportToPDF()" class="export-button">
+                    📄 Export PDF
+                </button>
+                <button onclick="emailReport()" class="export-button">
+                    📧 Email Report
+                </button>
+                <button onclick="shareLink()" class="export-button">
+                    🔗 Share Link
+                </button>
+            </div>
+            
+            <div class="mb-6">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <h3 class="text-xl font-semibold text-gray-100">12-Month Income Statement - Complete P&L View</h3>
+                </div>
+                <!-- Quick Actions Bar -->
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <button onclick="applyMonthlyScenario('growth')" class="text-xs px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors">
+                        Apply 5% Growth
+                    </button>
+                    <button onclick="applyMonthlyScenario('cost-cut')" class="text-xs px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors">
+                        Cut 10% Costs
+                    </button>
+                    <button onclick="applyMonthlyScenario('copy-budget')" class="text-xs px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                        Copy Budget to Actuals
+                    </button>
+                    <button onclick="resetMonthlyData()" class="text-xs px-4 py-2 bg-slate-600 text-white rounded hover:bg-slate-700 transition-colors">
+                        Reset All Changes
+                    </button>
+                </div>
+            </div>
+            
+            <div class="overflow-x-auto relative">
+                <div class="min-w-[2400px]">
+                    <table class="w-full text-xs monthly-pnl-table">
+                        <thead class="sticky-header">
+                            <!-- Section Headers -->
+                            <tr class="border-b border-gray-700">
+                                <th class="sticky-column text-left py-2 px-3 bg-slate-900 font-semibold text-gray-300" rowspan="2">Account</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#1e3a8a] text-white font-semibold border-l border-gray-600">ACTUALS</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#475569] text-white font-semibold border-l border-gray-600">BUDGET</th>
+                                <th colspan="12" class="text-center py-2 px-2 bg-[#7c3aed] text-white font-semibold border-l border-gray-600">VARIANCE (Act vs Bud)</th>
+                                <th class="text-center py-2 px-3 bg-[#065f46] text-white font-semibold border-l border-gray-600" rowspan="2">YTD Total</th>
+                            </tr>
+                            <!-- Month Names -->
+                            <tr class="border-b border-gray-700">
+                                <!-- Actuals Months -->
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#1e3a8a] text-gray-200">Dec</th>
+                                <!-- Budget Months -->
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#475569] text-gray-200">Dec</th>
+                                <!-- Variance Months -->
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200 border-l border-gray-600">Jan</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Feb</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Mar</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Apr</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">May</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Jun</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Jul</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Aug</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Sep</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Oct</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Nov</th>
+                                <th class="text-right py-2 px-1 bg-[#7c3aed] text-gray-200">Dec</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthTableBody">
+                            <!-- Dynamic monthly content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Summary Row -->
+            <div class="mt-4 p-4 bg-slate-800/50 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-400">Average Monthly Burn:</span>
+                        <span id="avgBurnActual" class="font-semibold text-red-400 ml-2">--</span>
+                        <span class="text-gray-500 mx-2">vs</span>
+                        <span id="avgBurnBudget" class="font-semibold text-yellow-400">--</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Best Month:</span>
+                        <span id="bestMonth" class="font-semibold text-emerald-400 ml-2">--</span>
+                        <span class="text-gray-500 mx-2">|</span>
+                        <span class="text-gray-400">Worst:</span>
+                        <span id="worstMonth" class="font-semibold text-red-400 ml-2">--</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Months to Breakeven:</span>
+                        <span id="monthsToBreakeven" class="font-semibold text-blue-400 ml-2">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waterfall Chart View -->
+        <div id="waterfallView" class="glass-card rounded-xl p-6 mb-6 hidden">
+            <canvas id="waterfallChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Trend Analysis View -->
+        <div id="trendView" class="glass-card rounded-xl p-6 mb-6 hidden">
+            <canvas id="trendChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Key Metrics Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Gross Margin</h3>
+                <div class="text-2xl font-bold text-emerald-400" id="grossMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="grossMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Operating Margin</h3>
+                <div class="text-2xl font-bold text-blue-400" id="operatingMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="operatingMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">EBITDA Margin</h3>
+                <div class="text-2xl font-bold text-purple-400" id="ebitdaMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="ebitdaMarginTrend">--</div>
+            </div>
+            <div class="glass-card rounded-xl p-4">
+                <h3 class="text-sm text-gray-400 mb-1">Net Margin</h3>
+                <div class="text-2xl font-bold text-orange-400" id="netMargin">--</div>
+                <div class="text-xs text-gray-500 mt-1" id="netMarginTrend">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Bar -->
+    <div class="summary-bar">
+        <div class="summary-metric">
+            <label>Average Burn</label>
+            <value id="summaryBurn">$XXk/mo</value>
+        </div>
+        <div class="summary-metric">
+            <label>Cash Runway</label>
+            <value id="summaryRunway">X months</value>
+        </div>
+        <div class="summary-metric">
+            <label>Breakeven</label>
+            <value id="summaryBreakeven">Month Year</value>
+        </div>
+        <div class="summary-metric">
+            <label>Best Month</label>
+            <value id="summaryBest">Dec</value>
+        </div>
+        <div class="summary-metric">
+            <label>Worst Month</label>
+            <value id="summaryWorst">Jan</value>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Chart of Accounts with expandable details
+        const chartOfAccounts = {
+            revenue: {
+                name: 'Revenue',
+                level: 0,
+                editable: true,
+                children: {
+                    'saas': { name: 'SaaS Revenue', level: 1, percentage: 60 },
+                    'services': { name: 'Professional Services', level: 1, percentage: 40 }
+                }
+            },
+            cogs: {
+                name: 'Cost of Goods Sold',
+                level: 0,
+                editable: false,
+                children: {}
+            },
+            opex: {
+                name: 'Operating Expenses',
+                level: 0,
+                editable: true,
+                children: {
+                    'salaries': { name: 'Salaries & Benefits', level: 1, percentage: 65 },
+                    'marketing': { name: 'Sales & Marketing', level: 1, percentage: 20 },
+                    'other': { name: 'Other OpEx', level: 1, percentage: 15 }
+                }
+            },
+            other: {
+                name: 'Other Income/Expenses',
+                level: 0,
+                editable: false,
+                children: {}
+            }
+        };
+
+        // Financial data with original values preserved
+        const originalData = {
+            revenue: 7950000,
+            cogs: 2350000,
+            opex: 5770000,
+            other: -36000
+        };
+
+        // Current financial data (mutable)
+        let financialData = {
+            revenue: 7950000,
+            cogs: 2350000,
+            opex: 5770000,
+            other: -36000
+        };
+
+        // Complete institutional-grade P&L data structure
+        const monthlyDataOriginal = {
+            revenue: {
+                name: 'REVENUE',
+                expanded: true,
+                actuals: [650000, 680000, 720000, 700000, 750000, 800000, 820000, 850000, 880000, 900000, 920000, 950000],
+                budget: [640000, 660000, 700000, 700000, 740000, 780000, 800000, 820000, 850000, 880000, 900000, 920000],
+                children: {
+                    product: {
+                        name: 'Product Revenue',
+                        actuals: [520000, 540000, 580000, 600000, 620000, 640000, 660000, 680000, 700000, 720000, 740000, 760000],
+                        budget: [500000, 520000, 560000, 580000, 600000, 620000, 640000, 660000, 680000, 700000, 720000, 740000]
+                    },
+                    service: {
+                        name: 'Service Revenue',
+                        actuals: [130000, 140000, 140000, 100000, 110000, 120000, 120000, 130000, 140000, 140000, 140000, 150000],
+                        budget: [140000, 140000, 140000, 120000, 120000, 120000, 120000, 120000, 130000, 140000, 140000, 140000]
+                    },
+                    recurring: {
+                        name: 'Recurring Revenue',
+                        actuals: [0, 0, 0, 0, 20000, 40000, 40000, 40000, 40000, 40000, 40000, 40000],
+                        budget: [0, 0, 0, 0, 20000, 40000, 40000, 40000, 40000, 40000, 40000, 40000]
+                    }
+                }
+            },
+            cogs: {
+                name: 'COST OF REVENUE',
+                expanded: true,
+                actuals: [192000, 201000, 213000, 210000, 228000, 246000, 252000, 260000, 268000, 276000, 284000, 292000],
+                budget: [190000, 198000, 210000, 210000, 219000, 237000, 243000, 250000, 258000, 266000, 274000, 282000],
+                children: {
+                    directLabor: {
+                        name: 'Direct Labor',
+                        actuals: [120000, 125000, 135000, 130000, 140000, 150000, 154000, 158000, 162000, 166000, 170000, 175000],
+                        budget: [115000, 120000, 130000, 130000, 135000, 145000, 148000, 152000, 156000, 160000, 164000, 168000]
+                    },
+                    materials: {
+                        name: 'Materials & Supplies',
+                        actuals: [40000, 42000, 45000, 44000, 48000, 52000, 53000, 55000, 57000, 59000, 61000, 63000],
+                        budget: [40000, 42000, 44000, 44000, 46000, 50000, 51000, 52000, 54000, 56000, 58000, 60000]
+                    },
+                    thirdParty: {
+                        name: 'Third-Party Costs',
+                        actuals: [32000, 34000, 33000, 36000, 40000, 44000, 45000, 47000, 49000, 51000, 53000, 54000],
+                        budget: [35000, 36000, 36000, 36000, 38000, 42000, 44000, 46000, 48000, 50000, 52000, 54000]
+                    }
+                }
+            },
+            opex: {
+                name: 'OPERATING EXPENSES',
+                expanded: true,
+                actuals: [506000, 522000, 540000, 536000, 563000, 584000, 596000, 610000, 624000, 638000, 652000, 668000],
+                budget: [501000, 509000, 523000, 524000, 544000, 557000, 570000, 583000, 596000, 609000, 622000, 635000],
+                children: {
+                    salesMarketing: {
+                        name: 'Sales & Marketing',
+                        expanded: false,
+                        actuals: [168000, 176000, 185000, 183000, 194000, 205000, 210000, 216000, 221000, 227000, 232000, 238000],
+                        budget: [166000, 170000, 177000, 177000, 185000, 194000, 199000, 204000, 209000, 214000, 219000, 224000],
+                        children: {
+                            smSalaries: {
+                                name: 'Salaries & Wages',
+                                actuals: [120000, 122000, 125000, 125000, 130000, 135000, 138000, 141000, 144000, 147000, 150000, 153000],
+                                budget: [118000, 120000, 122000, 122000, 125000, 130000, 133000, 136000, 139000, 142000, 145000, 148000]
+                            },
+                            advertising: {
+                                name: 'Advertising & Promotion',
+                                actuals: [40000, 45000, 50000, 48000, 52000, 55000, 56000, 58000, 59000, 61000, 62000, 64000],
+                                budget: [40000, 42000, 45000, 45000, 50000, 52000, 53000, 54000, 55000, 56000, 57000, 58000]
+                            },
+                            travel: {
+                                name: 'Travel & Entertainment',
+                                actuals: [8000, 9000, 10000, 10000, 12000, 15000, 16000, 17000, 18000, 19000, 20000, 21000],
+                                budget: [8000, 8000, 10000, 10000, 10000, 12000, 13000, 14000, 15000, 16000, 17000, 18000]
+                            }
+                        }
+                    },
+                    generalAdmin: {
+                        name: 'General & Administrative',
+                        expanded: false,
+                        actuals: [132000, 136000, 139000, 137000, 145000, 148000, 151000, 154000, 157000, 160000, 163000, 166000],
+                        budget: [131000, 133000, 136000, 136000, 137000, 140000, 143000, 146000, 149000, 152000, 155000, 158000],
+                        children: {
+                            execSalaries: {
+                                name: 'Executive Salaries',
+                                actuals: [80000, 80000, 80000, 80000, 85000, 85000, 87000, 87000, 89000, 89000, 91000, 91000],
+                                budget: [80000, 80000, 80000, 80000, 80000, 80000, 82000, 82000, 84000, 84000, 86000, 86000]
+                            },
+                            professionalFees: {
+                                name: 'Professional Fees',
+                                actuals: [25000, 28000, 30000, 28000, 30000, 32000, 33000, 34000, 35000, 36000, 37000, 38000],
+                                budget: [24000, 26000, 28000, 28000, 28000, 30000, 31000, 32000, 33000, 34000, 35000, 36000]
+                            },
+                            officeAdmin: {
+                                name: 'Office & Admin',
+                                actuals: [15000, 16000, 17000, 17000, 18000, 19000, 19000, 20000, 20000, 21000, 21000, 22000],
+                                budget: [15000, 15000, 16000, 16000, 17000, 18000, 18000, 19000, 19000, 20000, 20000, 21000]
+                            },
+                            insurance: {
+                                name: 'Insurance',
+                                actuals: [12000, 12000, 12000, 12000, 12000, 12000, 12000, 13000, 13000, 14000, 14000, 15000],
+                                budget: [12000, 12000, 12000, 12000, 12000, 12000, 12000, 13000, 13000, 14000, 14000, 15000]
+                            }
+                        }
+                    },
+                    researchDev: {
+                        name: 'Research & Development',
+                        expanded: false,
+                        actuals: [160000, 164000, 169000, 169000, 176000, 183000, 187000, 192000, 197000, 202000, 207000, 212000],
+                        budget: [158000, 160000, 164000, 164000, 168000, 174000, 178000, 182000, 186000, 190000, 194000, 198000],
+                        children: {
+                            rdSalaries: {
+                                name: 'R&D Salaries',
+                                actuals: [140000, 142000, 145000, 145000, 150000, 155000, 158000, 162000, 166000, 170000, 174000, 178000],
+                                budget: [138000, 140000, 142000, 142000, 145000, 150000, 153000, 156000, 159000, 162000, 165000, 168000]
+                            },
+                            software: {
+                                name: 'Software & Tools',
+                                actuals: [20000, 22000, 24000, 24000, 26000, 28000, 29000, 30000, 31000, 32000, 33000, 34000],
+                                budget: [20000, 20000, 22000, 22000, 24000, 26000, 27000, 28000, 29000, 30000, 31000, 32000]
+                            }
+                        }
+                    },
+                    facilities: {
+                        name: 'Facilities & Operations',
+                        expanded: false,
+                        actuals: [46000, 46000, 47000, 47000, 48000, 48000, 48000, 48000, 49000, 49000, 50000, 50000],
+                        budget: [46000, 46000, 46000, 47000, 47000, 47000, 47000, 47000, 48000, 48000, 49000, 49000],
+                        children: {
+                            rent: {
+                                name: 'Rent & Lease',
+                                actuals: [40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000],
+                                budget: [40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000, 40000]
+                            },
+                            utilities: {
+                                name: 'Utilities',
+                                actuals: [6000, 6000, 7000, 7000, 8000, 8000, 8000, 8000, 9000, 9000, 10000, 10000],
+                                budget: [6000, 6000, 6000, 7000, 7000, 7000, 7000, 7000, 8000, 8000, 9000, 9000]
+                            }
+                        }
+                    }
+                }
+            },
+            depreciation: {
+                name: 'Depreciation & Amortization',
+                actuals: [18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000],
+                budget: [18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000, 18000]
+            },
+            stockComp: {
+                name: 'Stock-Based Compensation',
+                actuals: [12000, 12000, 14000, 14000, 15000, 16000, 16000, 17000, 17000, 18000, 18000, 19000],
+                budget: [12000, 12000, 12000, 14000, 14000, 15000, 15000, 16000, 16000, 17000, 17000, 18000]
+            },
+            nonOperating: {
+                name: 'NON-OPERATING ITEMS',
+                expanded: true,
+                children: {
+                    interestIncome: {
+                        name: 'Interest Income',
+                        actuals: [2000, 2000, 2000, 2000, 3000, 3000, 3000, 3000, 4000, 4000, 4000, 4000],
+                        budget: [2000, 2000, 2000, 2000, 2000, 2000, 3000, 3000, 3000, 3000, 3000, 3000]
+                    },
+                    interestExpense: {
+                        name: 'Interest Expense',
+                        actuals: [-8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000],
+                        budget: [-8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000, -8000]
+                    },
+                    otherIncome: {
+                        name: 'Other Income/(Expense)',
+                        actuals: [-2000, -1000, -3000, 0, 2000, -2000, -1000, 0, 1000, -1000, 0, 2000],
+                        budget: [-2000, -2000, -2000, -2000, -2000, -2000, -2000, -2000, -2000, -2000, -2000, -2000]
+                    },
+                    investments: {
+                        name: 'Gain/(Loss) on Investments',
+                        actuals: [0, 0, 5000, 0, 0, -3000, 0, 2000, 0, -1000, 0, 3000],
+                        budget: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    }
+                }
+            },
+            tax: {
+                name: 'Income Tax Expense',
+                actuals: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                budget: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            shares: {
+                name: 'Weighted Avg Shares (000s)',
+                actuals: [100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000],
+                budget: [100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000]
+            }
+        };
+
+        // Create mutable copy
+        let monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
+
+        let currentPeriod = 'q3';
+        let currentView = 'table';
+        let waterfallChart = null;
+        let trendChart = null;
+        let hasEdits = false;
+
+        function formatCurrency(value, showSign = false) {
+            const formatted = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(Math.abs(value));
+            
+            if (showSign && value !== 0) {
+                return value > 0 ? '+$' + formatted : '-$' + formatted;
+            }
+            return '$' + formatted;
+        }
+
+        function formatNumber(value) {
+            return new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function renderPnLTable() {
+            const tbody = document.getElementById('pnlTableBody');
+            tbody.innerHTML = '';
+
+            const grossProfit = financialData.revenue - financialData.cogs;
+            const operatingIncome = grossProfit - financialData.opex;
+            const netIncome = operatingIncome + financialData.other;
+
+            // Render Revenue section
+            renderMainRow(tbody, 'Revenue', financialData.revenue, originalData.revenue, 'revenue');
+            if (chartOfAccounts.revenue.expanded) {
+                renderChildRows(tbody, chartOfAccounts.revenue.children, financialData.revenue);
+            }
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            // Render COGS
+            renderMainRow(tbody, 'Cost of Goods Sold', financialData.cogs, originalData.cogs, 'cogs', false);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Gross Profit', grossProfit, (originalData.revenue - originalData.cogs));
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            // Render OpEx section
+            renderMainRow(tbody, 'Operating Expenses', financialData.opex, originalData.opex, 'opex');
+            if (chartOfAccounts.opex.expanded) {
+                renderChildRows(tbody, chartOfAccounts.opex.children, financialData.opex);
+            }
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Operating Income', operatingIncome, (originalData.revenue - originalData.cogs - originalData.opex));
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            
+            // Render Other
+            renderMainRow(tbody, 'Other Income/Expenses', financialData.other, originalData.other, 'other', false);
+            
+            tbody.innerHTML += '<tr><td colspan="6" class="py-2"></td></tr>';
+            renderTotalRow(tbody, 'Net Income', netIncome, (originalData.revenue - originalData.cogs - originalData.opex + originalData.other));
+
+            // Update metrics and insights
+            updateMetrics(grossProfit, operatingIncome, netIncome);
+            updateWarningBanner();
+            updateInsights();
+        }
+
+        function renderMainRow(tbody, label, actual, budget, category, expandable = true) {
+            const row = document.createElement('tr');
+            row.className = 'account-row font-semibold text-gray-200';
+            
+            const variance = actual - budget;
+            const variancePercent = budget !== 0 ? (variance / budget * 100) : 0;
+            const delta = hasEdits && actual !== budget ? ((actual - budget) / budget * 100) : 0;
+            
+            row.innerHTML = `
+                <td class="py-2 px-2">
+                    ${expandable ? `<span class="expandable cursor-pointer" onclick="toggleExpand('${category}')">
+                        ${chartOfAccounts[category].expanded ? '▼' : '▶'} ${label}
+                    </span>` : label}
+                </td>
+                <td class="text-right py-2 px-2">
+                    ${chartOfAccounts[category].editable ? 
+                        `<span class="editable-value" onclick="editValue('${category}')" id="${category}-value">
+                            ${formatCurrency(actual)}
+                        </span>` : 
+                        formatCurrency(actual)
+                    }
+                    ${delta !== 0 ? `<span class="delta-indicator ${delta > 0 ? 'text-emerald-400' : 'text-red-400'}">
+                        ${delta > 0 ? '↑' : '↓'} ${Math.abs(delta).toFixed(0)}%
+                    </span>` : ''}
+                </td>
+                <td class="text-right py-2 px-2">${formatCurrency(budget)}</td>
+                <td class="text-right py-2 px-2 ${variance >= 0 ? 'positive-variance' : 'negative-variance'}">
+                    ${formatCurrency(Math.abs(variance))}
+                </td>
+                <td class="text-right py-2 px-2 ${variance >= 0 ? 'positive-variance' : 'negative-variance'}">
+                    ${variancePercent.toFixed(1)}%
+                </td>
+                <td class="text-right py-2 px-2">${(actual / financialData.revenue * 100).toFixed(1)}%</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function renderChildRows(tbody, children, parentTotal) {
+            Object.entries(children).forEach(([key, child]) => {
+                const amount = parentTotal * (child.percentage / 100);
+                const row = document.createElement('tr');
+                row.className = 'text-gray-400 child-account';
+                
+                row.innerHTML = `
+                    <td class="py-1 px-2 pl-8">└─ ${child.name}</td>
+                    <td class="text-right py-1 px-2">${formatCurrency(amount)}</td>
+                    <td class="text-right py-1 px-2 text-gray-500">${child.percentage}% of total</td>
+                    <td colspan="3"></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderTotalRow(tbody, label, actual, budget) {
+            const row = document.createElement('tr');
+            const isNegative = actual < 0;
+            row.className = 'font-bold text-white bg-slate-800 border-t border-gray-600';
+            
+            const variance = actual - budget;
+            const variancePercent = budget !== 0 ? (variance / budget * 100) : 0;
+            
+            row.innerHTML = `
+                <td class="py-2 px-2">${label}</td>
+                <td class="text-right py-2 px-2 ${isNegative ? 'negative-value' : ''}">${formatCurrency(actual)}</td>
+                <td class="text-right py-2 px-2">${formatCurrency(budget)}</td>
+                <td class="text-right py-2 px-2 ${variance >= 0 ? 'positive-variance' : 'negative-variance'}">
+                    ${formatCurrency(Math.abs(variance))}
+                </td>
+                <td class="text-right py-2 px-2 ${variance >= 0 ? 'positive-variance' : 'negative-variance'}">
+                    ${variancePercent.toFixed(1)}%
+                </td>
+                <td class="text-right py-2 px-2">${(actual / financialData.revenue * 100).toFixed(1)}%</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Interactive editing functions
+        function editValue(category) {
+            const span = document.getElementById(`${category}-value`);
+            const currentValue = financialData[category];
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'editing-input';
+            input.value = formatNumber(currentValue);
+            
+            input.onblur = function() {
+                const newValue = parseInt(input.value.replace(/,/g, '')) || currentValue;
+                financialData[category] = newValue;
+                hasEdits = true;
+                document.getElementById('resetButton').classList.remove('hidden');
+                renderPnLTable();
+            };
+            
+            input.onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+            };
+            
+            span.innerHTML = '';
+            span.appendChild(input);
+            input.focus();
+            input.select();
+        }
+
+        function toggleExpand(category) {
+            chartOfAccounts[category].expanded = !chartOfAccounts[category].expanded;
+            renderPnLTable();
+        }
+
+        function applyScenario(scenario) {
+            hasEdits = true;
+            document.getElementById('resetButton').classList.remove('hidden');
+            
+            if (scenario === 'growth') {
+                financialData.revenue = Math.round(originalData.revenue * 1.15);
+            } else if (scenario === 'cost-cut') {
+                financialData.opex = Math.round(originalData.opex * 0.9);
+            }
+            
+            renderPnLTable();
+        }
+
+        function resetValues() {
+            financialData = { ...originalData };
+            hasEdits = false;
+            document.getElementById('resetButton').classList.add('hidden');
+            renderPnLTable();
+        }
+
+        function toggleInsights() {
+            const box = document.getElementById('insightsBox');
+            const toggle = document.getElementById('insightsToggle');
+            
+            if (box.classList.contains('expanded')) {
+                box.classList.remove('expanded');
+                toggle.textContent = '▶';
+            } else {
+                box.classList.add('expanded');
+                toggle.textContent = '▼';
+            }
+        }
+
+        function toggleMonthView() {
+            const monthView = document.getElementById('monthView');
+            const standardView = document.getElementById('tableView');
+            
+            if (monthView.classList.contains('active')) {
+                monthView.classList.remove('active');
+                standardView.classList.remove('hidden');
+            } else {
+                monthView.classList.add('active');
+                standardView.classList.add('hidden');
+                renderMonthlyView();
+            }
+        }
+
+        function updateMetrics(grossProfit, operatingIncome, netIncome) {
+            const grossMargin = (grossProfit / financialData.revenue * 100).toFixed(1);
+            const operatingMargin = (operatingIncome / financialData.revenue * 100).toFixed(1);
+            const ebitdaMargin = ((operatingIncome + 250000) / financialData.revenue * 100).toFixed(1);
+            const netMargin = (netIncome / financialData.revenue * 100).toFixed(1);
+
+            document.getElementById('grossMargin').textContent = grossMargin + '%';
+            document.getElementById('operatingMargin').textContent = operatingMargin + '%';
+            document.getElementById('ebitdaMargin').textContent = ebitdaMargin + '%';
+            document.getElementById('netMargin').textContent = netMargin + '%';
+
+            // Update trends based on actuals
+            document.getElementById('grossMarginTrend').innerHTML = grossMargin > 70 ? 
+                '<span class="trend-up">↑ Above target</span>' : 
+                '<span class="trend-down">↓ Below target</span>';
+            document.getElementById('operatingMarginTrend').innerHTML = operatingMargin > 0 ? 
+                '<span class="trend-up">↑ Profitable</span>' : 
+                '<span class="trend-down">↓ Loss</span>';
+            document.getElementById('ebitdaMarginTrend').innerHTML = ebitdaMargin > 5 ? 
+                '<span class="trend-up">↑ Healthy</span>' : 
+                '<span class="trend-down">↓ Concerning</span>';
+            document.getElementById('netMarginTrend').innerHTML = netMargin > 0 ? 
+                '<span class="trend-up">↑ Profitable</span>' : 
+                '<span class="trend-down">↓ Loss</span>';
+        }
+
+        function updateWarningBanner() {
+            const grossProfit = financialData.revenue - financialData.cogs;
+            const operatingIncome = grossProfit - financialData.opex;
+            const banner = document.getElementById('warningBanner');
+            
+            if (operatingIncome < 0) {
+                const loss = Math.abs(operatingIncome);
+                const breakEvenCut = (financialData.opex - grossProfit) / financialData.opex * 100;
+                
+                document.getElementById('opexAmount').textContent = formatCurrency(financialData.opex);
+                document.getElementById('grossProfitAmount').textContent = formatCurrency(grossProfit);
+                document.getElementById('lossAmount').textContent = formatCurrency(loss);
+                
+                banner.innerHTML = `
+                    <span class="text-2xl">⚠️</span>
+                    <span class="text-yellow-200 text-sm font-medium">
+                        Operating Expenses (${formatCurrency(financialData.opex)}) exceed Gross Profit (${formatCurrency(grossProfit)}) by ${formatCurrency(loss)} - Reduce OpEx by ${breakEvenCut.toFixed(0)}% to break even
+                    </span>
+                `;
+                banner.style.display = 'flex';
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function updateInsights() {
+            const grossProfit = financialData.revenue - financialData.cogs;
+            const operatingIncome = grossProfit - financialData.opex;
+            const netIncome = operatingIncome + financialData.other;
+            
+            // Update burn rate
+            const monthlyBurn = Math.abs(netIncome) / 3; // Q3 = 3 months
+            document.getElementById('burnRate').textContent = formatCurrency(monthlyBurn) + '/month';
+            
+            // Update breakeven analysis
+            const breakEvenCut = Math.abs(operatingIncome);
+            const revenueIncrease = (breakEvenCut / financialData.revenue * 100).toFixed(0);
+            document.getElementById('breakEvenAmount').textContent = formatCurrency(breakEvenCut);
+            document.getElementById('revenueIncrease').textContent = revenueIncrease + '%';
+            
+            // Update gross margin
+            const grossMargin = (grossProfit / financialData.revenue * 100).toFixed(0);
+            document.getElementById('grossMarginPercent').textContent = grossMargin + '%';
+        }
+
+        function renderMonthlyView() {
+            const tbody = document.getElementById('monthTableBody');
+            tbody.innerHTML = '';
+            
+            // REVENUE SECTION
+            renderMonthlySectionHeader(tbody, 'revenue', monthlyData.revenue);
+            if (monthlyData.revenue.expanded) {
+                renderMonthlyChildAccounts(tbody, monthlyData.revenue.children, 'revenue');
+            }
+            renderMonthlyTotalRow(tbody, 'TOTAL REVENUE', calculateTotalRevenue());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // COST OF REVENUE SECTION
+            renderMonthlySectionHeader(tbody, 'cogs', monthlyData.cogs);
+            if (monthlyData.cogs.expanded) {
+                renderMonthlyChildAccounts(tbody, monthlyData.cogs.children, 'cogs');
+            }
+            renderMonthlyTotalRow(tbody, 'TOTAL COGS', calculateTotalCOGS());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // GROSS PROFIT
+            renderMonthlyCalculatedRow(tbody, 'GROSS PROFIT', calculateMonthlyGrossProfit(), 'total-row');
+            renderMonthlyMarginRow(tbody, 'Gross Margin %', calculateMonthlyGrossMargin());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // OPERATING EXPENSES SECTION
+            renderMonthlySectionHeader(tbody, 'opex', monthlyData.opex);
+            if (monthlyData.opex.expanded) {
+                Object.entries(monthlyData.opex.children).forEach(([key, category]) => {
+                    renderMonthlySubSection(tbody, key, category);
+                    if (category.expanded && category.children) {
+                        renderMonthlyChildAccounts(tbody, category.children, key, true);
+                    }
+                });
+            }
+            renderMonthlyTotalRow(tbody, 'TOTAL OPERATING EXPENSES', calculateTotalOpEx());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // EBITDA
+            renderMonthlyCalculatedRow(tbody, 'EBITDA', calculateEBITDA(), 'ebitda-row');
+            renderMonthlyMarginRow(tbody, 'EBITDA Margin %', calculateEBITDAMargin());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // D&A and Stock Comp
+            renderMonthlySimpleRow(tbody, 'depreciation', monthlyData.depreciation);
+            renderMonthlySimpleRow(tbody, 'stockComp', monthlyData.stockComp);
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // EBIT (Operating Income)
+            renderMonthlyCalculatedRow(tbody, 'EBIT (OPERATING INCOME)', calculateEBIT(), 'ebit-row');
+            renderMonthlyMarginRow(tbody, 'Operating Margin %', calculateOperatingMargin());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // NON-OPERATING ITEMS
+            renderMonthlySectionHeader(tbody, 'nonOperating', monthlyData.nonOperating);
+            if (monthlyData.nonOperating.expanded) {
+                renderMonthlyChildAccounts(tbody, monthlyData.nonOperating.children, 'nonOperating');
+            }
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // EBT
+            renderMonthlyCalculatedRow(tbody, 'EARNINGS BEFORE TAX (EBT)', calculateEBT(), 'ebt-row');
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // Tax
+            renderMonthlySimpleRow(tbody, 'tax', monthlyData.tax);
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 8px;"></td></tr>';
+            
+            // NET INCOME
+            renderMonthlyCalculatedRow(tbody, 'NET INCOME', calculateMonthlyNetIncome(), 'net-income-row');
+            renderMonthlyMarginRow(tbody, 'Net Margin %', calculateMonthlyNetMargin());
+            
+            tbody.innerHTML += '<tr><td colspan="38" style="height: 12px;"></td></tr>';
+            
+            // EPS
+            renderMonthlyEPSRow(tbody);
+            renderMonthlySharesRow(tbody);
+            
+            // Update summary metrics
+            updateMonthlySummary();
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white');
+                btn.classList.add('bg-slate-700', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-slate-700', 'text-gray-300');
+            event.target.classList.add('bg-emerald-600', 'text-white');
+
+            document.getElementById('tableView').classList.toggle('hidden', view !== 'table');
+            document.getElementById('waterfallView').classList.toggle('hidden', view !== 'waterfall');
+            document.getElementById('trendView').classList.toggle('hidden', view !== 'trend');
+
+            if (view === 'waterfall') {
+                renderWaterfallChart();
+            } else if (view === 'trend') {
+                renderTrendChart();
+            }
+        }
+
+        function renderWaterfallChart() {
+            const ctx = document.getElementById('waterfallChart').getContext('2d');
+            
+            if (waterfallChart) {
+                waterfallChart.destroy();
+            }
+
+            const revenue = financialData.revenue;
+            const cogs = financialData.cogs;
+            const opex = financialData.opex;
+            const other = financialData.other;
+            const grossProfit = revenue - cogs;
+            const operatingIncome = grossProfit - opex;
+            const netIncome = operatingIncome + other;
+
+            waterfallChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Revenue', 'COGS', 'Gross Profit', 'OpEx', 'Operating Income', 'Other', 'Net Income'],
+                    datasets: [{
+                        data: [revenue, -cogs, grossProfit, -opex, operatingIncome, other, netIncome],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            operatingIncome >= 0 ? 'rgba(139, 92, 246, 0.8)' : 'rgba(239, 68, 68, 0.8)',
+                            other >= 0 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)',
+                            netIncome >= 0 ? 'rgba(251, 146, 60, 0.8)' : 'rgba(239, 68, 68, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => formatCurrency(Math.abs(context.raw))
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => formatCurrency(value),
+                                color: '#9ca3af'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            
+            if (trendChart) {
+                trendChart.destroy();
+            }
+
+            // Calculate cumulative values for YTD
+            const revenueData = [];
+            const grossProfitData = [];
+            const netIncomeData = [];
+            
+            for (let i = 0; i < 9; i++) {
+                const monthlyRevenue = monthlyData.revenue.actual[i];
+                const monthlyCogs = monthlyData.cogs.actual[i];
+                const monthlyOpex = monthlyData.opex.actual[i];
+                
+                revenueData.push(monthlyRevenue);
+                grossProfitData.push(monthlyRevenue - monthlyCogs);
+                netIncomeData.push(monthlyRevenue - monthlyCogs - monthlyOpex - 3000);
+            }
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: revenueData,
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Gross Profit',
+                        data: grossProfitData,
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Net Income',
+                        data: netIncomeData,
+                        borderColor: 'rgba(251, 146, 60, 1)',
+                        backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            labels: { color: '#9ca3af' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => context.dataset.label + ': ' + formatCurrency(context.raw)
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => '$' + (value / 1000).toFixed(0) + 'k',
+                                color: '#9ca3af'
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Monthly view helper functions
+        function renderMonthlySectionHeader(tbody, key, section) {
+            const row = document.createElement('tr');
+            row.className = 'main-section-header';
+            
+            let accountCell = `<td class="sticky-column py-2 px-3">`;
+            if (section.children) {
+                accountCell += `<span class="expand-icon ${section.expanded ? 'expanded' : ''}" onclick="toggleSectionExpand('${key}')">▼</span> `;
+            }
+            accountCell += section.name + '</td>';
+            
+            row.innerHTML = accountCell;
+            
+            // Add actual values
+            if (section.actuals) {
+                section.actuals.forEach((value, i) => {
+                    row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}">${formatMonthlyValue(value)}</td>`;
+                });
+            } else {
+                // Empty cells for section headers
+                for (let i = 0; i < 12; i++) {
+                    row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}"></td>`;
+                }
+            }
+            
+            // Add budget values
+            if (section.budget) {
+                section.budget.forEach((value, i) => {
+                    row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}">${formatMonthlyValue(value)}</td>`;
+                });
+            } else {
+                for (let i = 0; i < 12; i++) {
+                    row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}"></td>`;
+                }
+            }
+            
+            // Add variance values
+            if (section.actuals && section.budget) {
+                section.actuals.forEach((actual, i) => {
+                    const budget = section.budget[i];
+                    const variance = actual - budget;
+                    const varianceClass = getVarianceClass(variance, budget, key === 'cogs' || key === 'opex');
+                    row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">${formatVariance(variance)}</td>`;
+                });
+            } else {
+                for (let i = 0; i < 12; i++) {
+                    row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''}"></td>`;
+                }
+            }
+            
+            // YTD
+            if (section.actuals) {
+                const ytd = section.actuals.reduce((sum, val) => sum + val, 0);
+                row.innerHTML += `<td class="month-cell border-l border-gray-600 font-semibold text-emerald-300">${formatMonthlyValue(ytd)}</td>`;
+            } else {
+                row.innerHTML += `<td class="month-cell border-l border-gray-600"></td>`;
+            }
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyChildAccounts(tbody, children, parentKey, isSubSub = false) {
+            Object.entries(children).forEach(([key, child]) => {
+                const row = document.createElement('tr');
+                row.className = isSubSub ? 'sub-sub-account' : 'sub-account';
+                
+                row.innerHTML = `<td class="sticky-column py-1 px-3 ${isSubSub ? 'sub-sub-account' : 'sub-account'}">${child.name}</td>`;
+                
+                // Actuals
+                child.actuals.forEach((value, i) => {
+                    row.innerHTML += `<td class="month-cell editable-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}" 
+                        ondblclick="editMonthlyCell('${parentKey}', '${key}', 'actuals', ${i})"
+                        onmouseenter="showTooltip(event, '${child.name}', ${i}, 'Actual')"
+                        onmouseleave="hideTooltip()"
+                        id="${parentKey}-${key}-actuals-${i}">
+                        ${formatMonthlyValue(value)}
+                    </td>`;
+                });
+                
+                // Budget
+                child.budget.forEach((value, i) => {
+                    row.innerHTML += `<td class="month-cell editable-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}" 
+                        ondblclick="editMonthlyCell('${parentKey}', '${key}', 'budget', ${i})"
+                        onmouseenter="showTooltip(event, '${child.name}', ${i}, 'Budget')"
+                        onmouseleave="hideTooltip()"
+                        id="${parentKey}-${key}-budget-${i}">
+                        ${formatMonthlyValue(value)}
+                    </td>`;
+                });
+                
+                // Variance
+                child.actuals.forEach((actual, i) => {
+                    const budget = child.budget[i];
+                    const variance = actual - budget;
+                    const isExpense = parentKey === 'cogs' || parentKey === 'opex' || parentKey.includes('Expense');
+                    const varianceClass = getVarianceClass(variance, budget, isExpense);
+                    row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                        ${formatVariance(variance)}
+                    </td>`;
+                });
+                
+                // YTD
+                const ytd = child.actuals.reduce((sum, val) => sum + val, 0);
+                row.innerHTML += `<td class="month-cell border-l border-gray-600 text-gray-300">${formatMonthlyValue(ytd)}</td>`;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderMonthlySubSection(tbody, key, category) {
+            const row = document.createElement('tr');
+            row.className = 'sub-account font-semibold';
+            
+            let accountCell = `<td class="sticky-column py-1 px-3 sub-account">`;
+            if (category.children) {
+                accountCell += `<span class="expand-icon ${category.expanded ? 'expanded' : ''}" onclick="toggleSubSectionExpand('opex', '${key}')">▼</span> `;
+            }
+            accountCell += category.name + '</td>';
+            
+            row.innerHTML = accountCell;
+            
+            // Add totals for this subsection
+            category.actuals.forEach((value, i) => {
+                row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}">${formatMonthlyValue(value)}</td>`;
+            });
+            
+            category.budget.forEach((value, i) => {
+                row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}">${formatMonthlyValue(value)}</td>`;
+            });
+            
+            category.actuals.forEach((actual, i) => {
+                const budget = category.budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, true);
+                row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">${formatVariance(variance)}</td>`;
+            });
+            
+            const ytd = category.actuals.reduce((sum, val) => sum + val, 0);
+            row.innerHTML += `<td class="month-cell border-l border-gray-600 font-semibold">${formatMonthlyValue(ytd)}</td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyTotalRow(tbody, label, values) {
+            const row = document.createElement('tr');
+            row.className = 'total-row';
+            
+            row.innerHTML = `<td class="sticky-column py-2 px-3">${label}</td>`;
+            
+            // Actuals
+            values.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Budget
+            values.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Variance
+            values.actuals.forEach((actual, i) => {
+                const budget = values.budget[i];
+                const variance = actual - budget;
+                const isExpense = label.includes('EXPENSE') || label.includes('COGS');
+                const varianceClass = getVarianceClass(variance, budget, isExpense);
+                row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // YTD
+            const ytd = values.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdClass = ytd < 0 ? 'text-red-400' : 'text-emerald-300';
+            row.innerHTML += `<td class="month-cell border-l border-gray-600 font-bold ${ytdClass}">
+                ${formatMonthlyValue(ytd)}
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlySimpleRow(tbody, key, data) {
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `<td class="sticky-column py-1 px-3 sub-account">${data.name}</td>`;
+            
+            // Actuals
+            data.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Budget
+            data.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Variance
+            data.actuals.forEach((actual, i) => {
+                const budget = data.budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, true);
+                row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // YTD
+            const ytd = data.actuals.reduce((sum, val) => sum + val, 0);
+            row.innerHTML += `<td class="month-cell border-l border-gray-600">${formatMonthlyValue(ytd)}</td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyEPSRow(tbody) {
+            const netIncome = calculateMonthlyNetIncome();
+            const shares = monthlyData.shares.actuals[0] / 1000; // Convert to thousands
+            
+            const row = document.createElement('tr');
+            row.className = 'text-gray-400';
+            
+            row.innerHTML = `<td class="sticky-column py-1 px-3">Earnings Per Share (Basic)</td>`;
+            
+            // Calculate EPS for each month
+            netIncome.actuals.forEach((ni, i) => {
+                const eps = ni / shares;
+                row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}">
+                    $${eps.toFixed(2)}
+                </td>`;
+            });
+            
+            netIncome.budget.forEach((ni, i) => {
+                const eps = ni / shares;
+                row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}">
+                    $${eps.toFixed(2)}
+                </td>`;
+            });
+            
+            // Variance
+            netIncome.actuals.forEach((actual, i) => {
+                const budget = netIncome.budget[i];
+                const epsActual = actual / shares;
+                const epsBudget = budget / shares;
+                const variance = epsActual - epsBudget;
+                const varianceClass = variance >= 0 ? 'positive-variance' : 'negative-variance';
+                row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    $${variance.toFixed(2)}
+                </td>`;
+            });
+            
+            // YTD
+            const ytdNI = netIncome.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdEPS = ytdNI / shares / 12; // Average EPS
+            row.innerHTML += `<td class="month-cell border-l border-gray-600">$${ytdEPS.toFixed(2)}</td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlySharesRow(tbody) {
+            const row = document.createElement('tr');
+            row.className = 'text-gray-400';
+            
+            row.innerHTML = `<td class="sticky-column py-1 px-3">${monthlyData.shares.name}</td>`;
+            
+            // Shares stay constant
+            for (let i = 0; i < 12; i++) {
+                row.innerHTML += `<td class="month-cell actuals-section ${i === 0 ? 'border-l border-gray-700' : ''}">
+                    ${formatNumber(monthlyData.shares.actuals[0] / 1000)}
+                </td>`;
+            }
+            
+            for (let i = 0; i < 12; i++) {
+                row.innerHTML += `<td class="month-cell budget-section ${i === 0 ? 'border-l border-gray-600' : ''}">
+                    ${formatNumber(monthlyData.shares.budget[0] / 1000)}
+                </td>`;
+            }
+            
+            for (let i = 0; i < 12; i++) {
+                row.innerHTML += `<td class="month-cell variance-section ${i === 0 ? 'border-l border-gray-600' : ''}">
+                    0
+                </td>`;
+            }
+            
+            row.innerHTML += `<td class="month-cell border-l border-gray-600">${formatNumber(monthlyData.shares.actuals[0] / 1000)}</td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyAccountRow(tbody, label, category, expandable) {
+            const row = document.createElement('tr');
+            row.className = 'account-row';
+            
+            // Account name column
+            let accountCell = `<td class="sticky-column py-2 px-3 font-semibold text-gray-200">`;
+            if (expandable) {
+                accountCell += `<span class="expandable cursor-pointer" onclick="toggleMonthlyExpand('${category}')">
+                    ${chartOfAccounts[category].expandedMonthly ? '▼' : '▶'} ${label}
+                </span>`;
+            } else {
+                accountCell += label;
+            }
+            accountCell += '</td>';
+            
+            row.innerHTML = accountCell;
+            
+            // Add actual values
+            monthlyData[category].actuals.forEach((value, i) => {
+                row.innerHTML += `<td class="text-right py-2 px-1 border-l border-gray-700 editable-cell" 
+                    onclick="editMonthlyCell('${category}', 'actuals', ${i})" 
+                    id="${category}-actual-${i}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Add budget values
+            monthlyData[category].budget.forEach((value, i) => {
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} editable-cell" 
+                    onclick="editMonthlyCell('${category}', 'budget', ${i})"
+                    id="${category}-budget-${i}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Add variance values
+            monthlyData[category].actuals.forEach((actual, i) => {
+                const budget = monthlyData[category].budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, category === 'cogs' || category === 'opex');
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // Add YTD total
+            const ytdActual = monthlyData[category].actuals.reduce((sum, val) => sum + val, 0);
+            row.innerHTML += `<td class="text-right py-2 px-3 border-l border-gray-600 font-semibold text-emerald-300">
+                ${formatMonthlyValue(ytdActual)}
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyCalculatedRow(tbody, label, values, rowClass = '') {
+            const row = document.createElement('tr');
+            row.className = rowClass || 'font-semibold text-gray-200';
+            
+            row.innerHTML = `<td class="sticky-column py-2 px-3">${label}</td>`;
+            
+            // Actuals
+            values.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-2 px-1 border-l border-gray-700 ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Budget
+            values.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${valueClass}">
+                    ${formatMonthlyValue(value)}
+                </td>`;
+            });
+            
+            // Variance
+            values.actuals.forEach((actual, i) => {
+                const budget = values.budget[i];
+                const variance = actual - budget;
+                const varianceClass = getVarianceClass(variance, budget, false);
+                row.innerHTML += `<td class="text-right py-2 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} ${varianceClass}">
+                    ${formatVariance(variance)}
+                </td>`;
+            });
+            
+            // YTD
+            const ytd = values.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdClass = ytd < 0 ? 'text-red-400' : 'text-emerald-300';
+            row.innerHTML += `<td class="text-right py-2 px-3 border-l border-gray-600 font-semibold ${ytdClass}">
+                ${formatMonthlyValue(ytd)}
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlyMarginRow(tbody, label, values) {
+            const row = document.createElement('tr');
+            row.className = 'text-gray-400';
+            
+            row.innerHTML = `<td class="sticky-column py-1 px-3">${label}</td>`;
+            
+            // Actuals
+            values.actuals.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-1 px-1 border-l border-gray-700 text-xs ${valueClass}">
+                    ${value.toFixed(1)}%
+                </td>`;
+            });
+            
+            // Budget
+            values.budget.forEach((value, i) => {
+                const valueClass = value < 0 ? 'negative-value' : '';
+                row.innerHTML += `<td class="text-right py-1 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} text-xs ${valueClass}">
+                    ${value.toFixed(1)}%
+                </td>`;
+            });
+            
+            // Variance
+            values.actuals.forEach((actual, i) => {
+                const budget = values.budget[i];
+                const variance = actual - budget;
+                const varianceClass = variance >= 0 ? 'positive-variance' : 'negative-variance';
+                row.innerHTML += `<td class="text-right py-1 px-1 ${i === 0 ? 'border-l border-gray-600' : ''} text-xs ${varianceClass}">
+                    ${variance >= 0 ? '+' : ''}${variance.toFixed(1)}%
+                </td>`;
+            });
+            
+            // YTD
+            row.innerHTML += `<td class="text-right py-1 px-3 border-l border-gray-600 text-xs">
+                ${values.ytd.toFixed(1)}%
+            </td>`;
+            
+            tbody.appendChild(row);
+        }
+
+        function renderMonthlySectionDivider(tbody) {
+            const row = document.createElement('tr');
+            row.className = 'section-divider';
+            row.innerHTML = '<td colspan="38" class="py-1"></td>';
+            tbody.appendChild(row);
+        }
+
+        // Calculation functions
+        function calculateTotalRevenue() {
+            return {
+                actuals: monthlyData.revenue.actuals,
+                budget: monthlyData.revenue.budget
+            };
+        }
+
+        function calculateTotalCOGS() {
+            return {
+                actuals: monthlyData.cogs.actuals,
+                budget: monthlyData.cogs.budget
+            };
+        }
+
+        function calculateTotalOpEx() {
+            return {
+                actuals: monthlyData.opex.actuals,
+                budget: monthlyData.opex.budget
+            };
+        }
+
+        function calculateMonthlyGrossProfit() {
+            return {
+                actuals: monthlyData.revenue.actuals.map((rev, i) => rev - monthlyData.cogs.actuals[i]),
+                budget: monthlyData.revenue.budget.map((rev, i) => rev - monthlyData.cogs.budget[i])
+            };
+        }
+
+        function calculateMonthlyGrossMargin() {
+            const grossProfit = calculateMonthlyGrossProfit();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdGrossProfit = grossProfit.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: grossProfit.actuals.map((gp, i) => (gp / monthlyData.revenue.actuals[i] * 100)),
+                budget: grossProfit.budget.map((gp, i) => (gp / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdGrossProfit / ytdRevenue * 100)
+            };
+        }
+
+        function calculateMonthlyOperatingIncome() {
+            const grossProfit = calculateMonthlyGrossProfit();
+            return {
+                actuals: grossProfit.actuals.map((gp, i) => gp - monthlyData.opex.actuals[i]),
+                budget: grossProfit.budget.map((gp, i) => gp - monthlyData.opex.budget[i])
+            };
+        }
+
+        function calculateEBITDA() {
+            const grossProfit = calculateMonthlyGrossProfit();
+            return {
+                actuals: grossProfit.actuals.map((gp, i) => gp - monthlyData.opex.actuals[i]),
+                budget: grossProfit.budget.map((gp, i) => gp - monthlyData.opex.budget[i])
+            };
+        }
+
+        function calculateEBITDAMargin() {
+            const ebitda = calculateEBITDA();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdEBITDA = ebitda.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: ebitda.actuals.map((e, i) => (e / monthlyData.revenue.actuals[i] * 100)),
+                budget: ebitda.budget.map((e, i) => (e / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdEBITDA / ytdRevenue * 100)
+            };
+        }
+
+        function calculateEBIT() {
+            const ebitda = calculateEBITDA();
+            return {
+                actuals: ebitda.actuals.map((e, i) => e - monthlyData.depreciation.actuals[i] - monthlyData.stockComp.actuals[i]),
+                budget: ebitda.budget.map((e, i) => e - monthlyData.depreciation.budget[i] - monthlyData.stockComp.budget[i])
+            };
+        }
+
+        function calculateOperatingMargin() {
+            const ebit = calculateEBIT();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdEBIT = ebit.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: ebit.actuals.map((e, i) => (e / monthlyData.revenue.actuals[i] * 100)),
+                budget: ebit.budget.map((e, i) => (e / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdEBIT / ytdRevenue * 100)
+            };
+        }
+
+        function calculateEBT() {
+            const ebit = calculateEBIT();
+            const nonOpIncome = Object.values(monthlyData.nonOperating.children).reduce((result, item) => {
+                return {
+                    actuals: result.actuals.map((val, i) => val + item.actuals[i]),
+                    budget: result.budget.map((val, i) => val + item.budget[i])
+                };
+            }, { actuals: new Array(12).fill(0), budget: new Array(12).fill(0) });
+            
+            return {
+                actuals: ebit.actuals.map((e, i) => e + nonOpIncome.actuals[i]),
+                budget: ebit.budget.map((e, i) => e + nonOpIncome.budget[i])
+            };
+        }
+
+        function calculateMonthlyOperatingIncome() {
+            return calculateEBIT();
+        }
+
+        function calculateMonthlyOperatingMargin() {
+            return calculateOperatingMargin();
+        }
+
+        function calculateMonthlyNetIncome() {
+            const ebt = calculateEBT();
+            return {
+                actuals: ebt.actuals.map((e, i) => e - monthlyData.tax.actuals[i]),
+                budget: ebt.budget.map((e, i) => e - monthlyData.tax.budget[i])
+            };
+        }
+
+        function calculateMonthlyNetMargin() {
+            const netIncome = calculateMonthlyNetIncome();
+            const ytdRevenue = monthlyData.revenue.actuals.reduce((sum, val) => sum + val, 0);
+            const ytdNetIncome = netIncome.actuals.reduce((sum, val) => sum + val, 0);
+            
+            return {
+                actuals: netIncome.actuals.map((ni, i) => (ni / monthlyData.revenue.actuals[i] * 100)),
+                budget: netIncome.budget.map((ni, i) => (ni / monthlyData.revenue.budget[i] * 100)),
+                ytd: (ytdNetIncome / ytdRevenue * 100)
+            };
+        }
+
+        // Formatting functions
+        function formatMonthlyValue(value) {
+            if (value === 0) return '$0';
+            const absValue = Math.abs(value);
+            const formatted = absValue >= 1000000 ? 
+                `$${(absValue / 1000000).toFixed(1)}M` : 
+                `$${(absValue / 1000).toFixed(0)}k`;
+            return value < 0 ? `(${formatted})` : formatted;
+        }
+
+        function formatVariance(variance) {
+            if (variance === 0) return '$0';
+            const formatted = formatMonthlyValue(Math.abs(variance));
+            return variance > 0 ? `+${formatted}` : `-${formatted.replace(/[()]/g, '')}`;
+        }
+
+        function getVarianceClass(variance, budget, isExpense) {
+            const percentVariance = budget !== 0 ? Math.abs(variance / budget * 100) : 0;
+            const isPositive = isExpense ? variance < 0 : variance > 0;
+            
+            if (percentVariance > 10) {
+                return isPositive ? 'variance-high-positive' : 'variance-high-negative';
+            } else if (percentVariance > 5) {
+                return isPositive ? 'variance-med-positive' : 'variance-med-negative';
+            } else {
+                return isPositive ? 'variance-low-positive' : 'variance-low-negative';
+            }
+        }
+
+        // Interactive functions
+        function editMonthlyCell(parentKey, childKey, type, monthIndex) {
+            const cellId = `${parentKey}-${childKey}-${type}-${monthIndex}`;
+            const cell = document.getElementById(cellId);
+            
+            let currentValue;
+            if (childKey) {
+                currentValue = monthlyData[parentKey].children[childKey][type][monthIndex];
+            } else {
+                currentValue = monthlyData[parentKey][type][monthIndex];
+            }
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'editing-input';
+            input.value = formatNumber(currentValue);
+            
+            input.onblur = function() {
+                const newValue = parseInt(input.value.replace(/,/g, '')) || currentValue;
+                
+                if (childKey) {
+                    monthlyData[parentKey].children[childKey][type][monthIndex] = newValue;
+                    // Update parent totals
+                    recalculateParentTotals(parentKey, type, monthIndex);
+                } else {
+                    monthlyData[parentKey][type][monthIndex] = newValue;
+                }
+                
+                cell.classList.add('edited-cell');
+                renderMonthlyView();
+            };
+            
+            input.onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+            };
+            
+            cell.innerHTML = '';
+            cell.appendChild(input);
+            input.focus();
+            input.select();
+        }
+
+        function recalculateParentTotals(parentKey, type, monthIndex) {
+            const children = monthlyData[parentKey].children;
+            let total = 0;
+            
+            Object.values(children).forEach(child => {
+                if (child[type] && child[type][monthIndex]) {
+                    total += child[type][monthIndex];
+                }
+            });
+            
+            monthlyData[parentKey][type][monthIndex] = total;
+        }
+
+        function toggleSectionExpand(key) {
+            monthlyData[key].expanded = !monthlyData[key].expanded;
+            renderMonthlyView();
+        }
+
+        function toggleSubSectionExpand(parentKey, subKey) {
+            monthlyData[parentKey].children[subKey].expanded = !monthlyData[parentKey].children[subKey].expanded;
+            renderMonthlyView();
+        }
+
+        let tooltipElement = null;
+
+        function showTooltip(event, accountName, monthIndex, type) {
+            if (!tooltipElement) {
+                tooltipElement = document.createElement('div');
+                tooltipElement.className = 'cell-tooltip';
+                document.body.appendChild(tooltipElement);
+            }
+            
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = months[monthIndex];
+            
+            tooltipElement.innerHTML = `${accountName} | ${month} | ${type}`;
+            tooltipElement.style.display = 'block';
+            
+            const rect = event.target.getBoundingClientRect();
+            tooltipElement.style.left = rect.left + 'px';
+            tooltipElement.style.top = (rect.top - 40) + 'px';
+        }
+
+        function hideTooltip() {
+            if (tooltipElement) {
+                tooltipElement.style.display = 'none';
+            }
+        }
+
+        // Export functions
+        function exportToExcel() {
+            alert('Excel export functionality would be implemented here');
+        }
+
+        function exportToPDF() {
+            alert('PDF export functionality would be implemented here');
+        }
+
+        function emailReport() {
+            alert('Email report functionality would be implemented here');
+        }
+
+        function shareLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url);
+            alert('Link copied to clipboard!');
+        }
+
+        function toggleMonthlyExpand(category) {
+            chartOfAccounts[category].expandedMonthly = !chartOfAccounts[category].expandedMonthly;
+            renderMonthlyView();
+        }
+
+        function applyMonthlyScenario(scenario) {
+            if (scenario === 'growth') {
+                monthlyData.revenue.actuals = monthlyData.revenue.actuals.map(val => Math.round(val * 1.05));
+            } else if (scenario === 'cost-cut') {
+                monthlyData.opex.actuals = monthlyData.opex.actuals.map(val => Math.round(val * 0.9));
+            } else if (scenario === 'copy-budget') {
+                monthlyData.revenue.actuals = [...monthlyData.revenue.budget];
+                monthlyData.cogs.actuals = [...monthlyData.cogs.budget];
+                monthlyData.opex.actuals = [...monthlyData.opex.budget];
+            }
+            renderMonthlyView();
+        }
+
+        function resetMonthlyData() {
+            monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
+            document.querySelectorAll('.edited-cell').forEach(cell => {
+                cell.classList.remove('edited-cell');
+            });
+            renderMonthlyView();
+        }
+
+        function updateMonthlySummary() {
+            const netIncome = calculateMonthlyNetIncome();
+            
+            // Average monthly burn
+            const avgBurnActual = netIncome.actuals.reduce((sum, val) => sum + val, 0) / 12;
+            const avgBurnBudget = netIncome.budget.reduce((sum, val) => sum + val, 0) / 12;
+            
+            document.getElementById('avgBurnActual').textContent = formatCurrency(avgBurnActual) + '/mo';
+            document.getElementById('avgBurnBudget').textContent = formatCurrency(avgBurnBudget) + '/mo';
+            
+            // Update summary bar
+            document.getElementById('summaryBurn').textContent = formatCurrency(Math.abs(avgBurnActual)) + '/mo';
+            
+            // Best and worst months
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const bestMonthIndex = netIncome.actuals.indexOf(Math.max(...netIncome.actuals));
+            const worstMonthIndex = netIncome.actuals.indexOf(Math.min(...netIncome.actuals));
+            
+            document.getElementById('bestMonth').textContent = `${monthNames[bestMonthIndex]} (${formatCurrency(netIncome.actuals[bestMonthIndex])})`;
+            document.getElementById('worstMonth').textContent = `${monthNames[worstMonthIndex]} (${formatCurrency(netIncome.actuals[worstMonthIndex])})`;
+            
+            document.getElementById('summaryBest').textContent = monthNames[bestMonthIndex];
+            document.getElementById('summaryWorst').textContent = monthNames[worstMonthIndex];
+            
+            // Months to breakeven and runway
+            if (avgBurnActual < 0) {
+                const currentCash = 4250000; // From balance sheet
+                const monthsToBreakeven = Math.round(currentCash / Math.abs(avgBurnActual));
+                document.getElementById('monthsToBreakeven').textContent = monthsToBreakeven + ' months';
+                document.getElementById('summaryRunway').textContent = monthsToBreakeven + ' months';
+                
+                // Calculate breakeven month
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+                const breakevenDate = new Date(currentYear, currentMonth + monthsToBreakeven);
+                const breakevenMonth = breakevenDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                document.getElementById('summaryBreakeven').textContent = breakevenMonth;
+            } else {
+                document.getElementById('monthsToBreakeven').textContent = 'Already profitable';
+                document.getElementById('summaryRunway').textContent = 'Infinite';
+                document.getElementById('summaryBreakeven').textContent = 'Profitable';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPnLTable();
+            
+            document.getElementById('periodSelect').addEventListener('change', (e) => {
+                currentPeriod = e.target.value;
+                renderPnLTable();
+                if (currentView === 'waterfall') renderWaterfallChart();
+                if (currentView === 'trend') renderTrendChart();
+            });
+        });
+    </script>
+</body>
+</html>

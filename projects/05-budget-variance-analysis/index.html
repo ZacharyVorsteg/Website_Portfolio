@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget vs Actual Variance Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                        Budget vs Actual Variance Analysis
+                    </h1>
+                    <p class="text-gray-400">Real-time variance tracking with drill-down capabilities</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-400">YTD Performance</div>
+                        <div id="ytdPerformance" class="text-2xl font-bold">--</div>
+                    </div>
+                    <button onclick="BVApp.exportReport()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                        Export Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Period</label>
+                    <select id="periodSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="current-month">October 2024</option>
+                        <option value="last-month">September 2024</option>
+                        <option value="quarter" selected>Q3 2024</option>
+                        <option value="ytd">YTD 2024</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Department</label>
+                    <select id="departmentSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="all">All Departments</option>
+                        <option value="sales">Sales & Marketing</option>
+                        <option value="rd">R&D</option>
+                        <option value="ga">G&A</option>
+                        <option value="ops">Operations</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="BVApp.setView('summary')" class="view-btn px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm">Summary</button>
+                        <button onclick="BVApp.setView('detailed')" class="view-btn px-3 py-2 bg-slate-700 text-gray-300 rounded-lg text-sm">Detailed</button>
+                        <button onclick="BVApp.setView('heatmap')" class="view-btn px-3 py-2 bg-slate-700 text-gray-300 rounded-lg text-sm">Heatmap</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Threshold</label>
+                    <select id="thresholdSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="5">±5%</option>
+                        <option value="10" selected>±10%</option>
+                        <option value="15">±15%</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Summary View -->
+            <div id="summaryView" class="lg:col-span-2">
+                <!-- Executive Summary Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="text-xs text-gray-400 mb-1">Total Budget</h3>
+                        <div class="text-xl font-bold text-gray-200" id="totalBudget">--</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="text-xs text-gray-400 mb-1">Total Actual</h3>
+                        <div class="text-xl font-bold text-gray-200" id="totalActual">--</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="text-xs text-gray-400 mb-1">Variance</h3>
+                        <div class="text-xl font-bold" id="totalVariance">--</div>
+                    </div>
+                    <div class="glass-card rounded-xl p-4">
+                        <h3 class="text-xs text-gray-400 mb-1">Variance %</h3>
+                        <div class="text-xl font-bold" id="totalVariancePercent">--</div>
+                    </div>
+                </div>
+
+                <!-- Variance Chart -->
+                <div class="glass-card rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-4">Variance by Category</h3>
+                    <canvas id="varianceChart" width="400" height="200"></canvas>
+                </div>
+
+                <!-- Top Variances List -->
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-4">Top Variances Requiring Attention</h3>
+                    <div id="topVariances" class="space-y-3">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts & Actions Panel -->
+            <div class="space-y-6">
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-4">Threshold Alerts</h3>
+                    <div id="thresholdAlerts" class="space-y-3">
+                        <!-- Dynamic alerts -->
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-4">Required Actions</h3>
+                    <div id="requiredActions" class="space-y-3">
+                        <!-- Dynamic actions -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Variance Table -->
+        <div class="glass-card rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-200 mb-4">Detailed Variance Analysis</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Category</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Budget</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Actual</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Variance</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Variance %</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="varianceTableBody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="data.js"></script>
+    <script src="variance-calc.js"></script>
+    <script src="alerts.js"></script>
+    <script src="export.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

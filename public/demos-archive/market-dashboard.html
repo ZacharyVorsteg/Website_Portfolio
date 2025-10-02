@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { background: #0A0A0B; }
+        .card { background: linear-gradient(145deg, #1a1a1d, #16161a); border: 1px solid rgba(255,255,255,0.1); }
+        .glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body class="text-gray-200 p-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+            Live Market Analytics Dashboard
+        </h1>
+        
+        <!-- Market Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="card rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-400 text-sm">S&P 500</span>
+                    <span class="text-green-400 text-xs pulse">LIVE</span>
+                </div>
+                <div class="text-2xl font-bold" id="sp500">4,783.45</div>
+                <div class="text-green-400 text-sm">+1.23%</div>
+            </div>
+            
+            <div class="card rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-400 text-sm">NASDAQ</span>
+                    <span class="text-green-400 text-xs pulse">LIVE</span>
+                </div>
+                <div class="text-2xl font-bold" id="nasdaq">15,123.68</div>
+                <div class="text-green-400 text-sm">+2.15%</div>
+            </div>
+            
+            <div class="card rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-400 text-sm">BTC/USD</span>
+                    <span class="text-green-400 text-xs pulse">LIVE</span>
+                </div>
+                <div class="text-2xl font-bold" id="btc">68,234.50</div>
+                <div class="text-red-400 text-sm">-0.87%</div>
+            </div>
+            
+            <div class="card rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-400 text-sm">Gold</span>
+                    <span class="text-green-400 text-xs pulse">LIVE</span>
+                </div>
+                <div class="text-2xl font-bold" id="gold">2,045.30</div>
+                <div class="text-green-400 text-sm">+0.45%</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Price Chart -->
+            <div class="card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">Price Movement</h2>
+                <canvas id="priceChart"></canvas>
+            </div>
+            
+            <!-- Volume Chart -->
+            <div class="card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">Trading Volume</h2>
+                <canvas id="volumeChart"></canvas>
+            </div>
+            
+            <!-- Top Movers -->
+            <div class="card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">Top Movers</h2>
+                <div class="space-y-3" id="topMovers">
+                    <div class="flex justify-between items-center p-3 bg-green-900/20 rounded-lg">
+                        <div>
+                            <div class="font-semibold">AAPL</div>
+                            <div class="text-sm text-gray-400">Apple Inc.</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">$195.89</div>
+                            <div class="text-green-400 text-sm">+3.45%</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-green-900/20 rounded-lg">
+                        <div>
+                            <div class="font-semibold">MSFT</div>
+                            <div class="text-sm text-gray-400">Microsoft</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">$428.32</div>
+                            <div class="text-green-400 text-sm">+2.87%</div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-red-900/20 rounded-lg">
+                        <div>
+                            <div class="font-semibold">TSLA</div>
+                            <div class="text-sm text-gray-400">Tesla Inc.</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold">$178.45</div>
+                            <div class="text-red-400 text-sm">-1.23%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Sentiment -->
+            <div class="card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-4">Market Sentiment</h2>
+                <canvas id="sentimentChart"></canvas>
+                <div class="grid grid-cols-3 gap-4 mt-4">
+                    <div class="text-center">
+                        <div class="text-green-400 text-2xl font-bold">65%</div>
+                        <div class="text-sm text-gray-400">Bullish</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-yellow-400 text-2xl font-bold">20%</div>
+                        <div class="text-sm text-gray-400">Neutral</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-red-400 text-2xl font-bold">15%</div>
+                        <div class="text-sm text-gray-400">Bearish</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Feed -->
+        <div class="card rounded-xl p-6 mt-6">
+            <h2 class="text-xl font-bold mb-4">Market News</h2>
+            <div class="space-y-4" id="newsFeed">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <div class="text-sm text-gray-400">2 minutes ago</div>
+                    <div class="font-semibold">Fed Signals Potential Rate Cut in Q2 2025</div>
+                    <div class="text-sm text-gray-400 mt-1">Markets rally on dovish Fed commentary...</div>
+                </div>
+                <div class="border-l-4 border-green-500 pl-4">
+                    <div class="text-sm text-gray-400">15 minutes ago</div>
+                    <div class="font-semibold">Tech Stocks Lead Market Recovery</div>
+                    <div class="text-sm text-gray-400 mt-1">NASDAQ up 2.15% as tech giants report strong earnings...</div>
+                </div>
+                <div class="border-l-4 border-yellow-500 pl-4">
+                    <div class="text-sm text-gray-400">1 hour ago</div>
+                    <div class="font-semibold">Oil Prices Stabilize After Volatile Week</div>
+                    <div class="text-sm text-gray-400 mt-1">WTI crude settles at $78.45 per barrel...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Price Chart
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: ['9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '1:00', '1:30', '2:00'],
+                datasets: [{
+                    label: 'S&P 500',
+                    data: [4750, 4760, 4755, 4770, 4765, 4780, 4775, 4783, 4780, 4783],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    }
+                }
+            }
+        });
+
+        // Volume Chart
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        const volumeChart = new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '1:00', '1:30', '2:00'],
+                datasets: [{
+                    label: 'Volume (M)',
+                    data: [120, 135, 110, 145, 125, 160, 140, 155, 130, 140],
+                    backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                    borderColor: 'rgb(139, 92, 246)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    }
+                }
+            }
+        });
+
+        // Sentiment Chart
+        const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+        const sentimentChart = new Chart(sentimentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Bullish', 'Neutral', 'Bearish'],
+                datasets: [{
+                    data: [65, 20, 15],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(250, 204, 21, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Simulate live updates
+        function updatePrices() {
+            const elements = ['sp500', 'nasdaq', 'btc', 'gold'];
+            const baseValues = [4783.45, 15123.68, 68234.50, 2045.30];
+            
+            elements.forEach((id, index) => {
+                const element = document.getElementById(id);
+                const variation = (Math.random() - 0.5) * 10;
+                const newValue = baseValues[index] + variation;
+                element.textContent = newValue.toFixed(2).toLocaleString();
+            });
+        }
+
+        // Update prices every 3 seconds
+        setInterval(updatePrices, 3000);
+
+        // Add new data point to price chart every 5 seconds
+        setInterval(() => {
+            const newPrice = 4783 + (Math.random() - 0.5) * 20;
+            priceChart.data.datasets[0].data.shift();
+            priceChart.data.datasets[0].data.push(newPrice);
+            priceChart.update();
+        }, 5000);
+    </script>
+</body>
+</html>

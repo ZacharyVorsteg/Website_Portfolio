@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Health Analyzer - Opportunity Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .stage-qualified { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .stage-proposal { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .stage-negotiation { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .stage-closed-won { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .stage-closed-lost { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+        .opportunity-row:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(2px);
+            transition: all 0.2s ease;
+        }
+        .funnel-stage {
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .funnel-stage:hover {
+            transform: scale(1.02);
+        }
+        .pipeline-health-excellent { color: #10b981; }
+        .pipeline-health-good { color: #22c55e; }
+        .pipeline-health-warning { color: #f59e0b; }
+        .pipeline-health-critical { color: #ef4444; }
+        .velocity-indicator {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent mb-2">
+                        Pipeline Health Analyzer
+                    </h1>
+                    <p class="text-gray-400">Advanced pipeline analysis with stage progression funnels and forecasting insights</p>
+                </div>
+                <div class="flex gap-2 mt-4 md:mt-0">
+                    <select id="timeFilter" onchange="filterByTime()" class="px-3 py-2 bg-slate-700 text-white rounded-lg text-sm">
+                        <option value="current">Current Quarter</option>
+                        <option value="next">Next Quarter</option>
+                        <option value="all">All Time</option>
+                    </select>
+                    <button onclick="refreshPipeline()" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                        Refresh Pipeline
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pipeline Health Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Pipeline Value</h3>
+                    <div class="text-2xl font-bold text-orange-400" id="pipelineValue">$4.2M</div>
+                    <div class="text-xs text-gray-500 mt-1">Weighted forecast</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Win Rate</h3>
+                    <div class="text-2xl font-bold text-green-400" id="winRate">23.4%</div>
+                    <div class="text-xs text-gray-500 mt-1">Overall conversion</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Avg Deal Size</h3>
+                    <div class="text-2xl font-bold text-blue-400" id="avgDealSize">$47.3K</div>
+                    <div class="text-xs text-gray-500 mt-1">Current pipeline</div>
+                </div>
+                <div class="metric-card rounded-lg p-4 text-center">
+                    <h3 class="text-sm text-gray-400 mb-1">Sales Velocity</h3>
+                    <div class="text-2xl font-bold text-purple-400" id="salesVelocity">$12.8K</div>
+                    <div class="text-xs text-gray-500 mt-1">Per day</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Sales Funnel -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-gray-200 mb-4">Sales Funnel Analysis</h3>
+                <div class="space-y-2" id="funnelContainer">
+                    <!-- Dynamic funnel stages -->
+                </div>
+                <div class="mt-4 text-sm text-gray-400">
+                    <div class="flex justify-between">
+                        <span>Overall Conversion Rate:</span>
+                        <span class="font-semibold text-green-400" id="overallConversion">23.4%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pipeline vs Quota -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-gray-200 mb-4">Pipeline Coverage</h3>
+                <canvas id="coverageChart" width="400" height="300"></canvas>
+                <div class="mt-4 grid grid-cols-2 gap-4 text-sm">
+                    <div class="text-center">
+                        <div class="text-gray-400">Pipeline Coverage</div>
+                        <div class="text-xl font-bold text-orange-400" id="pipelineCoverage">3.2x</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-400">Quota Gap</div>
+                        <div class="text-xl font-bold text-blue-400" id="quotaGap">$340K</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Win Rate by Stage -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <h3 class="text-xl font-semibold text-gray-200 mb-4">Win Rate by Pipeline Stage</h3>
+            <canvas id="winRateChart" width="400" height="250"></canvas>
+        </div>
+
+        <!-- Opportunity Details -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-200">Active Opportunities</h3>
+                <div class="flex gap-2">
+                    <select id="stageFilter" onchange="filterByStage()" class="px-3 py-1 bg-slate-700 text-white rounded text-sm">
+                        <option value="all">All Stages</option>
+                        <option value="Qualified">Qualified</option>
+                        <option value="Proposal">Proposal</option>
+                        <option value="Negotiation">Negotiation</option>
+                        <option value="Closed Won">Closed Won</option>
+                        <option value="Closed Lost">Closed Lost</option>
+                    </select>
+                    <select id="repFilter" onchange="filterByRep()" class="px-3 py-1 bg-slate-700 text-white rounded text-sm">
+                        <option value="all">All Reps</option>
+                        <option value="Sarah Johnson">Sarah Johnson</option>
+                        <option value="Mike Chen">Mike Chen</option>
+                        <option value="Emily Rodriguez">Emily Rodriguez</option>
+                        <option value="David Kim">David Kim</option>
+                    </select>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Opportunity</th>
+                            <th class="text-left py-3 px-2 text-gray-300">Account</th>
+                            <th class="text-left py-3 px-2 text-gray-300">Rep</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Value</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Stage</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Probability</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Weighted</th>
+                            <th class="text-left py-3 px-2 text-gray-300">Close Date</th>
+                            <th class="text-center py-3 px-2 text-gray-300">Days in Stage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="opportunityTable">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Deal Velocity Analysis -->
+        <div class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-semibold text-gray-200 mb-4">Deal Velocity Trends</h3>
+            <canvas id="velocityChart" width="400" height="250"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let opportunities = [];
+        let coverageChart = null;
+        let winRateChart = null;
+        let velocityChart = null;
+
+        const stages = ['Lead', 'Qualified', 'Proposal', 'Negotiation', 'Closed Won', 'Closed Lost'];
+        const stageColors = {
+            'Lead': '#6b7280',
+            'Qualified': '#10b981',
+            'Proposal': '#3b82f6',
+            'Negotiation': '#f59e0b',
+            'Closed Won': '#22c55e',
+            'Closed Lost': '#ef4444'
+        };
+
+        const stageProbabilities = {
+            'Lead': 10,
+            'Qualified': 25,
+            'Proposal': 50,
+            'Negotiation': 75,
+            'Closed Won': 100,
+            'Closed Lost': 0
+        };
+
+        const companies = [
+            'Acme Corp', 'TechFlow Inc', 'DataViz Solutions', 'CloudSync Ltd', 'InnovateCo',
+            'ScaleUp Systems', 'MetricLabs', 'NextGen Tech', 'FlexiSoft', 'RapidScale',
+            'SmartOps Inc', 'AgileFlow', 'ProTech Solutions', 'DataCore Systems', 'CloudFirst'
+        ];
+
+        const reps = ['Sarah Johnson', 'Mike Chen', 'Emily Rodriguez', 'David Kim'];
+
+        const opportunityTypes = [
+            'Enterprise License', 'Professional Services', 'SaaS Subscription', 'Custom Development',
+            'Training Package', 'Support Contract', 'Implementation', 'Consulting Services'
+        ];
+
+        function generateOpportunity() {
+            const company = companies[Math.floor(Math.random() * companies.length)];
+            const rep = reps[Math.floor(Math.random() * reps.length)];
+            const type = opportunityTypes[Math.floor(Math.random() * opportunityTypes.length)];
+            const value = Math.floor(Math.random() * 150000 + 10000); // $10K-$160K
+            const stage = stages[Math.floor(Math.random() * stages.length)];
+            const probability = stageProbabilities[stage];
+            const daysInStage = Math.floor(Math.random() * 60 + 1); // 1-60 days
+            
+            // Generate close date (within next 90 days)
+            const closeDate = new Date();
+            closeDate.setDate(closeDate.getDate() + Math.floor(Math.random() * 90));
+            
+            return {
+                id: 'OPP-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                name: type + ' - ' + company,
+                account: company,
+                rep,
+                value,
+                stage,
+                probability,
+                weightedValue: Math.floor(value * probability / 100),
+                closeDate: closeDate.toLocaleDateString(),
+                daysInStage,
+                createdDaysAgo: Math.floor(Math.random() * 180 + 1) // 1-180 days ago
+            };
+        }
+
+        function getStageClass(stage) {
+            const stageMap = {
+                'Lead': 'stage-qualified',
+                'Qualified': 'stage-qualified',
+                'Proposal': 'stage-proposal',
+                'Negotiation': 'stage-negotiation',
+                'Closed Won': 'stage-closed-won',
+                'Closed Lost': 'stage-closed-lost'
+            };
+            return stageMap[stage] || 'stage-qualified';
+        }
+
+        function refreshPipeline() {
+            opportunities = [];
+            for (let i = 0; i < 200; i++) {
+                opportunities.push(generateOpportunity());
+            }
+            
+            opportunities.sort((a, b) => b.weightedValue - a.weightedValue);
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Calculate metrics
+            const totalPipeline = opportunities.reduce((sum, opp) => sum + opp.weightedValue, 0);
+            const totalValue = opportunities.reduce((sum, opp) => sum + opp.value, 0);
+            const closedWon = opportunities.filter(opp => opp.stage === 'Closed Won');
+            const closedLost = opportunities.filter(opp => opp.stage === 'Closed Lost');
+            const winRate = closedWon.length / (closedWon.length + closedLost.length) * 100 || 0;
+            const avgDealSize = totalValue / opportunities.length;
+            
+            // Sales velocity calculation
+            const avgSalesCycle = opportunities.reduce((sum, opp) => sum + opp.createdDaysAgo, 0) / opportunities.length;
+            const salesVelocity = (avgDealSize * winRate / 100) / avgSalesCycle;
+            
+            document.getElementById('pipelineValue').textContent = '$' + (totalPipeline / 1000000).toFixed(1) + 'M';
+            document.getElementById('winRate').textContent = winRate.toFixed(1) + '%';
+            document.getElementById('avgDealSize').textContent = '$' + (avgDealSize / 1000).toFixed(1) + 'K';
+            document.getElementById('salesVelocity').textContent = '$' + (salesVelocity / 1000).toFixed(1) + 'K';
+            
+            // Pipeline coverage (assuming quarterly quota of $1.3M)
+            const quarterlyQuota = 1300000;
+            const coverage = totalPipeline / quarterlyQuota;
+            const quotaGap = Math.max(0, quarterlyQuota - totalPipeline);
+            
+            document.getElementById('pipelineCoverage').textContent = coverage.toFixed(1) + 'x';
+            document.getElementById('quotaGap').textContent = '$' + (quotaGap / 1000).toFixed(0) + 'K';
+            
+            renderFunnel();
+            renderOpportunityTable();
+            updateCharts();
+        }
+
+        function renderFunnel() {
+            const container = document.getElementById('funnelContainer');
+            container.innerHTML = '';
+            
+            // Calculate stage counts and conversion rates
+            const stageCounts = {};
+            stages.forEach(stage => {
+                stageCounts[stage] = opportunities.filter(opp => opp.stage === stage).length;
+            });
+            
+            const maxCount = Math.max(...Object.values(stageCounts));
+            let previousCount = stageCounts['Lead'] + stageCounts['Qualified'];
+            
+            // Create funnel visualization
+            ['Qualified', 'Proposal', 'Negotiation', 'Closed Won'].forEach((stage, index) => {
+                const count = stageCounts[stage];
+                const percentage = maxCount > 0 ? (count / maxCount * 100) : 0;
+                const conversionRate = previousCount > 0 ? (count / previousCount * 100) : 0;
+                
+                const stageDiv = document.createElement('div');
+                stageDiv.className = 'funnel-stage';
+                stageDiv.style.width = Math.max(percentage, 20) + '%';
+                stageDiv.style.backgroundColor = stageColors[stage];
+                stageDiv.style.height = '40px';
+                
+                stageDiv.innerHTML = `
+                    <span>${stage}: ${count} deals</span>
+                    <span class="velocity-indicator">${conversionRate.toFixed(1)}%</span>
+                `;
+                
+                container.appendChild(stageDiv);
+                previousCount = count;
+            });
+            
+            // Calculate overall conversion rate
+            const totalLeads = stageCounts['Lead'] + stageCounts['Qualified'];
+            const totalClosed = stageCounts['Closed Won'];
+            const overallConversion = totalLeads > 0 ? (totalClosed / totalLeads * 100) : 0;
+            document.getElementById('overallConversion').textContent = overallConversion.toFixed(1) + '%';
+        }
+
+        function renderOpportunityTable() {
+            const tbody = document.getElementById('opportunityTable');
+            tbody.innerHTML = '';
+            
+            // Show top 15 opportunities
+            opportunities.slice(0, 15).forEach(opp => {
+                const row = document.createElement('tr');
+                row.className = 'opportunity-row border-b border-gray-700';
+                
+                const velocityClass = opp.daysInStage > 30 ? 'text-red-400' : 
+                                    opp.daysInStage > 14 ? 'text-yellow-400' : 'text-green-400';
+                
+                row.innerHTML = `
+                    <td class="py-2 px-2 text-gray-300 font-medium">${opp.name}</td>
+                    <td class="py-2 px-2 text-gray-300">${opp.account}</td>
+                    <td class="py-2 px-2 text-gray-300">${opp.rep}</td>
+                    <td class="py-2 px-2 text-right font-semibold">$${(opp.value / 1000).toFixed(0)}K</td>
+                    <td class="py-2 px-2 text-center">
+                        <span class="px-2 py-1 rounded text-xs font-medium ${getStageClass(opp.stage)}">
+                            ${opp.stage}
+                        </span>
+                    </td>
+                    <td class="py-2 px-2 text-center font-semibold">${opp.probability}%</td>
+                    <td class="py-2 px-2 text-right text-green-400 font-semibold">$${(opp.weightedValue / 1000).toFixed(0)}K</td>
+                    <td class="py-2 px-2 text-gray-300">${opp.closeDate}</td>
+                    <td class="py-2 px-2 text-center ${velocityClass} font-semibold">${opp.daysInStage}d</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateCharts() {
+            createCoverageChart();
+            createWinRateChart();
+            createVelocityChart();
+        }
+
+        function createCoverageChart() {
+            const ctx = document.getElementById('coverageChart').getContext('2d');
+            
+            if (coverageChart) coverageChart.destroy();
+            
+            const quarterlyQuota = 1300000;
+            const currentPipeline = opportunities.reduce((sum, opp) => sum + opp.weightedValue, 0);
+            const quotaGap = Math.max(0, quarterlyQuota - currentPipeline);
+            
+            coverageChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Weighted Pipeline', 'Quota Gap'],
+                    datasets: [{
+                        data: [currentPipeline, quotaGap],
+                        backgroundColor: ['#f59e0b', '#374151'],
+                        borderWidth: 2,
+                        borderColor: '#1e293b'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            labels: { color: '#9ca3af' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createWinRateChart() {
+            const ctx = document.getElementById('winRateChart').getContext('2d');
+            
+            if (winRateChart) winRateChart.destroy();
+            
+            // Calculate win rates by stage
+            const stageWinRates = {};
+            stages.forEach(stage => {
+                const stageOpps = opportunities.filter(opp => opp.stage === stage);
+                const won = stageOpps.filter(opp => opp.stage === 'Closed Won').length;
+                const total = stageOpps.length;
+                stageWinRates[stage] = total > 0 ? (stageProbabilities[stage]) : 0;
+            });
+            
+            winRateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: stages.filter(s => s !== 'Closed Lost'),
+                    datasets: [{
+                        label: 'Win Probability (%)',
+                        data: stages.filter(s => s !== 'Closed Lost').map(stage => stageWinRates[stage]),
+                        backgroundColor: stages.filter(s => s !== 'Closed Lost').map(stage => stageColors[stage]),
+                        borderWidth: 1,
+                        borderColor: '#374151'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            title: { display: true, text: 'Win Probability (%)', color: '#9ca3af' },
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createVelocityChart() {
+            const ctx = document.getElementById('velocityChart').getContext('2d');
+            
+            if (velocityChart) velocityChart.destroy();
+            
+            // Generate monthly velocity data for the past 6 months
+            const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+            const velocityData = months.map(() => Math.random() * 20 + 5); // $5K-25K per day
+            
+            velocityChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Daily Sales Velocity ($K)',
+                        data: velocityData,
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#f59e0b',
+                        pointBorderColor: '#1e293b',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Daily Velocity ($K)', color: '#9ca3af' },
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: 'rgba(156, 163, 175, 0.1)' },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function filterByStage() {
+            const filter = document.getElementById('stageFilter').value;
+            const rows = document.querySelectorAll('#opportunityTable tr');
+            
+            rows.forEach(row => {
+                const stageCell = row.querySelector('td:nth-child(5) span');
+                if (stageCell) {
+                    const stage = stageCell.textContent.trim();
+                    if (filter === 'all' || stage === filter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function filterByRep() {
+            const filter = document.getElementById('repFilter').value;
+            const rows = document.querySelectorAll('#opportunityTable tr');
+            
+            rows.forEach(row => {
+                const repCell = row.querySelector('td:nth-child(3)');
+                if (repCell) {
+                    const rep = repCell.textContent.trim();
+                    if (filter === 'all' || rep === filter) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function filterByTime() {
+            // This would filter opportunities by time period
+            // For demo purposes, we'll just refresh the data
+            refreshPipeline();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshPipeline();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valuation Simulator - DCF + Multiples Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(20, 184, 166, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-8">
+    <!-- Header -->
+    <div class="max-w-7xl mx-auto mb-8">
+        <div class="glass-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                    Valuation Simulator (DCF + Multiples)
+                </h1>
+                <span class="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Interactive valuation tool demonstrating DCF modeling and comparable company analysis. 
+                Calculates enterprise value using multiple methods with real-time sensitivity analysis.
+            </p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Financial Modeling</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">DCF Analysis</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Sensitivity Tables</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">100% Self-Contained</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left Panel - Assumptions -->
+        <div class="lg:col-span-1">
+            <div class="glass-card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="settings" class="w-5 h-5 text-emerald-400"></i>
+                    Company Assumptions
+                </h2>
+                
+                <div class="space-y-6">
+                    <!-- Revenue & Growth -->
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Current Revenue ($M)</label>
+                        <input type="number" id="currentRevenue" value="50" min="10" max="1000" step="5"
+                               class="w-full bg-white/10 rounded-lg px-3 py-2 text-white">
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Revenue Growth Rate (%)</label>
+                        <input type="range" id="growthRate" min="0" max="50" value="25" step="5" 
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>0%</span>
+                            <span id="growthRateValue" class="text-emerald-400 font-bold">25%</span>
+                            <span>50%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">EBITDA Margin (%)</label>
+                        <input type="range" id="ebitdaMargin" min="5" max="50" value="25" step="5" 
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>5%</span>
+                            <span id="ebitdaMarginValue" class="text-emerald-400 font-bold">25%</span>
+                            <span>50%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Terminal Growth Rate (%)</label>
+                        <input type="range" id="terminalGrowth" min="0" max="10" value="3" step="1" 
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>0%</span>
+                            <span id="terminalGrowthValue" class="text-emerald-400 font-bold">3%</span>
+                            <span>10%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">WACC / Discount Rate (%)</label>
+                        <input type="range" id="wacc" min="5" max="20" value="10" step="1" 
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>5%</span>
+                            <span id="waccValue" class="text-emerald-400 font-bold">10%</span>
+                            <span>20%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Tax Rate (%)</label>
+                        <input type="range" id="taxRate" min="15" max="35" value="21" step="1" 
+                               class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gradient-to-r from-emerald-500 to-teal-500">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>15%</span>
+                            <span id="taxRateValue" class="text-emerald-400 font-bold">21%</span>
+                            <span>35%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-6 space-y-3">
+                    <button onclick="resetAssumptions()" 
+                            class="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                        Reset to Defaults
+                    </button>
+                    <button onclick="exportResults()" 
+                            class="w-full py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        Export Analysis
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Valuation Results -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">Enterprise Value</div>
+                    <div id="enterpriseValue" class="text-2xl font-bold text-emerald-400">$0M</div>
+                    <div id="evMultiple" class="text-xs text-gray-500 mt-1">0.0x Revenue</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">EV/EBITDA</div>
+                    <div id="evEbitda" class="text-2xl font-bold text-teal-400">0.0x</div>
+                    <div class="text-xs text-gray-500 mt-1">Multiple</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">Terminal Value</div>
+                    <div id="terminalValue" class="text-2xl font-bold text-blue-400">$0M</div>
+                    <div id="terminalPercent" class="text-xs text-gray-500 mt-1">0% of EV</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">IRR (5-Year)</div>
+                    <div id="irr" class="text-2xl font-bold text-purple-400">0%</div>
+                    <div class="text-xs text-gray-500 mt-1">Expected Return</div>
+                </div>
+            </div>
+
+            <!-- DCF Projection Chart -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+                    DCF Cash Flow Projections
+                </h3>
+                <canvas id="dcfChart" height="100"></canvas>
+            </div>
+
+            <!-- Comparable Companies -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="building" class="w-5 h-5 text-teal-400"></i>
+                    Comparable Company Analysis
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-gray-400">Company</th>
+                                <th class="text-right py-2 text-gray-400">EV/Revenue</th>
+                                <th class="text-right py-2 text-gray-400">EV/EBITDA</th>
+                                <th class="text-right py-2 text-gray-400">P/E Ratio</th>
+                                <th class="text-right py-2 text-gray-400">Growth %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="compsTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-3 bg-white/5 rounded-lg">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-400">Median EV/Revenue Multiple:</span>
+                        <span id="medianMultiple" class="text-emerald-400 font-bold">0.0x</span>
+                    </div>
+                    <div class="flex justify-between text-sm mt-1">
+                        <span class="text-gray-400">Implied Valuation (Comps):</span>
+                        <span id="compsValuation" class="text-emerald-400 font-bold">$0M</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensitivity Analysis -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="sliders" class="w-5 h-5 text-blue-400"></i>
+                    Sensitivity Analysis: WACC vs Terminal Growth
+                </h3>
+                <div id="sensitivityTable" class="overflow-x-auto">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Valuation Summary -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-purple-400"></i>
+                    Valuation Summary
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-400 mb-2">DCF Components</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">PV of Cash Flows (Years 1-5):</span>
+                                <span id="pvCashFlows" class="text-white">$0M</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">PV of Terminal Value:</span>
+                                <span id="pvTerminal" class="text-white">$0M</span>
+                            </div>
+                            <div class="flex justify-between font-bold border-t border-gray-700 pt-2">
+                                <span class="text-gray-400">Total Enterprise Value:</span>
+                                <span id="totalEV" class="text-emerald-400">$0M</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-gray-400 mb-2">Investment Metrics</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Entry Multiple:</span>
+                                <span id="entryMultiple" class="text-white">0.0x</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Exit Multiple (Implied):</span>
+                                <span id="exitMultiple" class="text-white">0.0x</span>
+                            </div>
+                            <div class="flex justify-between font-bold border-t border-gray-700 pt-2">
+                                <span class="text-gray-400">Return Potential:</span>
+                                <span id="returnPotential" class="text-emerald-400">0.0x</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Chart instance
+        let dcfChart;
+
+        // Initialize DCF chart
+        function initChart() {
+            const ctx = document.getElementById('dcfChart').getContext('2d');
+            dcfChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                    datasets: [
+                        {
+                            label: 'Revenue',
+                            data: [],
+                            type: 'line',
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'Free Cash Flow',
+                            data: [],
+                            backgroundColor: 'rgba(20, 184, 166, 0.5)',
+                            borderColor: '#14b8a6',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#9CA3AF' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#9CA3AF' }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                callback: function(value) {
+                                    return '$' + value + 'M';
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: { 
+                                color: '#9CA3AF',
+                                callback: function(value) {
+                                    return '$' + value + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calculate DCF valuation
+        function calculateDCF() {
+            const revenue = parseFloat(document.getElementById('currentRevenue').value);
+            const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
+            const ebitdaMargin = parseFloat(document.getElementById('ebitdaMargin').value) / 100;
+            const terminalGrowth = parseFloat(document.getElementById('terminalGrowth').value) / 100;
+            const wacc = parseFloat(document.getElementById('wacc').value) / 100;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) / 100;
+
+            // Project revenues and cash flows
+            const revenues = [];
+            const cashFlows = [];
+            const pvCashFlows = [];
+            let currentRev = revenue;
+
+            for (let i = 1; i <= 5; i++) {
+                currentRev = currentRev * (1 + growthRate);
+                revenues.push(currentRev);
+                
+                // Simplified FCF calculation
+                const ebitda = currentRev * ebitdaMargin;
+                const tax = ebitda * taxRate;
+                const fcf = ebitda - tax - (currentRev * 0.05); // Assume 5% capex
+                cashFlows.push(fcf);
+                
+                // Present value
+                const pv = fcf / Math.pow(1 + wacc, i);
+                pvCashFlows.push(pv);
+            }
+
+            // Terminal value
+            const terminalFCF = cashFlows[4] * (1 + terminalGrowth);
+            const terminalValue = terminalFCF / (wacc - terminalGrowth);
+            const pvTerminalValue = terminalValue / Math.pow(1 + wacc, 5);
+
+            // Enterprise value
+            const totalPVCashFlows = pvCashFlows.reduce((a, b) => a + b, 0);
+            const enterpriseValue = totalPVCashFlows + pvTerminalValue;
+
+            // Update chart
+            dcfChart.data.datasets[0].data = revenues;
+            dcfChart.data.datasets[1].data = cashFlows;
+            dcfChart.update();
+
+            // Update metrics
+            document.getElementById('enterpriseValue').textContent = `$${enterpriseValue.toFixed(0)}M`;
+            document.getElementById('evMultiple').textContent = `${(enterpriseValue / revenue).toFixed(1)}x Revenue`;
+            document.getElementById('evEbitda').textContent = `${(enterpriseValue / (revenue * ebitdaMargin)).toFixed(1)}x`;
+            document.getElementById('terminalValue').textContent = `$${terminalValue.toFixed(0)}M`;
+            document.getElementById('terminalPercent').textContent = `${(pvTerminalValue / enterpriseValue * 100).toFixed(0)}% of EV`;
+            
+            // Calculate IRR (simplified)
+            const irr = Math.pow(enterpriseValue / revenue, 1/5) - 1;
+            document.getElementById('irr').textContent = `${(irr * 100).toFixed(1)}%`;
+
+            // Update summary
+            document.getElementById('pvCashFlows').textContent = `$${totalPVCashFlows.toFixed(0)}M`;
+            document.getElementById('pvTerminal').textContent = `$${pvTerminalValue.toFixed(0)}M`;
+            document.getElementById('totalEV').textContent = `$${enterpriseValue.toFixed(0)}M`;
+            document.getElementById('entryMultiple').textContent = `${(enterpriseValue / revenue).toFixed(1)}x`;
+            document.getElementById('exitMultiple').textContent = `${(terminalValue / revenues[4]).toFixed(1)}x`;
+            document.getElementById('returnPotential').textContent = `${(revenues[4] / revenue).toFixed(1)}x`;
+
+            // Generate comparables
+            generateComps(revenue, enterpriseValue);
+            
+            // Generate sensitivity table
+            generateSensitivity(revenue, growthRate, ebitdaMargin, terminalGrowth, wacc, taxRate);
+        }
+
+        // Generate comparable companies
+        function generateComps(revenue, ourEV) {
+            const companies = [
+                { name: 'TechCo Alpha', evRevenue: 4.5, evEbitda: 18, pe: 25, growth: 30 },
+                { name: 'SaaS Beta', evRevenue: 5.2, evEbitda: 20, pe: 28, growth: 35 },
+                { name: 'Platform Gamma', evRevenue: 3.8, evEbitda: 15, pe: 22, growth: 25 },
+                { name: 'Enterprise Delta', evRevenue: 6.1, evEbitda: 22, pe: 30, growth: 40 },
+                { name: 'Cloud Epsilon', evRevenue: 4.9, evEbitda: 19, pe: 26, growth: 32 }
+            ];
+
+            const tbody = document.getElementById('compsTable');
+            tbody.innerHTML = companies.map(comp => `
+                <tr class="border-b border-gray-800">
+                    <td class="py-2">${comp.name}</td>
+                    <td class="text-right py-2">${comp.evRevenue.toFixed(1)}x</td>
+                    <td class="text-right py-2">${comp.evEbitda.toFixed(1)}x</td>
+                    <td class="text-right py-2">${comp.pe.toFixed(1)}x</td>
+                    <td class="text-right py-2">${comp.growth}%</td>
+                </tr>
+            `).join('');
+
+            // Calculate median
+            const multiples = companies.map(c => c.evRevenue).sort((a, b) => a - b);
+            const median = multiples[Math.floor(multiples.length / 2)];
+            const compsValuation = revenue * median;
+
+            document.getElementById('medianMultiple').textContent = `${median.toFixed(1)}x`;
+            document.getElementById('compsValuation').textContent = `$${compsValuation.toFixed(0)}M`;
+        }
+
+        // Generate sensitivity table
+        function generateSensitivity(revenue, growthRate, ebitdaMargin, terminalGrowth, wacc, taxRate) {
+            const waccRange = [wacc - 0.02, wacc - 0.01, wacc, wacc + 0.01, wacc + 0.02];
+            const terminalRange = [terminalGrowth - 0.02, terminalGrowth - 0.01, terminalGrowth, terminalGrowth + 0.01, terminalGrowth + 0.02];
+            
+            let tableHTML = '<table class="w-full text-xs"><thead><tr><th class="p-2 text-gray-400">WACC / Terminal</th>';
+            terminalRange.forEach(t => {
+                tableHTML += `<th class="p-2 text-gray-400">${(t * 100).toFixed(0)}%</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            waccRange.forEach(w => {
+                tableHTML += `<tr><td class="p-2 text-gray-400">${(w * 100).toFixed(0)}%</td>`;
+                terminalRange.forEach(t => {
+                    // Simplified EV calculation for sensitivity
+                    const fcf = revenue * (1 + growthRate) * ebitdaMargin * (1 - taxRate);
+                    const tv = (fcf * Math.pow(1 + growthRate, 4) * (1 + t)) / (w - t);
+                    const ev = tv / Math.pow(1 + w, 5) + fcf * 3; // Simplified
+                    
+                    const isCenter = w === wacc && t === terminalGrowth;
+                    const color = ev > revenue * 5 ? 'text-emerald-400' : ev > revenue * 3 ? 'text-yellow-400' : 'text-red-400';
+                    tableHTML += `<td class="p-2 text-center ${isCenter ? 'bg-white/10 font-bold' : ''} ${color}">$${ev.toFixed(0)}M</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            tableHTML += '</tbody></table>';
+
+            document.getElementById('sensitivityTable').innerHTML = tableHTML;
+        }
+
+        // Event listeners
+        document.getElementById('growthRate').addEventListener('input', function() {
+            document.getElementById('growthRateValue').textContent = this.value + '%';
+            calculateDCF();
+        });
+
+        document.getElementById('ebitdaMargin').addEventListener('input', function() {
+            document.getElementById('ebitdaMarginValue').textContent = this.value + '%';
+            calculateDCF();
+        });
+
+        document.getElementById('terminalGrowth').addEventListener('input', function() {
+            document.getElementById('terminalGrowthValue').textContent = this.value + '%';
+            calculateDCF();
+        });
+
+        document.getElementById('wacc').addEventListener('input', function() {
+            document.getElementById('waccValue').textContent = this.value + '%';
+            calculateDCF();
+        });
+
+        document.getElementById('taxRate').addEventListener('input', function() {
+            document.getElementById('taxRateValue').textContent = this.value + '%';
+            calculateDCF();
+        });
+
+        document.getElementById('currentRevenue').addEventListener('input', calculateDCF);
+
+        // Reset assumptions
+        function resetAssumptions() {
+            document.getElementById('currentRevenue').value = 50;
+            document.getElementById('growthRate').value = 25;
+            document.getElementById('ebitdaMargin').value = 25;
+            document.getElementById('terminalGrowth').value = 3;
+            document.getElementById('wacc').value = 10;
+            document.getElementById('taxRate').value = 21;
+            
+            document.getElementById('growthRateValue').textContent = '25%';
+            document.getElementById('ebitdaMarginValue').textContent = '25%';
+            document.getElementById('terminalGrowthValue').textContent = '3%';
+            document.getElementById('waccValue').textContent = '10%';
+            document.getElementById('taxRateValue').textContent = '21%';
+            
+            calculateDCF();
+        }
+
+        // Export results
+        function exportResults() {
+            alert('In production, this would export a comprehensive DCF model to Excel with all assumptions, projections, sensitivity analysis, and comparable company data.');
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initChart();
+            calculateDCF();
+        });
+    </script>
+</body>
+</html>

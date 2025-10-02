@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Portfolio Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        .crypto-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .profit { color: #10b981; }
+        .loss { color: #ef4444; }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .slide-in { animation: slideIn 0.5s ease-out; }
+    </style>
+</head>
+<body class="min-h-screen p-4 text-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-8">
+            <h1 class="text-5xl font-bold mb-2">Crypto Portfolio Tracker</h1>
+            <p class="text-xl opacity-80">Real-time cryptocurrency portfolio management</p>
+        </div>
+
+        <!-- Portfolio Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="crypto-card rounded-xl p-6 slide-in">
+                <div class="text-sm opacity-70 mb-1">Total Portfolio Value</div>
+                <div class="text-3xl font-bold" id="totalValue">$125,430.50</div>
+                <div class="text-sm profit mt-2">+12.5% (24h)</div>
+            </div>
+            <div class="crypto-card rounded-xl p-6 slide-in" style="animation-delay: 0.1s">
+                <div class="text-sm opacity-70 mb-1">Total Profit/Loss</div>
+                <div class="text-3xl font-bold profit" id="totalPL">+$15,230.00</div>
+                <div class="text-sm opacity-70 mt-2">All time</div>
+            </div>
+            <div class="crypto-card rounded-xl p-6 slide-in" style="animation-delay: 0.2s">
+                <div class="text-sm opacity-70 mb-1">Best Performer</div>
+                <div class="text-3xl font-bold">ETH</div>
+                <div class="text-sm profit mt-2">+45.2%</div>
+            </div>
+            <div class="crypto-card rounded-xl p-6 slide-in" style="animation-delay: 0.3s">
+                <div class="text-sm opacity-70 mb-1">Portfolio Health</div>
+                <div class="text-3xl font-bold">Excellent</div>
+                <div class="text-sm opacity-70 mt-2">Well diversified</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Holdings List -->
+            <div class="lg:col-span-2">
+                <div class="crypto-card rounded-xl p-6">
+                    <h2 class="text-2xl font-bold mb-4">Your Holdings</h2>
+                    <div class="space-y-3" id="holdings">
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold">₿</div>
+                                <div>
+                                    <div class="font-semibold">Bitcoin</div>
+                                    <div class="text-sm opacity-70">1.5 BTC</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">$102,351.75</div>
+                                <div class="text-sm profit">+2.3%</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center font-bold">Ξ</div>
+                                <div>
+                                    <div class="font-semibold">Ethereum</div>
+                                    <div class="text-sm opacity-70">10 ETH</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">$35,670.00</div>
+                                <div class="text-sm profit">+5.7%</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold">◈</div>
+                                <div>
+                                    <div class="font-semibold">Chainlink</div>
+                                    <div class="text-sm opacity-70">500 LINK</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">$7,500.00</div>
+                                <div class="text-sm loss">-1.2%</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center font-bold">◉</div>
+                                <div>
+                                    <div class="font-semibold">Polygon</div>
+                                    <div class="text-sm opacity-70">5000 MATIC</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold">$4,250.00</div>
+                                <div class="text-sm profit">+8.9%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add New Asset -->
+                    <div class="mt-6 p-4 border-2 border-dashed border-white/20 rounded-lg">
+                        <h3 class="font-semibold mb-3">Add New Asset</h3>
+                        <div class="grid grid-cols-3 gap-3">
+                            <input type="text" placeholder="Symbol" class="px-3 py-2 bg-white/10 rounded border border-white/20 focus:border-white/40 outline-none" id="newSymbol">
+                            <input type="number" placeholder="Amount" class="px-3 py-2 bg-white/10 rounded border border-white/20 focus:border-white/40 outline-none" id="newAmount">
+                            <button onclick="addAsset()" class="bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 rounded font-semibold hover:opacity-90 transition">
+                                Add Asset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Distribution -->
+            <div class="space-y-6">
+                <div class="crypto-card rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">Portfolio Distribution</h2>
+                    <canvas id="distributionChart"></canvas>
+                </div>
+                
+                <!-- Price Alerts -->
+                <div class="crypto-card rounded-xl p-6">
+                    <h2 class="text-xl font-bold mb-4">Price Alerts</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-green-500/20 rounded-lg">
+                            <div>
+                                <div class="text-sm font-semibold">BTC reached $68,000</div>
+                                <div class="text-xs opacity-70">2 minutes ago</div>
+                            </div>
+                            <span class="text-green-400">↑</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-blue-500/20 rounded-lg">
+                            <div>
+                                <div class="text-sm font-semibold">ETH up 5% today</div>
+                                <div class="text-xs opacity-70">1 hour ago</div>
+                            </div>
+                            <span class="text-blue-400">📈</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Chart -->
+        <div class="crypto-card rounded-xl p-6 mt-6">
+            <h2 class="text-2xl font-bold mb-4">Portfolio Performance</h2>
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Portfolio Distribution Chart
+        const distCtx = document.getElementById('distributionChart').getContext('2d');
+        const distChart = new Chart(distCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Bitcoin', 'Ethereum', 'Chainlink', 'Polygon'],
+                datasets: [{
+                    data: [102351, 35670, 7500, 4250],
+                    backgroundColor: [
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(168, 85, 247, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(34, 197, 94, 0.8)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: 'white', padding: 15 }
+                    }
+                }
+            }
+        });
+
+        // Performance Chart
+        const perfCtx = document.getElementById('performanceChart').getContext('2d');
+        const perfChart = new Chart(perfCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Portfolio Value',
+                    data: [80000, 85000, 92000, 88000, 95000, 103000, 98000, 112000, 118000, 115000, 122000, 125430],
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { 
+                            color: 'rgba(255, 255, 255, 0.8)',
+                            callback: function(value) {
+                                return '$' + (value/1000).toFixed(0) + 'k';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: 'rgba(255, 255, 255, 0.8)' }
+                    }
+                }
+            }
+        });
+
+        // Simulate live price updates
+        function updatePrices() {
+            const holdings = document.querySelectorAll('#holdings > div');
+            holdings.forEach(holding => {
+                const priceElement = holding.querySelector('.font-bold');
+                const changeElement = holding.querySelector('.text-sm.profit, .text-sm.loss');
+                if (priceElement && changeElement) {
+                    const currentPrice = parseFloat(priceElement.textContent.replace('$', '').replace(',', ''));
+                    const variation = (Math.random() - 0.5) * currentPrice * 0.002;
+                    const newPrice = currentPrice + variation;
+                    priceElement.textContent = '$' + newPrice.toFixed(2).toLocaleString();
+                    
+                    const change = (Math.random() - 0.5) * 2;
+                    changeElement.textContent = (change > 0 ? '+' : '') + change.toFixed(1) + '%';
+                    changeElement.className = 'text-sm ' + (change > 0 ? 'profit' : 'loss');
+                }
+            });
+            
+            // Update total value
+            const totalElement = document.getElementById('totalValue');
+            const currentTotal = parseFloat(totalElement.textContent.replace('$', '').replace(',', ''));
+            const totalVariation = (Math.random() - 0.5) * 1000;
+            totalElement.textContent = '$' + (currentTotal + totalVariation).toFixed(2).toLocaleString();
+        }
+
+        // Add new asset function
+        function addAsset() {
+            const symbol = document.getElementById('newSymbol').value.toUpperCase();
+            const amount = document.getElementById('newAmount').value;
+            
+            if (symbol && amount) {
+                const holdingsDiv = document.getElementById('holdings');
+                const newAsset = document.createElement('div');
+                newAsset.className = 'flex items-center justify-between p-4 bg-white/5 rounded-lg hover:bg-white/10 transition slide-in';
+                newAsset.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center font-bold">${symbol.charAt(0)}</div>
+                        <div>
+                            <div class="font-semibold">${symbol}</div>
+                            <div class="text-sm opacity-70">${amount} ${symbol}</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold">$${(Math.random() * 10000).toFixed(2)}</div>
+                        <div class="text-sm profit">+0.0%</div>
+                    </div>
+                `;
+                holdingsDiv.appendChild(newAsset);
+                
+                // Clear inputs
+                document.getElementById('newSymbol').value = '';
+                document.getElementById('newAmount').value = '';
+            }
+        }
+
+        // Update prices every 2 seconds
+        setInterval(updatePrices, 2000);
+    </script>
+</body>
+</html>

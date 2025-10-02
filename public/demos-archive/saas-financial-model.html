@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic SaaS Financial Model - Interactive Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        .slider-track {
+            background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen p-4 md:p-8">
+    <!-- Header with Professional Context -->
+    <div class="max-w-7xl mx-auto mb-8">
+        <div class="glass-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+                    Dynamic SaaS Financial Model
+                </h1>
+                <span class="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-lg text-sm font-medium">
+                    Live Demo
+                </span>
+            </div>
+            <p class="text-gray-400 mb-4">
+                Interactive financial modeling tool demonstrating real-time recalculation of SaaS metrics based on 
+                adjustable growth assumptions. This showcases the intersection of financial expertise and full-stack development.
+            </p>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">React</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Financial Modeling</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">REST API</span>
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-xs">Excel Export</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left Panel - Assumptions -->
+        <div class="lg:col-span-1">
+            <div class="glass-card rounded-xl p-6">
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <i data-lucide="settings" class="w-5 h-5 text-emerald-400"></i>
+                    Model Assumptions
+                </h2>
+                
+                <!-- Growth Assumptions -->
+                <div class="space-y-6">
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Monthly Growth Rate</label>
+                        <input type="range" id="growthRate" min="0" max="20" value="5" step="0.5" 
+                               class="w-full slider-track h-2 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>0%</span>
+                            <span id="growthRateValue" class="text-emerald-400 font-bold">5%</span>
+                            <span>20%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Monthly Churn Rate</label>
+                        <input type="range" id="churnRate" min="0" max="10" value="2" step="0.5" 
+                               class="w-full slider-track h-2 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>0%</span>
+                            <span id="churnRateValue" class="text-red-400 font-bold">2%</span>
+                            <span>10%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Average Revenue Per User (ARPU)</label>
+                        <input type="range" id="arpu" min="10" max="500" value="100" step="10" 
+                               class="w-full slider-track h-2 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>$10</span>
+                            <span id="arpuValue" class="text-blue-400 font-bold">$100</span>
+                            <span>$500</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Customer Acquisition Cost (CAC)</label>
+                        <input type="range" id="cac" min="50" max="2000" value="300" step="50" 
+                               class="w-full slider-track h-2 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>$50</span>
+                            <span id="cacValue" class="text-orange-400 font-bold">$300</span>
+                            <span>$2000</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Gross Margin</label>
+                        <input type="range" id="grossMargin" min="40" max="90" value="75" step="5" 
+                               class="w-full slider-track h-2 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>40%</span>
+                            <span id="grossMarginValue" class="text-purple-400 font-bold">75%</span>
+                            <span>90%</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Starting Customers</label>
+                        <input type="number" id="startingCustomers" value="100" min="10" max="10000" 
+                               class="w-full bg-white/10 rounded-lg px-3 py-2 text-white">
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-6 space-y-3">
+                    <button onclick="resetAssumptions()" 
+                            class="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                        Reset to Defaults
+                    </button>
+                    <button onclick="exportToExcel()" 
+                            class="w-full py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        Export to Excel
+                    </button>
+                    <button onclick="callAPI()" 
+                            class="w-full py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="code" class="w-4 h-4"></i>
+                        API Endpoint
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Metrics & Charts -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">MRR (Month 12)</div>
+                    <div id="mrr" class="text-2xl font-bold text-emerald-400">$0</div>
+                    <div id="mrrGrowth" class="text-xs text-gray-500 mt-1">+0%</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">ARR (Month 12)</div>
+                    <div id="arr" class="text-2xl font-bold text-blue-400">$0</div>
+                    <div id="arrGrowth" class="text-xs text-gray-500 mt-1">+0%</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">LTV:CAC Ratio</div>
+                    <div id="ltvCac" class="text-2xl font-bold text-purple-400">0.0x</div>
+                    <div id="ltvCacStatus" class="text-xs mt-1">-</div>
+                </div>
+                <div class="metric-card rounded-xl p-4">
+                    <div class="text-xs text-gray-400 mb-1">Payback Period</div>
+                    <div id="payback" class="text-2xl font-bold text-orange-400">0</div>
+                    <div class="text-xs text-gray-500 mt-1">months</div>
+                </div>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="trending-up" class="w-5 h-5 text-emerald-400"></i>
+                    Revenue Projection (12 Months)
+                </h3>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+
+            <!-- Customer Metrics Chart -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="users" class="w-5 h-5 text-blue-400"></i>
+                    Customer Growth & Churn
+                </h3>
+                <canvas id="customerChart" height="100"></canvas>
+            </div>
+
+            <!-- Unit Economics Table -->
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="calculator" class="w-5 h-5 text-purple-400"></i>
+                    Unit Economics Breakdown
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-2 text-gray-400">Metric</th>
+                                <th class="text-right py-2 text-gray-400">Value</th>
+                                <th class="text-right py-2 text-gray-400">Industry Benchmark</th>
+                                <th class="text-right py-2 text-gray-400">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="unitEconomicsTable">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Modal -->
+    <div id="apiModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div class="glass-card rounded-xl p-6 max-w-2xl w-full">
+            <h3 class="text-xl font-bold mb-4">REST API Endpoint</h3>
+            <p class="text-gray-400 mb-4">
+                This model is available via REST API for programmatic access:
+            </p>
+            <div class="bg-black/50 rounded-lg p-4 font-mono text-sm mb-4">
+                <div class="text-emerald-400">POST /api/financial-model/forecast</div>
+                <div class="text-gray-400 mt-2">
+                    {<br>
+                    &nbsp;&nbsp;"growthRate": <span id="apiGrowth">5</span>,<br>
+                    &nbsp;&nbsp;"churnRate": <span id="apiChurn">2</span>,<br>
+                    &nbsp;&nbsp;"arpu": <span id="apiArpu">100</span>,<br>
+                    &nbsp;&nbsp;"cac": <span id="apiCac">300</span>,<br>
+                    &nbsp;&nbsp;"grossMargin": <span id="apiMargin">75</span>,<br>
+                    &nbsp;&nbsp;"startingCustomers": <span id="apiCustomers">100</span><br>
+                    }
+                </div>
+            </div>
+            <button onclick="closeAPIModal()" class="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Chart instances
+        let revenueChart, customerChart;
+
+        // Initialize charts
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#9CA3AF' }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    },
+                    y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    }
+                }
+            };
+
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'MRR',
+                            data: [],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Gross Profit',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: chartOptions
+            });
+
+            // Customer Chart
+            const customerCtx = document.getElementById('customerChart').getContext('2d');
+            customerChart = new Chart(customerCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Total Customers',
+                            data: [],
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'New Customers',
+                            data: [],
+                            backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                            borderColor: '#10b981',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Churned',
+                            data: [],
+                            backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                            borderColor: '#ef4444',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Calculate financial model
+        function calculateModel() {
+            const growthRate = parseFloat(document.getElementById('growthRate').value) / 100;
+            const churnRate = parseFloat(document.getElementById('churnRate').value) / 100;
+            const arpu = parseFloat(document.getElementById('arpu').value);
+            const cac = parseFloat(document.getElementById('cac').value);
+            const grossMargin = parseFloat(document.getElementById('grossMargin').value) / 100;
+            let customers = parseFloat(document.getElementById('startingCustomers').value);
+
+            const months = [];
+            const mrrData = [];
+            const grossProfitData = [];
+            const customerData = [];
+            const newCustomerData = [];
+            const churnedData = [];
+
+            // Calculate 12-month projection
+            for (let i = 1; i <= 12; i++) {
+                months.push(`Month ${i}`);
+                
+                // Customer calculations
+                const newCustomers = Math.round(customers * growthRate);
+                const churned = Math.round(customers * churnRate);
+                customers = customers + newCustomers - churned;
+                
+                customerData.push(customers);
+                newCustomerData.push(newCustomers);
+                churnedData.push(churned);
+                
+                // Revenue calculations
+                const mrr = customers * arpu;
+                const grossProfit = mrr * grossMargin;
+                
+                mrrData.push(mrr);
+                grossProfitData.push(grossProfit);
+            }
+
+            // Update charts
+            revenueChart.data.labels = months;
+            revenueChart.data.datasets[0].data = mrrData;
+            revenueChart.data.datasets[1].data = grossProfitData;
+            revenueChart.update();
+
+            customerChart.data.labels = months;
+            customerChart.data.datasets[0].data = customerData;
+            customerChart.data.datasets[1].data = newCustomerData;
+            customerChart.data.datasets[2].data = churnedData;
+            customerChart.update();
+
+            // Calculate key metrics
+            const finalMRR = mrrData[11];
+            const initialMRR = parseFloat(document.getElementById('startingCustomers').value) * arpu;
+            const mrrGrowthPct = ((finalMRR - initialMRR) / initialMRR * 100).toFixed(1);
+            
+            const arr = finalMRR * 12;
+            const ltv = arpu / churnRate;
+            const ltvCacRatio = ltv / cac;
+            const paybackMonths = cac / (arpu * grossMargin);
+
+            // Update metrics display
+            document.getElementById('mrr').textContent = `$${finalMRR.toLocaleString()}`;
+            document.getElementById('mrrGrowth').textContent = `+${mrrGrowthPct}%`;
+            document.getElementById('arr').textContent = `$${arr.toLocaleString()}`;
+            document.getElementById('arrGrowth').textContent = `+${mrrGrowthPct}%`;
+            document.getElementById('ltvCac').textContent = `${ltvCacRatio.toFixed(1)}x`;
+            document.getElementById('payback').textContent = Math.ceil(paybackMonths);
+
+            // LTV:CAC status
+            const ltvCacStatus = document.getElementById('ltvCacStatus');
+            if (ltvCacRatio >= 3) {
+                ltvCacStatus.textContent = '✓ Healthy';
+                ltvCacStatus.className = 'text-xs mt-1 text-emerald-400';
+            } else if (ltvCacRatio >= 1) {
+                ltvCacStatus.textContent = '⚠ Needs Improvement';
+                ltvCacStatus.className = 'text-xs mt-1 text-yellow-400';
+            } else {
+                ltvCacStatus.textContent = '✗ Unsustainable';
+                ltvCacStatus.className = 'text-xs mt-1 text-red-400';
+            }
+
+            // Update unit economics table
+            updateUnitEconomicsTable({
+                ltv, cac, ltvCacRatio, paybackMonths, grossMargin, churnRate, growthRate, arpu
+            });
+        }
+
+        // Update unit economics table
+        function updateUnitEconomicsTable(metrics) {
+            const benchmarks = {
+                ltvCacRatio: { value: 3, label: '3.0x' },
+                paybackMonths: { value: 12, label: '12 months' },
+                grossMargin: { value: 0.7, label: '70%' },
+                churnRate: { value: 0.05, label: '5%' },
+                growthRate: { value: 0.1, label: '10%' }
+            };
+
+            const rows = [
+                {
+                    name: 'Customer Lifetime Value',
+                    value: `$${metrics.ltv.toFixed(0)}`,
+                    benchmark: `$${(metrics.cac * 3).toFixed(0)}`,
+                    status: metrics.ltv >= metrics.cac * 3
+                },
+                {
+                    name: 'LTV:CAC Ratio',
+                    value: `${metrics.ltvCacRatio.toFixed(1)}x`,
+                    benchmark: benchmarks.ltvCacRatio.label,
+                    status: metrics.ltvCacRatio >= benchmarks.ltvCacRatio.value
+                },
+                {
+                    name: 'CAC Payback',
+                    value: `${Math.ceil(metrics.paybackMonths)} months`,
+                    benchmark: benchmarks.paybackMonths.label,
+                    status: metrics.paybackMonths <= benchmarks.paybackMonths.value
+                },
+                {
+                    name: 'Gross Margin',
+                    value: `${(metrics.grossMargin * 100).toFixed(0)}%`,
+                    benchmark: benchmarks.grossMargin.label,
+                    status: metrics.grossMargin >= benchmarks.grossMargin.value
+                },
+                {
+                    name: 'Monthly Churn',
+                    value: `${(metrics.churnRate * 100).toFixed(1)}%`,
+                    benchmark: benchmarks.churnRate.label,
+                    status: metrics.churnRate <= benchmarks.churnRate.value
+                },
+                {
+                    name: 'Monthly Growth',
+                    value: `${(metrics.growthRate * 100).toFixed(1)}%`,
+                    benchmark: benchmarks.growthRate.label,
+                    status: metrics.growthRate >= benchmarks.growthRate.value
+                }
+            ];
+
+            const tbody = document.getElementById('unitEconomicsTable');
+            tbody.innerHTML = rows.map(row => `
+                <tr class="border-b border-gray-800">
+                    <td class="py-2">${row.name}</td>
+                    <td class="text-right py-2 font-mono">${row.value}</td>
+                    <td class="text-right py-2 text-gray-500">${row.benchmark}</td>
+                    <td class="text-right py-2">
+                        <span class="${row.status ? 'text-emerald-400' : 'text-red-400'}">
+                            ${row.status ? '✓' : '✗'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Event listeners for sliders
+        document.getElementById('growthRate').addEventListener('input', function() {
+            document.getElementById('growthRateValue').textContent = this.value + '%';
+            calculateModel();
+        });
+
+        document.getElementById('churnRate').addEventListener('input', function() {
+            document.getElementById('churnRateValue').textContent = this.value + '%';
+            calculateModel();
+        });
+
+        document.getElementById('arpu').addEventListener('input', function() {
+            document.getElementById('arpuValue').textContent = '$' + this.value;
+            calculateModel();
+        });
+
+        document.getElementById('cac').addEventListener('input', function() {
+            document.getElementById('cacValue').textContent = '$' + this.value;
+            calculateModel();
+        });
+
+        document.getElementById('grossMargin').addEventListener('input', function() {
+            document.getElementById('grossMarginValue').textContent = this.value + '%';
+            calculateModel();
+        });
+
+        document.getElementById('startingCustomers').addEventListener('input', calculateModel);
+
+        // Reset assumptions
+        function resetAssumptions() {
+            document.getElementById('growthRate').value = 5;
+            document.getElementById('churnRate').value = 2;
+            document.getElementById('arpu').value = 100;
+            document.getElementById('cac').value = 300;
+            document.getElementById('grossMargin').value = 75;
+            document.getElementById('startingCustomers').value = 100;
+            
+            document.getElementById('growthRateValue').textContent = '5%';
+            document.getElementById('churnRateValue').textContent = '2%';
+            document.getElementById('arpuValue').textContent = '$100';
+            document.getElementById('cacValue').textContent = '$300';
+            document.getElementById('grossMarginValue').textContent = '75%';
+            
+            calculateModel();
+        }
+
+        // Export to Excel (simulated)
+        function exportToExcel() {
+            alert('Excel export would download a comprehensive financial model with all projections, charts, and sensitivity analysis. In production, this would generate a .xlsx file with multiple tabs.');
+        }
+
+        // Show API modal
+        function callAPI() {
+            document.getElementById('apiGrowth').textContent = document.getElementById('growthRate').value;
+            document.getElementById('apiChurn').textContent = document.getElementById('churnRate').value;
+            document.getElementById('apiArpu').textContent = document.getElementById('arpu').value;
+            document.getElementById('apiCac').textContent = document.getElementById('cac').value;
+            document.getElementById('apiMargin').textContent = document.getElementById('grossMargin').value;
+            document.getElementById('apiCustomers').textContent = document.getElementById('startingCustomers').value;
+            document.getElementById('apiModal').classList.remove('hidden');
+        }
+
+        // Close API modal
+        function closeAPIModal() {
+            document.getElementById('apiModal').classList.add('hidden');
+        }
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            initCharts();
+            calculateModel();
+        });
+    </script>
+</body>
+</html>

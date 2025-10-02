@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Balance Sheet - CFO Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+                        Balance Sheet
+                    </h1>
+                    <p class="text-gray-400">Statement of Financial Position with Real-Time Ratios</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-400">Balance Check</div>
+                        <div id="balanceCheck" class="text-lg font-bold">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Period and View Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">As of Date</label>
+                    <select id="dateSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="current">Sep 30, 2024</option>
+                        <option value="prior-month">Aug 31, 2024</option>
+                        <option value="prior-quarter">Jun 30, 2024</option>
+                        <option value="prior-year">Sep 30, 2023</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">View</label>
+                    <div class="flex gap-2">
+                        <button onclick="BSApp.setView('standard')" class="view-btn px-4 py-2 bg-blue-600 text-white rounded-lg">Standard</button>
+                        <button onclick="BSApp.setView('common-size')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Common Size</button>
+                        <button onclick="BSApp.setView('trend')" class="view-btn px-4 py-2 bg-slate-700 text-gray-300 rounded-lg">Trend</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2">Format</label>
+                    <select id="formatSelect" class="w-full bg-slate-800 text-white rounded-lg px-4 py-2 border border-gray-600">
+                        <option value="thousands">Thousands ($000)</option>
+                        <option value="millions">Millions ($M)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Balance Sheet Table -->
+        <div id="standardView" class="glass-card rounded-xl p-6 mb-6">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="text-left py-3 px-2 text-gray-300">Account</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Current</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Prior Year</th>
+                            <th class="text-right py-3 px-2 text-gray-300">Change</th>
+                            <th class="text-right py-3 px-2 text-gray-300">% Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="balanceSheetBody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Financial Ratios Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Liquidity Ratios</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Current Ratio</span>
+                        <span id="currentRatio" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Quick Ratio</span>
+                        <span id="quickRatio" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Cash Ratio</span>
+                        <span id="cashRatio" class="font-semibold">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Leverage Ratios</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Debt-to-Equity</span>
+                        <span id="debtToEquity" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Debt-to-Assets</span>
+                        <span id="debtToAssets" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Equity Ratio</span>
+                        <span id="equityRatio" class="font-semibold">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Efficiency Ratios</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Asset Turnover</span>
+                        <span id="assetTurnover" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Working Capital</span>
+                        <span id="workingCapital" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Book Value/Share</span>
+                        <span id="bookValuePerShare" class="font-semibold">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Balance Check</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Total Assets</span>
+                        <span id="totalAssets" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Total Liab + Equity</span>
+                        <span id="totalLiabEquity" class="font-semibold">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Difference</span>
+                        <span id="balanceDifference" class="font-semibold">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Asset Composition</h3>
+                <canvas id="assetChart" width="400" height="300"></canvas>
+            </div>
+            <div class="glass-card rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-gray-200 mb-4">Capital Structure</h3>
+                <canvas id="capitalChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script src="data.js"></script>
+    <script src="ratios.js"></script>
+    <script src="validation.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

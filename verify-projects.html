@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Verification Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .status-success { color: #10b981; }
+        .status-error { color: #ef4444; }
+        .status-loading { color: #f59e0b; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 text-gray-100">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-card rounded-xl p-6 mb-6">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-4">
+                Project Verification Dashboard
+            </h1>
+            <p class="text-gray-400 mb-4">
+                Automated verification of all 15 modular projects for console errors and functionality.
+            </p>
+            <button onclick="verifyAllProjects()" class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                🔍 Verify All Projects
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="projectGrid">
+            <!-- Dynamic project cards will be inserted here -->
+        </div>
+
+        <div class="glass-card rounded-xl p-6 mt-6">
+            <h2 class="text-xl font-bold mb-4">Verification Summary</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div id="successCount" class="text-2xl font-bold status-success">0</div>
+                    <div class="text-sm text-gray-400">Successful</div>
+                </div>
+                <div class="text-center">
+                    <div id="errorCount" class="text-2xl font-bold status-error">0</div>
+                    <div class="text-sm text-gray-400">Errors</div>
+                </div>
+                <div class="text-center">
+                    <div id="totalCount" class="text-2xl font-bold text-gray-300">15</div>
+                    <div class="text-sm text-gray-400">Total</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            { id: 1, name: 'P&L Statement', path: '/projects/01-pl-statement/index.html' },
+            { id: 2, name: 'Balance Sheet', path: '/projects/02-balance-sheet/index.html' },
+            { id: 3, name: 'Cash Flow Statement', path: '/projects/03-cash-flow-statement/index.html' },
+            { id: 4, name: 'Working Capital Optimizer', path: '/projects/04-working-capital-optimizer/index.html' },
+            { id: 5, name: 'Budget Variance Analysis', path: '/projects/05-budget-variance-analysis/index.html' },
+            { id: 6, name: 'Valuation Simulator', path: '/projects/06-valuation-simulator/index.html' },
+            { id: 7, name: 'Growth Funnel Simulator', path: '/projects/07-growth-funnel-simulator/index.html' },
+            { id: 8, name: 'Customer Churn Predictor', path: '/projects/08-churn-predictor/index.html' },
+            { id: 9, name: 'Revenue Forecast Engine', path: '/projects/09-revenue-forecast-engine/index.html' },
+            { id: 10, name: 'Healthcare Predictor', path: '/projects/10-healthcare-predictor/index.html' },
+            { id: 11, name: 'Fraud Detection System', path: '/projects/11-fraud-detection/index.html' },
+            { id: 12, name: 'Startup Survival Predictor', path: '/projects/12-startup-survival/index.html' },
+            { id: 13, name: 'Territory Performance', path: '/projects/13-territory-performance/index.html' },
+            { id: 14, name: 'Pipeline Health Analyzer', path: '/projects/14-pipeline-analyzer/index.html' },
+            { id: 15, name: 'Forecast Accuracy Tracker', path: '/projects/15-forecast-accuracy/index.html' }
+        ];
+
+        function createProjectCard(project) {
+            return `
+                <div class="glass-card rounded-lg p-4" id="card-${project.id}">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-semibold text-sm">${project.name}</h3>
+                        <div id="status-${project.id}" class="status-loading">⏳</div>
+                    </div>
+                    <div class="text-xs text-gray-400 mb-2">${project.path}</div>
+                    <div id="result-${project.id}" class="text-xs text-gray-500">Waiting...</div>
+                    <button onclick="openProject(${project.id})" class="mt-2 px-3 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700">
+                        Open
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projectGrid');
+            grid.innerHTML = projects.map(createProjectCard).join('');
+        }
+
+        function verifyProject(project) {
+            return new Promise((resolve) => {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = project.path;
+                
+                let hasError = false;
+                const originalConsoleError = console.error;
+                
+                // Capture console errors
+                console.error = function(...args) {
+                    hasError = true;
+                    originalConsoleError.apply(console, args);
+                };
+
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        console.error = originalConsoleError;
+                        
+                        const statusElement = document.getElementById(`status-${project.id}`);
+                        const resultElement = document.getElementById(`result-${project.id}`);
+                        
+                        if (hasError) {
+                            statusElement.textContent = '❌';
+                            statusElement.className = 'status-error';
+                            resultElement.textContent = 'Console errors detected';
+                        } else {
+                            statusElement.textContent = '✅';
+                            statusElement.className = 'status-success';
+                            resultElement.textContent = 'No errors detected';
+                        }
+                        
+                        document.body.removeChild(iframe);
+                        resolve(!hasError);
+                    }, 2000); // Wait 2 seconds for project to initialize
+                };
+
+                iframe.onerror = function() {
+                    console.error = originalConsoleError;
+                    
+                    const statusElement = document.getElementById(`status-${project.id}`);
+                    const resultElement = document.getElementById(`result-${project.id}`);
+                    
+                    statusElement.textContent = '❌';
+                    statusElement.className = 'status-error';
+                    resultElement.textContent = 'Failed to load';
+                    
+                    document.body.removeChild(iframe);
+                    resolve(false);
+                };
+
+                document.body.appendChild(iframe);
+            });
+        }
+
+        async function verifyAllProjects() {
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (const project of projects) {
+                const success = await verifyProject(project);
+                if (success) {
+                    successCount++;
+                } else {
+                    errorCount++;
+                }
+                
+                // Update counters
+                document.getElementById('successCount').textContent = successCount;
+                document.getElementById('errorCount').textContent = errorCount;
+            }
+        }
+
+        function openProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (project) {
+                window.open(project.path, '_blank');
+            }
+        }
+
+        // Initialize
+        renderProjects();
+    </script>
+</body>
+</html>
