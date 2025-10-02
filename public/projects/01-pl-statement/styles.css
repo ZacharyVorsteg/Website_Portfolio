@@ -30,8 +30,18 @@ body {
 }
 
 .expanded .child-account {
-    display: table-row;
+    display: table-row !important;
     opacity: 1;
+}
+
+/* Ensure child accounts are visible when parent is expanded */
+tr.child-account {
+    display: none;
+}
+
+.account-row.expanded + tr.child-account,
+.account-row.expanded ~ tr.child-account {
+    display: table-row !important;
 }
 
 .trend-up { color: #10b981; }
@@ -212,6 +222,13 @@ body {
 
 .edited-cell {
     border: 1px solid #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.1) !important;
+    animation: highlight-edit 2s ease-out;
+}
+
+@keyframes highlight-edit {
+    0% { background: rgba(251, 191, 36, 0.3); }
+    100% { background: rgba(251, 191, 36, 0.1); }
 }
 
 .variance-high-positive {

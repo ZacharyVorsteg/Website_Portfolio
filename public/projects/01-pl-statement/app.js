@@ -139,8 +139,8 @@ const PLApp = {
         
         tbody.innerHTML = '';
         
-        // Use current data (could be quarterly or YTD)
-        const currentData = this.currentData || financialData;
+        // Use current data (could be quarterly or YTD) - always use modified financialData for scenarios
+        const currentData = financialData; // Always use the modified financialData for scenarios
         const comparisonData = this.comparisonData || budgetData;
         
         // Calculate current metrics
@@ -171,13 +171,14 @@ const PLApp = {
     // Render a main account row with expand/collapse functionality
     renderMainRow(tbody, label, actual, budget, category, expandable = true) {
         const row = document.createElement('tr');
-        row.className = 'account-row font-semibold text-gray-200';
+        const isExpanded = chartOfAccounts[category]?.expanded;
+        row.className = `account-row font-semibold text-gray-200 ${isExpanded ? 'expanded' : ''}`;
         
         const variance = calculateVariance(actual, budget);
         const percentOfRevenue = calculatePercentOfRevenue(actual, financialData.revenue);
         
         const expandIcon = expandable ? 
-            `<span class="expand-icon mr-2" onclick="PLApp.toggleExpand('${category}')">▶</span>` : '';
+            `<span class="expand-icon mr-2" onclick="PLApp.toggleExpand('${category}')">${isExpanded ? '▼' : '▶'}</span>` : '';
         
         const editableClass = chartOfAccounts[category]?.editable ? 'editable-value' : '';
         const clickHandler = chartOfAccounts[category]?.editable ? `onclick="PLApp.editValue('${category}')"` : '';
@@ -699,10 +700,14 @@ const PLApp = {
                     waterfallContainer.style.display = 'block';
                     waterfallContainer.parentElement.style.display = 'grid';
                     waterfallContainer.parentElement.style.gridTemplateColumns = '1fr';
+                    // Ensure waterfall chart renders
+                    setTimeout(() => renderWaterfallChart(calculateKeyMetrics(financialData)), 100);
                 } else if (view === 'trend' && trendContainer) {
                     trendContainer.style.display = 'block';
                     trendContainer.parentElement.style.display = 'grid';
                     trendContainer.parentElement.style.gridTemplateColumns = '1fr';
+                    // Ensure trend chart renders
+                    setTimeout(() => renderTrendChart(monthlyData), 100);
                 }
                 
                 // Smooth scroll to charts without jumping
