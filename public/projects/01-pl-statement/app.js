@@ -408,7 +408,7 @@ const PLApp = {
         // Update burn rate
         const burnRateElement = document.getElementById('burnRate');
         if (burnRateElement && metrics.netIncome < 0) {
-            const monthlyBurn = Math.abs(metrics.netIncome);
+            const monthlyBurn = Math.abs(metrics.netIncome / 12); // Monthly burn from annual
             burnRateElement.textContent = formatCurrency(monthlyBurn) + '/month';
         }
         
@@ -418,10 +418,31 @@ const PLApp = {
             breakEvenElement.textContent = formatCurrency(Math.abs(metrics.operatingIncome));
         }
         
+        // Update revenue increase needed
+        const revenueIncreaseElement = document.getElementById('revenueIncrease');
+        if (revenueIncreaseElement && metrics.operatingIncome < 0) {
+            const increaseNeeded = (Math.abs(metrics.operatingIncome) / metrics.revenue * 100);
+            revenueIncreaseElement.textContent = `${increaseNeeded.toFixed(1)}%`;
+        }
+        
         // Update gross margin percentage
         const grossMarginElement = document.getElementById('grossMarginPercent');
         if (grossMarginElement) {
             grossMarginElement.textContent = `${metrics.grossMargin.toFixed(1)}%`;
+        }
+        
+        // Generate dynamic insights
+        const insightsContainer = document.querySelector('#insightsBox ul');
+        if (insightsContainer && insights.length > 0) {
+            insightsContainer.innerHTML = insights.map(insight => `
+                <li class="flex items-start gap-2">
+                    <span class="${insight.type === 'critical' ? 'text-red-500' : insight.type === 'warning' ? 'text-yellow-500' : 'text-blue-500'} mt-0.5">●</span>
+                    <span class="text-gray-300 text-sm">
+                        <strong>${insight.category}:</strong> ${insight.message}
+                        <br><em class="text-gray-400">${insight.recommendation}</em>
+                    </span>
+                </li>
+            `).join('');
         }
     },
     
@@ -622,25 +643,38 @@ const PLApp = {
         const chartsView = document.getElementById('chartsView');
         
         if (view === 'table') {
-            if (tableView) tableView.style.display = 'block';
+            if (tableView) {
+                tableView.style.display = 'block';
+                tableView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             if (chartsView) chartsView.style.display = 'none';
         } else {
             if (tableView) tableView.style.display = 'none';
-            if (chartsView) chartsView.style.display = 'block';
-            
-            // Show only selected chart
-            const allChartContainers = chartsView.querySelectorAll('.grid > div');
-            allChartContainers.forEach(container => {
-                container.style.display = 'none';
-            });
-            
-            // Show specific chart based on view
-            if (view === 'waterfall') {
-                const waterfallContainer = document.querySelector('#waterfallChart').closest('div');
-                if (waterfallContainer) waterfallContainer.style.display = 'block';
-            } else if (view === 'trend') {
-                const trendContainer = document.querySelector('#trendChart').closest('div');
-                if (trendContainer) trendContainer.style.display = 'block';
+            if (chartsView) {
+                chartsView.style.display = 'block';
+                
+                // Show only selected chart grid
+                const firstGrid = chartsView.querySelector('.grid');
+                const secondGrid = chartsView.querySelector('.grid:nth-child(2)');
+                
+                if (view === 'waterfall') {
+                    if (firstGrid) firstGrid.style.display = 'grid';
+                    if (secondGrid) secondGrid.style.display = 'none';
+                    
+                    // Hide trend chart specifically
+                    const trendContainer = document.querySelector('#trendChart').closest('div');
+                    if (trendContainer) trendContainer.style.display = 'none';
+                } else if (view === 'trend') {
+                    if (firstGrid) firstGrid.style.display = 'grid';
+                    if (secondGrid) secondGrid.style.display = 'none';
+                    
+                    // Hide waterfall chart specifically
+                    const waterfallContainer = document.querySelector('#waterfallChart').closest('div');
+                    if (waterfallContainer) waterfallContainer.style.display = 'none';
+                }
+                
+                // Smooth scroll to charts without jumping
+                chartsView.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
             
             this.updateAllCharts();

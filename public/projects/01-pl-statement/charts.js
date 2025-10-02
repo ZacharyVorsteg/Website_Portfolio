@@ -61,6 +61,7 @@ function renderWaterfallChart(metrics) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            aspectRatio: 2, // Make chart wider, less tall
             plugins: {
                 title: {
                     display: true,
@@ -167,6 +168,7 @@ function renderTrendChart(monthlyData) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            aspectRatio: 2.5, // Make chart wider, less tall
             plugins: {
                 title: {
                     display: true,
