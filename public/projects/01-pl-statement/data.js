@@ -168,6 +168,38 @@ const monthlyDataOriginal = {
 // Deep copy for mutable monthly data
 let monthlyData = JSON.parse(JSON.stringify(monthlyDataOriginal));
 
+// Prior year data for comparison
+const priorYearData = {
+    revenue: 7500000,
+    cogs: 2100000,
+    opex: 5200000,
+    other: -45000
+};
+
+// Forecast data for comparison
+const forecastData = {
+    revenue: 8500000,
+    cogs: 2380000,
+    opex: 5650000,
+    other: -50000
+};
+
+// Budget data for comparison
+const budgetData = {
+    revenue: 8200000,
+    cogs: 2280000,
+    opex: 5600000,
+    other: -40000
+};
+
+// Quarterly breakdowns
+const quarterlyData = {
+    q1: { revenue: 2000000, cogs: 600000, opex: 1400000, other: -10000 },
+    q2: { revenue: 2200000, cogs: 660000, opex: 1450000, other: -12000 },
+    q3: { revenue: 2400000, cogs: 720000, opex: 1500000, other: -15000 },
+    ytd: { revenue: 7950000, cogs: 2350000, opex: 5770000, other: -36000 }
+};
+
 // Budget vs actual variance thresholds
 const varianceThresholds = {
     high: 0.15,    // 15% variance is high

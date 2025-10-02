@@ -380,6 +380,22 @@ function renderVarianceChart(actualData, budgetData, canvasId, title) {
 function updateAllCharts(metrics, monthlyData) {
     renderWaterfallChart(metrics);
     renderTrendChart(monthlyData);
+    
+    // Render additional charts
+    const expenseData = {
+        'Sales & Marketing': financialData.opex * 0.45,
+        'R&D': financialData.opex * 0.30,
+        'G&A': financialData.opex * 0.25
+    };
+    renderExpenseBreakdown(expenseData, 'expenseBreakdownChart');
+    
+    // Render variance chart
+    renderVarianceChart(
+        monthlyData.revenue.actuals, 
+        monthlyData.revenue.budget, 
+        'varianceChart', 
+        'Monthly Revenue: Actual vs Budget'
+    );
 }
 
 /**

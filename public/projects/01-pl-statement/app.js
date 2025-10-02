@@ -8,6 +8,9 @@ const PLApp = {
     // Current view state
     currentView: 'table',
     hasEdits: false,
+    currentData: financialData,
+    comparisonData: budgetData,
+    comparisonLabel: 'Budget',
     
     // Initialize the application
     init() {
@@ -30,8 +33,7 @@ const PLApp = {
         const periodSelect = document.getElementById('periodSelect');
         if (periodSelect) {
             periodSelect.addEventListener('change', () => {
-                this.renderPnLTable();
-                this.updateAllCharts();
+                this.handlePeriodChange();
             });
         }
         
@@ -39,9 +41,50 @@ const PLApp = {
         const comparisonSelect = document.getElementById('comparisonSelect');
         if (comparisonSelect) {
             comparisonSelect.addEventListener('change', () => {
-                this.renderPnLTable();
+                this.handleComparisonChange();
             });
         }
+    },
+    
+    // Handle period changes
+    handlePeriodChange() {
+        const period = document.getElementById('periodSelect').value;
+        
+        if (period === 'ytd') {
+            // Use full year data
+            this.currentData = financialData;
+        } else {
+            // Use quarterly data
+            this.currentData = quarterlyData[period] || financialData;
+        }
+        
+        this.renderPnLTable();
+        this.updateAllCharts();
+    },
+    
+    // Handle comparison changes
+    handleComparisonChange() {
+        const comparison = document.getElementById('comparisonSelect').value;
+        
+        switch(comparison) {
+            case 'budget':
+                this.comparisonData = budgetData;
+                this.comparisonLabel = 'Budget';
+                break;
+            case 'prior':
+                this.comparisonData = priorYearData;
+                this.comparisonLabel = 'Prior Year';
+                break;
+            case 'forecast':
+                this.comparisonData = forecastData;
+                this.comparisonLabel = 'Forecast';
+                break;
+            default:
+                this.comparisonData = budgetData;
+                this.comparisonLabel = 'Budget';
+        }
+        
+        this.renderPnLTable();
     },
     
     // Render the main P&L table
@@ -51,29 +94,33 @@ const PLApp = {
         
         tbody.innerHTML = '';
         
+        // Use current data (could be quarterly or YTD)
+        const currentData = this.currentData || financialData;
+        const comparisonData = this.comparisonData || budgetData;
+        
         // Calculate current metrics
-        const metrics = calculateKeyMetrics(financialData);
+        const metrics = calculateKeyMetrics(currentData);
         
         // Render revenue section
-        this.renderMainRow(tbody, 'Revenue', financialData.revenue, originalData.revenue * 1.05, 'revenue', true);
+        this.renderMainRow(tbody, 'Revenue', currentData.revenue, comparisonData.revenue, 'revenue', true);
         
         // Render COGS section
-        this.renderMainRow(tbody, 'Cost of Goods Sold', financialData.cogs, originalData.cogs * 1.02, 'cogs', true);
+        this.renderMainRow(tbody, 'Cost of Goods Sold', currentData.cogs, comparisonData.cogs, 'cogs', true);
         
         // Render gross profit
-        this.renderTotalRow(tbody, 'Gross Profit', metrics.grossProfit, (originalData.revenue * 1.05) - (originalData.cogs * 1.02));
+        this.renderTotalRow(tbody, 'Gross Profit', metrics.grossProfit, comparisonData.revenue - comparisonData.cogs);
         
         // Render OpEx section
-        this.renderMainRow(tbody, 'Operating Expenses', financialData.opex, originalData.opex * 0.98, 'opex', true);
+        this.renderMainRow(tbody, 'Operating Expenses', currentData.opex, comparisonData.opex, 'opex', true);
         
         // Render operating income
-        this.renderTotalRow(tbody, 'Operating Income', metrics.operatingIncome, metrics.grossProfit - (originalData.opex * 0.98));
+        this.renderTotalRow(tbody, 'Operating Income', metrics.operatingIncome, comparisonData.revenue - comparisonData.cogs - comparisonData.opex);
         
         // Render other income
-        this.renderMainRow(tbody, 'Other Income/(Expense)', financialData.other, originalData.other, 'other', false);
+        this.renderMainRow(tbody, 'Other Income/(Expense)', currentData.other, comparisonData.other, 'other', false);
         
         // Render net income
-        this.renderTotalRow(tbody, 'Net Income', metrics.netIncome, metrics.operatingIncome + originalData.other);
+        this.renderTotalRow(tbody, 'Net Income', metrics.netIncome, comparisonData.revenue - comparisonData.cogs - comparisonData.opex + comparisonData.other);
     },
     
     // Render a main account row with expand/collapse functionality
@@ -536,27 +583,172 @@ const PLApp = {
         updateAllCharts(metrics, monthlyData);
     },
     
-    // Export functions (placeholder implementations)
+    // Export functions (fully implemented)
     exportToExcel() {
-        alert('Excel export functionality would be implemented here');
+        const wb = XLSX.utils.book_new();
+        
+        // Create annual P&L data array
+        const metrics = calculateKeyMetrics(financialData);
+        const annualData = [
+            ['P&L Statement', '', '', '', ''],
+            ['Generated:', new Date().toLocaleDateString(), '', '', ''],
+            ['', '', '', '', ''],
+            ['Account', 'Actual', 'Budget', 'Variance', '% of Revenue'],
+            ['Revenue', financialData.revenue, budgetData.revenue, 
+             financialData.revenue - budgetData.revenue, '100.0%'],
+            ['COGS', financialData.cogs, budgetData.cogs,
+             financialData.cogs - budgetData.cogs,
+             ((financialData.cogs / financialData.revenue) * 100).toFixed(1) + '%'],
+            ['Gross Profit', metrics.grossProfit, budgetData.revenue - budgetData.cogs,
+             metrics.grossProfit - (budgetData.revenue - budgetData.cogs),
+             metrics.grossMargin.toFixed(1) + '%'],
+            ['OpEx', financialData.opex, budgetData.opex,
+             financialData.opex - budgetData.opex,
+             ((financialData.opex / financialData.revenue) * 100).toFixed(1) + '%'],
+            ['Operating Income', metrics.operatingIncome, 
+             (budgetData.revenue - budgetData.cogs - budgetData.opex),
+             metrics.operatingIncome - (budgetData.revenue - budgetData.cogs - budgetData.opex),
+             metrics.operatingMargin.toFixed(1) + '%'],
+            ['Net Income', metrics.netIncome,
+             (budgetData.revenue - budgetData.cogs - budgetData.opex + budgetData.other),
+             metrics.netIncome - (budgetData.revenue - budgetData.cogs - budgetData.opex + budgetData.other),
+             metrics.netMargin.toFixed(1) + '%']
+        ];
+        
+        // Add monthly data
+        const monthlyDataArray = [
+            ['Monthly P&L', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            ['Revenue', ...monthlyData.revenue.actuals],
+            ['COGS', ...monthlyData.cogs.actuals],
+            ['OpEx', ...monthlyData.opex.actuals]
+        ];
+        
+        const ws1 = XLSX.utils.aoa_to_sheet(annualData);
+        const ws2 = XLSX.utils.aoa_to_sheet(monthlyDataArray);
+        
+        XLSX.utils.book_append_sheet(wb, ws1, "Annual P&L");
+        XLSX.utils.book_append_sheet(wb, ws2, "Monthly P&L");
+        
+        XLSX.writeFile(wb, `PL_Statement_${new Date().toISOString().split('T')[0]}.xlsx`);
     },
     
     exportToPDF() {
-        alert('PDF export functionality would be implemented here');
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        doc.setFontSize(18);
+        doc.text('P&L Statement Report', 14, 22);
+        
+        doc.setFontSize(12);
+        doc.text(`Generated: ${new Date().toLocaleDateString()}`, 14, 32);
+        
+        // Add key metrics
+        const metrics = calculateKeyMetrics(financialData);
+        doc.setFontSize(14);
+        doc.text('Key Metrics', 14, 45);
+        doc.setFontSize(10);
+        doc.text(`Revenue: ${formatCurrency(financialData.revenue)}`, 14, 55);
+        doc.text(`Gross Profit: ${formatCurrency(metrics.grossProfit)} (${metrics.grossMargin.toFixed(1)}%)`, 14, 62);
+        doc.text(`Operating Income: ${formatCurrency(metrics.operatingIncome)} (${metrics.operatingMargin.toFixed(1)}%)`, 14, 69);
+        doc.text(`Net Income: ${formatCurrency(metrics.netIncome)} (${metrics.netMargin.toFixed(1)}%)`, 14, 76);
+        
+        // Add variance analysis
+        doc.setFontSize(14);
+        doc.text('Variance Analysis', 14, 90);
+        doc.setFontSize(10);
+        const revenueVar = financialData.revenue - budgetData.revenue;
+        doc.text(`Revenue Variance: ${formatCurrency(revenueVar)} (${revenueVar > 0 ? 'Favorable' : 'Unfavorable'})`, 14, 100);
+        
+        const opexVar = financialData.opex - budgetData.opex;
+        doc.text(`OpEx Variance: ${formatCurrency(opexVar)} (${opexVar < 0 ? 'Favorable' : 'Unfavorable'})`, 14, 107);
+        
+        doc.save(`PL_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     },
     
     emailReport() {
-        alert('Email report functionality would be implemented here');
+        const subject = encodeURIComponent('P&L Statement Report');
+        const metrics = calculateKeyMetrics(financialData);
+        const revenue = formatCurrency(financialData.revenue);
+        const netIncome = formatCurrency(metrics.netIncome);
+        
+        const body = encodeURIComponent(
+            `P&L Statement Summary\n\n` +
+            `Period: Q3 2024\n` +
+            `Revenue: ${revenue}\n` +
+            `Gross Margin: ${metrics.grossMargin.toFixed(1)}%\n` +
+            `Operating Margin: ${metrics.operatingMargin.toFixed(1)}%\n` +
+            `Net Income: ${netIncome}\n\n` +
+            `View full interactive report: ${window.location.href}\n\n` +
+            `Generated: ${new Date().toLocaleString()}`
+        );
+        
+        window.location.href = `mailto:?subject=${subject}&body=${body}`;
     },
     
     shareLink() {
-        alert('Share link functionality would be implemented here');
+        // Save current state to localStorage
+        const shareData = {
+            financialData: financialData,
+            monthlyData: monthlyData,
+            timestamp: Date.now()
+        };
+        
+        localStorage.setItem('sharedPLData', JSON.stringify(shareData));
+        
+        // Copy link to clipboard
+        const shareUrl = window.location.href;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            // Show temporary success message
+            const btn = event.target.closest('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            btn.style.background = '#10b981';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }).catch(() => {
+            // Fallback for browsers that don't support clipboard API
+            alert('Link copied to clipboard: ' + shareUrl);
+        });
     },
     
     // Apply monthly scenarios
     applyMonthlyScenario(scenarioName) {
-        // Implementation for monthly scenario adjustments
-        console.log(`Applying monthly scenario: ${scenarioName}`);
+        const scenarios = {
+            'growth': {
+                revenue: 1.05,  // 5% growth
+                cogs: 1.03,      // 3% increase in COGS
+                opex: 1.02       // 2% increase in OpEx
+            },
+            'cost-cut': {
+                revenue: 1.0,    // No change in revenue
+                cogs: 0.95,      // 5% reduction in COGS
+                opex: 0.90       // 10% reduction in OpEx
+            }
+        };
+        
+        const adjustments = scenarios[scenarioName];
+        if (!adjustments) return;
+        
+        // Apply adjustments to each month
+        monthlyData.revenue.actuals = monthlyData.revenue.actuals.map(val => Math.round(val * adjustments.revenue));
+        monthlyData.cogs.actuals = monthlyData.cogs.actuals.map(val => Math.round(val * adjustments.cogs));
+        monthlyData.opex.actuals = monthlyData.opex.actuals.map(val => Math.round(val * adjustments.opex));
+        
+        // Re-render the monthly view
+        this.renderMonthlyView();
+        this.updateAllCharts();
+        
+        // Show scenario applied indicator
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Applied';
+        btn.style.background = '#10b981';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
     },
     
     // Reset monthly data
