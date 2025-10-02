@@ -153,6 +153,8 @@ body {
     border-spacing: 0;
     font-size: 12px;
     color: #e2e8f0;
+    width: 100%;
+    min-width: 1200px;
 }
 
 .sticky-header {
@@ -414,4 +416,24 @@ body {
         flex: 1 1 calc(33.333% - 10px);
         min-width: 80px;
     }
+    
+    .monthly-pnl-table {
+        min-width: 800px;
+        font-size: 10px;
+    }
+    
+    .month-cell {
+        width: 60px;
+    }
+}
+
+/* Fix nested scrollbar issues */
+.month-view {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.month-view .overflow-x-auto {
+    overflow-x: auto;
+    overflow-y: visible;
 }

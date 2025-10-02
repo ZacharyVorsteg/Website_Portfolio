@@ -40,8 +40,8 @@ const PLApp = {
         // Comparison selector
         const comparisonSelect = document.getElementById('comparisonSelect');
         if (comparisonSelect) {
-            comparisonSelect.addEventListener('change', () => {
-                this.handleComparisonChange();
+            comparisonSelect.addEventListener('change', (event) => {
+                this.handleComparisonChange(event);
             });
         }
     },
@@ -63,8 +63,17 @@ const PLApp = {
     },
     
     // Handle comparison changes
-    handleComparisonChange() {
-        const comparison = document.getElementById('comparisonSelect').value;
+    handleComparisonChange(event) {
+        // Prevent default behavior and stop propagation
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        
+        const comparisonSelect = document.getElementById('comparisonSelect');
+        if (!comparisonSelect) return;
+        
+        const comparison = comparisonSelect.value;
         
         switch(comparison) {
             case 'budget':
@@ -82,6 +91,12 @@ const PLApp = {
             default:
                 this.comparisonData = budgetData;
                 this.comparisonLabel = 'Budget';
+        }
+        
+        // Update table header to show comparison type
+        const comparisonHeader = document.querySelector('th:nth-child(3)');
+        if (comparisonHeader) {
+            comparisonHeader.textContent = this.comparisonLabel;
         }
         
         this.renderPnLTable();
@@ -212,6 +227,9 @@ const PLApp = {
         const span = document.getElementById(`${category}-value`);
         if (!span) return;
         
+        // Prevent multiple edits
+        if (span.querySelector('input')) return;
+        
         const currentValue = financialData[category];
         
         const input = document.createElement('input');
@@ -219,26 +237,37 @@ const PLApp = {
         input.className = 'editing-input';
         input.value = formatNumber(currentValue);
         
-        input.onblur = () => {
-            const newValue = parseInt(input.value.replace(/,/g, '')) || currentValue;
-            financialData[category] = newValue;
-            this.hasEdits = true;
+        const commitEdit = () => {
+            const newValue = parseInt(input.value.replace(/[^0-9-]/g, '')) || currentValue;
+            if (newValue !== currentValue) {
+                financialData[category] = newValue;
+                this.hasEdits = true;
+                document.getElementById('resetButton').classList.remove('hidden');
+            }
             
+            // Restore original content
+            span.innerHTML = `<span id="${category}-value">${formatCurrency(financialData[category])}</span>`;
+            
+            // Update everything
             this.renderPnLTable();
             this.updateMetrics();
             this.updateWarningBanner();
             this.updateInsights();
             this.updateAllCharts();
-            
-            document.getElementById('resetButton').classList.remove('hidden');
         };
         
-        input.onkeypress = (e) => {
+        input.onblur = commitEdit;
+        input.onkeydown = (e) => {
             if (e.key === 'Enter') {
-                input.blur();
+                e.preventDefault();
+                commitEdit();
+            } else if (e.key === 'Escape') {
+                // Cancel edit
+                span.innerHTML = `<span id="${category}-value">${formatCurrency(currentValue)}</span>`;
             }
         };
         
+        // Replace content with input
         span.innerHTML = '';
         span.appendChild(input);
         input.focus();
@@ -249,6 +278,19 @@ const PLApp = {
     toggleExpand(category) {
         if (chartOfAccounts[category]) {
             chartOfAccounts[category].expanded = !chartOfAccounts[category].expanded;
+            
+            // Update expand icon
+            const expandIcon = document.querySelector(`[onclick="PLApp.toggleExpand('${category}')"] .expand-icon`);
+            if (expandIcon) {
+                if (chartOfAccounts[category].expanded) {
+                    expandIcon.textContent = '▼';
+                    expandIcon.classList.add('expanded');
+                } else {
+                    expandIcon.textContent = '▶';
+                    expandIcon.classList.remove('expanded');
+                }
+            }
+            
             this.renderPnLTable();
         }
     },
@@ -485,7 +527,7 @@ const PLApp = {
             `${parentKey}-${type}-${monthIndex}`;
         
         const cell = document.getElementById(cellId);
-        if (!cell) return;
+        if (!cell || cell.querySelector('input')) return; // Prevent multiple edits
         
         let currentValue;
         if (childKey) {
@@ -500,24 +542,36 @@ const PLApp = {
         input.value = formatNumber(currentValue);
         input.style.width = '70px';
         input.style.fontSize = '11px';
+        input.style.textAlign = 'right';
         
-        input.onblur = () => {
-            const newValue = parseInt(input.value.replace(/,/g, '')) || currentValue;
+        const commitEdit = () => {
+            const newValue = parseInt(input.value.replace(/[^0-9-]/g, '')) || currentValue;
             
-            if (childKey) {
-                monthlyData[parentKey].children[childKey][type][monthIndex] = newValue;
-            } else {
-                monthlyData[parentKey][type][monthIndex] = newValue;
+            if (newValue !== currentValue) {
+                if (childKey) {
+                    monthlyData[parentKey].children[childKey][type][monthIndex] = newValue;
+                } else {
+                    monthlyData[parentKey][type][monthIndex] = newValue;
+                }
+                
+                cell.classList.add('edited-cell');
             }
             
-            cell.classList.add('edited-cell');
+            // Restore original content
+            cell.innerHTML = formatCurrency(newValue);
+            
             this.renderMonthlyView();
             this.updateAllCharts();
         };
         
-        input.onkeypress = (e) => {
+        input.onblur = commitEdit;
+        input.onkeydown = (e) => {
             if (e.key === 'Enter') {
-                input.blur();
+                e.preventDefault();
+                commitEdit();
+            } else if (e.key === 'Escape') {
+                // Cancel edit
+                cell.innerHTML = formatCurrency(currentValue);
             }
         };
         
@@ -563,7 +617,7 @@ const PLApp = {
             activeBtn.classList.add('bg-emerald-600', 'text-white');
         }
         
-        // Show/hide appropriate sections
+        // Show/hide appropriate sections and charts
         const tableView = document.getElementById('tableView');
         const chartsView = document.getElementById('chartsView');
         
@@ -573,6 +627,22 @@ const PLApp = {
         } else {
             if (tableView) tableView.style.display = 'none';
             if (chartsView) chartsView.style.display = 'block';
+            
+            // Show only selected chart
+            const allChartContainers = chartsView.querySelectorAll('.grid > div');
+            allChartContainers.forEach(container => {
+                container.style.display = 'none';
+            });
+            
+            // Show specific chart based on view
+            if (view === 'waterfall') {
+                const waterfallContainer = document.querySelector('#waterfallChart').closest('div');
+                if (waterfallContainer) waterfallContainer.style.display = 'block';
+            } else if (view === 'trend') {
+                const trendContainer = document.querySelector('#trendChart').closest('div');
+                if (trendContainer) trendContainer.style.display = 'block';
+            }
+            
             this.updateAllCharts();
         }
     },
