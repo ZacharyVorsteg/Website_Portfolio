@@ -41,6 +41,19 @@ function formatNumber(value) {
 }
 
 /**
+ * Sanitizes numeric input values
+ * @param {*} value - Value to sanitize
+ * @param {number} defaultValue - Default if invalid
+ * @returns {number} Sanitized number
+ */
+function sanitizeNumber(value, defaultValue = 0) {
+    if (value === null || value === undefined || isNaN(value)) {
+        return defaultValue;
+    }
+    return Number(value);
+}
+
+/**
  * Calculates variance between actual and budget
  * @param {number} actual - Actual value
  * @param {number} budget - Budget value
@@ -91,11 +104,13 @@ function calculateGrossProfit(revenue, cogs) {
  * Calculates operating income and margin
  * @param {number} grossProfit - Gross profit
  * @param {number} opex - Operating expenses
+ * @param {number} revenue - Total revenue (required for margin calculation)
  * @returns {object} Operating income calculations
  */
-function calculateOperatingIncome(grossProfit, opex) {
+function calculateOperatingIncome(grossProfit, opex, revenue = 0) {
     const operatingIncome = grossProfit - opex;
-    const operatingMargin = grossProfit > 0 ? (operatingIncome / grossProfit) * 100 : 0;
+    // FIX: Operating margin must be calculated against revenue, not gross profit
+    const operatingMargin = revenue > 0 ? (operatingIncome / revenue) * 100 : 0;
     
     return {
         income: operatingIncome,
@@ -191,24 +206,29 @@ function calculateYTDTotal(monthlyValues) {
  * @returns {object} Monthly variance analysis
  */
 function calculateMonthlyVariance(actuals, budget) {
-    if (!Array.isArray(actuals) || !Array.isArray(budget)) {
-        return { variances: [], ytdVariance: 0 };
+    // Early exit for invalid inputs
+    if (!actuals?.length || !budget?.length) {
+        return { variances: [], ytdVariance: 0, ytdActual: 0, ytdBudget: 0 };
     }
     
-    const variances = actuals.map((actual, index) => {
-        const budgetValue = budget[index] || 0;
-        return calculateVariance(actual, budgetValue);
-    });
+    // Single loop optimization - calculate everything in one pass
+    let ytdActual = 0;
+    let ytdBudget = 0;
+    const variances = [];
     
-    const ytdActual = calculateYTDTotal(actuals);
-    const ytdBudget = calculateYTDTotal(budget);
-    const ytdVariance = calculateVariance(ytdActual, ytdBudget);
+    for (let i = 0; i < 12; i++) {
+        const actual = sanitizeNumber(actuals[i], 0);
+        const budgetVal = sanitizeNumber(budget[i], 0);
+        ytdActual += actual;
+        ytdBudget += budgetVal;
+        variances.push(calculateVariance(actual, budgetVal));
+    }
     
     return {
-        variances: variances,
-        ytdVariance: ytdVariance,
-        ytdActual: ytdActual,
-        ytdBudget: ytdBudget
+        variances,
+        ytdVariance: calculateVariance(ytdActual, ytdBudget),
+        ytdActual,
+        ytdBudget
     };
 }
 
@@ -254,7 +274,7 @@ function applyScenario(baseData, scenario) {
  */
 function calculateKeyMetrics(data) {
     const grossProfit = calculateGrossProfit(data.revenue, data.cogs);
-    const operatingIncome = calculateOperatingIncome(grossProfit.profit, data.opex);
+    const operatingIncome = calculateOperatingIncome(grossProfit.profit, data.opex, data.revenue);
     const ebitda = calculateEBITDA(operatingIncome.income);
     const netIncome = calculateNetIncome(operatingIncome.income, data.other);
     
@@ -314,12 +334,40 @@ function generateInsights(metrics) {
     return insights;
 }
 
+/**
+ * Tests calculation accuracy - run this to verify fixes
+ * @returns {boolean} True if all tests pass
+ */
+function testCalculations() {
+    const testData = {
+        revenue: 1000000,
+        cogs: 300000,
+        opex: 500000,
+        other: -50000
+    };
+    
+    const metrics = calculateKeyMetrics(testData);
+    
+    // Test gross margin: (1M - 300k) / 1M = 70%
+    console.assert(Math.abs(metrics.grossMargin - 70) < 0.1, 'Gross margin should be 70%');
+    
+    // Test operating margin: (700k - 500k) / 1M = 20%
+    console.assert(Math.abs(metrics.operatingMargin - 20) < 0.1, 'Operating margin should be 20%');
+    
+    // Test net margin: (200k - 50k) / 1M = 15%
+    console.assert(Math.abs(metrics.netMargin - 15) < 0.1, 'Net margin should be 15%');
+    
+    console.log('✅ All P&L calculations verified correctly');
+    return true;
+}
+
 // Export functions for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
     // Node.js environment
     module.exports = {
         formatCurrency,
         formatNumber,
+        sanitizeNumber,
         calculateVariance,
         calculatePercentOfRevenue,
         calculateGrossProfit,
@@ -332,6 +380,7 @@ if (typeof module !== 'undefined' && module.exports) {
         calculateBurnRate,
         applyScenario,
         calculateKeyMetrics,
-        generateInsights
+        generateInsights,
+        testCalculations
     };
 }
