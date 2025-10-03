@@ -1,8 +1,8 @@
 {
   "hero": {
     "title": "I structure deals and build the systems to track them",
-    "subtitle": "Strategic finance with operational excellence. From fractional CFO advisory to hands-on system building. M&A, syndications, and scalable finance infrastructure.",
-    "credBar": ["Finance", "FAU '20 • 4+ Years FP&A", "Deal Structuring", "Systems"],
+    "subtitle": "Strategic finance with operational excellence. From fractional CFO advisory to hands-on system building. M&A, syndications, and scalable finance infrastructure. Licensed real estate professional with hands-on deal experience across commercial and industrial properties.",
+    "credBar": ["Finance", "FAU '20", "Licensed RE", "4+ Years FP&A", "$2M+ Closed"],
     "primaryCta": { "label": "See Work", "href": "/work" },
     "secondaryCta": { "label": "Contact", "href": "/contact" }
   },
@@ -13,7 +13,7 @@
         "title": "Strategic & Deals",
         "bullets": [
           "M&A synergy models and integration planning",
-          "Real estate syndication and waterfall structures",
+          "Real estate transactions and syndications (licensed agent, $2M+ closed)",
           "Fundraise materials and investor reporting",
           "Partnership/JV deal structures"
         ]
@@ -55,7 +55,7 @@
   },
   "statement": {
     "title": "Professional Statement",
-    "text": "I operate at both the strategic and tactical levels of finance. I can structure your next syndication deal on Monday, build the model to track it on Tuesday, and automate the investor reporting by Friday. This combination of vision and execution is what drives real value."
+    "text": "I operate at both the strategic and tactical levels of finance. I can structure your next syndication deal on Monday, build the model to track it on Tuesday, and automate the investor reporting by Friday. As a licensed real estate professional, I don't just analyze deals—I source and close them. This combination of vision and execution is what drives real value."
   },
   "stack": {
     "title": "Tech, but finance-friendly",
@@ -63,6 +63,7 @@
       { "label": "Analysis", "items": ["Excel", "Financial Modeling", "FP&A"] },
       { "label": "Automation", "items": ["Python", "VBA", "SQL"] },
       { "label": "Visualization", "items": ["Power BI", "Custom Dashboards"] },
+      { "label": "Deal Tools", "items": ["CoStar/LoopNet", "CRM/Pipeline", "Market Analysis"] },
       { "label": "Delivery", "items": ["Documentation", "Training", "Handoff"] }
     ]
   },

@@ -33,12 +33,12 @@
       "image": "/images/syndication.png"
     },
     {
-      "slug": "commission-tracking-alignment",
-      "title": "Commission Tracking & Comp Alignment",
-      "challenge": "Complex commission structures with multiple tiers, accelerators, and adjustments created reconciliation issues and misalignment with growth targets. Finance team spent 40+ hours/month resolving disputes.",
-      "build": "Structured Excel model with clear tier logic, automated adjustment flags, audit trail, and printable commission statements. Built scenario planning tool to test comp plan changes before rollout. Automated calculations for 300+ reps across 5 commission tiers.",
-      "impact": "Aligned comp structure driving $2.3M in new revenue through better incentive targeting. Reduced commission disputes by 85%, saving $75K/year in corrections and finance time. Monthly comp cycle reduced from 40 hours to <10 hours.",
-      "image": "/images/commission.png"
+      "slug": "commercial-real-estate-portfolio",
+      "title": "Commercial Real Estate Portfolio",
+      "challenge": "Industrial and commercial property transactions required end-to-end deal execution from sourcing through close, with institutional-grade financial analysis and investor-ready packages.",
+      "build": "Licensed real estate agent executing full-cycle transactions. Built comprehensive deal analysis framework including pro forma cash flows, debt service coverage, cap rate analysis, and market comparables. Created investor presentation materials and coordinated with lenders, attorneys, and due diligence teams.",
+      "impact": "$2M+ in commercial and industrial transactions closed. Institutional-grade analysis reduced investor Q&A cycles by 50%. Combined licensing with financial modeling expertise to bridge buy-side and sell-side needs. Hands-on transaction experience across warehouse, flex space, and multi-tenant properties.",
+      "image": "/images/commercial-re.png"
     }
   ]
 }

@@ -114,7 +114,7 @@ export default function Home() {
       {/* Tech Stack */}
       <Section title={stack.title}>
         <Container>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {stack.areas.map((area, i) => (
               <div key={i} className="space-y-3">
                 <h3 className="text-lg font-semibold text-[#0B2D5B]">
