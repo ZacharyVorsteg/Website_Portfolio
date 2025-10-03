@@ -11,7 +11,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center justify-center gap-6 text-sm">
             <a
-              href="https://github.com/ZacharyVorsteg"
+              href="https://github.com/ZacharyVorsteg/Website_Portfolio"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-[#0B2D5B] focus:outline-none focus:ring-2 focus:ring-[#0B2D5B] focus:ring-offset-2 rounded"

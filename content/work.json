@@ -1,6 +1,14 @@
 {
   "items": [
     {
+      "slug": "saas-revenue-model",
+      "title": "SaaS Revenue & Cohort Model",
+      "challenge": "Subscription business needed MRR tracking, cohort analysis, and churn forecasting but lacked tools beyond basic spreadsheets.",
+      "build": "Excel-based model with Python backend for cohort tracking, MRR waterfall, expansion/contraction metrics, and 12-month rolling forecasts with scenario planning.",
+      "impact": "Enabled monthly board reporting with cohort retention curves and CAC payback analysis. Finance team now runs forecasts in <15 minutes vs 4+ hours.",
+      "image": "/images/saas-model.png"
+    },
+    {
       "slug": "multi-entity-consolidation",
       "title": "Multi-Entity Consolidation System",
       "challenge": "Monthly consolidation across 15 entities done manually in Excel created delays and errors.",

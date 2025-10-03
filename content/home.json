@@ -1,8 +1,8 @@
 {
   "hero": {
     "title": "I turn financial complexity into working systems",
-    "subtitle": "Financial analyst with a builder's mindset. Python, SQL, and production-ready solutions for finance, real estate, and operations.",
-    "credBar": ["Finance", "FAU '20", "Financial Modeling", "Process Automation"],
+    "subtitle": "Senior Financial Analyst who ships production code. Python, SQL, and production-ready solutions for finance, real estate, and operations.",
+    "credBar": ["Finance", "FAU Finance • 4+ Years", "Financial Modeling", "500+ Hours Automated"],
     "primaryCta": { "label": "See Work", "href": "/work" },
     "secondaryCta": { "label": "Contact", "href": "/contact" }
   },
@@ -39,6 +39,12 @@
     "title": "Selected Work",
     "items": [
       {
+        "slug": "saas-revenue-model",
+        "title": "SaaS Revenue & Cohort Model",
+        "oneLiner": "MRR tracking, cohort analysis, and churn forecasting.",
+        "impact": "Forecast runtime: 4+ hours → <15 minutes."
+      },
+      {
         "slug": "multi-entity-consolidation",
         "title": "Multi-Entity Consolidation System",
         "oneLiner": "Automated monthly roll-ups across 15 entities.",
@@ -49,12 +55,6 @@
         "title": "Revenue Forecasting Model",
         "oneLiner": "Scenario-ready forecasting with sensitivities.",
         "impact": "20+ scenarios tested within seconds."
-      },
-      {
-        "slug": "real-estate-deal-analyzer",
-        "title": "Real Estate Deal Analyzer",
-        "oneLiner": "Portfolio-level NPV/IRR evaluation tool.",
-        "impact": "Evaluate 100+ deals in minutes."
       }
     ],
     "cta": { "label": "View all work", "href": "/work" }

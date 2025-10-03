@@ -29,37 +29,42 @@ export default function Work() {
             const isExpanded = expandedSlug === item.slug;
             
             return (
-              <Card key={item.slug} className="cursor-pointer" onClick={() => setExpandedSlug(isExpanded ? null : item.slug)}>
+              <Card key={item.slug}>
                 <article>
                   <h2 className="text-xl font-semibold text-gray-900 mb-3">
                     {item.title}
                   </h2>
                   
-                  {!isExpanded ? (
-                    <p className="text-gray-600">
-                      Click to see details
+                  <div className="space-y-3 text-sm">
+                    {/* Always visible summary */}
+                    <p className="text-gray-600 leading-relaxed">
+                      {item.challenge}
                     </p>
-                  ) : (
-                    <div className="space-y-4 text-sm">
-                      <div>
-                        <h3 className="font-semibold text-[#0B2D5B] mb-1">Challenge</h3>
-                        <p className="text-gray-600">{item.challenge}</p>
+                    
+                    {/* Expandable details */}
+                    {isExpanded && (
+                      <div className="space-y-4 border-t border-gray-200 pt-4 animate-fade-in">
+                        <div>
+                          <h3 className="font-semibold text-[#0B2D5B] mb-2">Solution</h3>
+                          <p className="text-gray-600 leading-relaxed">{item.build}</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-[#0B2D5B] mb-2">Results</h3>
+                          <p className="text-gray-700 font-medium leading-relaxed">{item.impact}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-[#0B2D5B] mb-1">Build</h3>
-                        <p className="text-gray-600">{item.build}</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-[#0B2D5B] mb-1">Impact</h3>
-                        <p className="text-gray-600 font-medium">{item.impact}</p>
-                      </div>
-                      
-                      {/* Placeholder for image */}
-                      <div className="mt-4 bg-gray-100 rounded-md h-32 flex items-center justify-center text-gray-400 text-sm">
-                        [Project visualization]
-                      </div>
-                    </div>
-                  )}
+                    )}
+                    
+                    <button 
+                      className="text-[#0B2D5B] hover:text-[#0a2651] font-medium text-sm flex items-center gap-1 mt-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedSlug(isExpanded ? null : item.slug);
+                      }}
+                    >
+                      {isExpanded ? '− Show less' : '+ Show details'}
+                    </button>
+                  </div>
                 </article>
               </Card>
             );
