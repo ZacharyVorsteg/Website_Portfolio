@@ -3,7 +3,7 @@
   "fields": {
     "name": "Your name",
     "email": "Email",
-    "type": ["Financial Modeling","Data Automation","Custom Solution"],
+    "type": ["Fractional CFO Services","Deal Structuring & Modeling","FP&A Systems & Automation","Strategic Finance Advisory"],
     "timeline": ["Immediate","This Quarter","Exploratory"],
     "message": "What problem are we solving?"
   },

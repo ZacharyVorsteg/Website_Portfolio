@@ -1,8 +1,8 @@
 {
   "hero": {
-    "title": "I turn financial complexity into working systems",
-    "subtitle": "Senior Financial Analyst who ships production code. Python, SQL, and production-ready solutions for finance, real estate, and operations.",
-    "credBar": ["Finance", "FAU Finance • 4+ Years", "Financial Modeling", "500+ Hours Automated"],
+    "title": "I structure deals and build the systems to track them",
+    "subtitle": "Strategic finance with operational excellence. From fractional CFO advisory to hands-on system building. M&A, syndications, and scalable finance infrastructure.",
+    "credBar": ["Finance", "FAU '20 • 4+ Years FP&A", "Deal Structuring", "Systems"],
     "primaryCta": { "label": "See Work", "href": "/work" },
     "secondaryCta": { "label": "Contact", "href": "/contact" }
   },
@@ -10,27 +10,21 @@
     "title": "What I Build",
     "items": [
       {
-        "title": "Financial Models & Analysis",
+        "title": "Strategic & Deals",
         "bullets": [
-          "Dynamic three-statement models",
-          "Valuation with sensitivities",
-          "Budget vs actual variance reporting"
+          "M&A synergy models and integration planning",
+          "Real estate syndication and waterfall structures",
+          "Fundraise materials and investor reporting",
+          "Partnership/JV deal structures"
         ]
       },
       {
-        "title": "Data Systems & Automation",
+        "title": "Operations & Systems",
         "bullets": [
-          "Excel/VBA that saves hours daily",
-          "Python scripts for clean data",
-          "SQL reporting pipelines"
-        ]
-      },
-      {
-        "title": "Custom Business Tools",
-        "bullets": [
-          "Deal evaluation calculators",
-          "Commission tracking systems",
-          "KPI dashboards with alerts"
+          "Automated FP&A infrastructure",
+          "Multi-entity consolidations",
+          "Revenue operations dashboards",
+          "Custom financial tools"
         ]
       }
     ]
@@ -39,29 +33,29 @@
     "title": "Selected Work",
     "items": [
       {
-        "slug": "saas-revenue-model",
-        "title": "SaaS Revenue & Cohort Model",
-        "oneLiner": "MRR tracking, cohort analysis, and churn forecasting.",
-        "impact": "Forecast runtime: 4+ hours → <15 minutes."
+        "slug": "saas-exit-planning",
+        "title": "SaaS Revenue & Exit Planning",
+        "oneLiner": "Built ARR model supporting company valuation for due diligence.",
+        "impact": "Prepared data room materials for strategic buyers."
       },
       {
-        "slug": "multi-entity-consolidation",
-        "title": "Multi-Entity Consolidation System",
-        "oneLiner": "Automated monthly roll-ups across 15 entities.",
-        "impact": "Cycle time reduced from ~10 hours to ~30 minutes."
+        "slug": "post-acquisition-integration",
+        "title": "Post-Acquisition Integration",
+        "oneLiner": "Consolidated 15 entities post-merger with synergy tracking.",
+        "impact": "Identified operational synergies, reduced close time by 90%."
       },
       {
-        "slug": "revenue-forecasting-model",
-        "title": "Revenue Forecasting Model",
-        "oneLiner": "Scenario-ready forecasting with sensitivities.",
-        "impact": "20+ scenarios tested within seconds."
+        "slug": "growth-scenario-planning",
+        "title": "Growth Scenario Planning",
+        "oneLiner": "20+ scenarios for board and investor presentations.",
+        "impact": "Supported fundraising process with scenario analysis."
       }
     ],
     "cta": { "label": "View all work", "href": "/work" }
   },
   "statement": {
     "title": "Professional Statement",
-    "text": "I work at the intersection of finance and technology. Every solution I build has one goal: turn complex problems into simple, reliable systems that actually get used."
+    "text": "I operate at both the strategic and tactical levels of finance. I can structure your next syndication deal on Monday, build the model to track it on Tuesday, and automate the investor reporting by Friday. This combination of vision and execution is what drives real value."
   },
   "stack": {
     "title": "Tech, but finance-friendly",

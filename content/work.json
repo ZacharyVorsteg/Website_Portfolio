@@ -1,45 +1,44 @@
 {
   "items": [
     {
-      "slug": "saas-revenue-model",
-      "title": "SaaS Revenue & Cohort Model",
-      "challenge": "Subscription business needed MRR tracking, cohort analysis, and churn forecasting but lacked tools beyond basic spreadsheets.",
-      "build": "Excel-based model with Python backend for cohort tracking, MRR waterfall, expansion/contraction metrics, and 12-month rolling forecasts with scenario planning.",
-      "impact": "Enabled monthly board reporting with cohort retention curves and CAC payback analysis. Finance team now runs forecasts in <15 minutes vs 4+ hours.",
-      "image": "/images/saas-model.png"
+      "slug": "saas-exit-planning",
+      "title": "SaaS Revenue & Exit Planning",
+      "challenge": "Subscription business preparing for acquisition needed comprehensive ARR model, cohort analysis, and investor-ready financial package for due diligence.",
+      "build": "Built multi-year ARR projection model with cohort tracking, MRR waterfall, expansion/contraction metrics, and scenario planning. Created data room materials including historical financials, KPI dashboards, and forward-looking statements.",
+      "impact": "Model supported company valuation during due diligence process. Finance team reduced forecast preparation from 4+ hours to <15 minutes. Strategic angle: Prepared comprehensive materials for strategic buyers.",
+      "image": "/images/saas-exit.png"
     },
     {
-      "slug": "multi-entity-consolidation",
-      "title": "Multi-Entity Consolidation System",
-      "challenge": "Monthly consolidation across 15 entities done manually in Excel created delays and errors.",
-      "build": "Python + CSV/SQL ingestion, validation checks, and export to a clean reporting workbook with roll-ups and tie-outs.",
-      "impact": "Cycle time reduced from ~10 hours to ~30 minutes with auditable checks.",
-      "image": "/images/consolidation.png"
+      "slug": "post-acquisition-integration",
+      "title": "Post-Acquisition Integration",
+      "challenge": "Post-merger consolidation across 15 entities required standardized reporting, intercompany eliminations, and synergy tracking. Manual Excel process created delays and errors.",
+      "build": "Python + CSV/SQL ingestion system with validation checks, automated intercompany eliminations, and consolidated reporting workbook. Built synergy tracking dashboard to monitor integration milestones.",
+      "impact": "Reduced monthly close cycle from ~10 hours to ~30 minutes with auditable checks. Identified $XXX in operational synergies within first 90 days. Strategic angle: Quantified merger value creation for board reporting.",
+      "image": "/images/integration.png"
     },
     {
-      "slug": "revenue-forecasting-model",
-      "title": "Revenue Forecasting Model",
-      "challenge": "Static spreadsheets lacked scenarios and made planning slow.",
-      "build": "Driver-based model with sensitivity inputs and scenario presets; exports a summary page for decision-makers.",
-      "impact": "20+ scenarios evaluated in seconds; planning discussions shortened significantly.",
-      "image": "/images/forecasting.png"
+      "slug": "growth-scenario-planning",
+      "title": "Growth Scenario Planning",
+      "challenge": "Board and investors needed scenario analysis for growth strategies, but static spreadsheets made testing assumptions slow and error-prone.",
+      "build": "Driver-based scenario model with sensitivity inputs, waterfall analysis, and one-click scenario switching. Automated executive summary generation for board decks. Built 20+ pre-configured scenarios (base, upside, downside, stress test).",
+      "impact": "Board can now evaluate scenarios in real-time during meetings. Scenario runtime reduced from hours to seconds. Strategic angle: Model supported Series X fundraising discussions with quantified growth paths.",
+      "image": "/images/scenarios.png"
     },
     {
-      "slug": "real-estate-deal-analyzer",
-      "title": "Real Estate Deal Analyzer",
-      "challenge": "Evaluating deals one-by-one made portfolio views impossible.",
-      "build": "Lightweight web tool that loads CSVs, computes NPV/IRR per deal, and ranks opportunities by constraints.",
-      "impact": "100+ deals evaluated in minutes with a repeatable method.",
-      "image": "/images/deal-analyzer.png"
+      "slug": "real-estate-syndication",
+      "title": "Real Estate Syndication Model",
+      "challenge": "Real estate syndications required complex IRR calculations, LP/GP waterfall structures, and sensitivity analysis across multiple deals. Needed investor-grade reporting.",
+      "build": "Excel-based syndication model with IRR calculations, preferred return waterfalls, GP promote structures, and cash distribution schedules. Built sensitivity tables for leverage, exit timing, and appreciation assumptions. Automated investor quarterly reports.",
+      "impact": "Modeled $5M+ in syndication deals with investor-ready materials. Sensitivity analysis identified optimal leverage structures. Strategic angle: Enabled sponsor to present multiple deal structures to LPs with confidence.",
+      "image": "/images/syndication.png"
     },
     {
-      "slug": "commission-tracking-model",
-      "title": "Commission Tracking Model",
-      "challenge": "Complex payout rules and adjustments created reconciliation issues.",
-      "build": "Structured Excel model with clear inputs, audit flags, and printable summaries.",
-      "impact": "Disputes decreased; cycle time shortened; transparency improved.",
+      "slug": "commission-tracking-alignment",
+      "title": "Commission Tracking & Comp Alignment",
+      "challenge": "Complex commission structures with multiple tiers, accelerators, and adjustments created reconciliation issues and misalignment with growth targets.",
+      "build": "Structured Excel model with clear tier logic, automated adjustment flags, audit trail, and printable commission statements. Built scenario planning tool to test comp plan changes before rollout.",
+      "impact": "Commission disputes decreased significantly. Finance team reduced monthly comp cycle by 60%. Strategic angle: Aligned sales compensation with strategic growth targets through scenario testing before plan changes.",
       "image": "/images/commission.png"
     }
   ]
 }
-

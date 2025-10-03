@@ -48,16 +48,16 @@ export default function Home() {
       {/* What I Build */}
       <Section title={whatIBuild.title} className="bg-gray-50">
         <Container>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {whatIBuild.items.map((item, i) => (
               <Card key={i}>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-xl font-bold text-[#0B2D5B] mb-4">
                   {item.title}
                 </h3>
-                <ul className="space-y-2" role="list">
+                <ul className="space-y-3" role="list">
                   {item.bullets.map((bullet, j) => (
                     <li key={j} className="text-gray-600 leading-relaxed flex items-start">
-                      <span className="text-[#0B2D5B] mr-2 mt-1">•</span>
+                      <span className="text-[#0B2D5B] mr-2 mt-1 font-bold">•</span>
                       <span>{bullet}</span>
                     </li>
                   ))}
