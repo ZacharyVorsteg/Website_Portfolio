@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Code2, Database, Brain, TrendingUp, Calculator, BarChart, Users, Briefcase, Shield, DollarSign, LineChart, Target } from 'lucide-react'
 import { motion } from 'framer-motion'
-import BatchReveal from './scroll/BatchReveal'
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('finance')
@@ -138,36 +137,37 @@ const Skills = () => {
         </div>
 
         {/* Skills Display */}
-        <BatchReveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => {
-              const proficiency = proficiencyLevels[skill.proficiency as keyof typeof proficiencyLevels];
-              return (
-                <motion.div
-                  key={skill.name}
-                  className="glass-card p-6 reveal"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{skill.experience}</p>
-                  </div>
-                  <div className="ml-4 text-right">
-                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${proficiency.bgColor} ${proficiency.textColor} border border-current/30`}>
-                      {skill.proficiency}
-                    </span>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {proficiency.description}
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => {
+            const proficiency = proficiencyLevels[skill.proficiency as keyof typeof proficiencyLevels];
+            return (
+              <motion.div
+                key={skill.name}
+                className="glass-card p-6"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+              >
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{skill.experience}</p>
+                </div>
+                <div className="ml-4 text-right">
+                  <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${proficiency.bgColor} ${proficiency.textColor} border border-current/30`}>
+                    {skill.proficiency}
+                  </span>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {proficiency.description}
                   </div>
                 </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </BatchReveal>
+              </div>
+              </motion.div>
+            );
+          })}
+        </div>
 
         {/* Cross-Functional Skills */}
         <div className="mt-20">

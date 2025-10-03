@@ -6,17 +6,8 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 const Projects = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all')
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
-  const [showAllProjects, setShowAllProjects] = useState(false)
 
-  const categories = [
-    { id: 'all', label: 'All Projects', count: 15 },
-    { id: 'cfo', label: 'CFO Tools', count: 6 },
-    { id: 'ceo', label: 'CEO Strategy', count: 1 },
-    { id: 'datascience', label: 'Data Science', count: 5 },
-    { id: 'rsm', label: 'Sales Management', count: 3 },
-  ]
 
   const projects = [
     // FINANCIAL STATEMENTS - Core CFO Competency
@@ -330,14 +321,8 @@ const Projects = () => {
     },
   ]
 
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === selectedCategory)
-  
-  // Show only featured projects initially, or all if expanded
-  const displayedProjects = showAllProjects 
-    ? filteredProjects 
-    : filteredProjects.filter(p => p.featured)
+  // Show only the 6 fully functional featured projects
+  const displayedProjects = projects.filter(p => p.featured)
   
   return (
     <section id="projects" className="py-20 px-4 relative" style={{ backgroundColor: '#0f172a' }}>
@@ -360,61 +345,13 @@ const Projects = () => {
               <span className="split-text gradient-text-animated">Demo-Ready Projects</span>
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Tight, modular demos with synthetic data baked in. Each project runs in under a minute, 
-              showcasing the intersection of <span className="text-primary font-medium">financial expertise</span> and <span className="text-accent font-medium">technical execution</span>.
+              Six fully functional financial and data science tools showcasing the intersection of 
+              <span className="text-primary font-medium"> financial expertise</span> and 
+              <span className="text-accent font-medium"> technical execution</span>.
             </p>
-            <div className="mt-4 flex justify-center gap-4 text-sm">
-              <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg">
-                ✓ Single-file builds
-              </span>
-              <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg">
-                ✓ No external APIs
-              </span>
-              <span className="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-lg">
-                ✓ Instant results
-              </span>
-            </div>
           </motion.div>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`
-                relative px-6 py-3 rounded-2xl font-medium transition-all duration-300 magnetic
-                ${selectedCategory === category.id
-                  ? 'text-white shadow-lg shadow-primary/30'
-                  : 'text-muted-foreground hover:text-white'
-                }
-              `}
-            >
-              {selectedCategory === category.id && (
-                <motion.div
-                  layoutId="activeCategory"
-                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10 flex items-center gap-2">
-                {category.label}
-                <span className={`
-                  text-xs px-2 py-0.5 rounded-full
-                  ${selectedCategory === category.id
-                    ? 'bg-white/20'
-                    : 'bg-white/5'
-                  }
-                `}>
-                  {category.count}
-                </span>
-              </span>
-            </motion.button>
-          ))}
-        </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -555,39 +492,6 @@ const Projects = () => {
             ))}
           </div>
 
-        {/* View All Projects Button */}
-        {!showAllProjects && filteredProjects.length > displayedProjects.length && (
-          <div className="text-center mt-12">
-            <motion.button
-              onClick={() => setShowAllProjects(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl text-white font-medium hover:shadow-lg transition-all duration-300 flex items-center gap-3 mx-auto"
-            >
-              <span>View All {filteredProjects.length} Projects</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </motion.button>
-          </div>
-        )}
-
-        {/* Collapse Button */}
-        {showAllProjects && (
-          <div className="text-center mt-12">
-            <motion.button
-              onClick={() => setShowAllProjects(false)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-slate-700 text-gray-300 rounded-2xl font-medium hover:bg-slate-600 transition-all duration-300 flex items-center gap-3 mx-auto"
-            >
-              <span>Show Featured Projects Only</span>
-              <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </motion.button>
-          </div>
-        )}
 
         {/* Call to Action */}
         <motion.div 
@@ -602,14 +506,9 @@ const Projects = () => {
               <span className="gradient-text">Run These Demos Locally</span>
             </h3>
             <p className="text-gray-400 mb-6">
-              Each project is a single Python file with all dependencies clearly documented. 
-              Clone the repo and run any demo in under a minute.
+              Each project is modular and self-contained. Click "Demo" to try it live, 
+              or "Source" to view the code on GitHub.
             </p>
-            <div className="bg-black/50 rounded-lg p-4 font-mono text-sm text-left mb-6">
-              <div className="text-emerald-400"># Install and run any demo</div>
-              <div className="text-gray-300">pip install streamlit pandas plotly</div>
-              <div className="text-gray-300">streamlit run valuation_simulator.py</div>
-            </div>
             <a
               href="https://github.com/ZacharyVorsteg"
               target="_blank"
