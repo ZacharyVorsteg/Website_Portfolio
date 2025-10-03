@@ -8,24 +8,18 @@ const PLApp = {
     // Current view state
     currentView: 'table',
     hasEdits: false,
-    currentPeriod: 'q3',
+    currentPeriod: 'ytd',
     currentData: financialData,
     comparisonData: budgetData,
     comparisonLabel: 'Budget',
     
-    // Period-specific data storage
+    // Data storage
     periodData: {
-        q1: { ...quarterlyData.q1 },
-        q2: { ...quarterlyData.q2 },
-        q3: { ...quarterlyData.q3 },
         ytd: { ...originalData }
     },
     
-    // Original period data for resets
+    // Original data for resets
     originalPeriodData: {
-        q1: { ...quarterlyData.q1 },
-        q2: { ...quarterlyData.q2 },
-        q3: { ...quarterlyData.q3 },
         ytd: { ...originalData }
     },
     

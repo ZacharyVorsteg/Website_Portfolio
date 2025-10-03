@@ -2,6 +2,7 @@
 
 import { Calendar, MapPin, Briefcase, GraduationCap, Heart, Coffee } from 'lucide-react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 const About = () => {
   const timeline = [
@@ -148,28 +149,42 @@ const About = () => {
             {/* Timeline Items */}
             <div className="space-y-12">
               {timeline.map((item, index) => (
-                  <div
+                  <motion.div
                     key={item.year}
-                    className={`relative flex items-center reveal ${
+                    className={`relative flex items-center ${
                       index % 2 === 0 ? 'justify-start' : 'justify-end'
                     }`}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
                   >
-                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
-                    <div className="glass-card p-6 hover:scale-105 transition-transform duration-200">
-                      <div className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color} text-white`}>
-                          {item.icon}
+                    <motion.div 
+                      className={`w-full md:w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="glass-card p-6">
+                        <div className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`p-2 rounded-lg bg-gradient-to-r ${item.color} text-white`}>
+                            {item.icon}
+                          </div>
+                          <span className="text-2xl font-bold gradient-text">{item.year}</span>
                         </div>
-                        <span className="text-2xl font-bold gradient-text">{item.year}</span>
+                        <h4 className="text-lg font-semibold text-foreground mb-2">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
                       </div>
-                      <h4 className="text-lg font-semibold text-foreground mb-2">{item.title}</h4>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
-                  
-                  {/* Center Dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background" />
-                </div>
+                    </motion.div>
+                    
+                    {/* Center Dot */}
+                    <motion.div 
+                      className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background"
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: index * 0.2 + 0.2 }}
+                    />
+                  </motion.div>
                 ))}
               </div>
           </div>
