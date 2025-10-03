@@ -1,0 +1,13 @@
+{
+  "title": "Let's discuss your project",
+  "fields": {
+    "name": "Your name",
+    "email": "Email",
+    "type": ["Financial Modeling","Data Automation","Custom Solution"],
+    "timeline": ["Immediate","This Quarter","Exploratory"],
+    "message": "What problem are we solving?"
+  },
+  "submit": "Send message",
+  "microcopy": "If I'm not the best fit, I'll point you to someone who is."
+}
+

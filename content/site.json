@@ -1,0 +1,14 @@
+{
+  "author": "Zachary Vorsteg",
+  "brand": "ZV",
+  "accentHex": "#0B2D5B",
+  "seoTitle": "Zachary Vorsteg — Finance Analyst who builds systems",
+  "seoDescription": "I turn financial complexity into working systems: models, automations, and tools. Finance-grade accuracy, builder speed.",
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Work", "href": "/work" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "footerNote": "Finance-grade checks • Weekly demos • Documented handoffs"
+}
+

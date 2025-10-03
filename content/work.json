@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "slug": "multi-entity-consolidation",
+      "title": "Multi-Entity Consolidation System",
+      "challenge": "Monthly consolidation across 15 entities done manually in Excel created delays and errors.",
+      "build": "Python + CSV/SQL ingestion, validation checks, and export to a clean reporting workbook with roll-ups and tie-outs.",
+      "impact": "Cycle time reduced from ~10 hours to ~30 minutes with auditable checks.",
+      "image": "/images/consolidation.png"
+    },
+    {
+      "slug": "revenue-forecasting-model",
+      "title": "Revenue Forecasting Model",
+      "challenge": "Static spreadsheets lacked scenarios and made planning slow.",
+      "build": "Driver-based model with sensitivity inputs and scenario presets; exports a summary page for decision-makers.",
+      "impact": "20+ scenarios evaluated in seconds; planning discussions shortened significantly.",
+      "image": "/images/forecasting.png"
+    },
+    {
+      "slug": "real-estate-deal-analyzer",
+      "title": "Real Estate Deal Analyzer",
+      "challenge": "Evaluating deals one-by-one made portfolio views impossible.",
+      "build": "Lightweight web tool that loads CSVs, computes NPV/IRR per deal, and ranks opportunities by constraints.",
+      "impact": "100+ deals evaluated in minutes with a repeatable method.",
+      "image": "/images/deal-analyzer.png"
+    },
+    {
+      "slug": "commission-tracking-model",
+      "title": "Commission Tracking Model",
+      "challenge": "Complex payout rules and adjustments created reconciliation issues.",
+      "build": "Structured Excel model with clear inputs, audit flags, and printable summaries.",
+      "impact": "Disputes decreased; cycle time shortened; transparency improved.",
+      "image": "/images/commission.png"
+    }
+  ]
+}
+
