@@ -2,7 +2,6 @@
 
 import { Calendar, MapPin, Briefcase, GraduationCap, Heart, Coffee } from 'lucide-react'
 import Image from 'next/image'
-import BatchReveal from './scroll/BatchReveal'
 
 const About = () => {
   const timeline = [
@@ -147,9 +146,8 @@ const About = () => {
             <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-primary via-accent to-primary opacity-20" />
             
             {/* Timeline Items */}
-            <BatchReveal>
-              <div className="space-y-12">
-                {timeline.map((item, index) => (
+            <div className="space-y-12">
+              {timeline.map((item, index) => (
                   <div
                     key={item.year}
                     className={`relative flex items-center reveal ${
@@ -174,7 +172,6 @@ const About = () => {
                 </div>
                 ))}
               </div>
-            </BatchReveal>
           </div>
         </div>
 
