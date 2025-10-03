@@ -1,45 +1,41 @@
-import type { Metadata } from 'next'
-import { Inter, Sora } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import siteData from '@/content/site.json';
 
 const inter = Inter({ 
   subsets: ['latin'],
-  variable: '--font-inter',
-})
-
-const sora = Sora({ 
-  subsets: ['latin'],
-  variable: '--font-sora',
-})
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'Zachary Vorsteg | Fractional CFO • CEO • Data Scientist',
-  description: 'Unique hybrid executive bridging finance, strategy, and technology. Interactive demos showcasing AI-powered financial models and full-stack development expertise.',
-  keywords: 'Zachary Vorsteg, Fractional CFO, CEO, Data Scientist, Full-Stack Developer, Financial Models, AI, Machine Learning',
-  authors: [{ name: 'Zachary Vorsteg' }],
+  title: siteData.seoTitle,
+  description: siteData.seoDescription,
+  authors: [{ name: siteData.author }],
   openGraph: {
-    title: 'Zachary Vorsteg | Fractional CFO • CEO • Data Scientist',
-    description: 'Interactive demos showcasing the intersection of financial expertise and technical execution.',
+    title: siteData.seoTitle,
+    description: siteData.seoDescription,
     type: 'website',
-    locale: 'en_US',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Zachary Vorsteg | Fractional CFO • CEO • Data Scientist',
-    description: 'Interactive demos showcasing the intersection of financial expertise and technical execution.',
-  },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${sora.variable} font-sans bg-background text-foreground antialiased`}>
-        {children}
+    <html lang="en" className={inter.className}>
+      <body className="min-h-screen flex flex-col bg-white text-gray-900 antialiased">
+        <Header />
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
-  )
+  );
 }
+
