@@ -1,14 +1,8 @@
-# Static HTML site configuration
+# Static HTML site - NO framework
 [build]
-  command = ""
   publish = "."
-  ignore = "git diff --quiet HEAD^ HEAD"
 
-# Disable Next.js detection
-[build.environment]
-  NODE_VERSION = "18"
-
-# Headers for security and performance
+# Headers for security and performance  
 [[headers]]
   for = "/*"
   [headers.values]

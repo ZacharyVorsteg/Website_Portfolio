@@ -1,0 +1,10 @@
+{
+  "name": "zacharyvorsteg-static-site",
+  "version": "1.0.0",
+  "description": "Static HTML site for zacharyvorsteg.com",
+  "scripts": {},
+  "author": "Zachary Vorsteg",
+  "license": "UNLICENSED",
+  "private": true
+}
+
