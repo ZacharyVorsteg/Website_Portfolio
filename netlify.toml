@@ -1,6 +1,12 @@
-# Netlify configuration for static HTML site
+# Static HTML site configuration
 [build]
+  command = ""
   publish = "."
+  ignore = "git diff --quiet HEAD^ HEAD"
+
+# Disable Next.js detection
+[build.environment]
+  NODE_VERSION = "18"
 
 # Headers for security and performance
 [[headers]]
