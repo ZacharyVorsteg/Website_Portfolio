@@ -1,185 +1,70 @@
-# 🚀 Professional Portfolio Website
+# Zachary Vorsteg - Professional Website
 
-[![Next.js](https://img.shields.io/badge/Next.js-14.2.0-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-[![Deploy to Netlify](https://img.shields.io/badge/Deploy-Netlify-00C7B7?logo=netlify)](https://www.netlify.com/)
+Strategic Finance & System Builder | M&A • FP&A • Development
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features interactive project showcases, smooth animations, and a professional dark theme design.
+## 🌐 Live Site
 
-## ✨ Features
+[https://zacharyvorsteg.com](https://zacharyvorsteg.com)
 
-- **🎨 Modern Design**: Dark theme with glass morphism and gradient accents
-- **📱 Fully Responsive**: Optimized for all devices and screen sizes
-- **⚡ Performance Optimized**: Fast loading with Next.js optimizations
-- **🎬 Smooth Animations**: Framer Motion and CSS animations throughout
-- **🔍 SEO Ready**: Meta tags and structured data for better search visibility
-- **📊 Interactive Elements**: Live project previews and dynamic skill bars
-- **📬 Contact Form**: Functional contact section with validation
-- **🌐 Deploy Ready**: Configured for Netlify deployment
+## 📄 About
 
-## 🛠️ Tech Stack
+Professional website showcasing:
+- Strategic finance and deal structuring experience
+- FP&A systems and automation expertise
+- Licensed real estate professional credentials
+- Trusenda CRM - flagship iOS/web application
 
-- **Framework**: Next.js 14.2.0
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Animations**: Framer Motion, Typed.js
-- **Deployment**: Netlify
+## 🚀 Deployment
 
-## 📂 Project Structure
+This site is automatically deployed via Netlify from the `main` branch.
 
-```
-portfolio-website/
-├── app/                    # Next.js app directory
-│   ├── layout.tsx         # Root layout
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── Hero.tsx          # Hero section
-│   ├── Projects.tsx      # Projects showcase
-│   ├── Skills.tsx        # Skills section
-│   ├── About.tsx         # About section
-│   ├── Contact.tsx       # Contact form
-│   ├── Navigation.tsx    # Navigation bar
-│   ├── Footer.tsx        # Footer
-│   └── LoadingScreen.tsx # Loading animation
-├── public/               # Static assets
-├── tailwind.config.ts    # Tailwind configuration
-├── next.config.js        # Next.js configuration
-└── netlify.toml         # Netlify configuration
-```
+**Auto-Deploy:**
+- Push to `main` → Automatic deployment to zacharyvorsteg.com
+- Deploy time: ~30-60 seconds
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm or pnpm
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/ZacharyVorsteg/Website_Portfolio.git
-cd Website_Portfolio
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-pnpm install
-```
-
-3. Run the development server:
-```bash
-npm run dev
-# or
-pnpm dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view the site
-
-### Building for Production
+## 📝 Making Updates
 
 ```bash
-npm run build
-npm run start
+# Make your changes to index.html
+git add index.html
+git commit -m "Your update message"
+git push origin main
 ```
 
-## 📦 Deployment
+Netlify will automatically rebuild and deploy.
 
-### Deploy to Netlify
+## 🎯 Features
 
-#### Option 1: GitHub Integration (Recommended)
+- Clean, professional design
+- Mobile-responsive
+- Optimized contrast and readability
+- Symmetrical layout
+- Contact form with Netlify Forms
+- Featured: Trusenda CRM showcase
+- Strategic finance credentials
+- Selected work portfolio
+- Tech stack display
 
-1. Push your code to GitHub
-2. Log in to [Netlify](https://app.netlify.com)
-3. Click "Add new site" → "Import an existing project"
-4. Connect your GitHub account and select this repository
-5. Configure build settings:
-   - Build command: `npm run build`
-   - Publish directory: `.next`
-6. Click "Deploy site"
+## 📦 Structure
 
-#### Option 2: Manual Deploy
+- `index.html` - Main website file (self-contained)
+- `netlify.toml` - Netlify configuration
+- `.gitignore` - Git ignore rules
 
-1. Build the project:
-```bash
-npm run build
-```
+## 🔄 Branches
 
-2. Install Netlify CLI:
-```bash
-npm install -g netlify-cli
-```
+- `main` - Production website (auto-deploys)
+- `nextjs-backup` - Previous Next.js version (archived)
 
-3. Deploy:
-```bash
-netlify deploy --prod
-```
+## 📞 Contact
 
-## 🎨 Customization
-
-### Updating Content
-
-- **Personal Info**: Edit component files in `/components`
-- **Projects**: Update the projects array in `/components/Projects.tsx`
-- **Skills**: Modify skill categories in `/components/Skills.tsx`
-- **About**: Edit timeline and bio in `/components/About.tsx`
-- **Contact**: Update social links in `/components/Contact.tsx`
-
-### Styling
-
-- **Colors**: Edit the color palette in `tailwind.config.ts`
-- **Fonts**: Modify font imports in `app/layout.tsx`
-- **Animations**: Adjust animation settings in `tailwind.config.ts`
-
-## 📱 Sections
-
-1. **Hero**: Animated introduction with typed text effect
-2. **Projects**: Interactive showcase with live previews
-3. **Skills**: Categorized technical skills with progress bars
-4. **About**: Personal journey and timeline
-5. **Contact**: Contact form and social links
-
-## 🔧 Configuration Files
-
-- `next.config.js` - Next.js configuration
-- `tailwind.config.ts` - Tailwind CSS theme and plugins
-- `tsconfig.json` - TypeScript configuration
-- `netlify.toml` - Netlify deployment settings
-- `.eslintrc.json` - ESLint rules
-
-## 📈 Performance
-
-- Lighthouse Score: 95+ 
-- First Contentful Paint: < 1s
-- Time to Interactive: < 2s
-- SEO Score: 100
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 👤 Author
-
-**Zachary Vorsteg**
+Zachary Vorsteg
+- Email: Via contact form on site
+- Phone: (561) 718-6725
 - GitHub: [@ZacharyVorsteg](https://github.com/ZacharyVorsteg)
-- Portfolio: [Live Site](https://your-portfolio-url.netlify.app)
-
-## 🙏 Acknowledgments
-
-- Next.js team for the amazing framework
-- Tailwind CSS for the utility-first CSS framework
-- Lucide for the beautiful icons
-- Netlify for the hosting platform
+- LinkedIn: [linkedin.com/in/zachary-vorsteg](https://www.linkedin.com/in/zachary-vorsteg)
 
 ---
 
-Built with ❤️ by Zachary Vorsteg
+© 2024 Zachary Vorsteg | Strategic Finance • System Builder • Licensed RE
+

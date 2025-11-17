@@ -1,6 +1,23 @@
+# Netlify configuration for static HTML site
 [build]
-  command = "npm run build"
-  publish = ".next"
+  publish = "."
+  
+# Redirect all paths to index.html for SPA behavior (optional)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
+# Form submissions (for contact form)
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+  package = "@netlify/plugin-forms"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
