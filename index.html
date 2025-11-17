@@ -1432,11 +1432,8 @@
                     <p>Check your email for confirmation and next steps.</p>
                 </div>
                 
-                <form name="discovery-call" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="discovery-form" id="discoveryForm">
+                <form name="discovery-call" method="POST" data-netlify="true" class="discovery-form" id="discoveryForm">
                     <input type="hidden" name="form-name" value="discovery-call">
-                    <p style="display:none;">
-                        <label>Don't fill this out: <input name="bot-field"></label>
-                    </p>
                     
                     <div class="form-group">
                         <label for="name">Your Name *</label>
@@ -1459,24 +1456,13 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="package">Which Package Are You Interested In? *</label>
-                        <select id="package" name="package" required>
-                            <option value="">Select Package</option>
-                            <option value="single-page-350">Single Page Website - $350</option>
-                            <option value="multi-page-1250">Multi-Page Website - Starting at $1,250</option>
-                            <option value="custom-solution">Custom Solution - Let's Discuss</option>
+                        <label for="service">What Service Are You Interested In? *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select Service</option>
+                            <option value="strategic-advisory">Strategic Advisory</option>
+                            <option value="fpa-systems">FP&A Systems</option>
+                            <option value="custom-development">Custom Development</option>
                             <option value="not-sure">Not Sure Yet - Need Guidance</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="project-type">Project Type *</label>
-                        <select id="project-type" name="project-type" required>
-                            <option value="">Select Project Type</option>
-                            <option value="new-website">Brand New Website</option>
-                            <option value="redesign">Website Redesign</option>
-                            <option value="fix-issues">Fix Current Website Issues</option>
-                            <option value="not-sure">Not Sure Yet</option>
                         </select>
                     </div>
                     
@@ -1493,11 +1479,11 @@
                     
                     <div class="form-group">
                         <label for="message">Tell Me About Your Project</label>
-                        <textarea id="message" name="message" placeholder="What's your biggest challenge with your current website? What would success look like?"></textarea>
+                        <textarea id="message" name="message" placeholder="What challenge are you facing? What would success look like for your organization?"></textarea>
                     </div>
                     
                     <div class="form-submit">
-                        <button type="submit" class="btn btn-accent">Book My Free Discovery Call</button>
+                        <button type="submit" class="btn btn-accent">Submit</button>
                     </div>
                     
                     <p class="text-center mt-4" style="font-size: 14px; opacity: 0.7;">
@@ -1515,19 +1501,19 @@
         <div class="container">
             <div class="text-center mb-8">
                 <h2>What I Build</h2>
-                <p style="font-size: 18px; color: var(--gray-600); max-width: 800px; margin: 0 auto;">I operate at both the strategic and tactical levels. I can structure your next deal on Monday, build the model to track it on Tuesday, and automate the reporting by Friday.</p>
+                <p style="font-size: 18px; color: var(--gray-600); max-width: 800px; margin: 0 auto;">I support clients from structuring the deal through building tracking models and automating reporting.</p>
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; margin: 0 auto;">
-                <!-- Strategic & Deals -->
+                <!-- Strategy & Deals -->
                 <div class="card fade-in" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: var(--white); border: none;">
-                    <h3 style="font-size: 28px; margin-bottom: 24px; font-weight: 700;">Strategic & Deals</h3>
+                    <h3 style="font-size: 28px; margin-bottom: 24px; font-weight: 700;">Strategy & Deals</h3>
                     <ul style="list-style: none; margin: 0; padding: 0; line-height: 2;">
                         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• M&A synergy models and integration planning</li>
                         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Real estate transactions and syndications</li>
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Licensed agent, $2M+ closed</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Licensed real estate agent with $2M+ in closed transactions</li>
                         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Fundraise materials and investor reporting</li>
-                        <li style="padding: 8px 0;">• Partnership/JV deal structures</li>
+                        <li style="padding: 8px 0;">• Partnership and joint venture deal structures</li>
                     </ul>
                 </div>
                 
@@ -1535,11 +1521,11 @@
                 <div class="card fade-in" style="background: var(--gray-900); color: var(--white); border: none;">
                     <h3 style="font-size: 28px; margin-bottom: 24px; font-weight: 700;">Operations & Systems</h3>
                     <ul style="list-style: none; margin: 0; padding: 0; line-height: 2;">
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Automated FP&A infrastructure</li>
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Multi-entity consolidations</li>
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Revenue operations dashboards</li>
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Custom financial tools</li>
-                        <li style="padding: 8px 0;">• Native iOS & web applications</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Automated FP&A infrastructure and reporting systems</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Multi-entity consolidations and roll-up models</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Revenue operations dashboards and analytics</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">• Custom financial tools and calculators</li>
+                        <li style="padding: 8px 0;">• Native iOS and web application development</li>
                     </ul>
                 </div>
             </div>
@@ -1636,7 +1622,7 @@
         <div class="container">
             <div class="text-center mb-8">
                 <h2>How I Work</h2>
-                <p style="font-size: 18px; color: var(--gray-600);">Fractional CFO advisory to hands-on system building.</p>
+                <p style="font-size: 18px; color: var(--gray-600);">From fractional CFO advisory to hands-on system building, I offer services tailored to your needs.</p>
             </div>
             
             <div style="max-width: 1100px; margin: 0 auto;">
@@ -1727,8 +1713,8 @@
             ⏰
         </div>
         <div>
-            <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;" id="notificationTitle">New Project Started</div>
-            <div style="font-size: 13px; color: var(--gray-600);" id="notificationText">We don't just build websites. We build confidence.</div>
+            <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;" id="notificationTitle">Strategic Finance</div>
+            <div style="font-size: 13px; color: var(--gray-600);" id="notificationText">Vision and execution working together.</div>
         </div>
     </div>
 
@@ -1875,9 +1861,9 @@
         setTimeout(() => {
             const toast = document.getElementById('notificationToast');
             const notifications = [
-                { title: 'New Project Started', text: 'Another business getting the website they deserve.' },
-                { title: 'Client Update', text: 'We\'re making sure every site performs perfectly.' },
-                { title: 'Just Launched', text: 'Another local business now competing professionally.' }
+                { title: 'Deal Execution', text: 'From analysis to closing, real results.' },
+                { title: 'System Building', text: 'Automating finance operations that scale.' },
+                { title: 'Strategic Finance', text: 'Vision and execution working together.' }
             ];
             const randomNotification = notifications[Math.floor(Math.random() * notifications.length)];
             document.getElementById('notificationTitle').textContent = randomNotification.title;
