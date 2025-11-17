@@ -1432,8 +1432,8 @@
                     <p>Check your email for confirmation and next steps.</p>
                 </div>
                 
-                <form name="discovery-call" method="POST" data-netlify="true" class="discovery-form" id="discoveryForm">
-                    <input type="hidden" name="form-name" value="discovery-call">
+                <form name="contact" method="POST" action="/success" data-netlify="true" class="discovery-form" id="discoveryForm">
+                    <input type="hidden" name="form-name" value="contact">
                     
                     <div class="form-group">
                         <label for="name">Your Name *</label>
@@ -1792,14 +1792,12 @@
             });
         });
 
-        // Form handling - Properly configured for Netlify
+        // Form handling - Native Netlify Forms
         const discoveryForm = document.getElementById('discoveryForm');
-        const formSuccess = document.getElementById('formSuccess');
         
         if (discoveryForm) {
+            // Just validate on submit - let Netlify handle the actual submission
             discoveryForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
                 // Simple validation
                 const requiredFields = discoveryForm.querySelectorAll('[required]');
                 let isValid = true;
@@ -1814,46 +1812,13 @@
                 });
                 
                 if (!isValid) {
+                    e.preventDefault();
                     alert('Please fill in all required fields.');
-                    return;
+                    return false;
                 }
                 
-                // Get form data
-                const formData = new FormData(discoveryForm);
-                
-                // Convert to URLSearchParams for Netlify
-                const params = new URLSearchParams();
-                for (let [key, value] of formData.entries()) {
-                    params.append(key, value);
-                }
-                
-                // Submit to Netlify with proper headers
-                fetch('/', {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: params.toString()
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Show success message
-                        formSuccess.classList.add('show');
-                        discoveryForm.reset();
-                        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        
-                        // Hide success message after 10 seconds
-                        setTimeout(() => {
-                            formSuccess.classList.remove('show');
-                        }, 10000);
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('There was an error submitting the form. Please try again or call us at (561) 718-6725.');
-                });
+                // If valid, let the form submit naturally to Netlify
+                // Netlify will handle the submission and redirect
             });
         }
 
