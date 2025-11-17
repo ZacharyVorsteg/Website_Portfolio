@@ -1,16 +1,6 @@
 # Netlify configuration for static HTML site
 [build]
   publish = "."
-  
-# Redirect all paths to index.html for SPA behavior (optional)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Form submissions (for contact form)
-[[plugins]]
-  package = "@netlify/plugin-forms"
 
 # Headers for security and performance
 [[headers]]
