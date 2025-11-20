@@ -1275,78 +1275,50 @@
             }
         }
 
-        /* Audio Player Button */
+        /* Audio Player Button - Repositioned to work with other floating actions */
         .audio-player-btn {
             position: fixed;
-            bottom: 100px;
-            right: 20px;
-            background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+            bottom: 20px;
+            left: 20px;
+            width: 48px;
+            height: 48px;
+            background: var(--gray-900);
             color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.5), 0 0 0 4px rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             border: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            z-index: 999;
-            animation: pulse-audio 2s ease-in-out infinite;
+            justify-content: center;
+            font-size: 1.25rem;
+            z-index: 998;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
             user-select: none;
             transition: all 0.3s ease;
+            opacity: 0.9;
         }
 
         .audio-player-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.6), 0 0 0 4px rgba(37, 99, 235, 0.15);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            opacity: 1;
         }
 
         .audio-player-btn.playing {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5), 0 0 0 4px rgba(16, 185, 129, 0.1);
-            animation: none;
+            background: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
         }
 
         .audio-player-btn.playing:hover {
-            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.6), 0 0 0 4px rgba(16, 185, 129, 0.15);
-        }
-
-        @keyframes pulse-audio {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes wave {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-            25% {
-                transform: rotate(-15deg);
-            }
-            75% {
-                transform: rotate(15deg);
-            }
-        }
-
-        .audio-wave {
-            display: inline-block;
-            animation: wave 1s ease-in-out infinite;
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5);
         }
 
         @media (max-width: 640px) {
             .audio-player-btn {
-                bottom: 80px;
-                right: 16px;
-                padding: 0.75rem 1.25rem;
-                font-size: 0.85rem;
+                bottom: 16px;
+                left: 16px;
             }
         }
     </style>
@@ -1794,9 +1766,8 @@
     </div>
 
     <!-- Audio Player Button -->
-    <button id="audioPlayerBtn" class="audio-player-btn" aria-label="Play ambient music">
-        <span id="audioIcon" style="font-size: 1.25rem;" class="audio-wave">🔊</span>
-        <span id="audioText" style="white-space: nowrap;">Hear the vibe</span>
+    <button id="audioPlayerBtn" class="audio-player-btn" aria-label="Play ambient music" title="Play background music">
+        <span id="audioIcon">🎵</span>
     </button>
 
     <script>
@@ -1943,7 +1914,6 @@
         // Audio Player Functionality
         const audioPlayerBtn = document.getElementById('audioPlayerBtn');
         const audioIcon = document.getElementById('audioIcon');
-        const audioText = document.getElementById('audioText');
         let audio = null;
         let isPlaying = false;
         let isLoading = false;
@@ -1969,43 +1939,40 @@
             // Create and play fresh audio
             isLoading = true;
             audioIcon.textContent = '⏳';
-            audioText.textContent = 'Loading...';
+            audioPlayerBtn.setAttribute('title', 'Loading...');
             
             try {
                 audio = new Audio('/ambient-music.wav');
-                audio.volume = 0.6;
+                audio.volume = 0.5;
                 
                 // Event listeners
                 audio.onended = () => {
                     isPlaying = false;
                     audioPlayerBtn.classList.remove('playing');
-                    audioIcon.textContent = '🔊';
-                    audioIcon.classList.add('audio-wave');
-                    audioText.textContent = 'Hear the vibe';
+                    audioIcon.textContent = '🎵';
+                    audioPlayerBtn.setAttribute('title', 'Play background music');
                     audioPlayerBtn.style.display = 'none'; // Hide after playing
                 };
                 
                 audio.onpause = () => {
                     isPlaying = false;
                     audioPlayerBtn.classList.remove('playing');
-                    audioIcon.textContent = '🔊';
-                    audioIcon.classList.add('audio-wave');
-                    audioText.textContent = 'Hear the vibe';
+                    audioIcon.textContent = '🎵';
+                    audioPlayerBtn.setAttribute('title', 'Play background music');
                 };
                 
                 audio.onplay = () => {
                     isPlaying = true;
                     audioPlayerBtn.classList.add('playing');
                     audioIcon.textContent = '⏸️';
-                    audioIcon.classList.remove('audio-wave');
-                    audioText.textContent = 'Pause';
+                    audioPlayerBtn.setAttribute('title', 'Pause music');
                 };
                 
                 audio.onerror = (err) => {
                     console.log('Audio error:', err);
                     isLoading = false;
-                    audioIcon.textContent = '🔊';
-                    audioText.textContent = 'Hear the vibe';
+                    audioIcon.textContent = '🎵';
+                    audioPlayerBtn.setAttribute('title', 'Play background music');
                 };
                 
                 // Play
@@ -2015,8 +1982,8 @@
             } catch (error) {
                 console.log('Failed to play audio:', error.message);
                 isLoading = false;
-                audioIcon.textContent = '🔊';
-                audioText.textContent = 'Hear the vibe';
+                audioIcon.textContent = '🎵';
+                audioPlayerBtn.setAttribute('title', 'Play background music');
             }
         });
     </script>
