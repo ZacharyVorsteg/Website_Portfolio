@@ -745,17 +745,32 @@
         }
 
         .form-success {
-            background: var(--success);
+            background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             color: var(--white);
-            padding: 20px;
+            padding: 24px;
             border-radius: 8px;
             text-align: center;
             margin-bottom: 24px;
             display: none;
+            box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .form-success.show {
             display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .form-success h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .form-success p {
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.5;
         }
 
         /* Cards Grid - Enhanced */
@@ -1475,11 +1490,11 @@
                 </div>
                 
                 <div class="form-success" id="formSuccess">
-                    <h3>🎉 Success! We'll be in touch within 24 hours.</h3>
-                    <p>Check your email for confirmation and next steps.</p>
+                    <h3>Thank You</h3>
+                    <p>Your message has been received. I'll review your information and get back to you within 24 hours.</p>
                 </div>
                 
-                <form name="contact" method="POST" action="/success" data-netlify="true" class="discovery-form" id="discoveryForm">
+                <form name="contact" method="POST" data-netlify="true" class="discovery-form" id="discoveryForm">
                     <input type="hidden" name="form-name" value="contact">
                     
                     <div class="form-group">
