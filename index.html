@@ -744,33 +744,39 @@
             width: 100%;
         }
 
-        .form-success {
+        /* Success Toast Notification */
+        .form-success-toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
             background: linear-gradient(135deg, #0066CC 0%, #0052A3 100%);
             color: var(--white);
-            padding: 24px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 24px;
-            display: none;
-            box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 102, 204, 0.4);
+            z-index: 100000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
         }
 
-        .form-success.show {
-            display: block;
-            animation: slideIn 0.4s ease-out;
+        .form-success-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        .form-success h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
+        .form-success-toast h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
             font-weight: 700;
         }
 
-        .form-success p {
-            font-size: 15px;
+        .form-success-toast p {
+            font-size: 14px;
             opacity: 0.95;
-            line-height: 1.5;
+            line-height: 1.4;
+            margin: 0;
         }
 
         /* Cards Grid - Enhanced */
@@ -1489,11 +1495,6 @@
                     <p>Tell me about your project. Whether it's strategic advisory, system building, or custom development.</p>
                 </div>
                 
-                <div class="form-success" id="formSuccess">
-                    <h3>Thank You</h3>
-                    <p>Your message has been received. I'll review your information and get back to you within 24 hours.</p>
-                </div>
-                
                 <form name="contact" method="POST" data-netlify="true" class="discovery-form" id="discoveryForm">
                     <input type="hidden" name="form-name" value="contact">
                     
@@ -1778,6 +1779,12 @@
             <div style="font-size: 14px; font-weight: 600; margin-bottom: 2px;" id="notificationTitle">Strategic Finance</div>
             <div style="font-size: 13px; color: var(--gray-600);" id="notificationText">Vision and execution working together.</div>
         </div>
+    </div>
+
+    <!-- Form Success Toast -->
+    <div class="form-success-toast" id="formSuccessToast">
+        <h3>Thank You</h3>
+        <p>Your message has been received. I'll get back to you within 24 hours.</p>
     </div>
 
     <!-- Audio Player Button -->
