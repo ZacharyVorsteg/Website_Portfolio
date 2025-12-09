@@ -1296,52 +1296,6 @@
             }
         }
 
-        /* Audio Player Button - Repositioned to work with other floating actions */
-        .audio-player-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 48px;
-            height: 48px;
-            background: var(--gray-900);
-            color: white;
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            z-index: 998;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            user-select: none;
-            transition: all 0.3s ease;
-            opacity: 0.9;
-        }
-
-        .audio-player-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            opacity: 1;
-        }
-
-        .audio-player-btn.playing {
-            background: var(--accent);
-            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.4);
-        }
-
-        .audio-player-btn.playing:hover {
-            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5);
-        }
-
-        @media (max-width: 640px) {
-            .audio-player-btn {
-                bottom: 16px;
-                left: 16px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1357,6 +1311,7 @@
                     <a href="#resources">Templates</a>
                     <a href="#portfolio">Work</a>
                     <a href="#pricing">Services</a>
+                    <a href="https://investorproforma.netlify.app" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
                     <a href="#book-discovery" class="btn btn-primary">Contact</a>
                 </nav>
                 
@@ -1382,6 +1337,7 @@
                 <a href="#resources">Templates</a>
                 <a href="#portfolio">Work</a>
                 <a href="#pricing">Services</a>
+                <a href="https://investorproforma.netlify.app" target="_blank" style="color: #f59e0b; font-weight: 600;">📊 Pro Forma Tool</a>
                 <a href="tel:5617186725" class="btn btn-primary mt-4">Call Now</a>
             </nav>
         </div>
@@ -1480,9 +1436,57 @@
                     <a href="https://trusenda.com" target="_blank" rel="noopener" class="btn" style="background: var(--white); color: var(--gray-900); display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
                         Try Live Demo →
                     </a>
-                    <a href="https://github.com/ZacharyVorsteg/CRM-APP-SWIFT" target="_blank" rel="noopener" class="btn" style="background: rgba(255, 255, 255, 0.1); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.2); display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
-                        View on GitHub
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro Forma Tool Section -->
+    <section style="background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 100%); color: var(--white); padding: 80px 0; border-top: 1px solid rgba(245, 158, 11, 0.3);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div style="display: inline-block; padding: 8px 20px; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 100px; margin-bottom: 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #f59e0b;">
+                    Free Tool
+                </div>
+                <h2 style="margin-bottom: 20px; font-size: clamp(28px, 4vw, 42px); font-weight: 700;">Investor Pro Forma</h2>
+                <p style="font-size: clamp(16px, 2vw, 18px); color: rgba(255, 255, 255, 0.85); max-width: 700px; margin: 0 auto; line-height: 1.6;">
+                    Institutional-grade real estate investment analysis. Cap rates, cash-on-cash returns, breakeven analysis, and multi-year projections — all in one streamlined tool.
+                </p>
+            </div>
+            
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Features Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 12px;">📊</div>
+                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Investment Grading</h4>
+                        <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">A-F grades based on KPIs</p>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 12px;">🎯</div>
+                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Breakeven Analysis</h4>
+                        <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Occupancy, rent & rate</p>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 12px;">📈</div>
+                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">10-Year Projections</h4>
+                        <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Income, expenses & cash flow</p>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
+                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Strategic Insights</h4>
+                        <p style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">Intelligent recommendations</p>
+                    </div>
+                </div>
+                
+                <!-- CTA -->
+                <div style="text-align: center;">
+                    <a href="https://investorproforma.netlify.app" target="_blank" class="btn" style="background: #f59e0b; color: #000; font-weight: 700; padding: 16px 40px; font-size: 16px; display: inline-flex; align-items: center; gap: 10px;">
+                        Launch Pro Forma Tool →
                     </a>
+                    <p style="margin-top: 16px; font-size: 14px; color: rgba(255, 255, 255, 0.5);">
+                        No signup required. 100% free.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1816,7 +1820,6 @@
                 </div>
                 <div style="display: flex; gap: 24px; flex-wrap: wrap;">
                     <a href="tel:5617186725" style="color: var(--gray-700); text-decoration: none; font-size: 14px;">Call: (561) 718-6725</a>
-                    <a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener" style="color: var(--gray-700); text-decoration: none; font-size: 14px;">GitHub</a>
                     <a href="https://www.linkedin.com/in/zachary-vorsteg" target="_blank" rel="noopener" style="color: var(--gray-700); text-decoration: none; font-size: 14px;">LinkedIn</a>
                 </div>
             </div>
@@ -1852,10 +1855,6 @@
         <p>Your message has been received. I'll get back to you within 24 hours.</p>
     </div>
 
-    <!-- Audio Player Button -->
-    <button id="audioPlayerBtn" class="audio-player-btn" aria-label="Play ambient music" title="Play background music">
-        <span id="audioIcon">🎵</span>
-    </button>
 
     <script>
         // Mobile menu functionality
@@ -2019,81 +2018,6 @@
             observer.observe(el);
         });
 
-        // Audio Player Functionality
-        const audioPlayerBtn = document.getElementById('audioPlayerBtn');
-        const audioIcon = document.getElementById('audioIcon');
-        let audio = null;
-        let isPlaying = false;
-        let isLoading = false;
-
-        audioPlayerBtn.addEventListener('click', async function() {
-            // Prevent duplicate calls
-            if (isLoading) {
-                return;
-            }
-
-            // Pause if currently playing
-            if (isPlaying && audio) {
-                audio.pause();
-                return;
-            }
-
-            // Resume if paused
-            if (audio && audio.paused && audio.currentTime > 0) {
-                audio.play();
-                return;
-            }
-
-            // Create and play fresh audio
-            isLoading = true;
-            audioIcon.textContent = '⏳';
-            audioPlayerBtn.setAttribute('title', 'Loading...');
-            
-            try {
-                audio = new Audio('/ambient-music.wav');
-                audio.volume = 0.5;
-                
-                // Event listeners
-                audio.onended = () => {
-                    isPlaying = false;
-                    audioPlayerBtn.classList.remove('playing');
-                    audioIcon.textContent = '🎵';
-                    audioPlayerBtn.setAttribute('title', 'Play background music');
-                    audioPlayerBtn.style.display = 'none'; // Hide after playing
-                };
-                
-                audio.onpause = () => {
-                    isPlaying = false;
-                    audioPlayerBtn.classList.remove('playing');
-                    audioIcon.textContent = '🎵';
-                    audioPlayerBtn.setAttribute('title', 'Play background music');
-                };
-                
-                audio.onplay = () => {
-                    isPlaying = true;
-                    audioPlayerBtn.classList.add('playing');
-                    audioIcon.textContent = '⏸️';
-                    audioPlayerBtn.setAttribute('title', 'Pause music');
-                };
-                
-                audio.onerror = (err) => {
-                    console.log('Audio error:', err);
-                    isLoading = false;
-                    audioIcon.textContent = '🎵';
-                    audioPlayerBtn.setAttribute('title', 'Play background music');
-                };
-                
-                // Play
-                await audio.play();
-                isLoading = false;
-                
-            } catch (error) {
-                console.log('Failed to play audio:', error.message);
-                isLoading = false;
-                audioIcon.textContent = '🎵';
-                audioPlayerBtn.setAttribute('title', 'Play background music');
-            }
-        });
     </script>
 </body>
 </html>
