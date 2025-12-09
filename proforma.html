@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Pro Forma | Zachary Vorsteg</title>
+    <meta name="description" content="Free institutional-grade real estate investment pro forma analysis tool. Cap rates, cash-on-cash returns, breakeven analysis, and multi-year projections.">
+    <link rel="canonical" href="https://zacharyvorsteg.com/proforma.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: { 900: '#0a0e17', 800: '#0f1419', 700: '#1a1f2e', 600: '#1e293b', 500: '#2d3748' },
+                        amber: { 500: '#f59e0b', 600: '#d97706' },
+                        emerald: { 500: '#10b981' },
+                        red: { 500: '#ef4444' },
+                        blue: { 500: '#3b82f6' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Consolas', monospace; }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+        .sticky-col { position: sticky; left: 0; z-index: 10; }
+        @media print { .no-print { display: none !important; } }
+    </style>
+</head>
+<body class="min-h-screen bg-dark-900 text-slate-200">
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-dark-800 to-dark-700 border-b border-dark-500 px-6 py-3 sticky top-0 z-50 no-print">
+        <div class="max-w-[1920px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded flex items-center justify-center">
+                        <span class="text-black font-black text-sm">IP</span>
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-bold text-white tracking-wider">INVESTOR PRO</h1>
+                        <p class="text-[10px] text-slate-500 tracking-widest">PRO FORMA ANALYSIS</p>
+                    </div>
+                </a>
+                <nav class="hidden lg:flex items-center border-l border-dark-500 pl-6 gap-1">
+                    <button onclick="scrollToEl('analysis')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">ANALYSIS</button>
+                    <button onclick="scrollToEl('property')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">PROPERTY</button>
+                    <button onclick="scrollToEl('units')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">UNITS</button>
+                    <button onclick="scrollToEl('financing')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">FINANCING</button>
+                    <button onclick="scrollToEl('expenses')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">EXPENSES</button>
+                    <button onclick="scrollToEl('projection')" class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-amber-500 transition-colors tracking-wide">PROJECTION</button>
+                </nav>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="resetAll()" class="p-2 bg-dark-600 hover:bg-dark-500 rounded transition-colors" title="Reset">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                </button>
+                <button onclick="window.print()" class="p-2 bg-dark-600 hover:bg-dark-500 rounded transition-colors" title="Print">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                </button>
+                <a href="/" class="flex items-center gap-2 px-3 py-1.5 bg-dark-600 hover:bg-dark-500 rounded text-xs font-medium tracking-wide transition-colors">← BACK</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app" class="max-w-[1920px] mx-auto p-6 space-y-4">
+        <!-- Content will be rendered by JavaScript -->
+        <div class="text-center py-20">
+            <div class="animate-pulse text-amber-500 text-xl">Loading Pro Forma...</div>
+        </div>
+    </main>
+
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-4 right-4 w-10 h-10 bg-amber-500 text-black rounded flex items-center justify-center hover:bg-amber-600 transition-colors shadow-lg no-print">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+    </button>
+
+    <script>
+    // ============================================================================
+    // STATE & DEFAULTS
+    // ============================================================================
+    
+    const defaultUnits = [];
+    for (let i = 1; i <= 12; i++) {
+        const isLarger = i === 4 || i === 10;
+        defaultUnits.push({
+            id: String(i),
+            unitNumber: `Unit ${i}`,
+            tenant: i === 7 ? 'Vacant' : '',
+            sqft: isLarger ? 775 : 550,
+            rent: isLarger ? 1800 : (i === 7 ? 1550 : 1600),
+        });
+    }
+
+    const defaultInputs = {
+        propertyName: 'SAMPLE PROPERTY',
+        propertyAddress: 'Enter property address',
+        purchasePrice: 2300000,
+        closingCosts: 46000,
+        immediateRepairs: 0,
+        downPaymentPct: 25,
+        interestRate: 7.0,
+        loanTermYears: 30,
+        units: JSON.parse(JSON.stringify(defaultUnits)),
+        laundryIncome: 208.33,
+        parkingIncome: 0,
+        storageIncome: 0,
+        otherIncome: 0,
+        realEstateTaxes: 47915,
+        insurance: 11000,
+        water: 4000,
+        sewer: 2000,
+        gas: 1500,
+        electric: 2800,
+        trash: 2400,
+        landscaping: 2400,
+        snowRemoval: 0,
+        repairsMaintenance: 4800,
+        pestControl: 600,
+        managementPct: 5,
+        legalAccounting: 1200,
+        advertising: 500,
+        miscellaneous: 1000,
+        replacementReserves: 1800,
+        vacancyPct: 5,
+        annualRentIncrease: 3,
+        annualExpenseIncrease: 3,
+        projectionYears: 10,
+        exitCapRate: 6,
+    };
+
+    let inputs = JSON.parse(localStorage.getItem('proforma-web') || 'null') || JSON.parse(JSON.stringify(defaultInputs));
+    let expandedSections = { income: true, expenses: true, net: true };
+
+    // ============================================================================
+    // HELPERS
+    // ============================================================================
+
+    const fmt = n => isNaN(n) || !isFinite(n) ? '0' : Math.round(n).toLocaleString('en-US');
+    const fmtDec = (n, dec = 2) => isNaN(n) || !isFinite(n) ? '0.00' : n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    const scrollToEl = id => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    function save() {
+        localStorage.setItem('proforma-web', JSON.stringify(inputs));
+        render();
+    }
+
+    function resetAll() {
+        if (confirm('Reset all values to defaults?')) {
+            inputs = JSON.parse(JSON.stringify(defaultInputs));
+            save();
+        }
+    }
+
+    function setInput(key, value) {
+        inputs[key] = value;
+        save();
+    }
+
+    function setNumInput(key, value) {
+        inputs[key] = parseFloat(value) || 0;
+        save();
+    }
+
+    function updateUnit(id, field, value) {
+        const unit = inputs.units.find(u => u.id === id);
+        if (unit) {
+            if (field === 'unitNumber' || field === 'tenant') {
+                unit[field] = value;
+            } else {
+                unit[field] = parseFloat(value) || 0;
+            }
+            save();
+        }
+    }
+
+    function addUnit() {
+        inputs.units.push({
+            id: String(Date.now()),
+            unitNumber: `Unit ${inputs.units.length + 1}`,
+            tenant: '',
+            sqft: 550,
+            rent: 1500,
+        });
+        save();
+    }
+
+    function removeUnit(id) {
+        if (inputs.units.length > 1) {
+            inputs.units = inputs.units.filter(u => u.id !== id);
+            save();
+        }
+    }
+
+    function toggleSection(section) {
+        expandedSections[section] = !expandedSections[section];
+        render();
+    }
+
+    // ============================================================================
+    // CALCULATIONS
+    // ============================================================================
+
+    function calculate() {
+        const { purchasePrice, closingCosts, immediateRepairs, downPaymentPct, interestRate, loanTermYears, units,
+            laundryIncome, parkingIncome, storageIncome, otherIncome, realEstateTaxes, insurance, water, sewer, gas, electric, trash,
+            landscaping, snowRemoval, repairsMaintenance, pestControl, managementPct, legalAccounting, advertising, miscellaneous, replacementReserves,
+            vacancyPct, annualRentIncrease, annualExpenseIncrease, projectionYears, exitCapRate } = inputs;
+
+        const totalUnits = units.length;
+        const totalSqft = units.reduce((sum, u) => sum + u.sqft, 0);
+        const monthlyRent = units.reduce((sum, u) => sum + u.rent, 0);
+        const annualRent = monthlyRent * 12;
+        const pricePerSqft = totalSqft > 0 ? purchasePrice / totalSqft : 0;
+        const pricePerUnit = totalUnits > 0 ? purchasePrice / totalUnits : 0;
+        const monthlyOtherIncome = laundryIncome + parkingIncome + storageIncome + otherIncome;
+        const annualOtherIncome = monthlyOtherIncome * 12;
+        const grossPotentialIncome = annualRent + annualOtherIncome;
+        const downPayment = purchasePrice * (downPaymentPct / 100);
+        const loanAmount = purchasePrice - downPayment;
+        const ltv = purchasePrice > 0 ? (loanAmount / purchasePrice) * 100 : 0;
+        const monthlyRate = interestRate / 100 / 12;
+        const numPayments = loanTermYears * 12;
+        const monthlyMortgage = loanAmount > 0 && monthlyRate > 0 ? loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1) : 0;
+        const annualDebtService = monthlyMortgage * 12;
+        const totalCashRequired = downPayment + closingCosts + immediateRepairs;
+        const year1Vacancy = grossPotentialIncome * (vacancyPct / 100);
+        const year1EGI = grossPotentialIncome - year1Vacancy;
+        const year1Management = year1EGI * (managementPct / 100);
+        const baseExpensesTotal = realEstateTaxes + insurance + water + sewer + gas + electric + trash + landscaping + snowRemoval + repairsMaintenance + pestControl + legalAccounting + advertising + miscellaneous + replacementReserves;
+        const year1TotalExpenses = baseExpensesTotal + year1Management;
+        const year1NOI = year1EGI - year1TotalExpenses;
+        const year1CashFlow = year1NOI - annualDebtService;
+        const capRate = purchasePrice > 0 ? (year1NOI / purchasePrice) * 100 : 0;
+        const cashOnCash = totalCashRequired > 0 ? (year1CashFlow / totalCashRequired) * 100 : 0;
+        const grossRentMultiplier = annualRent > 0 ? purchasePrice / annualRent : 0;
+        const dscr = annualDebtService > 0 ? year1NOI / annualDebtService : 999;
+        const expenseRatio = year1EGI > 0 ? (year1TotalExpenses / year1EGI) * 100 : 0;
+
+        const years = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 0; i <= projectionYears; i++) {
+            const rentGrowth = Math.pow(1 + annualRentIncrease / 100, i);
+            const expenseGrowth = Math.pow(1 + annualExpenseIncrease / 100, i);
+            const scheduledRent = annualRent * rentGrowth;
+            const yearLaundry = laundryIncome * 12 * rentGrowth;
+            const yearOther = otherIncome * 12 * rentGrowth;
+            const gpi = scheduledRent + yearLaundry + yearOther;
+            const vacancy = gpi * (vacancyPct / 100);
+            const egi = gpi - vacancy;
+            const yearTaxes = realEstateTaxes * expenseGrowth;
+            const yearInsurance = insurance * expenseGrowth;
+            const yearUtilities = (water + sewer + gas + electric) * expenseGrowth;
+            const yearRepairs = repairsMaintenance * expenseGrowth;
+            const yearMgmt = egi * (managementPct / 100);
+            const yearOtherOp = (trash + landscaping + legalAccounting + advertising + miscellaneous + replacementReserves) * expenseGrowth;
+            const totalOpex = yearTaxes + yearInsurance + yearUtilities + yearRepairs + yearMgmt + yearOtherOp;
+            const noi = egi - totalOpex;
+            const cashFlow = noi - annualDebtService;
+            years.push({ year: currentYear + i, scheduledRent, laundryIncome: yearLaundry, otherIncome: yearOther, gpi, vacancy, egi, yearTaxes, yearInsurance, yearUtilities, yearRepairs, yearMgmt, yearOtherOp, totalOpex, noi, debtService: annualDebtService, cashFlow });
+        }
+
+        return { totalUnits, totalSqft, monthlyRent, annualRent, pricePerSqft, pricePerUnit, grossPotentialIncome, downPayment, loanAmount, ltv, monthlyMortgage, annualDebtService, totalCashRequired, year1EGI, year1TotalExpenses, year1NOI, year1CashFlow, years, capRate, cashOnCash, grossRentMultiplier, dscr, expenseRatio };
+    }
+
+    function analyze(calc) {
+        const { capRate, cashOnCash, dscr, expenseRatio, pricePerUnit, pricePerSqft, year1NOI, year1CashFlow, year1TotalExpenses, annualDebtService, grossRentMultiplier, monthlyRent, totalSqft, totalUnits, loanAmount, grossPotentialIncome } = calc;
+        const { purchasePrice, downPaymentPct, interestRate, vacancyPct, managementPct, annualRentIncrease, annualExpenseIncrease, realEstateTaxes, loanTermYears } = inputs;
+
+        const isCashDeal = downPaymentPct >= 100 || loanAmount <= 0;
+        let dealType = isCashDeal ? 'Cash Acquisition' : year1CashFlow < 0 ? 'Appreciation Play' : cashOnCash >= 8 ? 'Cash Flow Investment' : 'Stabilized Investment';
+
+        const totalObligations = year1TotalExpenses + annualDebtService;
+        const occupancyBE = grossPotentialIncome > 0 ? Math.min(100, (totalObligations / grossPotentialIncome) * 100) : 100;
+        const rentBE = totalUnits > 0 ? (totalObligations / totalUnits / 12) / (1 - vacancyPct/100 - managementPct/100) : 0;
+        let rateBE = null;
+        if (!isCashDeal && year1NOI > 0) {
+            for (let r = 1; r <= 15; r += 0.25) {
+                const mr = r / 100 / 12, np = loanTermYears * 12;
+                const pmt = loanAmount * (mr * Math.pow(1 + mr, np)) / (Math.pow(1 + mr, np) - 1);
+                if (pmt * 12 >= year1NOI) { rateBE = r; break; }
+            }
+        }
+
+        const effectiveTaxRate = (realEstateTaxes / purchasePrice) * 100;
+        const rentPerSF = monthlyRent / totalSqft;
+        const expensePerUnit = year1TotalExpenses / totalUnits;
+
+        const kpis = [
+            { label: 'Price/SF', value: `$${fmtDec(pricePerSqft, 0)}`, status: pricePerSqft > 350 ? 'warning' : pricePerSqft < 180 ? 'positive' : 'neutral' },
+            { label: 'Price/Unit', value: `$${fmt(pricePerUnit)}`, status: pricePerUnit > 200000 ? 'warning' : pricePerUnit < 120000 ? 'positive' : 'neutral' },
+            { label: 'GRM', value: fmtDec(grossRentMultiplier, 1), status: grossRentMultiplier > 12 ? 'warning' : grossRentMultiplier < 9 ? 'positive' : 'neutral' },
+            { label: 'OpEx/Unit', value: `$${fmt(expensePerUnit)}`, status: expensePerUnit > 7500 ? 'warning' : expensePerUnit < 5000 ? 'positive' : 'neutral' },
+            { label: 'Rent/SF', value: `$${fmtDec(rentPerSF, 2)}`, status: rentPerSF > 2.5 ? 'positive' : rentPerSF < 1.5 ? 'warning' : 'neutral' },
+            { label: 'Tax Rate', value: `${fmtDec(effectiveTaxRate, 2)}%`, status: effectiveTaxRate > 2.5 ? 'negative' : 'neutral' },
+        ];
+
+        const insights = [];
+        if (isCashDeal) {
+            insights.push({ type: 'info', title: 'All-Cash Deal', detail: `Unleveraged return: ${fmtDec(capRate)}% cap rate`, value: 'No Debt' });
+        } else {
+            const spread = capRate - interestRate;
+            if (spread < 0) {
+                insights.push({ type: 'negative', title: 'Negative Leverage', detail: `Cap rate (${fmtDec(capRate)}%) below debt cost (${interestRate}%). Rate breakeven: ${rateBE ? fmtDec(rateBE) + '%' : 'N/A'}`, value: `${fmtDec(spread * 100, 0)} bps` });
+            } else if (spread > 1.5) {
+                insights.push({ type: 'positive', title: 'Positive Leverage', detail: `Cap rate exceeds debt cost by ${fmtDec(spread * 100, 0)} bps.`, value: `+${fmtDec(spread * 100, 0)} bps` });
+            }
+        }
+        insights.push({ type: occupancyBE > 95 ? 'warning' : 'info', title: 'Occupancy Breakeven', detail: `Need ${fmtDec(occupancyBE, 1)}% occupancy. Current: ${100 - vacancyPct}%.`, value: `${fmtDec(occupancyBE, 1)}%` });
+        const currentAvgRent = monthlyRent / totalUnits;
+        const rentCushion = ((currentAvgRent - rentBE) / currentAvgRent) * 100;
+        insights.push({ type: rentCushion < 0 ? 'negative' : rentCushion < 10 ? 'warning' : 'info', title: 'Rent Breakeven', detail: `Min: $${fmt(rentBE)}/unit/mo. Current: $${fmt(currentAvgRent)}.`, value: `$${fmt(rentBE)}` });
+        if (expenseRatio > 50) insights.push({ type: 'warning', title: 'High Expense Ratio', detail: `${fmtDec(expenseRatio, 0)}% of EGI to expenses.`, value: `${fmtDec(expenseRatio, 0)}%` });
+
+        let score = 50;
+        if (cashOnCash >= 10) score += 20; else if (cashOnCash >= 6) score += 12; else if (cashOnCash >= 0) score += 4; else score -= 15;
+        if (isCashDeal) score += 8; else if (dscr >= 1.3) score += 12; else if (dscr >= 1.15) score += 6; else if (dscr < 1) score -= 15;
+        if (capRate >= 7) score += 10; else if (capRate >= 5.5) score += 5; else if (capRate < 4.5) score -= 5;
+        if (expenseRatio <= 42) score += 6; else if (expenseRatio > 52) score -= 6;
+        score = Math.max(0, Math.min(100, score));
+        const grade = score >= 80 ? 'A' : score >= 68 ? 'B' : score >= 55 ? 'C' : score >= 40 ? 'D' : 'F';
+
+        return { dealType, isCashDeal, score, grade, kpis, breakeven: { occupancy: occupancyBE, rent: rentBE, rate: rateBE }, insights };
+    }
+
+    // ============================================================================
+    // RENDER
+    // ============================================================================
+
+    function render() {
+        const calc = calculate();
+        const analysis = analyze(calc);
+
+        const gradeColor = analysis.grade === 'A' ? 'text-emerald-500' : analysis.grade === 'B' ? 'text-blue-500' : analysis.grade === 'C' ? 'text-amber-500' : 'text-red-500';
+
+        document.getElementById('app').innerHTML = `
+        <!-- TOP METRICS -->
+        <div class="grid grid-cols-4 lg:grid-cols-8 gap-3">
+            ${metricCard('CAP RATE', `${fmtDec(calc.capRate)}%`)}
+            ${metricCard('CASH-ON-CASH', `${fmtDec(calc.cashOnCash)}%`, calc.cashOnCash > 0, calc.cashOnCash < 0)}
+            ${metricCard('DSCR', fmtDec(calc.dscr, 2), calc.dscr >= 1.25, calc.dscr < 1)}
+            ${metricCard('NOI', `$${fmt(calc.year1NOI)}`)}
+            ${metricCard('CASH FLOW', `$${fmt(calc.year1CashFlow)}`, calc.year1CashFlow > 0, calc.year1CashFlow < 0)}
+            ${metricCard('LTV', `${fmtDec(calc.ltv, 0)}%`)}
+            ${metricCard('EXP RATIO', `${fmtDec(calc.expenseRatio, 1)}%`)}
+            <div class="bg-gradient-to-br from-dark-600 to-dark-900 rounded border border-dark-500 p-3 flex items-center justify-center">
+                <div class="text-center">
+                    <div class="text-3xl font-black ${gradeColor}">${analysis.grade}</div>
+                    <div class="text-[10px] text-slate-500 tracking-wider">GRADE</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANALYSIS -->
+        <section id="analysis" class="bg-dark-800 rounded border border-dark-500">
+            <div class="px-4 py-3 border-b border-dark-500 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-amber-500 tracking-wider">INVESTMENT ANALYSIS</span>
+                    <span class="px-2 py-0.5 bg-dark-600 rounded text-[10px] text-slate-400 tracking-wide">${analysis.dealType.toUpperCase()}</span>
+                </div>
+                <span class="text-xs text-slate-500">Score: ${analysis.score}/100</span>
+            </div>
+            <div class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+                <div class="lg:col-span-5 grid grid-cols-3 gap-2">
+                    ${analysis.kpis.map(kpi => kpiCard(kpi)).join('')}
+                </div>
+                <div class="lg:col-span-3 bg-dark-600/50 rounded border border-dark-500 p-4">
+                    <div class="text-xs font-bold text-amber-500 tracking-wider mb-3">BREAKEVEN ANALYSIS</div>
+                    ${breakevenRow('Occupancy', `${fmtDec(analysis.breakeven.occupancy, 1)}%`, `${100 - inputs.vacancyPct}%`, analysis.breakeven.occupancy < 100 - inputs.vacancyPct)}
+                    ${breakevenRow('Rent/Unit', `$${fmt(analysis.breakeven.rent)}`, `$${fmt(calc.monthlyRent / calc.totalUnits)}`, analysis.breakeven.rent < calc.monthlyRent / calc.totalUnits)}
+                    ${analysis.breakeven.rate ? breakevenRow('Rate', `${fmtDec(analysis.breakeven.rate)}%`, `${inputs.interestRate}%`, analysis.breakeven.rate > inputs.interestRate) : ''}
+                </div>
+                <div class="lg:col-span-4 space-y-2">
+                    ${analysis.insights.slice(0, 4).map(insightRow).join('')}
+                </div>
+            </div>
+        </section>
+
+        <!-- PROPERTY & FINANCING -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <section id="property" class="bg-dark-800 rounded border border-dark-500">
+                <div class="px-4 py-3 border-b border-dark-500"><span class="text-xs font-bold text-amber-500 tracking-wider">PROPERTY</span></div>
+                <div class="p-4 space-y-3">
+                    <input type="text" value="${inputs.propertyName}" onchange="setInput('propertyName', this.value)" class="w-full bg-dark-600 border border-dark-500 rounded px-3 py-2 text-white font-bold focus:border-amber-500 focus:outline-none">
+                    <input type="text" value="${inputs.propertyAddress}" onchange="setInput('propertyAddress', this.value)" class="w-full bg-dark-600 border border-dark-500 rounded px-3 py-2 text-slate-400 text-sm focus:border-amber-500 focus:outline-none">
+                    <div class="grid grid-cols-4 gap-2 pt-2 border-t border-dark-500">
+                        ${statBox('UNITS', calc.totalUnits)}
+                        ${statBox('SQ FT', fmt(calc.totalSqft))}
+                        ${statBox('$/UNIT', `$${fmt(calc.pricePerUnit)}`)}
+                        ${statBox('$/SF', `$${fmtDec(calc.pricePerSqft, 0)}`)}
+                    </div>
+                </div>
+            </section>
+            <section id="financing" class="bg-dark-800 rounded border border-dark-500">
+                <div class="px-4 py-3 border-b border-dark-500"><span class="text-xs font-bold text-amber-500 tracking-wider">ACQUISITION & FINANCING</span></div>
+                <div class="p-4">
+                    <div class="grid grid-cols-3 gap-3 mb-3">
+                        ${inputField('Purchase Price', 'purchasePrice', '$')}
+                        ${inputField('Closing Costs', 'closingCosts', '$')}
+                        ${inputField('Repairs', 'immediateRepairs', '$')}
+                        ${inputField('Down Payment', 'downPaymentPct', '', '%')}
+                        ${inputField('Interest Rate', 'interestRate', '', '%')}
+                        ${inputField('Term', 'loanTermYears', '', 'yrs')}
+                    </div>
+                    <div class="grid grid-cols-4 gap-2 pt-3 border-t border-dark-500">
+                        ${statBox('LOAN', `$${fmt(calc.loanAmount)}`)}
+                        ${statBox('P&I/MO', `$${fmt(calc.monthlyMortgage)}`)}
+                        ${statBox('CASH IN', `$${fmt(calc.totalCashRequired)}`, true)}
+                        ${statBox('LTV', `${fmtDec(calc.ltv, 0)}%`)}
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- RENT ROLL -->
+        <section id="units" class="bg-dark-800 rounded border border-dark-500">
+            <div class="px-4 py-3 border-b border-dark-500 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-amber-500 tracking-wider">RENT ROLL</span>
+                    <span class="px-2 py-0.5 bg-dark-600 rounded text-[10px] text-slate-400">${calc.totalUnits} UNITS</span>
+                </div>
+                <button onclick="addUnit()" class="flex items-center gap-1 px-2 py-1 bg-dark-600 hover:bg-dark-500 rounded text-xs transition-colors">+ ADD</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-dark-500">
+                            <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 tracking-wider">UNIT</th>
+                            <th class="px-4 py-3 text-left text-[10px] font-bold text-slate-500 tracking-wider">TENANT</th>
+                            <th class="px-4 py-3 text-right text-[10px] font-bold text-slate-500 tracking-wider">SQ FT</th>
+                            <th class="px-4 py-3 text-right text-[10px] font-bold text-slate-500 tracking-wider">RENT/MO</th>
+                            <th class="px-4 py-3 text-right text-[10px] font-bold text-slate-500 tracking-wider">$/SF</th>
+                            <th class="px-4 py-3 w-10"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${inputs.units.map((unit, idx) => unitRow(unit, idx)).join('')}
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-emerald-500/10 border-t border-emerald-500/30">
+                            <td class="px-4 py-3 font-bold text-emerald-500 text-sm">TOTAL</td>
+                            <td class="px-4 py-3 text-slate-500 text-xs">${inputs.units.filter(u => (u.tenant || '').toLowerCase() === 'vacant').length > 0 ? inputs.units.filter(u => (u.tenant || '').toLowerCase() === 'vacant').length + ' vacant' : ''}</td>
+                            <td class="px-4 py-3 text-right font-bold text-white">${fmt(calc.totalSqft)}</td>
+                            <td class="px-4 py-3 text-right font-bold text-emerald-500">$${fmt(calc.monthlyRent)}</td>
+                            <td class="px-4 py-3 text-right text-white">$${fmtDec(calc.totalSqft > 0 ? calc.monthlyRent / calc.totalSqft : 0)}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+
+        <!-- OPERATING STATEMENT -->
+        <section id="expenses" class="bg-dark-800 rounded border border-dark-500">
+            <div class="px-4 py-3 border-b border-dark-500"><span class="text-xs font-bold text-amber-500 tracking-wider">OPERATING STATEMENT</span></div>
+            <div class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <div class="text-[10px] font-bold text-emerald-500 tracking-wider mb-3">INCOME</div>
+                    <div class="space-y-1">
+                        ${summaryRow('Scheduled Rent', `$${fmt(calc.annualRent)}`)}
+                        ${expenseInput('Laundry Income', 'laundryIncome', '$', '/mo')}
+                        ${expenseInput('Parking Income', 'parkingIncome', '$', '/mo')}
+                        ${expenseInput('Other Income', 'otherIncome', '$', '/mo')}
+                        ${expenseInput('Vacancy', 'vacancyPct', '', '%', true)}
+                        ${summaryRow('Effective Gross Income', `$${fmt(calc.year1EGI)}`, true)}
+                    </div>
+                </div>
+                <div>
+                    <div class="text-[10px] font-bold text-red-500 tracking-wider mb-3">EXPENSES</div>
+                    <div class="grid grid-cols-2 gap-1">
+                        ${expenseInput('Taxes', 'realEstateTaxes', '$')}
+                        ${expenseInput('Insurance', 'insurance', '$')}
+                        ${expenseInput('Water', 'water', '$')}
+                        ${expenseInput('Sewer', 'sewer', '$')}
+                        ${expenseInput('Gas', 'gas', '$')}
+                        ${expenseInput('Electric', 'electric', '$')}
+                        ${expenseInput('Trash', 'trash', '$')}
+                        ${expenseInput('Landscape', 'landscaping', '$')}
+                        ${expenseInput('Repairs', 'repairsMaintenance', '$')}
+                        ${expenseInput('Mgmt', 'managementPct', '', '%')}
+                        ${expenseInput('Reserves', 'replacementReserves', '$')}
+                        ${expenseInput('Other', 'miscellaneous', '$')}
+                    </div>
+                    <div class="mt-2">${summaryRow('Total Operating Expenses', `$${fmt(calc.year1TotalExpenses)}`, false, true)}</div>
+                </div>
+            </div>
+            <div class="px-4 pb-4 grid grid-cols-4 gap-3 border-t border-dark-500 pt-4">
+                ${resultCard('NOI', `$${fmt(calc.year1NOI)}`)}
+                ${resultCard('DEBT SERVICE', `$${fmt(calc.annualDebtService)}`)}
+                ${resultCard('CASH FLOW', `$${fmt(calc.year1CashFlow)}`, calc.year1CashFlow > 0, calc.year1CashFlow < 0)}
+                ${resultCard('CASH-ON-CASH', `${fmtDec(calc.cashOnCash)}%`, calc.cashOnCash >= 8, calc.cashOnCash < 0)}
+            </div>
+        </section>
+
+        <!-- PROJECTION -->
+        <section id="projection" class="bg-dark-800 rounded border border-dark-500">
+            <div class="px-4 py-3 border-b border-dark-500 flex items-center justify-between flex-wrap gap-4">
+                <span class="text-xs font-bold text-amber-500 tracking-wider">${inputs.projectionYears + 1}-YEAR PRO FORMA</span>
+                <div class="flex items-center gap-4 text-xs">
+                    <label class="flex items-center gap-2 text-slate-500">RENT↑<input type="number" value="${inputs.annualRentIncrease}" onchange="setNumInput('annualRentIncrease', this.value)" class="w-12 bg-dark-600 border border-dark-500 rounded px-2 py-1 text-white text-center" step="0.5">%</label>
+                    <label class="flex items-center gap-2 text-slate-500">EXP↑<input type="number" value="${inputs.annualExpenseIncrease}" onchange="setNumInput('annualExpenseIncrease', this.value)" class="w-12 bg-dark-600 border border-dark-500 rounded px-2 py-1 text-white text-center" step="0.5">%</label>
+                    <label class="flex items-center gap-2 text-slate-500">YRS<input type="number" value="${inputs.projectionYears}" onchange="setNumInput('projectionYears', this.value)" class="w-10 bg-dark-600 border border-dark-500 rounded px-2 py-1 text-white text-center"></label>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs">
+                    <thead>
+                        <tr class="border-b border-dark-500">
+                            <th class="px-4 py-3 text-left font-bold text-slate-500 tracking-wider sticky-col bg-dark-800 min-w-[200px] border-r border-dark-500">LINE ITEM</th>
+                            ${calc.years.map(y => `<th class="px-3 py-3 text-right font-bold text-slate-500 min-w-[90px]">${y.year}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${collapsibleHeader('INCOME', 'income', 'green')}
+                        ${expandedSections.income ? `
+                            ${projectionRow('Scheduled Rent', calc.years.map(y => y.scheduledRent), false, false, '', true)}
+                            ${inputs.laundryIncome > 0 ? projectionRow('Laundry Income', calc.years.map(y => y.laundryIncome), false, false, '', true) : ''}
+                        ` : ''}
+                        ${projectionRow('Gross Potential Income', calc.years.map(y => y.gpi), true)}
+                        ${projectionRow(`Vacancy (${inputs.vacancyPct}%)`, calc.years.map(y => -y.vacancy), false, true)}
+                        ${projectionRow('Effective Gross Income', calc.years.map(y => y.egi), true, false, 'green')}
+                        
+                        ${collapsibleHeader('OPERATING EXPENSES', 'expenses', 'red')}
+                        ${expandedSections.expenses ? `
+                            ${projectionRow('Real Estate Taxes', calc.years.map(y => y.yearTaxes), false, false, '', true)}
+                            ${projectionRow('Insurance', calc.years.map(y => y.yearInsurance), false, false, '', true)}
+                            ${projectionRow('Utilities', calc.years.map(y => y.yearUtilities), false, false, '', true)}
+                            ${projectionRow('Repairs & Maintenance', calc.years.map(y => y.yearRepairs), false, false, '', true)}
+                            ${projectionRow(`Management (${inputs.managementPct}%)`, calc.years.map(y => y.yearMgmt), false, false, '', true)}
+                            ${projectionRow('Other Operating', calc.years.map(y => y.yearOtherOp), false, false, '', true)}
+                        ` : ''}
+                        ${projectionRow('Total Operating Expenses', calc.years.map(y => y.totalOpex), true, false, 'red')}
+                        
+                        ${collapsibleHeader('NET INCOME', 'net', 'blue')}
+                        ${projectionRow('Net Operating Income', calc.years.map(y => y.noi), true, false, 'green')}
+                        ${expandedSections.net && calc.annualDebtService > 0 ? projectionRow('Debt Service', calc.years.map(y => -y.debtService), false, true, '', true) : ''}
+                        ${projectionRow('Cash Flow Before Tax', calc.years.map(y => y.cashFlow), true, false, 'blue')}
+                        
+                        <tr class="border-t-2 border-dark-500 bg-dark-600">
+                            <td class="px-4 py-3 font-bold text-amber-500 sticky-col bg-dark-600 min-w-[200px] border-r border-dark-500">CASH-ON-CASH</td>
+                            ${calc.years.map(y => {
+                                const coc = calc.totalCashRequired > 0 ? (y.cashFlow / calc.totalCashRequired) * 100 : 0;
+                                const cocClass = coc >= 8 ? 'text-emerald-500' : coc >= 0 ? 'text-white' : 'text-red-500';
+                                return `<td class="px-3 py-3 text-right font-bold ${cocClass}">${fmtDec(coc)}%</td>`;
+                            }).join('')}
+                        </tr>
+                        <tr class="bg-dark-800">
+                            <td class="px-4 py-2 text-slate-500 sticky-col bg-dark-800 min-w-[200px] border-r border-dark-500">CAP RATE</td>
+                            ${calc.years.map(y => `<td class="px-3 py-2 text-right text-slate-400">${fmtDec(inputs.purchasePrice > 0 ? (y.noi / inputs.purchasePrice) * 100 : 0)}%</td>`).join('')}
+                        </tr>
+                        ${calc.annualDebtService > 0 ? `
+                        <tr class="bg-dark-900">
+                            <td class="px-4 py-2 text-slate-500 sticky-col bg-dark-900 min-w-[200px] border-r border-dark-500">DSCR</td>
+                            ${calc.years.map(y => {
+                                const d = calc.annualDebtService > 0 ? y.noi / calc.annualDebtService : 0;
+                                const dClass = d >= 1.25 ? 'text-emerald-500' : d >= 1 ? 'text-amber-500' : 'text-red-500';
+                                return `<td class="px-3 py-2 text-right ${dClass}">${fmtDec(d, 2)}x</td>`;
+                            }).join('')}
+                        </tr>` : ''}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-600 text-xs py-4 tracking-wider">
+            INVESTOR PRO • <a href="/" class="text-amber-500 hover:underline">ZACHARY VORSTEG</a> • INSTITUTIONAL GRADE ANALYTICS
+        </footer>
+        `;
+    }
+
+    // ============================================================================
+    // TEMPLATE HELPERS
+    // ============================================================================
+
+    function metricCard(label, value, positive = false, negative = false) {
+        const valueClass = negative ? 'text-red-500' : positive ? 'text-emerald-500' : 'text-white';
+        return `<div class="bg-gradient-to-br from-dark-600 to-dark-900 rounded border border-dark-500 p-3"><div class="text-[9px] text-slate-500 tracking-widest mb-1">${label}</div><div class="text-lg font-bold ${valueClass}">${value}</div></div>`;
+    }
+
+    function kpiCard(kpi) {
+        const colors = { positive: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-500', negative: 'bg-red-500/10 border-red-500/30 text-red-500', warning: 'bg-amber-500/10 border-amber-500/30 text-amber-500', neutral: 'bg-dark-600 border-dark-500 text-white' };
+        const c = colors[kpi.status] || colors.neutral;
+        return `<div class="p-3 rounded border ${c.split(' ').slice(0, 2).join(' ')}"><div class="text-[10px] text-slate-500 tracking-wider mb-1">${kpi.label.toUpperCase()}</div><div class="text-lg font-bold ${c.split(' ').slice(2).join(' ')}">${kpi.value}</div></div>`;
+    }
+
+    function breakevenRow(label, value, current, ok) {
+        const icon = ok ? '<svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : '<svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+        return `<div class="flex items-center justify-between py-2 border-b border-dark-500 last:border-0"><div><div class="text-sm text-white">${label}</div><div class="text-[10px] text-slate-500">Current: ${current}</div></div><div class="flex items-center gap-2"><span class="font-bold text-white">${value}</span>${icon}</div></div>`;
+    }
+
+    function insightRow(insight) {
+        const colors = { positive: { border: 'border-emerald-500/30', bg: 'bg-emerald-500/10', text: 'text-emerald-500' }, negative: { border: 'border-red-500/30', bg: 'bg-red-500/10', text: 'text-red-500' }, warning: { border: 'border-amber-500/30', bg: 'bg-amber-500/10', text: 'text-amber-500' }, info: { border: 'border-blue-500/30', bg: 'bg-blue-500/10', text: 'text-blue-500' } };
+        const c = colors[insight.type] || colors.info;
+        return `<div class="flex items-start gap-3 p-3 rounded border ${c.border} ${c.bg}"><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><span class="text-sm font-bold ${c.text}">${insight.title}</span>${insight.value ? `<span class="text-xs font-bold text-white bg-dark-600 px-2 py-0.5 rounded">${insight.value}</span>` : ''}</div><p class="text-xs text-slate-400 mt-1">${insight.detail}</p></div></div>`;
+    }
+
+    function statBox(label, value, highlight = false) {
+        const bgClass = highlight ? 'bg-amber-500/20 border border-amber-500/30' : 'bg-dark-600';
+        const textClass = highlight ? 'text-amber-500' : 'text-white';
+        return `<div class="text-center p-2 rounded ${bgClass}"><div class="text-[9px] text-slate-500 tracking-widest">${label}</div><div class="text-sm font-bold ${textClass}">${value}</div></div>`;
+    }
+
+    function inputField(label, key, prefix = '', suffix = '') {
+        return `<div><label class="block text-[10px] text-slate-500 tracking-wider mb-1">${label}</label><div class="flex items-center bg-dark-600 border border-dark-500 rounded focus-within:border-amber-500">${prefix ? `<span class="pl-2 text-slate-500 text-sm">${prefix}</span>` : ''}<input type="number" value="${inputs[key]}" onchange="setNumInput('${key}', this.value)" class="w-full px-2 py-2 bg-transparent text-white text-right text-sm focus:outline-none">${suffix ? `<span class="pr-2 text-slate-500 text-xs">${suffix}</span>` : ''}</div></div>`;
+    }
+
+    function expenseInput(label, key, prefix = '', suffix = '', warning = false) {
+        const bgClass = warning ? 'bg-amber-500/10 border-amber-500/30' : 'bg-dark-600/50 border-dark-500';
+        return `<div class="flex items-center justify-between py-1.5 px-2 rounded border ${bgClass}"><span class="text-xs text-slate-400">${label}</span><div class="flex items-center">${prefix ? `<span class="text-slate-500 text-xs mr-1">${prefix}</span>` : ''}<input type="number" value="${inputs[key]}" onchange="setNumInput('${key}', this.value)" class="w-16 bg-dark-600 border border-dark-500 rounded px-2 py-1 text-white text-right text-xs focus:border-amber-500 focus:outline-none">${suffix ? `<span class="text-slate-500 text-xs ml-1">${suffix}</span>` : ''}</div></div>`;
+    }
+
+    function summaryRow(label, value, highlight = false, negative = false) {
+        const bgClass = highlight ? 'bg-emerald-500/10 border border-emerald-500/30' : negative ? 'bg-red-500/10 border border-red-500/30' : 'bg-dark-600/50';
+        const textClass = highlight ? 'text-emerald-500 font-bold' : negative ? 'text-red-500 font-bold' : 'text-slate-400';
+        const valueClass = highlight ? 'text-emerald-500' : negative ? 'text-red-500' : 'text-white';
+        return `<div class="flex items-center justify-between py-2 px-3 rounded ${bgClass}"><span class="text-sm ${textClass}">${label}</span><span class="text-sm font-bold ${valueClass}">${value}</span></div>`;
+    }
+
+    function resultCard(label, value, positive = false, negative = false) {
+        const bgClass = negative ? 'bg-red-500/10 border-red-500/30' : positive ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-dark-600 border-dark-500';
+        const textClass = negative ? 'text-red-500' : positive ? 'text-emerald-500' : 'text-white';
+        return `<div class="p-3 rounded border text-center ${bgClass}"><div class="text-[9px] text-slate-500 tracking-widest mb-1">${label}</div><div class="text-xl font-bold ${textClass}">${value}</div></div>`;
+    }
+
+    function unitRow(unit, idx) {
+        const tenantClass = (unit.tenant || '').toLowerCase() === 'vacant' ? 'border-amber-500/50 text-amber-500' : 'border-dark-500 text-slate-400';
+        const bgClass = idx % 2 ? 'bg-dark-900' : '';
+        return `<tr class="border-b border-dark-600 hover:bg-dark-600/50 ${bgClass}"><td class="px-4 py-2"><input type="text" value="${unit.unitNumber}" onchange="updateUnit('${unit.id}', 'unitNumber', this.value)" class="w-20 bg-transparent border border-dark-500 rounded px-2 py-1 text-white text-sm focus:border-amber-500 focus:outline-none"></td><td class="px-4 py-2"><input type="text" value="${unit.tenant || ''}" onchange="updateUnit('${unit.id}', 'tenant', this.value)" placeholder="—" class="w-32 bg-transparent border rounded px-2 py-1 text-sm focus:border-amber-500 focus:outline-none ${tenantClass}"></td><td class="px-4 py-2 text-right"><input type="number" value="${unit.sqft}" onchange="updateUnit('${unit.id}', 'sqft', this.value)" class="w-16 bg-transparent border border-dark-500 rounded px-2 py-1 text-white text-sm text-right focus:border-amber-500 focus:outline-none"></td><td class="px-4 py-2 text-right"><div class="inline-flex items-center"><span class="text-slate-500 mr-1">$</span><input type="number" value="${unit.rent}" onchange="updateUnit('${unit.id}', 'rent', this.value)" class="w-16 bg-transparent border border-dark-500 rounded px-2 py-1 text-white text-sm text-right focus:border-amber-500 focus:outline-none"></div></td><td class="px-4 py-2 text-right text-slate-500">$${fmtDec(unit.sqft > 0 ? unit.rent / unit.sqft : 0)}</td><td class="px-4 py-2">${inputs.units.length > 1 ? `<button onclick="removeUnit('${unit.id}')" class="p-1 text-slate-500 hover:text-red-500 transition-colors">×</button>` : ''}</td></tr>`;
+    }
+
+    function collapsibleHeader(title, section, color) {
+        const colors = { green: 'bg-emerald-500', red: 'bg-red-500', blue: 'bg-blue-500' };
+        const icon = expandedSections[section] ? '▼' : '▶';
+        return `<tr class="${colors[color]} cursor-pointer hover:opacity-90" onclick="toggleSection('${section}')"><td class="px-4 py-2 font-bold text-white text-xs tracking-wider sticky-col ${colors[color]} min-w-[200px] border-r border-white/20"><span class="mr-2">${icon}</span>${title}</td><td colspan="99"></td></tr>`;
+    }
+
+    function projectionRow(label, values, bold = false, negative = false, highlight = '', indent = false) {
+        const stickyBg = highlight === 'green' ? 'bg-[#0d2818]' : highlight === 'red' ? 'bg-[#2a1215]' : highlight === 'blue' ? 'bg-[#0f1a2e]' : 'bg-dark-800';
+        const rowBg = highlight === 'green' ? 'bg-emerald-500/10' : highlight === 'red' ? 'bg-red-500/10' : highlight === 'blue' ? 'bg-blue-500/10' : '';
+        const textClass = highlight === 'green' ? 'text-emerald-500' : highlight === 'red' ? 'text-red-500' : highlight === 'blue' ? 'text-blue-500' : '';
+        const labelClass = bold ? `font-bold ${textClass || 'text-white'}` : 'text-slate-400';
+        const pl = indent ? 'pl-8' : 'px-4';
+        return `<tr class="border-b border-dark-600 ${rowBg}"><td class="${pl} py-2 sticky-col min-w-[200px] border-r border-dark-500 ${stickyBg} ${labelClass}">${label}</td>${values.map(v => {
+            const valClass = negative && v < 0 ? 'text-red-500' : (bold ? `font-bold ${textClass || 'text-white'}` : 'text-slate-400');
+            const display = negative && v < 0 ? `(${fmt(Math.abs(v))})` : `$${fmt(Math.abs(v))}`;
+            return `<td class="px-3 py-2 text-right ${valClass}">${display}</td>`;
+        }).join('')}</tr>`;
+    }
+
+    // Initialize
+    render();
+    </script>
+</body>
+</html>
+
