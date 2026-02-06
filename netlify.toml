@@ -26,16 +26,16 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "frame-ancestors 'none'"
 
-# Cache CSS/JS for 1 year (content-hashed by Netlify)
+# Cache CSS/JS for 1 hour, revalidate (filenames aren't hashed)
 [[headers]]
   for = "/*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
   for = "/*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 # Cache images for 1 year (immutable)
 [[headers]]

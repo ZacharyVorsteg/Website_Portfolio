@@ -297,8 +297,6 @@ header.scrolled {
 section {
     padding: 80px 0;
     contain: layout style paint;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 600px;
 }
 
 @media (min-width: 768px) {
@@ -313,7 +311,6 @@ section {
     padding-top: calc(var(--header-height) + 68px);
     padding-bottom: 68px;
     background: var(--gray-50);
-    content-visibility: visible;
     min-height: 85vh;
     display: flex;
     align-items: center;
