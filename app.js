@@ -22,18 +22,16 @@ mobileMenu.addEventListener('click', function(e) {
     if (e.target === mobileMenu) closeMobileMenu();
 });
 
-// Header scroll (throttled)
-let scrollTicking = false;
+// Header scroll — only toggle class when state actually changes
 const headerEl = document.querySelector('header');
+let headerScrolled = false;
 window.addEventListener('scroll', () => {
-    if (!scrollTicking) {
-        scrollTicking = true;
-        requestAnimationFrame(() => {
-            headerEl.classList.toggle('scrolled', window.scrollY > 100);
-            scrollTicking = false;
-        });
+    const shouldBeScrolled = window.scrollY > 100;
+    if (shouldBeScrolled !== headerScrolled) {
+        headerScrolled = shouldBeScrolled;
+        headerEl.classList.toggle('scrolled', shouldBeScrolled);
     }
-});
+}, { passive: true });
 
 // Form handling
 const discoveryForm = document.getElementById('discoveryForm');
@@ -70,11 +68,14 @@ if (discoveryForm) {
     });
 }
 
-// Fade-in on scroll
+// Fade-in on scroll — unobserve after visible to stop firing during scroll
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.15 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
