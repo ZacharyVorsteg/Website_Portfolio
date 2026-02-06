@@ -38,6 +38,9 @@ node_modules/
 .next/
 next-env.d.ts
 
+# Tailwind build files (keep config, ignore input)
+tailwind-input.css
+
 # Logs
 logs
 *.log
