@@ -68,6 +68,17 @@ if (discoveryForm) {
     });
 }
 
+// Smooth scroll only for anchor clicks (not CSS scroll-behavior which jams Chrome)
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
 // Fade-in on scroll — unobserve after visible to stop firing during scroll
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
