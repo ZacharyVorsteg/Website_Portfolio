@@ -6,13 +6,10 @@
     <title>Investor Pro Forma | Zachary Vorsteg</title>
     <meta name="description" content="Free real estate investment pro forma analysis tool with complete operating statement, leasing costs, and cash flow analysis.">
     <link rel="canonical" href="https://zacharyvorsteg.com/proforma.html">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="proforma-styles.css">
     <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(180deg, #FEFDFB 0%, #F8FAFC 100%); }
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(180deg, #FEFDFB 0%, #F8FAFC 100%); }
         input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type="number"] { -moz-appearance: textfield; }
         .input-field { background: #FFFFFF !important; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: all 0.2s; }
@@ -130,7 +127,8 @@
     const fmt = n => isNaN(n) || !isFinite(n) ? '0' : Math.round(n).toLocaleString('en-US');
     const fmtDec = (n, dec = 2) => isNaN(n) || !isFinite(n) ? '0.00' : n.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
 
-    function save() { localStorage.setItem('proforma-v3', JSON.stringify(inputs)); render(); }
+    let renderTimeout = null;
+    function save() { localStorage.setItem('proforma-v3', JSON.stringify(inputs)); if (renderTimeout) cancelAnimationFrame(renderTimeout); renderTimeout = requestAnimationFrame(render); }
     function resetAll() { if (confirm('Reset all values to defaults?')) { inputs = JSON.parse(JSON.stringify(defaultInputs)); save(); } }
     function setInput(key, value) { inputs[key] = value; save(); }
     function setNumInput(key, value) { inputs[key] = parseFloat(value) || 0; save(); }

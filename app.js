@@ -22,10 +22,17 @@ mobileMenu.addEventListener('click', function(e) {
     if (e.target === mobileMenu) closeMobileMenu();
 });
 
-// Header scroll
+// Header scroll (throttled)
+let scrollTicking = false;
+const headerEl = document.querySelector('header');
 window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    header.classList.toggle('scrolled', window.scrollY > 100);
+    if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+            headerEl.classList.toggle('scrolled', window.scrollY > 100);
+            scrollTicking = false;
+        });
+    }
 });
 
 // Form handling

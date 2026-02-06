@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17147516072"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17147516072');
-    </script>
-
     <title>Zachary Vorsteg | Strategic Finance, M&A Modeling & Custom Development | West Palm Beach, FL</title>
     <meta name="description" content="Zachary Vorsteg — Finance executive, builder, operator in West Palm Beach, FL. M&A synergy modeling, automated FP&A infrastructure, custom iOS and web platforms. 4+ years FP&A. FAU Finance '20. Florida licensed real estate. Available nationwide.">
     <meta name="keywords" content="Zachary Vorsteg, M&A modeling, FP&A systems, financial automation, real estate syndication, custom development, strategic finance, West Palm Beach, Florida, financial planning and analysis, SaaS metrics, investor pro forma, Trusenda CRM">
@@ -214,6 +205,7 @@
     }
     </script>
     
+    <link rel="preload" as="image" href="images/zach-headshot.jpg">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -561,5 +553,20 @@
 
 
     <script src="app.js" defer></script>
+    <script>
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17147516072';
+      s.async = true;
+      document.head.appendChild(s);
+      s.onload = function() {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'AW-17147516072');
+      };
+    });
+    </script>
 </body>
 </html>
