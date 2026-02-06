@@ -73,7 +73,7 @@ p { margin-bottom: 16px; }
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
     cursor: pointer;
     border: none;
     min-height: 48px;
@@ -125,10 +125,9 @@ header {
     right: 0;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
 }
 
 header.scrolled {
@@ -165,7 +164,7 @@ header.scrolled {
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease;
     padding: 8px 12px;
     border-radius: 6px;
 }
@@ -205,7 +204,7 @@ header.scrolled {
     width: 100%;
     height: 2px;
     background: var(--gray-900);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .mobile-menu-btn.active span:nth-child(1) {
@@ -230,7 +229,7 @@ header.scrolled {
     z-index: 9999;
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .mobile-menu.active {
@@ -839,7 +838,7 @@ section {
     border-radius: 16px;
     border: 1px solid var(--gray-200);
     text-align: center;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .service-card:hover {
@@ -1002,7 +1001,7 @@ footer {
     border-radius: 8px;
     color: var(--white);
     font-size: 16px;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     min-height: 48px;
 }
 
@@ -1101,7 +1100,7 @@ footer {
 .fade-in {
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.6s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .fade-in.visible {
