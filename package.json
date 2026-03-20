@@ -1,0 +1,20 @@
+{
+  "name": "zacharyvorsteg-static-site",
+  "version": "1.0.0",
+  "description": "Static HTML site for zacharyvorsteg.com",
+  "scripts": {
+    "build": "node build-blog.js"
+  },
+  "dependencies": {
+    "marked": "^15.0.0"
+  },
+  "author": "Zachary Vorsteg",
+  "license": "UNLICENSED",
+  "private": true
+}
+
+
+
+
+
+
