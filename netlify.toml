@@ -1,6 +1,7 @@
 # Static HTML site - NO framework
 [build]
   publish = "."
+  command = "npm install && node build-blog.js"
 
 # Asset optimization
 [build.processing]
