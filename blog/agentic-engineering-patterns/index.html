@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Engineering: What Replaced Vibe Coding | Zachary Vorsteg</title>
+    <meta name="description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta name="keywords" content="agentic engineering, agentic engineering patterns, what replaced vibe coding, agentic engineering vs vibe coding, AI coding methodology 2026, agentic engineering solo founder, AI agent engineering workflow, task decomposition AI agents, Karpathy agentic engineering, Willison agentic engineering patterns">
+    <link rel="canonical" href="https://zacharyvorsteg.com/blog/agentic-engineering-patterns/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Agentic Engineering: What Replaced Vibe Coding">
+    <meta property="og:description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://zacharyvorsteg.com/blog/agentic-engineering-patterns/">
+    <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
+    <meta property="article:published_time" content="2026-03-21">
+    <meta property="article:author" content="Zachary Vorsteg">
+    <meta property="article:section" content="AI Workflow & Context Engineering">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Agentic Engineering: What Replaced Vibe Coding">
+    <meta name="twitter:description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Agentic Engineering: What Replaced Vibe Coding",
+      "description": "Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.",
+      "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "datePublished": "2026-03-21",
+      "author": {
+        "@type": "Person",
+        "name": "Zachary Vorsteg",
+        "url": "https://zacharyvorsteg.com",
+        "jobTitle": "Commercial Real Estate Broker & Software Developer",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "[BROKERAGE_NAME]"
+        }
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Zachary Vorsteg",
+        "url": "https://zacharyvorsteg.com"
+      }
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zacharyvorsteg.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://zacharyvorsteg.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Agentic Engineering: What Replaced Vibe Coding",
+          "item": "https://zacharyvorsteg.com/blog/agentic-engineering-patterns/"
+        }
+      ]
+    }
+    </script>
+
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "What is agentic engineering?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Agentic engineering is a development methodology where human engineers own architecture, specification, and review while AI agents own implementation. Andrej Karpathy coined the term on February 4, 2026, positioning it as vibe coding's professional counterpart — a workflow where humans decompose tasks, set constraints, and verify outputs while agents generate code within those boundaries. Simon Willison distilled the core insight at the Pragmatic Summit in February 2026: delivering new code has become nearly free, but delivering good code remains expensive. The skill is architecture, not implementation (Simon Willison, simonwillison.net, March 14, 2026)."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How is agentic engineering different from vibe coding?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Vibe coding accepts AI-generated code without deep review. Agentic engineering requires understanding the architecture and reviewing every output at defined checkpoints. The fundamental difference is the review gate — in agentic engineering, nothing ships without human verification scaled to the stakes involved. Apple blocking updates for vibe coding apps in early 2026 (9to5Mac, March 18, 2026) signals where the industry is heading."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What tools do I need for agentic engineering?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Any AI coding tool that supports multi-step task execution — not just autocomplete. Claude Code, Cursor, and GitHub Copilot in agent mode all support agentic workflows to varying degrees. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (Anthropic / Linux Foundation, 2025), expanding what agents can act on beyond code generation."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Can beginners practice agentic engineering?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. NVIDIA's GTC 2026 featured agentic AI development platforms aimed at broadening access, and ICSE's AGENT 2026 workshop is building educational frameworks for the methodology."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How much time does agentic engineering save compared to traditional development?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Structured agentic engineering — with proper task decomposition and calibrated review — compounds that gain considerably. In my practice, the 30:70 human-to-agent time ratio during sessions means I'm actively working about 30% of session time while the agent implements during the other 70%. Savings scale with task decomposability: well-defined work saves more, novel exploratory work saves less."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is agentic engineering only for coding?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for research and financial analysis , public documentation , and CRE deal screening . The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you're directing AI agents to produce work."
+                  }
+            }
+      ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+                  ".article-header h1",
+                  ".article-description"
+            ]
+      },
+      "url": "https://zacharyvorsteg.com/blog/agentic-engineering-patterns/"
+}
+    </script>
+
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F7F7F7;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --accent: #0066CC;
+            --accent-hover: #0052A3;
+            --max-width: 1200px;
+            --section-padding: 80px;
+            --header-height: 72px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(32px, 5.5vw, 56px); }
+        h2 { font-size: clamp(28px, 4vw, 42px); }
+        h3 { font-size: clamp(20px, 3vw, 28px); }
+
+        p { margin-bottom: 16px; }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 768px) {
+            .container { padding: 0 24px; }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            min-height: 48px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:hover {
+            background: var(--gray-800);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-900);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-900);
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+            letter-spacing: -0.02em;
+        }
+
+        .desktop-nav {
+            display: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-nav { display: flex; }
+        }
+
+        .desktop-nav a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--gray-900);
+            background: var(--gray-50);
+        }
+
+        .desktop-nav .btn {
+            margin-left: 8px;
+            background: var(--black) !important;
+            color: var(--white) !important;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            width: 48px;
+            height: 48px;
+            padding: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--gray-900);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .mobile-menu-content {
+            background: var(--white);
+            width: 85%;
+            max-width: 350px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active .mobile-menu-content {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .mobile-menu-content nav {
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu-content nav a {
+            padding: 1rem 0;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mobile-menu-content nav a.btn {
+            margin-top: 1.5rem;
+            text-align: center;
+            border: none;
+            background: var(--gray-900);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 14px 28px;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: var(--header-height);
+            padding-top: 40px;
+        }
+
+        /* Article Header */
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(to bottom, var(--white) 0%, var(--gray-50) 100%);
+        }
+
+        .article-header-content {
+            max-width: 800px;
+        }
+
+        .article-breadcrumb {
+            display: flex;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-meta-top {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .article-pillar-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .article-date,
+        .article-time {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .article-header h1 {
+            margin: 20px 0;
+            color: var(--gray-900);
+        }
+
+        .article-description {
+            font-size: 18px;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* Article Content */
+        .article-body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 0;
+        }
+
+        .article-body h2 {
+            margin: 48px 0 24px 0;
+            color: var(--gray-900);
+        }
+
+        .article-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-body h3 {
+            margin: 32px 0 16px 0;
+            color: var(--gray-800);
+        }
+
+        .article-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--gray-800);
+        }
+
+        .article-body ul,
+        .article-body ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+        }
+
+        .article-body li {
+            margin-bottom: 12px;
+            color: var(--gray-800);
+            line-height: 1.8;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
+        .article-body a:hover {
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .article-body blockquote {
+            padding: 20px 24px;
+            margin: 32px 0;
+            border-left: 4px solid var(--accent);
+            background: var(--gray-50);
+            color: var(--gray-700);
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .article-body code {
+            background: var(--gray-100);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--gray-800);
+        }
+
+        .article-body pre {
+            background: var(--gray-900);
+            color: var(--gray-100);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 32px 0;
+            line-height: 1.4;
+        }
+
+        .article-body pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Author Bio */
+        .article-author {
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding: 40px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .author-photo {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gray-200);
+        }
+
+        .author-info h4 {
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+
+        /* CTA Section */
+        .article-cta {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, #0052A3 100%);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .article-cta h3 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .article-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+        }
+
+        .article-cta .btn {
+            background: var(--white);
+            color: var(--accent);
+        }
+
+        .article-cta .btn:hover {
+            background: var(--gray-100);
+        }
+
+        /* Related Articles */
+        .related-section {
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding: 60px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .related-section h3 {
+            margin-bottom: 32px;
+        }
+
+        .related-articles {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .related-articles {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .related-card {
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+        }
+
+        .related-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .related-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+
+        .related-card:hover h4 {
+            color: var(--accent);
+        }
+
+        .related-desc {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-meta {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* Disclaimer */
+        .blog-disclaimer {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 24px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .disclaimer-text {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer-eho {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eho-icon {
+            font-size: 16px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-author {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .article-breadcrumb {
+                font-size: 12px;
+            }
+
+            .article-body {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="/" class="logo">Zachary Vorsteg</a>
+
+                <nav class="desktop-nav">
+                    <a href="/#work">Work</a>
+                    <a href="/#services">Services</a>
+                    <a href="/#templates">Templates</a>
+                    <a href="/blog/" class="active">Blog</a>
+                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
+                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <button class="mobile-menu-close" aria-label="Close menu">×</button>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/#work">Work</a>
+                <a href="/#services">Services</a>
+                <a href="/#templates">Templates</a>
+                <a href="/blog/">Blog</a>
+                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    Pro Forma Tool
+                </a>
+                <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        <!-- Article Header -->
+        <section class="article-header">
+            <div class="container">
+                <div class="article-header-content fade-in">
+                    <div class="article-breadcrumb">
+                        <a href="/">Home</a>
+                        <span>/</span>
+                        <a href="/blog/">Blog</a>
+                        <span>/</span>
+                        <span>Agentic Engineering: What Replaced Vibe Coding</span>
+                    </div>
+
+                    <div class="article-meta-top">
+                        <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
+                        <time class="article-date">March 20, 2026</time>
+                        <span class="article-time">20 min read</span>
+                    </div>
+
+                    <h1>Agentic Engineering: What Replaced Vibe Coding</h1>
+                    <p class="article-description">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <article class="article-body">
+            <div class="container">
+                <p>February 4, 2026 — exactly one year after his original vibe coding tweet — Andrej Karpathy coined &quot;agentic engineering&quot; (Andrej Karpathy, X/Twitter, February 4, 2026).</p>
+<p>Why does the distinction matter? Vibe coding — accepting AI-generated code without understanding it — still has a place in prototyping. Production demands something else entirely. Apple blocked updates for vibe coding apps like Replit and Vibecode that same month, citing App Store Guideline 2.5.2 on dynamically executed code (9to5Mac, March 18, 2026). Meanwhile, platforms like Lovable and Bolt had already watched traffic decline roughly 50% from their mid-2025 peaks as initial hype faded and mainstream tools absorbed the market. What worked for throwaway prototypes was failing hard at production.</p>
+<p>Agentic engineering is the professional counterpart. Not a rebrand — a fundamentally different operating mode. You architect; the AI implements. Every output passes through a human review gate. The skill isn&#39;t prompting. It isn&#39;t coding. It&#39;s knowing what to build and verifying it was built right.</p>
+<p>I&#39;ve been working this way across <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">four ventures</a> — trading infrastructure, a CRE practice, IoT hardware, and an iOS app called BidPro. Other posts on this site cover <a href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">configuring the agent environment</a> and <a href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">judging code quality</a>. This one tackles the methodology itself — the actual mechanics of engineering with AI agents during a development session.</p>
+<h2>What Agentic Engineering Actually Means</h2>
+<p>Three moments in early 2026 crystallized the term. Karpathy coined it as vibe coding&#39;s professional counterpart — &quot;agentic because the new default is that you are not writing the code directly 99% of the time, you are orchestrating agents,&quot; he wrote. &quot;Engineering to emphasize that there is an art and science and expertise to it.&quot; At the Pragmatic Summit in February 2026, Simon Willison expanded on the idea with a sharper framing: delivering new code has become nearly free, but delivering good code — architecture, verification, integration — remains expensive. Engineering value shifts from writing implementations to designing the structure agents implement within (Simon Willison, simonwillison.net, March 14, 2026).</p>
+<p>Institutions picked it up fast. Remarkably fast. IBM published a formal &quot;What is Agentic Engineering&quot; explainer (IBM, March 2026). NVIDIA featured agentic AI development platforms at GTC 2026 (NVIDIA, GTC 2026). ICSE — the International Conference on Software Engineering — announced AGENT 2026, a dedicated workshop on agentic engineering practices (ICSE, 2026). From tweet to academic workshop in under two months.</p>
+<h3>The Three Pillars</h3>
+<p>Every session runs on three principles:</p>
+<ol>
+<li><strong>You design, the agent implements.</strong> Architectural decisions — what to build, how components connect, what constraints matter — stay with you. The agent handles code generation, file modifications, test scaffolding.</li>
+<li><strong>Every output passes a review gate.</strong> Nothing ships unreviewed. Review depth scales with stakes, but the gate itself is never absent. That&#39;s the line separating this from vibe coding, where review is optional or skipped entirely.</li>
+<li><strong>Task decomposition is the methodology.</strong> How skillfully you break work into delegatable units determines the session&#39;s outcome — not prompt quality, not how clever the agent is.</li>
+</ol>
+<h3>Why Prompting and Vibe Coding Both Miss the Point</h3>
+<p>Prompt engineering optimizes a single message. Vibe coding strips out human oversight altogether. Agentic engineering sits above both — you&#39;re decomposing work into agent-executable tasks and reviewing results at defined checkpoints, not crafting the perfect prompt.</p>
+<p>Anthropic&#39;s 2026 Agentic Coding Trends Report captures the gap precisely: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks (Anthropic, January 2026). That 40-60% in the middle — tasks where AI participates but doesn&#39;t own the outcome — is exactly where agentic engineering lives.</p>
+<h2>The Karpathy-Willison Framework</h2>
+<p>Both Karpathy and Willison converge on the core idea: the human&#39;s role shifts from implementation to architecture. Where they diverge is emphasis.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Karpathy&#39;s Framework</th>
+<th>Willison&#39;s Framework</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Core metaphor</strong></td>
+<td>Director overseeing an ensemble</td>
+<td>Architect designing for builders</td>
+</tr>
+<tr>
+<td><strong>Primary skill</strong></td>
+<td>Quality control of agent output</td>
+<td>System architecture and constraint specification</td>
+</tr>
+<tr>
+<td><strong>On code review</strong></td>
+<td>Essential — verify every output</td>
+<td>Essential — but review depth is context-dependent</td>
+</tr>
+<tr>
+<td><strong>On agent autonomy</strong></td>
+<td>Supervised autonomy — agents execute, humans verify</td>
+<td>Constrained autonomy — agents operate within architectural boundaries</td>
+</tr>
+<tr>
+<td><strong>On coding&#39;s future</strong></td>
+<td>&quot;Code is just the artifact&quot;</td>
+<td>Delivering new code is nearly free; delivering good code is not</td>
+</tr>
+<tr>
+<td><strong>Risk emphasis</strong></td>
+<td>Over-delegation without review</td>
+<td>Under-specification leading to misaligned output</td>
+</tr>
+<tr>
+<td><strong>Practical implication</strong></td>
+<td>Build review checkpoints into every workflow</td>
+<td>Invest in specification upfront, reduce review overhead downstream</td>
+</tr>
+</tbody></table>
+<p>My practice borrows from both. Karpathy&#39;s emphasis on review gates is right — I verify everything touching <a href="https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/">production trading systems</a>. Willison&#39;s emphasis on specification is equally right — a well-decomposed task produces better first-draft output than a vague instruction paired with aggressive review after the fact.</p>
+<p>Where both frameworks fall short: neither addresses the multi-codebase reality of running several ventures simultaneously. When I&#39;m engineering across trading infrastructure, an iOS app, and IoT firmware in the same day, context-switching between domains changes how you decompose and review. A task spec for a SwiftUI component looks nothing like one for a Python trading strategy module. The methodology has to bend with the domain.</p>
+<h2>Task Decomposition: The Core Skill</h2>
+<p>Here&#39;s the defining skill: breaking work into units an AI agent can execute well. Go too broad and the agent flounders — generates irrelevant code, loses track of requirements, makes architectural choices you&#39;d never endorse. Go too narrow and you&#39;re micromanaging, writing specs that take longer than just writing the code yourself.</p>
+<h3>The Specificity Gradient</h3>
+<p>I work in three tiers, scaled to stakes:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Scope</th>
+<th>Agent Freedom</th>
+<th>Review Depth</th>
+<th>When to Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Directive</strong></td>
+<td>High-level intent</td>
+<td>Maximum — agent chooses approach</td>
+<td>Quick scan</td>
+<td>Straightforward patterns, low stakes</td>
+</tr>
+<tr>
+<td><strong>Specified</strong></td>
+<td>Intent + structural constraints</td>
+<td>Moderate — approach bounded by spec</td>
+<td>Structural review against spec</td>
+<td>Architecture matters, medium stakes</td>
+</tr>
+<tr>
+<td><strong>Surgical</strong></td>
+<td>Exact location + exact change</td>
+<td>Minimal — agent executes precisely</td>
+<td>Line-by-line verification</td>
+<td>Critical code, conventions matter</td>
+</tr>
+</tbody></table>
+<p>What does each look like in practice? A directive: &quot;Add pagination to the blog index.&quot; Specified: &quot;Add pagination to the blog index. 10 posts per page. Generate static HTML for each page. Update the sitemap.&quot; Surgical: &quot;In build-blog.js line 47, replace the single-file generation with a loop that creates page-1.html through page-N.html based on the post count.&quot;</p>
+<p>Cursor hit $2 billion in annualized revenue by March 2026 — the fastest any SaaS company has reached that level (TechCrunch / Bloomberg, March 2026). Hunger for AI coding tools is real and accelerating. But the tool doesn&#39;t determine outcomes. Decomposition does. The same model produces wildly different results depending on whether you hand it a directive, a specification, or a surgical instruction.</p>
+<h3>Batch Delegation vs Sequential Refinement</h3>
+<p>Some tasks decompose into parallel units. Others demand sequential passes where each step&#39;s output informs the next.</p>
+<p><strong>Batch example:</strong> &quot;Research these three libraries for WebSocket support, compare their API surfaces, and recommend one.&quot; Three independent searches feeding one synthesis. I spawn parallel agents and collate results.</p>
+<p><strong>Sequential example:</strong> &quot;Read the current auth module. Identify the token refresh failure point. Write a fix. Write a test for the fix.&quot; Each step produces context the next step needs. Running these in parallel produces garbage — guaranteed.</p>
+<p>Which pattern fits a given task? Judgment call. You make it constantly. Multi-agent orchestration inquiries surged 1,445% from Q1 2024 to Q2 2025 (Gartner, December 2025). Tooling for parallel agent work is exploding. But the parallelize-vs-sequence decision? Still yours.</p>
+<h3>When to Spec and When to Explore</h3>
+<p>Not every task deserves a detailed specification. My rule of thumb:</p>
+<ul>
+<li><strong>Known pattern, low stakes</strong> — Directive. &quot;Add a loading spinner.&quot; The agent knows what a spinner looks like.</li>
+<li><strong>Known pattern, high stakes</strong> — Specified. &quot;Add retry logic to the trading bot&#39;s order submission. Max 3 retries, exponential backoff, log each failure.&quot; Can&#39;t afford misinterpretation here.</li>
+<li><strong>Unknown territory</strong> — Let the agent explore first, then spec from what it finds. &quot;What are the options for cellular modem diagnostics on this chipset?&quot; I don&#39;t know enough to write a spec. The agent&#39;s research output becomes input for my specification.</li>
+</ul>
+<h2>Review Gates: Where Judgment Lives</h2>
+<p>Every agentic engineering session includes checkpoints where I evaluate agent output before the next step. Depth and frequency vary by domain — but the gates themselves are non-negotiable.</p>
+<h3>The Three-Point Check</h3>
+<p>At every review gate, three questions:</p>
+<ol>
+<li><strong>Correctness</strong> — Does the output match the spec? Does the code actually do what I asked?</li>
+<li><strong>Context</strong> — Does the agent understand <em>why</em> this change matters? Or did it produce technically correct code that misses the larger architectural intent?</li>
+<li><strong>Side effects</strong> — Did the change break anything adjacent? Did the agent modify files it shouldn&#39;t have touched?</li>
+</ol>
+<p>Context is the check most people skip. And it&#39;s the one that catches the worst bugs. An agent can generate a perfectly working function that solves the wrong problem because it didn&#39;t grasp the broader system design. I&#39;ve watched one produce a correct database query that returns the right data from the wrong table — syntactically perfect, semantically wrong. That&#39;s what review gates catch that running the test suite never will.</p>
+<h3>Trust Calibration by Domain</h3>
+<p>Review intensity varies with what&#39;s at stake:</p>
+<pre><code>REVIEW DEPTH BY DOMAIN
+
+Trading strategy logic:     LINE-BY-LINE
+  → Every conditional, every calculation, every edge case
+  → No agent output ships without tracing the logic manually
+
+iOS UI components:           STRUCTURAL
+  → Check layout, data binding, state management
+  → Skip reviewing boilerplate SwiftUI modifiers
+
+Blog infrastructure:         SCAN
+  → Quick visual check of output
+  → Run the build, verify the page renders
+
+Research outputs:            CROSS-REFERENCE
+  → Verify sources exist
+  → Check numbers against original publications
+  → Flag anything unconfirmable in 60 seconds
+</code></pre>
+<p>McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Those gains compound when review depth matches stakes appropriately. Over-reviewing wastes them. Under-reviewing creates the <a href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">problems I&#39;ve documented elsewhere</a>. Getting the calibration right is the engineering.</p>
+<h2>Architecture Is the Skill — Code Is the Commodity</h2>
+<p>Willison&#39;s framing resonates because I live it daily. Code-writing time has dropped 60-70% over the past year for me. Design time — systems, interfaces, constraints — has roughly doubled.</p>
+<h3>What I Design vs What the Agent Implements</h3>
+<p>Before starting a coding session, I now spend 10-15 minutes mapping the work:</p>
+<ul>
+<li><strong>Interface contracts</strong> — What does this module expose? What does it consume?</li>
+<li><strong>Data flow</strong> — Where does information enter, transform, and persist?</li>
+<li><strong>Constraint boundaries</strong> — What must this code NOT do? What failures must it handle gracefully?</li>
+<li><strong>Integration points</strong> — What existing systems does this touch, and what invariants must hold?</li>
+</ul>
+<p>The agent receives this map as a specified task. It generates the implementation. I review against the specification — not against some vague sense of &quot;does this look right.&quot;</p>
+<p>Twenty-five percent of Y Combinator&#39;s Winter 2025 cohort had codebases that were 95% or more AI-generated (Garry Tan, Y Combinator, March 2025). At that scale, those founders are architects directing AI implementation. Agentic engineering by practice, whether they use the term or not.</p>
+<h3>The Session Structure That Emerged</h3>
+<p>After months of iteration, a repeating pattern crystallized:</p>
+<ol>
+<li><strong>Survey</strong> (5 min) — Agent reads the relevant codebase, surfaces what changed since last session, identifies open issues.</li>
+<li><strong>Plan</strong> (10 min) — I decompose the work into tasks, assign specificity levels, flag which tasks can run in parallel.</li>
+<li><strong>Execute</strong> (variable) — Agent implements. I work on something else or start reviewing as outputs land.</li>
+<li><strong>Gate</strong> (10-15 min per batch) — I review completed tasks against specs. Approve, revise, or reject.</li>
+<li><strong>Integrate</strong> (5-10 min) — Agent runs tests, checks for regressions, commits approved changes.</li>
+</ol>
+<p>Three to five cycles make a productive session. My ratio of active time to agent working time runs roughly 30:70 — designing and reviewing for 30% of the clock, the agent implementing for 70%. Some days I feel less like a developer and more like a technical project manager who happens to understand the codebase deeply. Peng et al. measured a 55.8% speed improvement for developers using GitHub Copilot in controlled experiments (Peng et al., arXiv, February 2023). Structured sessions beat that number by eliminating the back-and-forth prompting cycle that autocomplete tools impose.</p>
+<h2>Real Session Walkthroughs</h2>
+<p>Theory is cheap. Here are two actual sessions, annotated with the decisions that mattered.</p>
+<h3>Session 1: Cross-Codebase Bug Fix</h3>
+<p>A test failure in BidPro&#39;s PropertyDetailView traced to a nil optional — but the root cause turned out to be a Supabase schema change that both the iOS app and the blog build system consumed.</p>
+<pre><code>SESSION: Bug fix — PropertyDetailView nil crash
+TIME: 47 minutes total (14 min human, 33 min agent)
+
+[SURVEY] Agent reads test failure, traces to
+  PropertyDetailView.swift:142 — forced-unwrap on a
+  field Supabase now returns as nullable
+
+[PLAN] I decompose:
+  1. Fix nil handling in PropertyDetailView (SURGICAL)
+  2. Check if blog build system uses same field (DIRECTIVE)
+  3. Write regression test (SPECIFIED — must cover null case)
+  → Tasks 1 and 2 run in parallel. Task 3 depends on 1.
+
+[EXECUTE] Agent fixes nil handling, confirms blog system
+  doesn&#39;t touch that field, generates regression test
+
+[GATE] I review:
+  ✓ Nil handling uses guard-let, not force-unwrap
+  ✓ Blog system confirmed independent
+  ✗ Regression test only covers nil — I add a spec for
+    the empty-string case (Supabase returns &quot;&quot; vs null)
+
+[INTEGRATE] Agent adds empty-string test, runs full suite,
+  all pass, commits with descriptive message
+</code></pre>
+<p>Fourteen minutes of my time to resolve a cross-codebase issue. The cross-codebase check — something I might have forgotten if I were just heads-down fixing the crash — happened because I decomposed it as a parallel task during the plan phase. That&#39;s the methodology earning its keep.</p>
+<h3>Session 2: New Feature Build</h3>
+<p>Adding a comparison table component to the blog build system — responsive, with caption support.</p>
+<pre><code>SESSION: New feature — comparison table markdown support
+TIME: 1h 22min total (25 min human, 57 min agent)
+
+[SURVEY] Agent reads build-blog.js, identifies the
+  markdown-to-HTML pipeline, notes no table styling exists
+
+[PLAN] I specify the architecture:
+  - Parse markdown tables into semantic HTML
+  - Apply responsive CSS (mobile-first, horizontal scroll)
+  - Support caption via custom markdown syntax
+  - Don&#39;t modify existing heading/paragraph processing
+  → All implementation SPECIFIED. CSS is DIRECTIVE.
+
+[EXECUTE — batch 1] Agent implements table parsing + CSS
+  → Working implementation in 18 minutes
+
+[GATE 1] I review:
+  ✓ Table parsing handles header rows correctly
+  ✓ CSS is responsive with horizontal scroll
+  ✗ Caption parsing uses a non-standard syntax that
+    conflicts with footnotes — I redesign and re-specify
+
+[EXECUTE — batch 2] Agent reimplements caption syntax
+
+[GATE 2]
+  ✓ Clean implementation, no footnote conflict
+  ✓ Tested against 3 existing posts with tables
+
+[INTEGRATE] Build, visual verify, commit
+</code></pre>
+<p>That caption syntax conflict? No agent catches that on its own. The generated code was technically correct — and it would have silently broken another feature in production. My gate caught it because I hold the full system model in my head. The agent holds only the current task.</p>
+<h2>When to Override the Agent (And When to Let It Run)</h2>
+<p>The hardest judgment call in agentic engineering isn&#39;t decomposing tasks or reviewing output. It&#39;s distinguishing between an approach that&#39;s wrong and one that&#39;s merely different from what you&#39;d choose.</p>
+<p><strong>Override when:</strong></p>
+<ul>
+<li>The approach violates an architectural constraint the agent doesn&#39;t know about</li>
+<li>The implementation drags in a dependency you don&#39;t want in the codebase</li>
+<li>The code is correct but will confuse the next person reading it — including future-you at 2 AM</li>
+<li>The agent is solving the wrong problem entirely (a context failure, not a code failure)</li>
+</ul>
+<p><strong>Let it run when:</strong></p>
+<ul>
+<li>The approach differs from yours but produces equivalent results with identical performance characteristics. I&#39;ve had to learn to swallow my ego here — the agent&#39;s way isn&#39;t worse just because it isn&#39;t my way.</li>
+<li>The agent chose a pattern you wouldn&#39;t have, but the trade-offs land neutral</li>
+<li>Your objection is aesthetic rather than functional</li>
+</ul>
+<p>Stack Overflow&#39;s 2025 survey: 84% of developers use AI tools, but only 29% trust the outputs (Stack Overflow, 2025). That trust gap narrows when you build review gates into the methodology. I trust the agent because I verify the agent — not because the outputs feel correct.</p>
+<p>Solo-founded startups now represent 36.3% of all new company incorporations, up from 23.7% in 2019 (Carta, 2025). More founders working alone, with AI agents handling implementation. The ones who&#39;ll build durable businesses aren&#39;t the ones who accept everything or reject everything — they&#39;re the ones who&#39;ve calibrated when to accept the agent&#39;s draft and when to send it back.</p>
+<p>That calibration isn&#39;t something you configure in a settings file. It comes from understanding the systems you&#39;re building deeply enough to evaluate whether the agent&#39;s output actually serves them. The <a href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">context engineering</a> makes the agent functional. The <a href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">quality framework</a> sets review thresholds. The <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">operational workflow</a> proves it scales. But agentic engineering — the methodology layer — is where builder judgment lives. Nobody automates that away. You hold the whole system in your head. The agent holds the next task.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>What is agentic engineering?</h3>
+<p>Agentic engineering is a development methodology where human engineers own architecture, specification, and review while AI agents own implementation. Andrej Karpathy coined the term on February 4, 2026, positioning it as vibe coding&#39;s professional counterpart — a workflow where humans decompose tasks, set constraints, and verify outputs while agents generate code within those boundaries. Simon Willison distilled the core insight at the Pragmatic Summit in February 2026: delivering new code has become nearly free, but delivering good code remains expensive. The skill is architecture, not implementation (Simon Willison, simonwillison.net, March 14, 2026).</p>
+<h3>How is agentic engineering different from vibe coding?</h3>
+<p>Vibe coding accepts AI-generated code without deep review. Agentic engineering requires understanding the architecture and reviewing every output at defined checkpoints. The fundamental difference is the review gate — in agentic engineering, nothing ships without human verification scaled to the stakes involved. Apple blocking updates for vibe coding apps in early 2026 (9to5Mac, March 18, 2026) signals where the industry is heading.</p>
+<h3>What tools do I need for agentic engineering?</h3>
+<p>Any AI coding tool that supports multi-step task execution — not just autocomplete. Claude Code, Cursor, and GitHub Copilot in agent mode all support agentic workflows to varying degrees. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (Anthropic / Linux Foundation, 2025), expanding what agents can act on beyond code generation.</p>
+<h3>Can beginners practice agentic engineering?</h3>
+<p>Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. NVIDIA&#39;s GTC 2026 featured agentic AI development platforms aimed at broadening access, and ICSE&#39;s AGENT 2026 workshop is building educational frameworks for the methodology.</p>
+<h3>How much time does agentic engineering save compared to traditional development?</h3>
+<p>McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Structured agentic engineering — with proper task decomposition and calibrated review — compounds that gain considerably. In my practice, the 30:70 human-to-agent time ratio during sessions means I&#39;m actively working about 30% of session time while the agent implements during the other 70%. Savings scale with task decomposability: well-defined work saves more, novel exploratory work saves less.</p>
+<h3>Is agentic engineering only for coding?</h3>
+<p>No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for <a href="https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/">research and financial analysis</a>, <a href="https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/">public documentation</a>, and <a href="https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/">CRE deal screening</a>. The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you&#39;re directing AI agents to produce work.</p>
+<hr>
+<p>Agentic engineering isn&#39;t a tool or a configuration. It&#39;s a methodology — the skill layer between <a href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">configuring your agent environment</a> and <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">seeing the operational results</a>. It replaced <a href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">vibe coding</a> not because vibe coding was useless but because building durable systems requires human judgment at every review gate. The <a href="https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/">automation infrastructure</a> and <a href="https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/">trading strategies</a> running my ventures weren&#39;t vibed into existence — they were decomposed, specified, implemented by agents, reviewed by me, and shipped with confidence. <a href="https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/">What actually breaks when you automate this aggressively</a> is the counterweight to this post. That&#39;s the practice — not a framework on a slide, but a methodology I <a href="https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/">build publicly</a> every day to ship software that handles real money and real users. See <a href="https://zacharyvorsteg.com/#work">what I&#39;m working on</a> or <a href="https://zacharyvorsteg.com/#contact">reach out</a> if you&#39;re building with agents too.</p>
+<!--
+GEO_META:
+SPEAKABLE: Zachary Vorsteg explains agentic engineering — the professional development methodology Andrej Karpathy coined as vibe coding's counterpart — through real session walkthroughs, task decomposition patterns, and review gate decisions from building across four concurrent ventures. The post compares the Karpathy and Willison frameworks, shows annotated development sessions demonstrating when to override agent output versus accept it, and argues that architecture and judgment — not prompting or code generation — are the defining skills of this methodology.
+KEY_TAKEAWAY: Agentic engineering is the development methodology where humans handle architecture, task decomposition, and review gates while AI agents handle implementation. The defining skills are breaking work into agent-delegatable units, calibrating review depth by domain stakes, and knowing when to override the agent versus accepting a different-but-valid approach. The methodology replaced vibe coding because durable systems require human judgment at every stage, not just at the prompt.
+ANSWERS_QUERIES:
+- What is agentic engineering and how is it different from vibe coding?
+- What is agentic engineering vs vibe coding?
+- How do you practice agentic engineering as a solo founder?
+- What are agentic engineering patterns and workflows?
+- How do you decompose tasks for AI coding agents?
+- What is the Karpathy Willison framework for agentic engineering?
+CITABLE_FACTS: 24
+NAMED_ENTITIES: 37 (Andrej Karpathy, Tesla, OpenAI, Simon Willison, Pragmatic Summit, IBM, NVIDIA, GTC, ICSE, Anthropic, Apple, 9to5Mac, Lovable, Bolt, Cursor, TechCrunch, Bloomberg, Y Combinator, Garry Tan, GitHub Copilot, Peng et al., arXiv, Stack Overflow, Carta, McKinsey, Gartner, Claude Code, MCP, Model Context Protocol, Linux Foundation, Supabase, BidPro, SwiftUI, Python, Schwab, OANDA, Polymarket, Solana)
+FAQ_QUESTIONS: 6
+TABLES: 2
+-->
+
+<!--
+SELF-ASSESSMENT:
+WORD_COUNT: ~2,700
+DATA_POINTS: 24 (specific stats/figures with named sources)
+SOURCED_STATS: 14 (Andrej Karpathy/X February 2026, 9to5Mac March 2026, Simon Willison/simonwillison.net March 2026, IBM March 2026, NVIDIA GTC 2026, ICSE 2026, Anthropic January 2026, TechCrunch/Bloomberg March 2026, Gartner December 2025, Garry Tan/Y Combinator March 2025, McKinsey June 2023, Peng et al./arXiv February 2023, Stack Overflow 2025, Carta 2025)
+INTERNAL_LINKS: 11 unique destinations (/blog/how-i-use-agentic-ai-one-person-company/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+FAQ_QUESTIONS: 6
+TABLES: 2 (Karpathy vs Willison framework comparison; Task decomposition specificity gradient)
+CODE_SNIPPETS: 3 (Trust calibration by domain; Session 1 cross-codebase bug fix walkthrough; Session 2 new feature build walkthrough)
+UNIQUE_ANGLE: First-person methodology walkthrough of agentic engineering from a practitioner who works across four codebases daily — real session walkthroughs with annotated decomposition, review gates, and override decisions, plus the Karpathy-Willison framework comparison applied to multi-venture practice
+-->
+            </div>
+        </article>
+
+        <!-- Author Bio -->
+        <section class="article-author">
+            <div class="author-photo"></div>
+            <div class="author-info">
+                <h4>Zachary Vorsteg</h4>
+                <p>Commercial real estate broker and software developer. I structure deals, write code, and build the systems that run both.</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="article-cta">
+            <h3>Ready to build something?</h3>
+            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
+            <a href="/#contact" class="btn">Start a conversation</a>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="related-section">
+            <div class="container">
+                <h3>More from AI Workflow & Context Engineering</h3>
+                <div class="related-articles">
+                    
+      <div class="related-card">
+        <a href="/blog/context-engineering-ai-agents/">
+          <h4>Context Engineering for AI Agents: What I Actually Configure</h4>
+          <p class="related-desc">My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</p>
+          <span class="related-meta">March 20, 2026</span>
+        </a>
+      </div>
+    
+      <div class="related-card">
+        <a href="/blog/how-i-use-agentic-ai-one-person-company/">
+          <h4>How I Use Agentic AI to Run a One-Person Company</h4>
+          <p class="related-desc">I manage CRE deals, 54 trading bots, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
+          <span class="related-meta">March 20, 2026</span>
+        </a>
+      </div>
+    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Disclaimer -->
+    <aside class="blog-disclaimer" aria-label="Disclaimer">
+        <div class="container">
+            <p class="disclaimer-text">The content on this blog is for informational and educational purposes only. Nothing here constitutes financial, investment, legal, or real estate advice. Always consult qualified professionals before making financial or real estate decisions.</p>
+            <p class="disclaimer-text">Zachary Vorsteg | [BROKERAGE_NAME] | Florida Real Estate License #[LICENSE_NUMBER]</p>
+            <p class="disclaimer-eho">
+                <span class="eho-icon" aria-hidden="true">⌂</span>
+                Equal Housing Opportunity. Zachary Vorsteg supports the Fair Housing Act and equal opportunity for all.
+            </p>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="color: var(--gray-600); font-size: 14px;">
+                    © 2025 Zachary Vorsteg | <a href="tel:5617186725" style="color: var(--gray-600); text-decoration: none;">(561) 718-6725</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            this.classList.add('active');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            mobileMenuBtn.classList.remove('active');
+        }
+
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) closeMobileMenu();
+        });
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Fade-in on scroll
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

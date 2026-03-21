@@ -12,15 +12,70 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
-    <loc>https://zacharyvorsteg.com/blog/</loc>
+    <loc>https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/context-engineering-ai-agents/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/</loc>
+    <lastmod>2026-03-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/</loc>
-    <lastmod>2026-03-20</lastmod>
+    <lastmod>2025-03-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

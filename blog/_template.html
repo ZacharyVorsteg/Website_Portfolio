@@ -36,7 +36,12 @@
       "author": {
         "@type": "Person",
         "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
+        "url": "https://zacharyvorsteg.com",
+        "jobTitle": "Commercial Real Estate Broker & Software Developer",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "[BROKERAGE_NAME]"
+        }
       },
       "publisher": {
         "@type": "Organization",
@@ -73,6 +78,8 @@
       ]
     }
     </script>
+
+    {{EXTRA_SCHEMA}}
 
     <style>
         /* Reset & Base Styles */
@@ -644,6 +651,35 @@
             color: var(--gray-500);
         }
 
+        /* Disclaimer */
+        .blog-disclaimer {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 24px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .disclaimer-text {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer-eho {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eho-icon {
+            font-size: 16px;
+        }
+
         /* Footer */
         footer {
             background: var(--gray-50);
@@ -780,7 +816,7 @@
             <div class="author-photo"></div>
             <div class="author-info">
                 <h4>Zachary Vorsteg</h4>
-                <p>Finance executive, builder, operator. I structure deals and build the systems that run them.</p>
+                <p>Commercial real estate broker and software developer. I structure deals, write code, and build the systems that run both.</p>
             </div>
         </section>
 
@@ -801,6 +837,18 @@
             </div>
         </section>
     </main>
+
+    <!-- Disclaimer -->
+    <aside class="blog-disclaimer" aria-label="Disclaimer">
+        <div class="container">
+            <p class="disclaimer-text">The content on this blog is for informational and educational purposes only. Nothing here constitutes financial, investment, legal, or real estate advice. Always consult qualified professionals before making financial or real estate decisions.</p>
+            <p class="disclaimer-text">Zachary Vorsteg | [BROKERAGE_NAME] | Florida Real Estate License #[LICENSE_NUMBER]</p>
+            <p class="disclaimer-eho">
+                <span class="eho-icon" aria-hidden="true">⌂</span>
+                Equal Housing Opportunity. Zachary Vorsteg supports the Fair Housing Act and equal opportunity for all.
+            </p>
+        </div>
+    </aside>
 
     <!-- Footer -->
     <footer>

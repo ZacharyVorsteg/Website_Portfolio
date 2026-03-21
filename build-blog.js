@@ -61,6 +61,84 @@ function readTime(content) {
   return `${minutes} min read`;
 }
 
+// Decode HTML entities in extracted text
+function decodeEntities(text) {
+  return text
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&mdash;/g, '—')
+    .replace(/&ndash;/g, '–');
+}
+
+// Extract FAQ pairs from HTML content (looks for H3 questions followed by paragraph answers)
+function extractFAQPairs(htmlContent) {
+  const pairs = [];
+  // Match H3s that appear after an H2 containing "FAQ" or "Frequently Asked"
+  const faqSectionMatch = htmlContent.match(/<h2[^>]*>.*?(?:FAQ|Frequently Asked).*?<\/h2>([\s\S]*?)(?=<h2|<hr|$)/i);
+  if (!faqSectionMatch) return pairs;
+
+  const faqSection = faqSectionMatch[1];
+  const h3Regex = /<h3[^>]*>(.*?)<\/h3>([\s\S]*?)(?=<h3|$)/g;
+  let match;
+  while ((match = h3Regex.exec(faqSection)) !== null) {
+    const question = decodeEntities(match[1].replace(/<[^>]+>/g, '').trim());
+    // Get text content from the paragraphs following the H3
+    const answerHtml = match[2];
+    const answer = decodeEntities(answerHtml
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim());
+    if (question && answer) {
+      pairs.push({ question, answer });
+    }
+  }
+  return pairs;
+}
+
+// Generate extra schema blocks (FAQPage + Speakable)
+function generateExtraSchema(article, faqPairs) {
+  const schemas = [];
+
+  // FAQPage schema
+  if (faqPairs.length > 0) {
+    schemas.push(`<script type="application/ld+json">
+    ${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqPairs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }, null, 6)}
+    </script>`);
+  }
+
+  // Speakable schema
+  if (article.speakable) {
+    schemas.push(`<script type="application/ld+json">
+    ${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [".article-header h1", ".article-description"]
+      },
+      "url": `https://zacharyvorsteg.com/blog/${article.slug}/`
+    }, null, 6)}
+    </script>`);
+  }
+
+  return schemas.length > 0 ? '\n    ' + schemas.join('\n\n    ') : '';
+}
+
 // Get related articles by pillar tag
 function getRelatedArticles(articles, currentSlug, pillar, limit = 3) {
   return articles
@@ -101,6 +179,7 @@ function build() {
     const dateStr = metadata.date || new Date().toISOString().split('T')[0];
     const pillar = metadata.pillar || 'Finance';
 
+    const speakable = metadata.speakable || '';
     const dateFormatted = formatDate(dateStr);
     const dateISO = formatDateISO(dateStr);
     const readTimeStr = readTime(body);
@@ -115,6 +194,7 @@ function build() {
       dateFormatted,
       dateISO,
       pillar,
+      speakable,
       readTime: readTimeStr,
       content: htmlContent
     });
@@ -143,6 +223,9 @@ function build() {
       )
       .join('');
 
+    const faqPairs = extractFAQPairs(article.content);
+    const extraSchema = generateExtraSchema(article, faqPairs);
+
     const html = template
       .replace(/{{TITLE}}/g, article.title)
       .replace(/{{DESCRIPTION}}/g, article.description)
@@ -153,7 +236,8 @@ function build() {
       .replace(/{{CONTENT}}/g, article.content)
       .replace(/{{PILLAR}}/g, article.pillar)
       .replace(/{{READ_TIME}}/g, article.readTime)
-      .replace(/{{RELATED_ARTICLES}}/g, relatedHtml);
+      .replace(/{{RELATED_ARTICLES}}/g, relatedHtml)
+      .replace(/{{EXTRA_SCHEMA}}/g, extraSchema);
 
     const articleDir = path.join(OUTPUT_DIR, article.slug);
     if (!fs.existsSync(articleDir)) fs.mkdirSync(articleDir, { recursive: true });
@@ -197,7 +281,7 @@ function updateSitemap(articles) {
   let sitemap = fs.existsSync(SITEMAP_PATH) ? fs.readFileSync(SITEMAP_PATH, 'utf-8') : '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>';
 
   // Remove existing blog entries
-  sitemap = sitemap.replace(/\s*<url>\s*<loc>https:\/\/zacharyvorsteg\.com\/blog\/.*?<\/url>\s*/g, '');
+  sitemap = sitemap.replace(/\s*<url>\s*<loc>https:\/\/zacharyvorsteg\.com\/blog\/[\s\S]*?<\/url>/g, '');
 
   const blogEntries = articles
     .map(

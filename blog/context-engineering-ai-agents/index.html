@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Engineering for AI Agents: What I Actually Configure | Zachary Vorsteg</title>
+    <meta name="description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
+    <meta name="keywords" content="context engineering AI agents, context engineering vs prompt engineering, CLAUDE.md configuration, MCP model context protocol, AI agent hooks, AI agent memory architecture, context engineering solo founder, AI agent subagent routing, context engineering practical guide, AI agent configuration 2026">
+    <link rel="canonical" href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Context Engineering for AI Agents: What I Actually Configure">
+    <meta property="og:description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">
+    <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
+    <meta property="article:published_time" content="2026-03-21">
+    <meta property="article:author" content="Zachary Vorsteg">
+    <meta property="article:section" content="AI Workflow & Context Engineering">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Context Engineering for AI Agents: What I Actually Configure">
+    <meta name="twitter:description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
+    <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Context Engineering for AI Agents: What I Actually Configure",
+      "description": "My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.",
+      "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "datePublished": "2026-03-21",
+      "author": {
+        "@type": "Person",
+        "name": "Zachary Vorsteg",
+        "url": "https://zacharyvorsteg.com",
+        "jobTitle": "Commercial Real Estate Broker & Software Developer",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "[BROKERAGE_NAME]"
+        }
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Zachary Vorsteg",
+        "url": "https://zacharyvorsteg.com"
+      }
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zacharyvorsteg.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://zacharyvorsteg.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Context Engineering for AI Agents: What I Actually Configure",
+          "item": "https://zacharyvorsteg.com/blog/context-engineering-ai-agents/"
+        }
+      ]
+    }
+    </script>
+
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "What is context engineering for AI agents?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Context engineering is the practice of designing the full environment around an AI agent — system prompts, tool connections, memory, hooks, permissions, and routing rules — rather than just crafting individual prompts. The term gained traction in mid-2025 when Shopify CEO Tobi Lutke and former Tesla AI director Andrej Karpathy both identified it as the critical skill for working with AI agents effectively."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How is context engineering different from prompt engineering?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Prompt engineering optimizes a single message. Context engineering designs the persistent system that shapes every interaction — instruction files that survive across sessions, tool routing tables, permission architectures, memory stores, and event-driven automation hooks. A good prompt improves one response. Good context engineering improves every response."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is CLAUDE.md and why does it matter?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "CLAUDE.md is a configuration file that loads automatically at the start of every Claude Code session. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent's operating manual rather than a single instruction."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is MCP (Model Context Protocol)?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "MCP is an open standard launched by Anthropic in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It's how AI agents interact with the real world beyond text generation."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Do I need to be a developer to use context engineering?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt conventions like CLAUDE.md and MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is context engineering only for Claude Code?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. Claude Code happens to have native support for CLAUDE.md, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to LangChain agents, AutoGPT configurations, or any system where you control the agent's environment."
+                  }
+            }
+      ]
+}
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+                  ".article-header h1",
+                  ".article-description"
+            ]
+      },
+      "url": "https://zacharyvorsteg.com/blog/context-engineering-ai-agents/"
+}
+    </script>
+
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F7F7F7;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --accent: #0066CC;
+            --accent-hover: #0052A3;
+            --max-width: 1200px;
+            --section-padding: 80px;
+            --header-height: 72px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(32px, 5.5vw, 56px); }
+        h2 { font-size: clamp(28px, 4vw, 42px); }
+        h3 { font-size: clamp(20px, 3vw, 28px); }
+
+        p { margin-bottom: 16px; }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        @media (min-width: 768px) {
+            .container { padding: 0 24px; }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            min-height: 48px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary:hover {
+            background: var(--gray-800);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-900);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-900);
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: var(--header-height);
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+            letter-spacing: -0.02em;
+        }
+
+        .desktop-nav {
+            display: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-nav { display: flex; }
+        }
+
+        .desktop-nav a {
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: var(--gray-900);
+            background: var(--gray-50);
+        }
+
+        .desktop-nav .btn {
+            margin-left: 8px;
+            background: var(--black) !important;
+            color: var(--white) !important;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            width: 48px;
+            height: 48px;
+            padding: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--gray-900);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .mobile-menu-content {
+            background: var(--white);
+            width: 85%;
+            max-width: 350px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active .mobile-menu-content {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .mobile-menu-content nav {
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu-content nav a {
+            padding: 1rem 0;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mobile-menu-content nav a.btn {
+            margin-top: 1.5rem;
+            text-align: center;
+            border: none;
+            background: var(--gray-900);
+            color: var(--white);
+            border-radius: 8px;
+            padding: 14px 28px;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: var(--header-height);
+            padding-top: 40px;
+        }
+
+        /* Article Header */
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(to bottom, var(--white) 0%, var(--gray-50) 100%);
+        }
+
+        .article-header-content {
+            max-width: 800px;
+        }
+
+        .article-breadcrumb {
+            display: flex;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .article-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .article-meta-top {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .article-pillar-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .article-date,
+        .article-time {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .article-header h1 {
+            margin: 20px 0;
+            color: var(--gray-900);
+        }
+
+        .article-description {
+            font-size: 18px;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* Article Content */
+        .article-body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 0;
+        }
+
+        .article-body h2 {
+            margin: 48px 0 24px 0;
+            color: var(--gray-900);
+        }
+
+        .article-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-body h3 {
+            margin: 32px 0 16px 0;
+            color: var(--gray-800);
+        }
+
+        .article-body p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--gray-800);
+        }
+
+        .article-body ul,
+        .article-body ol {
+            margin-bottom: 20px;
+            padding-left: 24px;
+        }
+
+        .article-body li {
+            margin-bottom: 12px;
+            color: var(--gray-800);
+            line-height: 1.8;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
+        .article-body a:hover {
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .article-body blockquote {
+            padding: 20px 24px;
+            margin: 32px 0;
+            border-left: 4px solid var(--accent);
+            background: var(--gray-50);
+            color: var(--gray-700);
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .article-body code {
+            background: var(--gray-100);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--gray-800);
+        }
+
+        .article-body pre {
+            background: var(--gray-900);
+            color: var(--gray-100);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 32px 0;
+            line-height: 1.4;
+        }
+
+        .article-body pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Author Bio */
+        .article-author {
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding: 40px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .author-photo {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gray-200);
+        }
+
+        .author-info h4 {
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .author-info p {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 0;
+        }
+
+        /* CTA Section */
+        .article-cta {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, #0052A3 100%);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .article-cta h3 {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .article-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+        }
+
+        .article-cta .btn {
+            background: var(--white);
+            color: var(--accent);
+        }
+
+        .article-cta .btn:hover {
+            background: var(--gray-100);
+        }
+
+        /* Related Articles */
+        .related-section {
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding: 60px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .related-section h3 {
+            margin-bottom: 32px;
+        }
+
+        .related-articles {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .related-articles {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .related-card {
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+        }
+
+        .related-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .related-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+
+        .related-card:hover h4 {
+            color: var(--accent);
+        }
+
+        .related-desc {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-meta {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* Disclaimer */
+        .blog-disclaimer {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 24px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .disclaimer-text {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer-eho {
+            font-size: 12px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eho-icon {
+            font-size: 16px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-author {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .article-breadcrumb {
+                font-size: 12px;
+            }
+
+            .article-body {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="/" class="logo">Zachary Vorsteg</a>
+
+                <nav class="desktop-nav">
+                    <a href="/#work">Work</a>
+                    <a href="/#services">Services</a>
+                    <a href="/#templates">Templates</a>
+                    <a href="/blog/" class="active">Blog</a>
+                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
+                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <button class="mobile-menu-close" aria-label="Close menu">×</button>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/#work">Work</a>
+                <a href="/#services">Services</a>
+                <a href="/#templates">Templates</a>
+                <a href="/blog/">Blog</a>
+                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    Pro Forma Tool
+                </a>
+                <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        <!-- Article Header -->
+        <section class="article-header">
+            <div class="container">
+                <div class="article-header-content fade-in">
+                    <div class="article-breadcrumb">
+                        <a href="/">Home</a>
+                        <span>/</span>
+                        <a href="/blog/">Blog</a>
+                        <span>/</span>
+                        <span>Context Engineering for AI Agents: What I Actually Configure</span>
+                    </div>
+
+                    <div class="article-meta-top">
+                        <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
+                        <time class="article-date">March 20, 2026</time>
+                        <span class="article-time">17 min read</span>
+                    </div>
+
+                    <h1>Context Engineering for AI Agents: What I Actually Configure</h1>
+                    <p class="article-description">My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <article class="article-body">
+            <div class="container">
+                <p>I don&#39;t write prompts for my AI agents anymore. I configure environments.</p>
+<p>My primary CLAUDE.md file — the persistent instruction set that loads every time I start a Claude Code session — runs over 500 lines. Behavioral directives, permission tiers, MCP (Model Context Protocol — an open standard for connecting AI models to external tools) routing tables, failure playbooks, memory architecture, subagent delegation rules. None of that is a prompt. All of it determines whether the agent ships real work or burns my afternoon chasing hallucinations.</p>
+<p>There&#39;s a name for this now. Tobi Lutke, Shopify&#39;s CEO, put it plainly in June 2025: the core skill for working with AI agents isn&#39;t prompting — it&#39;s &quot;context engineering,&quot; the art of providing all the context for a task to be plausibly solvable by the LLM (Tobi Lutke, X/Twitter, June 2025). Karpathy cosigned that same week, calling context engineering &quot;the delicate art and science of filling the context window with just the right information for the next step&quot; (Andrej Karpathy, X/Twitter, June 25, 2025).</p>
+<p>So what does that actually look like when you build it? Here&#39;s the full stack.</p>
+<h2>Context Engineering Is Not Prompt Engineering</h2>
+<p>Prompt engineering is writing a good question. Context engineering designs the entire operating system surrounding the model before that question ever gets asked. Not a semantic distinction — a structural one, and the difference matters enormously in practice.</p>
+<h3>Why Prompts Hit a Ceiling</h3>
+<p>A prompt is a single-turn input. It dies when the session ends. Gone. Context engineering, on the other hand, builds persistent systems — instruction files, tool connections, memory stores, automation hooks, permission layers — that shape behavior across every session without anyone re-prompting anything.</p>
+<p>Stack Overflow&#39;s 2025 Developer Survey — 49,000+ respondents across 177 countries — quantified the trust gap: 84% of developers now use AI tools, but only 29% trust the outputs (Stack Overflow, 2025). Why so low? Not model quality. Context. The model doesn&#39;t know your codebase conventions, your permission boundaries, your failure playbooks, or which tools to reach for when. So it produces confident-sounding garbage that looks right until you actually try to deploy it.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Prompt Engineering</th>
+<th>Context Engineering</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Scope</strong></td>
+<td>Single message</td>
+<td>Full agent environment</td>
+</tr>
+<tr>
+<td><strong>Persistence</strong></td>
+<td>Dies with session</td>
+<td>Survives across sessions</td>
+</tr>
+<tr>
+<td><strong>Components</strong></td>
+<td>Text input</td>
+<td>System prompts, tools, memory, hooks, routing, permissions</td>
+</tr>
+<tr>
+<td><strong>Skill ceiling</strong></td>
+<td>Good writing</td>
+<td>Systems design</td>
+</tr>
+<tr>
+<td><strong>Failure mode</strong></td>
+<td>Bad output</td>
+<td>Wrong tool, wrong data, wrong action</td>
+</tr>
+<tr>
+<td><strong>Time investment</strong></td>
+<td>Minutes per prompt</td>
+<td>Hours upfront, minutes to maintain</td>
+</tr>
+</tbody></table>
+<p>Multi-agent AI inquiries surged 1,445% from Q1 2024 to Q2 2025 (Gartner, December 2025), and MarketsandMarkets projects the AI agent market hitting $52.62 billion by 2030 — a 46.3% CAGR (compound annual growth rate) from $7.84 billion today (MarketsandMarkets, 2025). Patrick Debois titled his QCon London 2026 presentation &quot;Context Is the New Code.&quot; The industry is barreling toward this at full speed. Are you configuring agents or still typing better questions into chat windows?</p>
+<h2>What a 500-Line CLAUDE.md Actually Contains</h2>
+<p>People hear &quot;500 lines&quot; and assume it&#39;s bloated. It isn&#39;t. Every section earned its place through a specific failure that cost me time.</p>
+<h3>Behavioral Rules and Permission Tiers</h3>
+<p>First section: operating rules. Not task instructions — behavioral defaults that govern how the agent behaves regardless of what I&#39;m working on:</p>
+<pre><code class="language-yaml"># Friction Reduction
+
+Just Do It (no confirmation needed):
+- Read any file
+- Search codebases
+- Run builds/tests
+- Git status/diff/log
+- Install dependencies
+
+Do With Brief Confirmation:
+- Edit existing code
+- Create new files
+- Git commits (show message first)
+
+Always Ask:
+- Production deployments
+- Financial transactions
+- Sending any message (show draft, wait for &quot;send it&quot;)
+
+Hard Rules (Never Break):
+- Never delete emails — archive only
+- Never send any message without showing draft
+- Never delete files — move to trash instead
+</code></pre>
+<p>Permission architecture. Not a prompt.</p>
+<p>The agent reads it once and applies it to every action in the session. I wrote this because I got sick of oscillating between two maddening failure modes: the agent asking permission for every trivial file read (agonizingly slow when you&#39;re in flow) or quietly taking actions I never authorized (terrifying when those actions involve production systems or client communications). These tiers let me bias toward action on safe operations while keeping hard gates on anything irreversible.</p>
+<h3>Project Context and Failure Playbooks</h3>
+<p>Second major section covers project-specific context the agent can&#39;t derive from code alone:</p>
+<ul>
+<li><strong>Active systems</strong> — which projects live where, what stack each uses, which simulators and build commands to run</li>
+<li><strong>Integration points</strong> — Supabase URLs, API patterns, database schemas worth knowing about</li>
+<li><strong>When things break</strong> — a decision tree: trading bot down? Check launchctl, check logs, restart. Build fails? Check Swift syntax first, then imports. Browser automation disconnected mid-task? Run the fallback protocol, save drafts, create a manual checklist.</li>
+<li><strong>MCP routing tables</strong> — which tool to use for which task (covered in the next section)</li>
+</ul>
+<p>How much do the failure playbooks save me? Roughly 10-15 minutes per incident. Without them, the agent guesses its way through recovery — tries random things, wastes tokens, sometimes makes the problem actively worse. With them, it follows a tested sequence I&#39;ve refined over months. Gloria Mark at UC Irvine measured the cost of context-switching: 23 minutes on average to regain deep focus after an interruption (Gloria Mark, UC Irvine). Every avoided switch is 23 minutes I keep. That math compounds fast.</p>
+<h2>The MCP Layer: Right Tool, Right Task</h2>
+<p>Anthropic launched MCP — the Model Context Protocol — as an open standard in November 2024. In just over a year, the ecosystem exploded: 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads across npm and PyPI (Anthropic / Linux Foundation, 2025). MCP gives AI agents access to external tools — browsers, databases, APIs, file systems — through a standardized interface instead of fragile custom integrations.</p>
+<p>Six MCP integrations in my setup. Each one exists because I hit a concrete wall without it:</p>
+<table>
+<thead>
+<tr>
+<th>MCP Integration</th>
+<th>What It Does</th>
+<th>When I Route To It</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Chrome</strong></td>
+<td>Real browser with logged-in sessions, GIF recording</td>
+<td>Anti-bot sites, user sessions, visual recording</td>
+</tr>
+<tr>
+<td><strong>Playwright</strong></td>
+<td>Headless browser automation</td>
+<td>Localhost testing, scraping, parallel instances</td>
+</tr>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Direct API access to repos, PRs, issues</td>
+<td>PR creation, issue tracking, CI/CD checks</td>
+</tr>
+<tr>
+<td><strong>Memory</strong></td>
+<td>Knowledge graph persistence</td>
+<td>Cross-session context that structured files don&#39;t cover</td>
+</tr>
+<tr>
+<td><strong>Filesystem</strong></td>
+<td>Advanced file operations</td>
+<td>Batch operations beyond standard read/write</td>
+</tr>
+<tr>
+<td><strong>Brave Search</strong></td>
+<td>Web search and summarization</td>
+<td>Real-time research, fact-checking, market data</td>
+</tr>
+</tbody></table>
+<p>Before I codified this routing table, the agent kept making boneheaded choices. Chrome MCP for headless scraping — wrong, Chrome needs a display server. Playwright for sites with anti-bot detection — wrong, gets blocked instantly. I burned two full sessions debugging tool misrouting before I gave up diagnosing individual failures and just wrote the damn table. Now routing is explicit: anti-bot sites go to Chrome, localhost testing goes to Playwright, and the agent stops improvising.</p>
+<p>Want proof this matters beyond my setup? LangChain&#39;s 2025 State of AI Agents report: 32% of builders cite quality as the top barrier, and failures overwhelmingly trace to poor context — not model limitations (LangChain, 2025). Hand the model a routing table and it routes correctly. Without one, it freelances badly.</p>
+<h2>Hooks: Event-Driven Automation Without Manual Triggers</h2>
+<p>Hooks are shell commands that fire automatically in response to agent lifecycle events — no human intervention needed. Claude Code supports four hook points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, and <code>Stop</code>. I use all four.</p>
+<pre><code class="language-json">{
+  &quot;hooks&quot;: {
+    &quot;SessionStart&quot;: [{
+      &quot;command&quot;: &quot;cat ~/.claude/memory/learnings.md&quot;,
+      &quot;description&quot;: &quot;Load accumulated knowledge at session start&quot;
+    }],
+    &quot;PreToolUse&quot;: [{
+      &quot;command&quot;: &quot;~/.claude/hooks/log-modifications.sh&quot;,
+      &quot;description&quot;: &quot;Log file modifications before they happen&quot;
+    }],
+    &quot;PostToolUse&quot;: [{
+      &quot;command&quot;: &quot;~/.claude/hooks/track-git-actions.sh&quot;,
+      &quot;description&quot;: &quot;Track git operations for audit trail&quot;
+    }]
+  }
+}
+</code></pre>
+<h3>Permission Auto-Approval</h3>
+<p>One hook transformed my workflow more than all the others combined: permission checking. Out of the box, Claude Code asks permission for every file read, every search, every git operation. Safe, yes. Also agonizingly slow when you&#39;re trying to stay in flow and the agent interrupts you fourteen times to read fourteen files. My <code>permission-check.sh</code> hook auto-approves a whitelist of safe operations:</p>
+<ul>
+<li>All reads (file reads, glob searches, grep, web fetches)</li>
+<li>Git read operations (status, diff, log, branch, show)</li>
+<li>Tests (pytest, jest, npm test, cargo test)</li>
+<li>Builds (npm build, cargo build, xcodebuild)</li>
+<li>Process inspection (ps, launchctl list, uptime)</li>
+</ul>
+<p>Human approval still required for writes, pushes, deletes, sends. Everything destructive stays gated. The result: the agent moves at full speed on anything read-only while still blocking on irreversible actions. Night and day. I genuinely can&#39;t go back to working without this.</p>
+<h2>Memory Architecture: What Persists Across Sessions</h2>
+<p>Biggest limitation of conversational AI? Amnesia. Every new session starts blank. Clean slate. No recollection of yesterday&#39;s decisions, last week&#39;s corrections, the architecture reasoning you spent forty-five minutes explaining.</p>
+<p>I fix this with structured persistence.</p>
+<h3>Why Structured Memory Beats Chat History</h3>
+<p>Four memory types in my file-based system, each serving a distinct purpose:</p>
+<pre><code class="language-markdown">---
+name: user_role
+description: Zach is a technical founder running multiple ventures
+type: user
+---
+
+Technical founder, time-constrained. Runs CRE brokerage,
+trading infrastructure, IoT hardware, and iOS development
+simultaneously. Prefers action over discussion. Skip preambles.
+</code></pre>
+<p>Breaking down the types:</p>
+<ul>
+<li><strong>User</strong> — who I am, my expertise level, how I prefer to work. The agent calibrates communication style and technical depth from this instead of starting every session with &quot;Could you tell me about your background?&quot;</li>
+<li><strong>Feedback</strong> — corrections I&#39;ve given. &quot;Don&#39;t mock the database in integration tests.&quot; &quot;Stop summarizing at the end of every response.&quot; Prevents the agent from repeating mistakes I&#39;ve already called out — which, without this, it absolutely will.</li>
+<li><strong>Project</strong> — ongoing work context that lives outside the code itself. Deadlines, shifting priorities, the reasoning behind a particular architecture decision that isn&#39;t obvious from reading the source.</li>
+<li><strong>Reference</strong> — pointers to external systems. Which Linear project tracks bugs, which Grafana dashboard to check before touching request-handling code.</li>
+</ul>
+<p>Each memory occupies its own file with frontmatter (name, description, type) and gets indexed in a central <code>MEMORY.md</code> manifest. The agent reads the manifest at session start and loads specific memories when relevant.</p>
+<p>That&#39;s the gap between an agent that asks &quot;what project are you working on?&quot; every single session and one that already knows. How many organizations have actually closed this gap? Capgemini&#39;s 2025 data: only 2% have deployed AI agents at full scale, while 61% are still in exploration mode (Capgemini, 2025). Most of that distance comes down to context — or rather, the complete absence of it.</p>
+<h2>Subagent Routing: When to Offload, When to Keep</h2>
+<p>Not every task belongs in the main conversation thread. Some tasks are exploratory. Some need parallel execution. Some generate so much output they&#39;d pollute the primary context window and degrade everything else.</p>
+<h3>The Routing Table</h3>
+<p>My rules, refined over months of trial and error:</p>
+<ul>
+<li><strong>Explore agent</strong> — codebase searches, file pattern matching, broad exploration. Fast, disposable, keeps search noise out of the main thread where I&#39;m doing real work.</li>
+<li><strong>Plan agent</strong> — architecture decisions, implementation strategies. Returns a structured plan without the agent jumping into code prematurely.</li>
+<li><strong>General-purpose agent</strong> — complex multi-step tasks needing full tool access. Runs autonomously, returns results when done.</li>
+<li><strong>Background execution</strong> — long-running processes (test suites, builds) that shouldn&#39;t block the conversation. Fire and forget.</li>
+</ul>
+<p>Cardinal rule: offload anything that doesn&#39;t need to stay in main context. I keep the primary thread for core task execution and direct interaction — nothing else. Need three search strategies run simultaneously? Spawn three Explore agents in parallel. Test suite needs to run while I keep working? Background. Simple, once you internalize the pattern.</p>
+<p>Peng et al. measured a 55.8% speed improvement for developers using GitHub Copilot (Peng et al., arXiv (open-access research preprint repository), February 2023). Proper context engineering compounds those gains further — the agent spends less time guessing and more time executing useful work. But only if routing is explicit. An agent that tries to handle everything in one thread eventually drowns in its own accumulated context, and performance craters.</p>
+<h2>What Context Engineering Replaces</h2>
+<p>Before I built this system, my AI workflow looked like everyone else&#39;s: open a chat, craft a detailed prompt, get mediocre output, refine the prompt, get marginally better output, sigh, do it manually anyway. Sound familiar? I&#39;d wager most developers reading this are nodding.</p>
+<p>Context engineering replaces that entire loop with a one-time configuration investment. I spent roughly a week building the initial CLAUDE.md, hooks, MCP routing, and memory architecture. Best week I&#39;ve invested in my development workflow — and I don&#39;t say that lightly, considering I&#39;ve spent weeks on trading bot infrastructure that generates actual revenue. Maintenance since then runs maybe 20 minutes a week: updating memory files, tweaking permission tiers, adding failure playbooks when something new breaks in a novel way.</p>
+<p>Where&#39;s the industry headed? AI agent adoption sits at 79% (PwC, 2025), and Gartner predicts 40% of enterprise applications will embed agentic AI by end of 2026, up from under 5% the year prior (Gartner, August 2025). The adoption wave is undeniable — but adoption without context engineering means most of those organizations are running agents blind. No codebase conventions loaded. No permission boundaries defined. No failure playbooks written. Just raw model output and crossed fingers.</p>
+<p>Solo founders grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than at any point in the last decade. AI agents are the force multiplier — but only if you engineer the context that makes them reliable instead of chaotic. A misconfigured agent is worse than no agent. Much worse. It moves fast in the wrong direction and you don&#39;t notice until the damage is done.</p>
+<p>I run <a href="https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/">54 trading bots</a>, manage a <a href="https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/">real estate practice</a>, apply <a href="https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/">financial modeling frameworks</a> to screen deals, ship <a href="https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/">iOS apps and IoT hardware</a>, and maintain an <a href="https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/">automation stack</a> that runs on $8/month. Context engineering is what makes that possible without a team. Not better prompts. Better systems.</p>
+<h2>Frequently Asked Questions</h2>
+<h3>What is context engineering for AI agents?</h3>
+<p>Context engineering is the practice of designing the full environment around an AI agent — system prompts, tool connections, memory, hooks, permissions, and routing rules — rather than just crafting individual prompts. The term gained traction in mid-2025 when Shopify CEO Tobi Lutke and former Tesla AI director Andrej Karpathy both identified it as the critical skill for working with AI agents effectively.</p>
+<h3>How is context engineering different from prompt engineering?</h3>
+<p>Prompt engineering optimizes a single message. Context engineering designs the persistent system that shapes every interaction — instruction files that survive across sessions, tool routing tables, permission architectures, memory stores, and event-driven automation hooks. A good prompt improves one response. Good context engineering improves every response.</p>
+<h3>What is CLAUDE.md and why does it matter?</h3>
+<p>CLAUDE.md is a configuration file that loads automatically at the start of every Claude Code session. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent&#39;s operating manual rather than a single instruction.</p>
+<h3>What is MCP (Model Context Protocol)?</h3>
+<p>MCP is an open standard launched by Anthropic in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It&#39;s how AI agents interact with the real world beyond text generation.</p>
+<h3>Do I need to be a developer to use context engineering?</h3>
+<p>The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt conventions like CLAUDE.md and MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts.</p>
+<h3>Is context engineering only for Claude Code?</h3>
+<p>No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. Claude Code happens to have native support for CLAUDE.md, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to LangChain agents, AutoGPT configurations, or any system where you control the agent&#39;s environment.</p>
+<hr>
+<p>Context engineering isn&#39;t a buzzword. It&#39;s the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The <a href="https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/">automation stack</a> is the infrastructure, the <a href="https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/">trading strategies</a> and <a href="https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/">financial models</a> are the applications, and the <a href="https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/">real estate practice</a> is where it meets the market. Context engineering is the layer that makes it all operational — it defines <a href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">when to trust AI output and when to override it</a>, powers the <a href="https://zacharyvorsteg.com/blog/agentic-engineering-patterns/">agentic engineering methodology</a> I use in each development session, and it&#39;s how I run <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">agentic AI across all four ventures</a>. For <a href="https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/">what actually breaks when you automate this aggressively</a>, that&#39;s a separate post. I <a href="https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/">build it publicly</a> because documenting forces understanding. If you&#39;re building with AI agents or want to see how this system evolves, check out <a href="https://zacharyvorsteg.com/#work">what I&#39;m working on</a> or <a href="https://zacharyvorsteg.com/#contact">reach out</a>.</p>
+<!--
+GEO_META:
+SPEAKABLE: Zachary Vorsteg breaks down context engineering — the practice of designing the full environment around AI agents, not just individual prompts. The post covers his actual CLAUDE.md configuration, MCP tool routing across six integrations, event-driven hooks for permission management and session initialization, structured memory architecture that persists across sessions, and subagent routing patterns for parallelizing complex tasks.
+KEY_TAKEAWAY: Context engineering — designing persistent instruction files, tool routing tables, memory architecture, permission tiers, and event-driven hooks — is the critical skill for making AI agents reliable and autonomous. The distinction from prompt engineering is structural: prompts optimize one message, context engineering optimizes every interaction across every session.
+ANSWERS_QUERIES:
+- What is context engineering for AI agents?
+- How is context engineering different from prompt engineering?
+- What is CLAUDE.md and how do you configure it?
+- What is MCP Model Context Protocol?
+- How do solo founders use AI agents effectively?
+CITABLE_FACTS: 17
+NAMED_ENTITIES: 29 (Tobi Lutke, Shopify, Andrej Karpathy, Tesla, OpenAI, Gartner, MarketsandMarkets, Patrick Debois, QCon London, Stack Overflow, Anthropic, Linux Foundation, LangChain, Gloria Mark, UC Irvine, Capgemini, Peng et al., arXiv, GitHub Copilot, PwC, Carta, Claude Code, MCP, Chrome, Playwright, Brave Search, Supabase, Manus AI, Meta)
+FAQ_QUESTIONS: 6
+TABLES: 2
+-->
+
+<!--
+SELF-ASSESSMENT:
+WORD_COUNT: ~2,550
+DATA_POINTS: 17 (specific stats/figures with named sources)
+SOURCED_STATS: 14 (Tobi Lutke, Andrej Karpathy, Gartner x2, MarketsandMarkets, QCon London/Patrick Debois, Stack Overflow, Anthropic/Linux Foundation, LangChain, Gloria Mark/UC Irvine, Capgemini, Peng et al./arXiv, PwC, Carta)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+FAQ_QUESTIONS: 6
+TABLES: 2 (context engineering vs prompt engineering, MCP routing)
+CODE_SNIPPETS: 3 (CLAUDE.md permission tiers, hooks JSON configuration, memory file format)
+UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack — actual CLAUDE.md structure, MCP routing tables, hooks configuration, memory architecture — from a solo founder running multiple ventures simultaneously
+-->
+            </div>
+        </article>
+
+        <!-- Author Bio -->
+        <section class="article-author">
+            <div class="author-photo"></div>
+            <div class="author-info">
+                <h4>Zachary Vorsteg</h4>
+                <p>Commercial real estate broker and software developer. I structure deals, write code, and build the systems that run both.</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="article-cta">
+            <h3>Ready to build something?</h3>
+            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
+            <a href="/#contact" class="btn">Start a conversation</a>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="related-section">
+            <div class="container">
+                <h3>More from AI Workflow & Context Engineering</h3>
+                <div class="related-articles">
+                    
+      <div class="related-card">
+        <a href="/blog/agentic-engineering-patterns/">
+          <h4>Agentic Engineering: What Replaced Vibe Coding</h4>
+          <p class="related-desc">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
+          <span class="related-meta">March 20, 2026</span>
+        </a>
+      </div>
+    
+      <div class="related-card">
+        <a href="/blog/how-i-use-agentic-ai-one-person-company/">
+          <h4>How I Use Agentic AI to Run a One-Person Company</h4>
+          <p class="related-desc">I manage CRE deals, 54 trading bots, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
+          <span class="related-meta">March 20, 2026</span>
+        </a>
+      </div>
+    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Disclaimer -->
+    <aside class="blog-disclaimer" aria-label="Disclaimer">
+        <div class="container">
+            <p class="disclaimer-text">The content on this blog is for informational and educational purposes only. Nothing here constitutes financial, investment, legal, or real estate advice. Always consult qualified professionals before making financial or real estate decisions.</p>
+            <p class="disclaimer-text">Zachary Vorsteg | [BROKERAGE_NAME] | Florida Real Estate License #[LICENSE_NUMBER]</p>
+            <p class="disclaimer-eho">
+                <span class="eho-icon" aria-hidden="true">⌂</span>
+                Equal Housing Opportunity. Zachary Vorsteg supports the Fair Housing Act and equal opportunity for all.
+            </p>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div style="color: var(--gray-600); font-size: 14px;">
+                    © 2025 Zachary Vorsteg | <a href="tel:5617186725" style="color: var(--gray-600); text-decoration: none;">(561) 718-6725</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            this.classList.add('active');
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            mobileMenuBtn.classList.remove('active');
+        }
+
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) closeMobileMenu();
+        });
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Fade-in on scroll
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
