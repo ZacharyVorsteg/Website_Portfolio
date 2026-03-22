@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg runs 54 algorithmic trading bots across equities, fo
 
 Fifty-four algorithmic trading bots, five markets. Equities on Schwab. Forex through OANDA. On-chain crypto via Solana. Prediction markets on Polymarket and Kalshi. Plus a set of cross-market arbitrage strategies constantly hunting pricing inefficiencies between all of them.
 
-I've written about [the infrastructure behind this system](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) — Python scripts, the launchctl job scheduler, the $8/month hosting cost. What follows isn't about infrastructure. It's about the trading layer itself: which strategies actually work, which ones decay (and how fast), what slippage looks like when your backtest hits production, and how I decide when to kill a bot versus pour more engineering hours into saving it.
+I've written about [the infrastructure behind this system](/blog/my-solo-founder-automation-stack/) — Python scripts, the launchctl job scheduler, the $8/month hosting cost. What follows isn't about infrastructure. It's about the trading layer itself: which strategies actually work, which ones decay (and how fast), what slippage looks like when your backtest hits production, and how I decide when to kill a bot versus pour more engineering hours into saving it.
 
 Mordor Intelligence pegs the algorithmic trading market at $20.23 billion in 2026, heading for $29.54 billion by 2031 at a 7.87% CAGR (compound annual growth rate). QuantConnect alone has 478,000 quants and 375,000+ live strategies deployed since 2012. Setup content is everywhere — backtesting frameworks, API integration walkthroughs, "build your first bot" tutorials. What's practically nonexistent is honest writing about what happens after month three, when your edge starts thinning and the broker API goes dark during a volatility spike.
 
@@ -17,7 +17,7 @@ That's this post.
 
 ## What I Actually Trade: Five Markets, 54 Strategies
 
-The 54 bots break into three tiers. Five core strategies run continuously, holding positions across equities, forex, crypto, and prediction markets. Forty-five-plus arbitrage bots sit dormant until specific conditions trigger — carry trades, calendar spreads, cross-index discrepancies, DEX/CEX price gaps. Four infrastructure bots handle health checks, logging, reconciliation, and daily reporting (covered in [my automation stack post](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) — won't rehash them here).
+The 54 bots break into three tiers. Five core strategies run continuously, holding positions across equities, forex, crypto, and prediction markets. Forty-five-plus arbitrage bots sit dormant until specific conditions trigger — carry trades, calendar spreads, cross-index discrepancies, DEX/CEX price gaps. Four infrastructure bots handle health checks, logging, reconciliation, and daily reporting (covered in [my automation stack post](/blog/my-solo-founder-automation-stack/) — won't rehash them here).
 
 One insight took me a full year to properly internalize: "54 bots" doesn't mean 54 independent revenue streams. It means 54 expressions of maybe 8-10 distinct strategy types, each tuned for a specific market, pair, or timeframe. When one expression fails, I learn something about the underlying type. When a strategy type fails across all its expressions simultaneously? Kill signal.
 
@@ -152,7 +152,7 @@ Here's what separates a portfolio approach from single-strategy gambling:
 
 **Rigorous position sizing.** No single strategy ever represents more than 5% of total capital. Most arb bots run at 1-2%. A strategy that goes spectacularly wrong costs me a bad week. Never a bad year.
 
-The [financial modeling fundamentals](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) I use for evaluating strategy economics come from the same analytical framework I apply to deal analysis in my [commercial real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) — NPV (net present value), risk-adjusted return, sensitivity analysis. Different asset class, same math.
+The [financial modeling fundamentals](/blog/financial-modeling-fundamentals/) I use for evaluating strategy economics come from the same analytical framework I apply to deal analysis in my [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) — NPV (net present value), risk-adjusted return, sensitivity analysis. Different asset class, same math.
 
 ## How I Decide to Kill a Strategy
 
@@ -210,11 +210,11 @@ Correlated drawdowns. All your strategies lose money on the same day. CBOE's Imp
 
 ### Can I build trading bots as a side project, or does it require full-time attention?
 
-I run all 54 bots alongside a [commercial real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) and multiple software products. The infrastructure is automated — I covered how in [my automation stack post](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). The trading layer takes about 30 minutes daily: morning log review, strategy health checks, occasional parameter adjustments. Building your first profitable bot takes real time — weeks to months of development and testing. But ongoing operations absolutely fit a side-project schedule.
+I run all 54 bots alongside a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) and multiple software products. The infrastructure is automated — I covered how in [my automation stack post](/blog/my-solo-founder-automation-stack/). The trading layer takes about 30 minutes daily: morning log review, strategy health checks, occasional parameter adjustments. Building your first profitable bot takes real time — weeks to months of development and testing. But ongoing operations absolutely fit a side-project schedule.
 
 ---
 
-54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). If you're building automated trading systems or weighing whether to start, explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](/blog/my-solo-founder-automation-stack/). If you're building automated trading systems or weighing whether to start, explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

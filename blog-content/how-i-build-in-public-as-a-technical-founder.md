@@ -1,6 +1,6 @@
 ---
 title: How I Build in Public as a Technical Founder
-description: "I run 54 trading bots, ship iOS apps, and build IoT hardware — all solo. Here's what I share, what I keep private, and why transparency compounds."
+description: "I run a multi-market trading infrastructure, ship iOS apps, and build IoT hardware — all solo. Here's what I share, what I keep private, and why transparency compounds."
 keywords: build in public, technical founder, building in public, solo founder transparency, open startup, indie hacker build in public, solo founder accountability, building in public framework
 date: 2026-03-20
 pillar: Building in Public
@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg explains how building in public works for technical 
 
 Most "building in public" content amounts to indie hackers tweeting MRR screenshots. Fine for SaaS solo acts — but that barely scratches what transparency looks like when you're simultaneously juggling trading bots, an iOS app, and sensor networks across multiple sites.
 
-I'm a [licensed commercial real estate broker who codes](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a builder shipping across trading automation, iOS apps, IoT hardware, and this site. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
+I'm a [licensed commercial real estate broker who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a builder shipping across trading automation, iOS apps, IoT hardware, and this site. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
 
 What I share, what stays private, and the returns I've actually measured — that's what follows. If the "just be authentic" crowd burned you, consider this the tactical antidote.
 
@@ -17,7 +17,7 @@ What I share, what stays private, and the returns I've actually measured — tha
 
 Followers weren't the motivation. Drowning was.
 
-54 [trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/). An iOS app in active development. IoT sensor networks. A [full CRE practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/). All running simultaneously. Things slip through cracks when you operate like that — invisible things, the kind that surface three months later when you discover a system's been silently failing since Tuesday.
+Dozens of [trading strategies](/blog/algorithmic-trading-bots-side-project/) across multiple markets. An iOS app in active development. IoT sensor networks. A [full CRE practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/). All running simultaneously. Things slip through cracks when you operate like that — invisible things, the kind that surface three months later when you discover a system's been silently failing since Tuesday.
 
 Building in public forced a discipline: articulate what you're working on, why it matters, what actually happened. Even when zero people are reading, that act of writing catches problems early. Rubber duck debugging, but for your entire operation.
 
@@ -50,9 +50,9 @@ Most building-in-public guides offer "be transparent" without ever defining boun
 ### What I Share Freely
 
 - **Architecture decisions** — why Supabase over Firebase, why SwiftUI over UIKit for BidPro, why Python over Go for trading automation
-- **System design** — how 54 trading bots are orchestrated via launchctl, how [the IoT network communicates over cellular backhaul](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/)
+- **System design** — how production trading systems are orchestrated via launchctl, how [the IoT network communicates over cellular backhaul](/blog/shipping-iot-hardware-solo/)
 - **Mistakes and post-mortems** — the bot logic error that cost real money, the deployment that bricked a sensor node
-- **Process** — my approach to [financial modeling](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/), my build pipeline for this blog, how I test across platforms
+- **Process** — my approach to [financial modeling](/blog/financial-modeling-fundamentals/), my build pipeline for this blog, how I test across platforms
 - **Directional numbers** — performance ranges, user counts, uptime percentages
 
 ### What I Keep Private
@@ -69,7 +69,7 @@ Share process and architecture. Protect edge and relationships. Whole framework,
 
 ### Trust Compounds Faster Than Marketing
 
-From the 2025 Edelman Trust Barometer: 81% of consumers must trust a brand before purchasing — and 87% will pay more for brands they trust. Every honest failure post, every architecture breakdown, every real metric functions as a trust deposit. Not marketing spend. The [financial modeling](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) of transparency matters here: compounding credibility accrues whether you're paying attention or not, and the returns are measurable across customer acquisition, retention, and willingness to pay premium prices.
+From the 2025 Edelman Trust Barometer: 81% of consumers must trust a brand before purchasing — and 87% will pay more for brands they trust. Every honest failure post, every architecture breakdown, every real metric functions as a trust deposit. Not marketing spend. The [financial modeling](/blog/financial-modeling-fundamentals/) of transparency matters here: compounding credibility accrues whether you're paying attention or not, and the returns are measurable across customer acquisition, retention, and willingness to pay premium prices.
 
 Buffer ran an experiment that proved this dramatically. They've shared salaries and revenue publicly since 2013 — and when they first published their salary formula, job applications jumped 128% in 30 days, from 1,263 to 2,886 applications, according to Buffer's own transparency report. No recruiter on earth generates that kind of lift. None.
 
@@ -77,23 +77,23 @@ Buffer ran an experiment that proved this dramatically. They've shared salaries 
 
 Build-in-public founders across Indie Hackers, Product Hunt, and Hacker News consistently pull in early adopters before they've shipped anything. Share the process; people materialize.
 
-When you're building solo, this dynamic hits differently than it does for a funded startup with a marketing department. Followers morph into beta testers, bug reporters, referral sources — occasionally genuine collaborators. No HR department required. I lean on [agentic AI](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) and [agentic engineering patterns](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/) to scale this feedback loop — letting AI agents handle the operational throughput while I focus on directional decisions. My strongest early feedback on BidPro came from people who'd been reading about the architecture decisions for months before they ever opened the app. I didn't recruit them. They recruited themselves because the work was visible.
+When you're building solo, this dynamic hits differently than it does for a funded startup with a marketing department. Followers morph into beta testers, bug reporters, referral sources — occasionally genuine collaborators. No HR department required. I lean on [agentic AI](/blog/how-i-use-agentic-ai-one-person-company/) and [agentic engineering patterns](/blog/agentic-engineering-patterns/) to scale this feedback loop — letting AI agents handle the operational throughput while I focus on directional decisions. My strongest early feedback on BidPro came from people who'd been reading about the architecture decisions for months before they ever opened the app. I didn't recruit them. They recruited themselves because the work was visible.
 
 ### Public Commitments Are Harder to Break
 
 Underrated, this one. When you publicly commit to shipping something, the gravitational pull toward actually shipping it is remarkable. When you publicly document your architecture, you maintain it — because someone might call you out if it rots. Transparency becomes the management layer solo founders otherwise lack entirely.
 
-I've killed three projects I should have killed sooner. Fair enough. But I've also finished a dozen I absolutely would have abandoned in stealth mode. No manager pinging for status updates. No board expecting quarterly progress decks. Your audience steps into the accountability role you can't hire for. The flipside: [what actually breaks when you automate everything](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) — public commitments expose the gaps in your automation infrastructure and force you to maintain them properly.
+I've killed three projects I should have killed sooner. Fair enough. But I've also finished a dozen I absolutely would have abandoned in stealth mode. No manager pinging for status updates. No board expecting quarterly progress decks. Your audience steps into the accountability role you can't hire for. The flipside: [what actually breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — public commitments expose the gaps in your automation infrastructure and force you to maintain them properly.
 
 ### Writing Forces Understanding
 
 Every post I write about one of my systems forces me to understand it more deeply than I did before sitting down. Writing about error recovery in my trading bots exposed three edge cases I'd completely missed. Documenting IoT sensor calibration surfaced a temperature drift problem I'd been unconsciously ignoring for months — the kind of slow-burn issue that compounds into hardware failures if you don't catch it.
 
-Feynman nailed it: if you can't explain something clearly, you don't actually understand it. I use [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) to speed up this understanding process — and I'm deliberate about [where I draw the line on AI-generated code](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) versus hand-written solutions. Six months of public posts become a knowledge base you genuinely reference — unlike private notes decaying in some folder you forgot existed.
+Feynman nailed it: if you can't explain something clearly, you don't actually understand it. I use [context engineering](/blog/context-engineering-ai-agents/) to speed up this understanding process — and I'm deliberate about [where I draw the line on AI-generated code](/blog/vibe-coding-vs-real-engineering/) versus hand-written solutions. Six months of public posts become a knowledge base you genuinely reference — unlike private notes decaying in some folder you forgot existed.
 
 ## My Building-in-Public System
 
-Random posting doesn't scale. Systems do. Motivation absolutely does not. I've automated and optimized this entire process — see [my solo founder automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) for the full technical architecture.
+Random posting doesn't scale. Systems do. Motivation absolutely does not. I've automated and optimized this entire process — see [my solo founder automation stack](/blog/my-solo-founder-automation-stack/) for the full technical architecture.
 
 **Weekly cadence:**
 
@@ -105,7 +105,7 @@ Random posting doesn't scale. Systems do. Motivation absolutely does not. I've a
 
 | Tier | Type | Effort | Value | Example |
 |------|------|--------|-------|---------|
-| **1** | Architecture post | 3-4 hours | Highest — shareable, rankable, evergreen | "How I orchestrate 54 trading bots with launchctl" |
+| **1** | Architecture post | 3-4 hours | Highest — shareable, rankable, evergreen | "Solo founder trading automation: system architecture & launchctl orchestration" |
 | **2** | Retrospective | 1-2 hours | High — builds trust, drives engagement | "The bot error that cost me money (and how I fixed it)" |
 | **3** | System update | 30 minutes | Moderate — maintains consistency | "March update: new sensor nodes deployed, BidPro v2 shipped" |
 

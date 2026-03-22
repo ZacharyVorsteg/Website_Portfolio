@@ -11,7 +11,7 @@ Software developers think shipping means pushing code. Hardware developers know 
 
 I built an IoT thermal detection system from scratch. ESP32-S3 microcontrollers. MLX90640 infrared sensor arrays. Quectel EG25-G cellular modules for backhaul. Jetson Orin Nano for edge processing. Designed, prototyped, programmed, deployed — all solo, with zero formal hardware engineering training.
 
-I've written about the [software automation infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) running alongside this hardware, the [CRE business](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) that created the need for thermal detection in commercial buildings, and [what breaks when these systems hit the field](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/). Here's the origin story — how a software developer ships real hardware, what the breadboard-to-deployment journey actually looks like, and what I'd do differently.
+I've written about the [software automation infrastructure](/blog/my-solo-founder-automation-stack/) running alongside this hardware, the [CRE business](/blog/why-im-a-commercial-real-estate-broker-who-codes/) that created the need for thermal detection in commercial buildings, and [what breaks when these systems hit the field](/blog/what-breaks-when-you-automate-everything/). Here's the origin story — how a software developer ships real hardware, what the breadboard-to-deployment journey actually looks like, and what I'd do differently.
 
 ## Why a Software Developer Started Building Hardware
 
@@ -21,7 +21,7 @@ Commercial thermal imaging systems for building diagnostics run $15,000 to $50,0
 
 By 2025, the global IoT device count had hit 21.1 billion connected devices, growing 14% year-over-year (IoT Analytics, 2025). Billions of devices, and almost none of them built for commercial real estate monitoring at solo-operator budgets. Enterprise buyers get served. Hobbyist tinkerers get served. That middle ground — production-grade hardware for small operators? Barely exists.
 
-So I built one. My [financial modeling](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) wasn't complicated: $200 in components per sensor node versus $15,000 for commercial alternatives. At 75x cheaper, the question stopped being "should we pilot this?" and became "how many can I deploy?"
+So I built one. My [financial modeling](/blog/financial-modeling-fundamentals/) wasn't complicated: $200 in components per sensor node versus $15,000 for commercial alternatives. At 75x cheaper, the question stopped being "should we pilot this?" and became "how many can I deploy?"
 
 ## Choosing the Right Sensor: Why MLX90640 Over Everything Else
 
@@ -41,7 +41,7 @@ Melexis makes the MLX90640 — a 32×24 pixel far-infrared thermal sensor array.
 
 AMG8833 tempted me. Cheaper, simpler, decent community support. But 8×8 pixels — 64 data points per frame — can't distinguish between a roof leak's thermal signature and normal temperature variation in a commercial space. 768 pixels versus 64 — the MLX90640 catches gradients the AMG8833 misses entirely. That resolution gap? Difference between detecting a leak and detecting the weather.
 
-FLIR Lepton? Gorgeous resolution. Also $250 per unit with worse absolute accuracy. When you're deploying ten of these across multiple buildings, unit cost matters more than spec-sheet bragging rights. My [trading infrastructure](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) drilled that into me — I'd rather have reliable data from a $50 sensor at every site than stunning data from a $250 sensor at three.
+FLIR Lepton? Gorgeous resolution. Also $250 per unit with worse absolute accuracy. When you're deploying ten of these across multiple buildings, unit cost matters more than spec-sheet bragging rights. My [trading infrastructure](/blog/algorithmic-trading-bots-side-project/) drilled that into me — I'd rather have reliable data from a $50 sensor at every site than stunning data from a $250 sensor at three.
 
 ## ESP32-S3: The Microcontroller That Made Solo Hardware Possible
 
@@ -102,7 +102,7 @@ No site-specific network configuration. No IT department granting access. No cre
 
 Trade-off? Power consumption. EG25-G draws 500-600 mA during transmission. My sensor nodes run on mains power with battery backup, so I can live with that. For battery-only deployments, the math changes entirely — you'd need NB-IoT (Narrowband IoT) or LTE-M (LTE for Machines — low-power wide-area network protocols designed for battery-powered IoT devices) modules drawing 10-50 mA at peak.
 
-One thing cellular can't fix: signal quality varies by location. Below -95 dBm, packet loss climbs sharply. I've stood in a building basement watching signal bars flicker while my sensor node cheerfully cached readings locally, waiting for a transmission window. Cellular dead zones are a recurring headache — I've [documented the failure modes](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) in detail. Some sites need external antennas or the sensor node relocated to a spot with better reception.
+One thing cellular can't fix: signal quality varies by location. Below -95 dBm, packet loss climbs sharply. I've stood in a building basement watching signal bars flicker while my sensor node cheerfully cached readings locally, waiting for a transmission window. Cellular dead zones are a recurring headache — I've [documented the failure modes](/blog/what-breaks-when-you-automate-everything/) in detail. Some sites need external antennas or the sensor node relocated to a spot with better reception.
 
 ## Jetson Orin Nano: Edge Processing Instead of Cloud
 
@@ -145,7 +145,7 @@ Mounting hardware in commercial buildings means dealing with building managers, 
 
 ### The Calibration Problem
 
-Factory calibration on the MLX90640 is ±1°C. After six months in the field — temperature cycling, humidity exposure, vibration from HVAC equipment — sensors drift. Half a degree, then a full degree. Readings still look plausible on the dashboard. Those [monitoring blind spots](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) I wrote about elsewhere? Calibration drift is the hardware version of that same problem.
+Factory calibration on the MLX90640 is ±1°C. After six months in the field — temperature cycling, humidity exposure, vibration from HVAC equipment — sensors drift. Half a degree, then a full degree. Readings still look plausible on the dashboard. Those [monitoring blind spots](/blog/what-breaks-when-you-automate-everything/) I wrote about elsewhere? Calibration drift is the hardware version of that same problem.
 
 My solution: a quarterly recalibration protocol using a known-temperature reference surface. Drive to the site, hold the reference in front of the sensor, log the offset, push a calibration update over the air. Not scalable. But at my current deployment count, it's sustainable — and it catches drift before it corrupts the data pipeline.
 
@@ -178,15 +178,15 @@ Nordic Semiconductor's nRF54LM20B, announced at CES 2026, integrates a dedicated
 
 Carta's 2025 data: solo-founded startups now represent 36.3% of all new company incorporations, up from 23.7% in 2019. More people building alone, and the toolchain has caught up. That gap between "I can write firmware" and "I can ship a hardware product" used to require a team. Now it requires persistence and a credit card for JLCPCB.
 
-My [agentic engineering methodology](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/) I use for software applies to firmware too — with caveats. You can't [vibe code](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. Every line of firmware gets the line-by-line review treatment, period.
+My [agentic engineering methodology](/blog/agentic-engineering-patterns/) I use for software applies to firmware too — with caveats. You can't [vibe code](/blog/vibe-coding-vs-real-engineering/) embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. Every line of firmware gets the line-by-line review treatment, period.
 
 ## What I'd Tell a Software Developer Starting Hardware
 
 Build the ugliest working prototype first. Not a clean PCB — a breadboard held together with jumper wires and tape. Prove the sensor reads correctly. Prove the data reaches your server. Prove the enclosure survives a week outdoors. Then iterate.
 
-Biggest mental shift? Atoms are not bits. Software has zero marginal cost for copies. Hardware has BOM (bill of materials) cost, shipping, lead times, minimum order quantities, and components going end-of-life without warning. My [context engineering layer](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) helps debug firmware, and my [agentic AI workflow](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) handles morning briefings that include sensor health status. But when an ESP32 loses cellular connectivity in a ceiling plenum, no AI agent drives to the building and swaps the module. That's me, a ladder, and a Tuesday afternoon.
+Biggest mental shift? Atoms are not bits. Software has zero marginal cost for copies. Hardware has BOM (bill of materials) cost, shipping, lead times, minimum order quantities, and components going end-of-life without warning. My [context engineering layer](/blog/context-engineering-ai-agents/) helps debug firmware, and my [agentic AI workflow](/blog/how-i-use-agentic-ai-one-person-company/) handles morning briefings that include sensor health status. But when an ESP32 loses cellular connectivity in a ceiling plenum, no AI agent drives to the building and swaps the module. That's me, a ladder, and a Tuesday afternoon.
 
-Hardware's the reason I [build in public](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/). Documenting the journey — including the five prototype iterations, the UV-degraded enclosure, the cellular dead zones — forces honest assessment of what's working and what needs rebuilding. Hardware punishes dishonesty faster than software ever will.
+Hardware's the reason I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/). Documenting the journey — including the five prototype iterations, the UV-degraded enclosure, the cellular dead zones — forces honest assessment of what's working and what needs rebuilding. Hardware punishes dishonesty faster than software ever will.
 
 ## Frequently Asked Questions
 
@@ -216,7 +216,7 @@ Espressif has shipped over one billion chips globally (Espressif Systems), and t
 
 ---
 
-Every other post on this site describes software systems — [bots that trade markets](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/), [automation infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/), [AI workflows](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) managing four ventures. This is the post about the physical layer underneath all of that — sensors bolted to ceilings, cellular modules negotiating tower handoffs, firmware running for months without a restart. Hardware is where software meets reality, and reality doesn't accept pull requests.
+Every other post on this site describes software systems — [bots that trade markets](/blog/algorithmic-trading-bots-side-project/), [automation infrastructure](/blog/my-solo-founder-automation-stack/), [AI workflows](/blog/how-i-use-agentic-ai-one-person-company/) managing four ventures. This is the post about the physical layer underneath all of that — sensors bolted to ceilings, cellular modules negotiating tower handoffs, firmware running for months without a restart. Hardware is where software meets reality, and reality doesn't accept pull requests.
 
 If you're a software developer considering hardware — or building IoT systems and want to compare approaches — see [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact).
 

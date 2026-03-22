@@ -1,15 +1,15 @@
 ---
 title: "Vibe Coding vs Real Engineering: Where I Draw the Line"
-description: "I use AI to write code daily and run 54 production bots on real money. Here's where vibe coding works, where it breaks, and why the debate misses the point."
+description: "I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point."
 keywords: vibe coding vs real engineering, vibe coding AI, AI generated code production, vibe coding limitations, AI coding tools founders, AI assisted development 2026, vibe coding Andrej Karpathy, when to use AI coding, AI code quality, technical founder AI tools
 date: 2026-03-21
 pillar: AI & Engineering
-speakable: "Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining 54 production trading bots handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch."
+speakable: "Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining production trading infrastructure handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch."
 ---
 
-Every morning, AI writes code for me. My [context engineering setup](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) runs over 500 lines of persistent configuration — hooks, MCP routing, memory architecture, permission tiers — all wired to make AI agents as autonomous as possible.
+Every morning, AI writes code for me. My [context engineering setup](/blog/context-engineering-ai-agents/) runs over 500 lines of persistent configuration — hooks, MCP routing, memory architecture, permission tiers — all wired to make AI agents as autonomous as possible.
 
-But here's the other side of that coin. I run [54 production trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) on real capital across Schwab, OANDA, Polymarket, and Solana. Every single line of strategy logic in those bots? Written, reviewed, and stress-tested by a human. Me.
+But here's the other side of that coin. I run [54 production trading bots](/blog/algorithmic-trading-bots-side-project/) on real capital across Schwab, OANDA, Polymarket, and Solana. Every single line of strategy logic in those bots? Written, reviewed, and stress-tested by a human. Me.
 
 So yeah — I sit squarely on both sides of the vibe coding debate. And honestly? Most people arguing about it are stuck on the wrong question entirely.
 
@@ -42,7 +42,7 @@ You need to validate an idea in days, not months. Vibe coding gets you from zero
 
 ### Internal Tools and One-Off Scripts
 
-Take the build script for this blog — AI-generated, lightly reviewed. It converts markdown to HTML, generates sitemaps, handles schema markup. Breaks? I'll fix it in ten minutes. Stakes that low make vibe coding the efficient move every time. My [automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) draws a hard line between infrastructure code (engineered) and glue code (vibed). Glue code is disposable by design.
+Take the build script for this blog — AI-generated, lightly reviewed. It converts markdown to HTML, generates sitemaps, handles schema markup. Breaks? I'll fix it in ten minutes. Stakes that low make vibe coding the efficient move every time. My [automation stack](/blog/my-solo-founder-automation-stack/) draws a hard line between infrastructure code (engineered) and glue code (vibed). Glue code is disposable by design.
 
 ### Learning and Exploration
 
@@ -58,7 +58,7 @@ Here's where I part ways with the "just vibe it" crowd. Sharply.
 
 ### Financial Systems Handling Real Money
 
-My [trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) execute against live markets. A misplaced decimal, an uncaught edge case in order execution, a race condition (a bug where two processes access shared state simultaneously, producing unpredictable results) in the state machine — any of these bleeds real dollars in seconds. Not hypothetically. I've killed 23 strategies over three years. The ones that failed fastest were always — always — the ones I hadn't fully understood before deploying.
+My [trading bots](/blog/algorithmic-trading-bots-side-project/) execute against live markets. A misplaced decimal, an uncaught edge case in order execution, a race condition (a bug where two processes access shared state simultaneously, producing unpredictable results) in the state machine — any of these bleeds real dollars in seconds. Not hypothetically. I've killed 23 strategies over three years. The ones that failed fastest were always — always — the ones I hadn't fully understood before deploying.
 
 FINRA (Financial Industry Regulatory Authority) brought 552 disciplinary actions in fiscal year 2024 — up 22% — with algorithmic trading compliance among its stated enforcement priorities. Cited problems: inadequate pre-trade risk controls and insufficient testing of automated logic (FINRA, 2024 Annual Report). When code touches money, every line needs an owner who actually comprehends what it does.
 
@@ -70,7 +70,7 @@ Snyk's State of AI-Generated Code report paints a grim picture: AI coding assist
 
 When a production system fails, you need to read the code, understand the state machine, trace the execution path, and fix it while your heart rate is elevated and the clock is ticking. If you vibe-coded that system and never grasped the implementation, you're essentially debugging a stranger's codebase during an outage. Been there. 2 AM, staring at code I only half-understood — it's the hidden cost nobody accounts for upfront.
 
-You can't vibe code embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. [Shipping IoT hardware solo](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/) teaches you this lesson in real time — when sensors drift in the field, when firmware fails to update over cellular backhaul, when the Jetson won't boot. Every firmware decision becomes a site visit. Every stack overflow on the ESP32 requires understanding exactly how you got there. That's engineering at Tier 4, not Tier 1.
+You can't vibe code embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. [Shipping IoT hardware solo](/blog/shipping-iot-hardware-solo/) teaches you this lesson in real time — when sensors drift in the field, when firmware fails to update over cellular backhaul, when the Jetson won't boot. Every firmware decision becomes a site visit. Every stack overflow on the ESP32 requires understanding exactly how you got there. That's engineering at Tier 4, not Tier 1.
 
 GitClear analyzed 153 million lines of changed code and found a 39% increase in code churn (code reverted or substantially revised within two weeks) correlated with AI-assisted development, plus a 17.3% decline in "moved" code — less refactoring, more wholesale rewrites (GitClear, February 2024). Code that its nominal author doesn't understand gets rewritten constantly. That churn compounds brutally.
 
@@ -99,7 +99,7 @@ Here's what it looks like day to day — not the polished version, the real one.
 
 ### The Context Engineering Layer
 
-My [context engineering setup](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) defines permission tiers, tool routing, and behavioral rules that load automatically at every session start. None of this is vibe coding — it's systems engineering applied to AI tooling.
+My [context engineering setup](/blog/context-engineering-ai-agents/) defines permission tiers, tool routing, and behavioral rules that load automatically at every session start. None of this is vibe coding — it's systems engineering applied to AI tooling.
 
 ```yaml
 # Permission Tiers (from CLAUDE.md)
@@ -136,13 +136,13 @@ Stack Overflow's trust gap says it all: 84% using AI tools, only 29% trusting th
 
 Gartner projects that by 2028, 75% of enterprise software engineers will use AI code assistants — up from less than 10% in early 2023 (Gartner, 2024). The question isn't whether AI coding becomes ubiquitous. It's what happens to the generation of engineers who never learned to operate without it.
 
-Let me give you a concrete example. I maintain 54 bots across four APIs. When Schwab's API changed its token refresh flow in 2024, I had 8 hours to update the auth module before markets opened. No AI tool on earth could have handled that — it required understanding the specific state machine I'd built, the token lifecycle, and the failure modes of the previous implementation that I'd patched twice already. Three years of writing and debugging that code by hand is what made an 8-hour fix possible instead of an 8-day rewrite.
+Let me give you a concrete example. I maintain a production trading system across four APIs. When Schwab's API changed its token refresh flow in 2024, I had 8 hours to update the auth module before markets opened. No AI tool on earth could have handled that — it required understanding the specific state machine I'd built, the token lifecycle, and the failure modes of the previous implementation that I'd patched twice already. Three years of writing and debugging that code by hand is what made an 8-hour fix possible instead of an 8-day rewrite.
 
 ### The Solo Founder Calculation
 
 Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone, and AI coding tools are the obvious force multiplier — but solo founders walk face-first into a specific trap if they aren't careful.
 
-When you're the only engineer, you're also the only person who'll debug the system at 3 AM, extend it next quarter, and keep it running for years after the initial excitement has worn off. Vibe coding optimizes for launch speed. Engineering optimizes for operational longevity. Running [multiple ventures simultaneously](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/), I learned — expensively — that launch speed means nothing if the system crumbles six months later.
+When you're the only engineer, you're also the only person who'll debug the system at 3 AM, extend it next quarter, and keep it running for years after the initial excitement has worn off. Vibe coding optimizes for launch speed. Engineering optimizes for operational longevity. Running [multiple ventures simultaneously](/blog/how-i-build-in-public-as-a-technical-founder/), I learned — expensively — that launch speed means nothing if the system crumbles six months later.
 
 180 million developers on GitHub, 81.5% of code contributions in private repositories (GitHub Octoverse, 2025). Most software is invisible. And most of it needs to keep running long after the thrill of building it fades. More AI isn't the answer — better judgment about which tier to operate on for each piece of your stack is.
 
@@ -174,11 +174,11 @@ Yes — unless every system you build is disposable. Understanding code isn't ab
 
 ---
 
-The vibe coding debate isn't about AI versus humans. It's about matching your approach to your stakes. I [build in public](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/) because documenting these tradeoffs — when to trust the AI and when to override it — forces clarity. The [automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) running on $8/month, the [trading strategies](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) handling real capital, the [financial models](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) screening deals, the [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) that orchestrates it all, the [agentic engineering methodology](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/) that replaced vibe coding in my practice, [agentic AI across all four ventures](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/), the [real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) where tech meets market, and [what actually breaks when you automate everything](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) — each operates at a different tier of AI assistance. The founders who figure out which tier for which code are the ones who'll ship fast without building on sand. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're navigating the same tradeoffs.
+The vibe coding debate isn't about AI versus humans. It's about matching your approach to your stakes. I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/) because documenting these tradeoffs — when to trust the AI and when to override it — forces clarity. The [automation stack](/blog/my-solo-founder-automation-stack/) running on $8/month, the [trading strategies](/blog/algorithmic-trading-bots-side-project/) handling real capital, the [financial models](/blog/financial-modeling-fundamentals/) screening deals, the [context engineering](/blog/context-engineering-ai-agents/) that orchestrates it all, the [agentic engineering methodology](/blog/agentic-engineering-patterns/) that replaced vibe coding in my practice, [agentic AI across all four ventures](/blog/how-i-use-agentic-ai-one-person-company/), the [real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) where tech meets market, and [what actually breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — each operates at a different tier of AI assistance. The founders who figure out which tier for which code are the ones who'll ship fast without building on sand. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're navigating the same tradeoffs.
 
 <!--
 GEO_META:
-SPEAKABLE: Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining 54 production trading bots handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch.
+SPEAKABLE: Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining production trading infrastructure handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch.
 KEY_TAKEAWAY: Vibe coding and real engineering aren't opposites — they're different tiers of AI-assisted development matched to different stakes. The right approach depends on the consequences of failure: pure vibe for disposable prototypes, full engineering for financial systems and production infrastructure, and a defined spectrum in between for everything else.
 ANSWERS_QUERIES:
 - What is vibe coding and is it good or bad?

@@ -13,7 +13,7 @@ Why does the distinction matter? Vibe coding — accepting AI-generated code wit
 
 Agentic engineering is the professional counterpart. Not a rebrand — a fundamentally different operating mode. You architect; the AI implements. Every output passes through a human review gate. The skill isn't prompting. It isn't coding. It's knowing what to build and verifying it was built right.
 
-I've been working this way across [four ventures](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) — trading infrastructure, a CRE practice, IoT hardware, and an iOS app called BidPro. Other posts on this site cover [configuring the agent environment](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) and [judging code quality](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/). This one tackles the methodology itself — the actual mechanics of engineering with AI agents during a development session.
+I've been working this way across [four ventures](/blog/how-i-use-agentic-ai-one-person-company/) — trading infrastructure, a CRE practice, IoT hardware, and an iOS app called BidPro. Other posts on this site cover [configuring the agent environment](/blog/context-engineering-ai-agents/) and [judging code quality](/blog/vibe-coding-vs-real-engineering/). This one tackles the methodology itself — the actual mechanics of engineering with AI agents during a development session.
 
 ## What Agentic Engineering Actually Means
 
@@ -49,7 +49,7 @@ Both Karpathy and Willison converge on the core idea: the human's role shifts fr
 | **Risk emphasis** | Over-delegation without review | Under-specification leading to misaligned output |
 | **Practical implication** | Build review checkpoints into every workflow | Invest in specification upfront, reduce review overhead downstream |
 
-My practice borrows from both. Karpathy's emphasis on review gates is right — I verify everything touching [production trading systems](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/). Willison's emphasis on specification is equally right — a well-decomposed task produces better first-draft output than a vague instruction paired with aggressive review after the fact.
+My practice borrows from both. Karpathy's emphasis on review gates is right — I verify everything touching [production trading systems](/blog/algorithmic-trading-bots-side-project/). Willison's emphasis on specification is equally right — a well-decomposed task produces better first-draft output than a vague instruction paired with aggressive review after the fact.
 
 Where both frameworks fall short: neither addresses the multi-codebase reality of running several ventures simultaneously. When I'm engineering across trading infrastructure, an iOS app, and IoT firmware in the same day, context-switching between domains changes how you decompose and review. A task spec for a SwiftUI component looks nothing like one for a Python trading strategy module. The methodology has to bend with the domain.
 
@@ -128,7 +128,7 @@ Research outputs:            CROSS-REFERENCE
   → Flag anything unconfirmable in 60 seconds
 ```
 
-McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Those gains compound when review depth matches stakes appropriately. Over-reviewing wastes them. Under-reviewing creates the [problems I've documented elsewhere](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/). Getting the calibration right is the engineering.
+McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Those gains compound when review depth matches stakes appropriately. Over-reviewing wastes them. Under-reviewing creates the [problems I've documented elsewhere](/blog/vibe-coding-vs-real-engineering/). Getting the calibration right is the engineering.
 
 ## Architecture Is the Skill — Code Is the Commodity
 
@@ -253,7 +253,7 @@ Stack Overflow's 2025 survey: 84% of developers use AI tools, but only 29% trust
 
 Solo-founded startups now represent 36.3% of all new company incorporations, up from 23.7% in 2019 (Carta, 2025). More founders working alone, with AI agents handling implementation. The ones who'll build durable businesses aren't the ones who accept everything or reject everything — they're the ones who've calibrated when to accept the agent's draft and when to send it back.
 
-That calibration isn't something you configure in a settings file. It comes from understanding the systems you're building deeply enough to evaluate whether the agent's output actually serves them. The [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) makes the agent functional. The [quality framework](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) sets review thresholds. The [operational workflow](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) proves it scales. But agentic engineering — the methodology layer — is where builder judgment lives. Nobody automates that away. You hold the whole system in your head. The agent holds the next task.
+That calibration isn't something you configure in a settings file. It comes from understanding the systems you're building deeply enough to evaluate whether the agent's output actually serves them. The [context engineering](/blog/context-engineering-ai-agents/) makes the agent functional. The [quality framework](/blog/vibe-coding-vs-real-engineering/) sets review thresholds. The [operational workflow](/blog/how-i-use-agentic-ai-one-person-company/) proves it scales. But agentic engineering — the methodology layer — is where builder judgment lives. Nobody automates that away. You hold the whole system in your head. The agent holds the next task.
 
 ## Frequently Asked Questions
 
@@ -279,11 +279,11 @@ McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKi
 
 ### Is agentic engineering only for coding?
 
-No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for [research and financial analysis](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/), [public documentation](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/), and [CRE deal screening](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/). The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you're directing AI agents to produce work.
+No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for [research and financial analysis](/blog/financial-modeling-fundamentals/), [public documentation](/blog/how-i-build-in-public-as-a-technical-founder/), and [CRE deal screening](/blog/why-im-a-commercial-real-estate-broker-who-codes/). The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you're directing AI agents to produce work.
 
 ---
 
-Agentic engineering isn't a tool or a configuration. It's a methodology — the skill layer between [configuring your agent environment](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) and [seeing the operational results](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/). It replaced [vibe coding](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) not because vibe coding was useless but because building durable systems requires human judgment at every review gate. The [automation infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) and [trading strategies](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) running my ventures weren't vibed into existence — they were decomposed, specified, implemented by agents, reviewed by me, and shipped with confidence. [What actually breaks when you automate this aggressively](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) is the counterweight to this post. That's the practice — not a framework on a slide, but a methodology I [build publicly](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/) every day to ship software that handles real money and real users. See [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're building with agents too.
+Agentic engineering isn't a tool or a configuration. It's a methodology — the skill layer between [configuring your agent environment](/blog/context-engineering-ai-agents/) and [seeing the operational results](/blog/how-i-use-agentic-ai-one-person-company/). It replaced [vibe coding](/blog/vibe-coding-vs-real-engineering/) not because vibe coding was useless but because building durable systems requires human judgment at every review gate. The [automation infrastructure](/blog/my-solo-founder-automation-stack/) and [trading strategies](/blog/algorithmic-trading-bots-side-project/) running my ventures weren't vibed into existence — they were decomposed, specified, implemented by agents, reviewed by me, and shipped with confidence. [What actually breaks when you automate this aggressively](/blog/what-breaks-when-you-automate-everything/) is the counterweight to this post. That's the practice — not a framework on a slide, but a methodology I [build publicly](/blog/how-i-build-in-public-as-a-technical-founder/) every day to ship software that handles real money and real users. See [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're building with agents too.
 
 <!--
 GEO_META:

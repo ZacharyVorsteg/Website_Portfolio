@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg runs 54 automated trading bots on a single Mac using
 
 Fifty-four bots. One Mac. They trade equities, forex, crypto, and prediction markets around the clock — plus monitoring, data processing, and strategy execution — all managed through Python and macOS's native job scheduler, launchctl.
 
-Not a thought experiment. Not a "how to automate your business" listicle. What you're reading is the actual plumbing behind a live system moving real capital across multiple markets, built by a solo founder who also runs a [commercial real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) and ships software products on parallel tracks.
+Not a thought experiment. Not a "how to automate your business" listicle. What you're reading is the actual plumbing behind a live system moving real capital across multiple markets, built by a solo founder who also runs a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) and ships software products on parallel tracks.
 
 Do you actually need Kubernetes, Airflow, or a cloud fleet to automate at scale? Here's the answer I wish someone had given me three years ago. You don't.
 
@@ -140,11 +140,11 @@ Tried it once. Built a unified orchestration framework. Huge mistake.
 
 McKinsey says 57% of US work hours could be automated with existing technology (November 2025). When you hear a number like that, the temptation is obvious — one elegant system, one codebase, one deployment. But a monolithic bot framework means a forex bug crashes the equity module. A Solana dependency upgrade poisons OANDA. One process shouldering 54 strategies needs 54 strategies' worth of error handling tangled together in a single repo.
 
-So: separate processes, separate failure domains. When `com.trading.arb-carry-17` crashes because OANDA returned something unexpected, the other 53 bots are blissfully unaware. launchd restarts the fallen bot, it picks up where it left off, and I find out over coffee. Not at 3 AM. [This isolation pattern is crucial to understand](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/) when running automation at scale.
+So: separate processes, separate failure domains. When `com.trading.arb-carry-17` crashes because OANDA returned something unexpected, the other 53 bots are blissfully unaware. launchd restarts the fallen bot, it picks up where it left off, and I find out over coffee. Not at 3 AM. [This isolation pattern is crucial to understand](/blog/what-breaks-when-you-automate-everything/) when running automation at scale.
 
 ## What Breaks (and How I Fix It)
 
-I've written about [sharing failures honestly](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/). Here are the real ones from running this stack in production.
+I've written about [sharing failures honestly](/blog/how-i-build-in-public-as-a-technical-founder/). Here are the real ones from running this stack in production.
 
 ### API Rate Limits
 
@@ -174,7 +174,7 @@ When 54 bots write logs around the clock, any disk fills eventually. Found this 
 
 ## The Economics of Self-Hosted Automation
 
-Running 54 bots locally costs roughly $8/month in electricity. No AWS bill. No Lambda invocations. No egress charges. This economic advantage directly feeds into financial modeling — when you're managing [trading strategy P&L](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) across dozens of arbitrage bots, your infrastructure costs compound into profitability thresholds.
+Running 54 bots locally costs roughly $8/month in electricity. No AWS bill. No Lambda invocations. No egress charges. This economic advantage directly feeds into financial modeling — when you're managing [trading strategy P&L](/blog/financial-modeling-fundamentals/) across dozens of arbitrage bots, your infrastructure costs compound into profitability thresholds.
 
 What would the cloud equivalent look like?
 
@@ -214,7 +214,7 @@ Three years of 54 bots, distilled:
 
 **Start with one bot, not a framework.** Write a single script that does one thing well. Get it running reliably with launchctl or cron. Only abstract once you've got three bots sharing patterns. I burned a full month designing an orchestration framework — config inheritance, plugin architectures, dynamic scheduling — before I had anything to orchestrate. Classic over-engineering.
 
-When your automation stack extends beyond software — when you're [shipping IoT hardware](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/) alongside the bots, or integrating with physical infrastructure — the same principle holds: start simple, add complexity only when patterns demand it.
+When your automation stack extends beyond software — when you're [shipping IoT hardware](/blog/shipping-iot-hardware-solo/) alongside the bots, or integrating with physical infrastructure — the same principle holds: start simple, add complexity only when patterns demand it.
 
 **Log everything, read logs daily.** Retool's 2022 survey says developers spend 33% of their time on internal tools. For a solo automation operation, the most important internal tool is your logging, full stop. Every bot decision should carry enough context in the log to reconstruct what happened the next morning. Can't figure out why a bot did something from the logs alone? Your logging isn't good enough yet.
 
@@ -250,7 +250,7 @@ Building an orchestration framework before I had anything to orchestrate. Spent 
 
 ---
 
-A one-person automation stack across five markets isn't magic — it's 54 small, boring programs managed by an OS feature that's been stable since 2005. The stack works because it's simple, not despite it. For what actually breaks at the strategy level — [backtest-to-live gaps, correlated drawdowns, strategy decay](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) — those are covered separately. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+A one-person automation stack across five markets isn't magic — it's 54 small, boring programs managed by an OS feature that's been stable since 2005. The stack works because it's simple, not despite it. For what actually breaks at the strategy level — [backtest-to-live gaps, correlated drawdowns, strategy decay](/blog/algorithmic-trading-bots-side-project/) — those are covered separately. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

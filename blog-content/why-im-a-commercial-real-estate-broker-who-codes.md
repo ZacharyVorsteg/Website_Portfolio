@@ -1,13 +1,13 @@
 ---
 title: "Why I'm a Commercial Real Estate Broker Who Codes"
-description: "I'm a licensed CRE broker who also runs 54 trading bots and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage."
+description: "I'm a licensed CRE broker who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage."
 keywords: commercial real estate broker who codes, CRE broker technology, proptech, commercial real estate technology, CRE broker automation, proptech adoption commercial real estate, CRE deal analysis automation, commercial real estate AI, proptech market 2026, commercial real estate technology gap
 date: 2026-03-20
 pillar: Hardware & PropTech
 speakable: "Zachary Vorsteg explains why he's both a licensed commercial real estate broker and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage."
 ---
 
-Licensed CRE broker. Also writes Python, ships iOS apps, runs [54 algorithmic trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/). Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
+Licensed CRE broker. Also writes Python, ships iOS apps, runs a fleet of [algorithmic trading systems](/blog/algorithmic-trading-bots-side-project/) across multiple markets. Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
 
 McKinsey ranks construction and real estate among the least digitized industries on the planet — under 15% as digitized as tech and media (McKinsey Global Institute, "Digital America," 2015 — still cited in their 2024 updates because, remarkably, the gap hasn't closed). From a different vantage point, JLL's 2025 survey paints a similarly lopsided picture: 92% of CRE occupiers have started or plan AI pilots. Only 5% claim they've nailed all their AI goals. A mere 33% of the workforce feels adequately trained.
 
@@ -29,7 +29,7 @@ Every tool I've written starts the same way — I kept slamming into a friction 
 
 **Deal underwriting automation.** A standard CRE acquisition chews through dozens of analyst hours on data extraction alone — companies like Buildout and Blooma have built entire businesses around this bottleneck. I wrote a Python script that pulls rent rolls, calculates NOI (net operating income — total revenue minus operating expenses, excluding debt service), applies cap rates from comparable sales, and spits out a sensitivity analysis across five scenarios. Under a minute. That same analysis done by hand? Four to six hours hunched over a spreadsheet, hoping you didn't fat-finger a cell reference.
 
-**Market data pipelines.** The old way: log into CoStar, run a search, export a CSV, reformat the whole thing for a client deck, realize you forgot a filter, start over. I automated the entire flow — market comps, vacancy rates, recent sales, demographic data. The pipeline runs on the same launchctl-based scheduling system from [my automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). Different domain, identical plumbing.
+**Market data pipelines.** The old way: log into CoStar, run a search, export a CSV, reformat the whole thing for a client deck, realize you forgot a filter, start over. I automated the entire flow — market comps, vacancy rates, recent sales, demographic data. The pipeline runs on the same launchctl-based scheduling system from [my automation stack](/blog/my-solo-founder-automation-stack/). Different domain, identical plumbing.
 
 **Client reporting.** Monthly market updates that used to devour two hours of my morning now take ten minutes. Data aggregation, formatting, chart generation — all handled before I've finished my coffee. My job becomes the insight layer. Not wrangling CSVs.
 
@@ -39,7 +39,7 @@ Here's the thing nobody in PropTech wants to say out loud: software companies au
 
 Where does coding pay for itself fastest? Deal screening. Not even close.
 
-The [financial modeling fundamentals](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) I use for M&A translate cleanly into CRE deal evaluation — but I can run them at scale, across dozens of opportunities simultaneously, while a traditional analyst is still formatting their first spreadsheet.
+The [financial modeling fundamentals](/blog/financial-modeling-fundamentals/) I use for M&A translate cleanly into CRE deal evaluation — but I can run them at scale, across dozens of opportunities simultaneously, while a traditional analyst is still formatting their first spreadsheet.
 
 Morgan Stanley (2025) puts it at 37% of real estate tasks automatable, worth $34 billion in operating efficiencies by 2030. Brokers and services get the biggest lift: a projected 34% increase in operating cash flow through automation — the highest of any CRE subsector.
 
@@ -113,7 +113,7 @@ I'm not waiting for PropTech to catch up.
 
 **Version control is documentation discipline.** Every line of code I write gets tracked, versioned, made recoverable. Same rigor applies to my deal files — every version of every analysis, every communication thread, every amendment. Client asks about a revision from three weeks ago? Found in seconds. Meanwhile, most brokers are excavating email threads and praying they didn't delete the attachment.
 
-I [build in public](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/) because writing about these cross-domain connections forces me to sharpen them. The documentation habit that produces posts about my [trading bot operations](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) is the same habit that makes me document deal processes — and both improve from the discipline. Strange how that works.
+I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/) because writing about these cross-domain connections forces me to sharpen them. The documentation habit that produces posts about my [trading bot operations](/blog/algorithmic-trading-bots-side-project/) is the same habit that makes me document deal processes — and both improve from the discipline. Strange how that works.
 
 ## Building the Bridge: Broker Credibility Meets Technical Capability
 
@@ -125,7 +125,7 @@ But most people building CRE technology have never brokered a deal. Never walked
 
 I build from the opposite direction. Every tool starts with a real problem from an actual transaction — something that burned me once, or twice, or enough times that the frustration finally boiled over. Code serves the brokerage. Not the other way around. And the brokerage informs the code in ways no product manager interviewing brokers from outside could ever replicate.
 
-What does this look like in practice? A single system where both sides compound. [Financial modeling](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) feeds the deal analysis scripts. Scripts surface better opportunities. Better opportunities build the brokerage. The brokerage generates problems worth solving with code. Flywheel.
+What does this look like in practice? A single system where both sides compound. [Financial modeling](/blog/financial-modeling-fundamentals/) feeds the deal analysis scripts. Scripts surface better opportunities. Better opportunities build the brokerage. The brokerage generates problems worth solving with code. Flywheel.
 
 If you're a developer curious about CRE, or a broker wondering whether coding is worth your evenings and weekends — the technology gap isn't closing. Not soon, anyway. The people who bridge it will hold an advantage that pure relationship brokers and pure technologists simply cannot touch.
 
@@ -141,7 +141,7 @@ Fast. JLL's 2025 survey: 92% of CRE occupiers have started AI pilots, but only 5
 
 ### What programming language is most useful for commercial real estate?
 
-Python, and it's not close. It handles financial modeling, data analysis, API integrations, and automation — the four highest-value CRE applications. I use the same Python infrastructure for CRE deal analysis that powers [my 54-bot automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). Libraries like pandas, numpy, and matplotlib map directly to the data-heavy analytical work brokers do daily.
+Python, and it's not close. It handles financial modeling, data analysis, API integrations, and automation — the four highest-value CRE applications. I use the same Python infrastructure for CRE deal analysis that powers [my production trading automation stack](/blog/my-solo-founder-automation-stack/). Libraries like pandas, numpy, and matplotlib map directly to the data-heavy analytical work brokers do daily.
 
 ### How big is the PropTech market?
 

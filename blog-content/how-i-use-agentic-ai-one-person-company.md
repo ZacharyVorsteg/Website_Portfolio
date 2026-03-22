@@ -1,17 +1,17 @@
 ---
 title: "How I Use Agentic AI to Run a One-Person Company"
-description: "I manage CRE deals, 54 trading bots, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could."
+description: "I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could."
 keywords: agentic AI workflow solo founder, agentic AI automation one person company, AI agent daily workflow, solo founder AI tools 2026, agentic AI real workflow, one person company AI, AI agent task delegation, solo founder productivity AI, agentic AI limitations, AI automated business operations
 date: 2026-03-21
 pillar: AI Workflow & Context Engineering
 speakable: "Zachary Vorsteg describes how agentic AI operates in his daily workflow across four concurrent ventures — commercial real estate, algorithmic trading, IoT hardware, and iOS development. The post details specific tasks delegated to AI agents, real time savings measured across each business line, where agentic AI consistently fails, and why the one-person company model works only when you understand the delegation ceiling."
 ---
 
-Four ventures run simultaneously under one roof: a [commercial real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/), [54 algorithmic trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/), IoT thermal detection hardware, and an iOS app. No employees. No co-founder. No virtual assistant answering emails.
+Four ventures run simultaneously under one roof: a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/), [54 algorithmic trading bots](/blog/algorithmic-trading-bots-side-project/), IoT thermal detection hardware, and an iOS app. No employees. No co-founder. No virtual assistant answering emails.
 
 What makes this operationally survivable isn't willpower or 80-hour weeks. It's agentic AI — AI that acts autonomously within defined boundaries, not AI that sits idle waiting for prompts.
 
-I won't walk through agent configuration here — that's covered in my [context engineering walkthrough](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/). And I won't rehash when to trust AI-generated code — see the [vibe coding framework](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) for that. This post is strictly about outcomes. What agentic AI actually produces across multiple businesses, where it saves real time, and where it faceplants spectacularly every single week.
+I won't walk through agent configuration here — that's covered in my [context engineering walkthrough](/blog/context-engineering-ai-agents/). And I won't rehash when to trust AI-generated code — see the [vibe coding framework](/blog/vibe-coding-vs-real-engineering/) for that. This post is strictly about outcomes. What agentic AI actually produces across multiple businesses, where it saves real time, and where it faceplants spectacularly every single week.
 
 ## What "Agentic AI" Actually Means When You Use It Daily
 
@@ -25,7 +25,7 @@ When I start a session, the agent doesn't wait around. Project context loads aut
 
 A chatbot responds to one prompt. An agentic AI inhabits an environment — persistent instructions, tool access, memory, automation hooks — and takes multi-step actions. It spawns sub-tasks. Runs parallel searches. Monitors background processes while I'm heads-down on something else entirely, maybe debugging firmware or on the phone with a tenant.
 
-IBM's 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (IBM, June 2025). That tracks with what I've experienced firsthand — but only because I invested heavily in the [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) that makes agents reliable instead of just impressive. Strip that layer away and what you've got is a chatbot with more tools and fewer guardrails. Worse, actually.
+IBM's 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (IBM, June 2025). That tracks with what I've experienced firsthand — but only because I invested heavily in the [context engineering](/blog/context-engineering-ai-agents/) that makes agents reliable instead of just impressive. Strip that layer away and what you've got is a chatbot with more tools and fewer guardrails. Worse, actually.
 
 ## A Typical Morning: What the Agent Handles Before I Start
 
@@ -68,11 +68,11 @@ A new CRE listing crosses my desk — the agent pulls comps, zoning data, tenant
 
 ### Code Generation and Review
 
-Boilerplate, test scaffolding, build scripts, well-defined feature work — the agent handles all of it. For the iOS app, that means UI components and data binding. For blog infrastructure, markdown processing and schema generation. My [tier framework](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) sets the review bar — production code gets full human review, low-stakes glue code ships with a quick visual scan and a prayer. (Kidding. Mostly.)
+Boilerplate, test scaffolding, build scripts, well-defined feature work — the agent handles all of it. For the iOS app, that means UI components and data binding. For blog infrastructure, markdown processing and schema generation. My [tier framework](/blog/vibe-coding-vs-real-engineering/) sets the review bar — production code gets full human review, low-stakes glue code ships with a quick visual scan and a prayer. (Kidding. Mostly.)
 
 ### System Monitoring and Triage
 
-My [54 trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) run on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.
+My [54 trading bots](/blog/algorithmic-trading-bots-side-project/) run on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.
 
 ### Content Pipeline Automation
 
@@ -80,7 +80,7 @@ Running this blog involves a multi-stage pipeline: keyword research, deduplicati
 
 ### Deal Screening and Analysis
 
-The agent runs [financial models](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) on incoming CRE deals — cap rate analysis, DSCR (debt service coverage ratio — the property's net operating income divided by its debt payments) calculations, comp adjustments. It screens 10-15 listings per week and surfaces the 2-3 worth my serious attention. Previously I screened 3-4 per week manually and almost certainly missed better opportunities buried in the noise. The [CRE technology gap](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) is exactly why this edge matters — most practitioners still do all of this by hand.
+The agent runs [financial models](/blog/financial-modeling-fundamentals/) on incoming CRE deals — cap rate analysis, DSCR (debt service coverage ratio — the property's net operating income divided by its debt payments) calculations, comp adjustments. It screens 10-15 listings per week and surfaces the 2-3 worth my serious attention. Previously I screened 3-4 per week manually and almost certainly missed better opportunities buried in the noise. The [CRE technology gap](/blog/why-im-a-commercial-real-estate-broker-who-codes/) is exactly why this edge matters — most practitioners still do all of this by hand.
 
 ## What I Still Do Myself — And Why the Delegation Ceiling Exists
 
@@ -133,7 +133,7 @@ My workaround: structured checkpoints. Every 60-90 minutes, I have the agent dum
 
 The most dangerous failure mode. The one that keeps me up at night. The agent generates plausible but incorrect information — a statistic attributed to a real institution that doesn't actually appear in their reports, a code pattern that compiles cleanly but carries a subtle logic error, a market analysis that sounds authoritative but runs on stale data from 18 months ago. Agentic AI moves fast. Confidently wrong agentic AI moves fast straight off a cliff.
 
-I've caught fabricated citations, misattributed quotes, and mathematically impossible figures in my own content pipeline — more than once. The fix: verification before action, always. The agent drafts. A separate pass — sometimes a second agent, sometimes me with a cup of coffee and skepticism — checks every claim. Apply the [Tier 3 and 4 approach](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) to everything, not just code.
+I've caught fabricated citations, misattributed quotes, and mathematically impossible figures in my own content pipeline — more than once. The fix: verification before action, always. The agent drafts. A separate pass — sometimes a second agent, sometimes me with a cup of coffee and skepticism — checks every claim. Apply the [Tier 3 and 4 approach](/blog/vibe-coding-vs-real-engineering/) to everything, not just code.
 
 ### Cross-System Coordination Gaps
 
@@ -175,7 +175,7 @@ HUMAN-ONLY (no agent involvement):
 
 460+ agent-executed actions. 8 human-in-the-loop decisions. 6 human-only tasks. That ratio — roughly 97% agent-touchable, 60% fully autonomous — is what makes the one-person company work in practice. Not because the AI handles everything. Because it absorbs enough operational volume that one person can run four ventures without drowning in logistics or losing their mind.
 
-The real question isn't whether agentic AI is useful. Obviously it is. The real question is whether you've built the [context engineering layer](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) that makes it reliable, set up the [quality framework](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) that keeps it safe, and accepted — genuinely accepted — that the delegation ceiling is permanent. Not something the next model release will magically fix.
+The real question isn't whether agentic AI is useful. Obviously it is. The real question is whether you've built the [context engineering layer](/blog/context-engineering-ai-agents/) that makes it reliable, set up the [quality framework](/blog/vibe-coding-vs-real-engineering/) that keeps it safe, and accepted — genuinely accepted — that the delegation ceiling is permanent. Not something the next model release will magically fix.
 
 ## Frequently Asked Questions
 
@@ -185,7 +185,7 @@ Agentic AI operates autonomously within an environment — taking multi-step act
 
 ### How much does an agentic AI workflow cost for a solo founder?
 
-A complete solo-founder AI stack runs $3,000-$12,000 per year in 2026 — covering AI model subscriptions, cloud compute, and tool integrations — representing a 95-98% cost reduction versus equivalent traditional staffing (GREY Journal, 2026). My own stack runs on an [$8/month local infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) base for trading bots, plus AI model subscriptions and MCP integrations for the agent layer.
+A complete solo-founder AI stack runs $3,000-$12,000 per year in 2026 — covering AI model subscriptions, cloud compute, and tool integrations — representing a 95-98% cost reduction versus equivalent traditional staffing (GREY Journal, 2026). My own stack runs on an [$8/month local infrastructure](/blog/my-solo-founder-automation-stack/) base for trading bots, plus AI model subscriptions and MCP integrations for the agent layer.
 
 ### Can agentic AI really replace a team?
 
@@ -193,7 +193,7 @@ Not entirely. Anthropic's 2026 Agentic Coding Trends Report found developers ful
 
 ### What tools do you use for your agentic AI workflow?
 
-My primary agent is Claude Code with a 500+ line CLAUDE.md configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the [full context engineering setup](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) and the [automation infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) in separate posts.
+My primary agent is Claude Code with a 500+ line CLAUDE.md configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the [full context engineering setup](/blog/context-engineering-ai-agents/) and the [automation infrastructure](/blog/my-solo-founder-automation-stack/) in separate posts.
 
 ### Where does agentic AI fail the most?
 

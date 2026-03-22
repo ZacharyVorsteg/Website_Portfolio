@@ -232,6 +232,19 @@ function validateInternalLinks(slug, htmlContent, validSlugs, warnings) {
   }
 }
 
+// Check for absolute internal links (should be relative)
+function validateNoAbsoluteLinks(slug, htmlContent, warnings) {
+  const absLinkRegex = new RegExp(`href="${siteConfig.siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/blog/`, 'g');
+  let match;
+  let count = 0;
+  while ((match = absLinkRegex.exec(htmlContent)) !== null) {
+    count++;
+  }
+  if (count > 0) {
+    warnings.push(`🚫 [${slug}]: ${count} absolute internal link(s) found — use relative paths (/blog/slug/) instead`);
+  }
+}
+
 // Generate RSS feed
 function generateRSS(articles) {
   const items = articles
@@ -345,6 +358,7 @@ function build() {
   articles.forEach(article => {
     // Validate internal links
     validateInternalLinks(article.slug, article.content, validSlugs, warnings);
+    validateNoAbsoluteLinks(article.slug, article.content, warnings);
 
     const relatedArticles = getRelatedArticles(articles, article.slug, article.pillar);
     const relatedHtml = relatedArticles.length > 0
