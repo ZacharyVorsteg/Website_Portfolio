@@ -55,3 +55,9 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
+
+# Redirect old blog URL to new URL (FREC compliance fix)
+[[redirects]]
+  from = "/blog/why-im-a-commercial-real-estate-broker-who-codes/*"
+  to = "/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/:splat"
+  status = 301
