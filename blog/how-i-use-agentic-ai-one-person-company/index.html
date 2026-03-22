@@ -38,10 +38,9 @@
         "name": "Zachary Vorsteg",
         "url": "https://zacharyvorsteg.com",
         "jobTitle": "Commercial Real Estate Broker & Software Developer",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "[BROKERAGE_NAME]"
-        }
+        "sameAs": [
+          "https://zacharyvorsteg.com"
+        ]
       },
       "publisher": {
         "@type": "Organization",
@@ -560,6 +559,52 @@
             border-bottom: 1px solid var(--accent);
         }
 
+        /* Tables */
+        .article-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            font-size: 15px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .article-body table {
+                display: table;
+            }
+        }
+
+        .article-body thead {
+            background: var(--gray-50);
+        }
+
+        .article-body th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: var(--gray-900);
+            border-bottom: 2px solid var(--gray-200);
+            white-space: nowrap;
+        }
+
+        .article-body td {
+            padding: 12px 16px;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-100);
+            line-height: 1.6;
+        }
+
+        .article-body tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .article-body hr {
+            border: none;
+            border-top: 1px solid var(--gray-200);
+            margin: 48px 0;
+        }
+
         .article-body blockquote {
             padding: 20px 24px;
             margin: 32px 0;
@@ -613,6 +658,14 @@
             height: 80px;
             border-radius: 50%;
             background: var(--gray-200);
+            overflow: hidden;
+        }
+
+        .author-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .author-info h4 {
@@ -1125,7 +1178,7 @@ UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four con
 
         <!-- Author Bio -->
         <section class="article-author">
-            <div class="author-photo"></div>
+            <div class="author-photo"><img src="/images/zach-headshot.jpg" alt="Zachary Vorsteg"></div>
             <div class="author-info">
                 <h4>Zachary Vorsteg</h4>
                 <p>Commercial real estate broker and software developer. I structure deals, write code, and build the systems that run both.</p>
@@ -1169,12 +1222,7 @@ UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four con
     <!-- Disclaimer -->
     <aside class="blog-disclaimer" aria-label="Disclaimer">
         <div class="container">
-            <p class="disclaimer-text">The content on this blog is for informational and educational purposes only. Nothing here constitutes financial, investment, legal, or real estate advice. Always consult qualified professionals before making financial or real estate decisions.</p>
-            <p class="disclaimer-text">Zachary Vorsteg | [BROKERAGE_NAME] | Florida Real Estate License #[LICENSE_NUMBER]</p>
-            <p class="disclaimer-eho">
-                <span class="eho-icon" aria-hidden="true">⌂</span>
-                Equal Housing Opportunity. Zachary Vorsteg supports the Fair Housing Act and equal opportunity for all.
-            </p>
+            <p class="disclaimer-text">The content on this blog is for informational and educational purposes only. Nothing here constitutes financial, investment, legal, or professional advice. Always consult qualified professionals before making decisions.</p>
         </div>
     </aside>
 
