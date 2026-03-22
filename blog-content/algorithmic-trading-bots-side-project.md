@@ -146,6 +146,12 @@ Here's what separates a portfolio approach from single-strategy gambling:
 
 **Rigorous position sizing.** No single strategy ever represents more than 5% of total capital. Most arb bots run at 1-2%. A strategy that goes spectacularly wrong costs me a bad week. Never a bad year.
 
+**Diversification across strategy types.** Momentum and mean-reversion strategies are naturally anti-correlated in low-volatility environments. When momentum bleeds, mean-reversion often profits — and vice versa. Running both dampens portfolio volatility considerably.
+
+**Diversification across markets.** Forex carry trades and Solana DEX arbitrage respond to completely different economic forces. A Fed rate decision moves forex but doesn't touch on-chain liquidity. An Ethereum upgrade shakes crypto but leaves prediction markets untouched. Partial decorrelation — not full, as March 2020 brutally demonstrated — but enough to smooth the equity curve most months.
+
+**Rigorous position sizing.** No single strategy ever represents more than 5% of total capital. Most arb bots run at 1-2%. A strategy that goes spectacularly wrong costs me a bad week. Never a bad year.
+
 The [financial modeling fundamentals](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) I use for evaluating strategy economics come from the same analytical framework I apply to deal analysis in my [commercial real estate practice](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/) — NPV (net present value), risk-adjusted return, sensitivity analysis. Different asset class, same math.
 
 ## How I Decide to Kill a Strategy
@@ -208,7 +214,7 @@ I run all 54 bots alongside a [commercial real estate practice](https://zacharyv
 
 ---
 
-54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. I write about it publicly because [building in public](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/) forces clearer thinking about what's actually working. For the infrastructure underneath, see [my full automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). The [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) that makes AI agents useful for monitoring these bots, the [agentic engineering methodology](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/) for working with AI agents in each session, the [framework for AI-assisted vs. hand-written code](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/), and [agentic AI in the daily workflow](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/) all connect to this trading infrastructure. For the operational reality of what breaks — [the full breakdown is here](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/). If you're building automated trading systems or weighing whether to start, explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/). If you're building automated trading systems or weighing whether to start, explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

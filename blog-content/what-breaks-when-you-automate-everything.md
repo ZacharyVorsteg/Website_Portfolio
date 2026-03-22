@@ -113,6 +113,8 @@ The [vibe coding spectrum](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-e
 
 My thermal detection hardware uses MLX90640 infrared sensor arrays connected to ESP32-S3 microcontrollers. Factory calibration: good to ±1°C. Over months of deployment — temperature cycling, humidity exposure, UV degradation — they drift. Not dramatically. Half a degree, then a full degree. Readings land technically within the sensor's noise floor but skew consistently in one direction.
 
+The full journey from prototype to deployment — [shipping IoT hardware solo](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/) — teaches you that atoms behave differently than bits. Firmware updates don't fix hardware that's drifted in the field, and recalibration requires a site visit. This is the "almost working" tax paid in real time, where dashboards show green while the actual data slowly diverges from reality.
+
 Dashboards show normal patterns. But edge-case detections — the ones that actually matter — get missed. I've stood staring at a green dashboard while knowing in my gut something was off. Couldn't point to a number, couldn't articulate why. That's the "almost working" tax paid in real time.
 
 Trading bots have their own version of this. A strategy returning 12% annually degrades to 8%, then 5%, then 2%. At what point is it broken versus experiencing a rough market? There's no clean threshold. No bright line. The "almost working" tax means paying sustained attention to something that may or may not need intervention — drawing from the same limited cognitive budget that services everything else in the stack.

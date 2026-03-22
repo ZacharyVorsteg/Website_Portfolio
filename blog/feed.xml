@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zachary Vorsteg</title>
+    <link>https://zacharyvorsteg.com/blog/</link>
+    <description>Insights on finance, real estate, automation, and building.</description>
+    <language>en-us</language>
+    <atom:link href="https://zacharyvorsteg.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Agentic Engineering: What Replaced Vibe Coding</title>
+      <link>https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.</description>
+      <category>AI Workflow &amp; Context Engineering</category>
+    </item>
+    <item>
+      <title>Context Engineering for AI Agents: What I Actually Configure</title>
+      <link>https://zacharyvorsteg.com/blog/context-engineering-ai-agents/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/context-engineering-ai-agents/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>My CLAUDE.md is 500+ lines. Here&apos;s what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</description>
+      <category>AI Workflow &amp; Context Engineering</category>
+    </item>
+    <item>
+      <title>How I Use Agentic AI to Run a One-Person Company</title>
+      <link>https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I manage CRE deals, 54 trading bots, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.</description>
+      <category>AI Workflow &amp; Context Engineering</category>
+    </item>
+    <item>
+      <title>Shipping IoT Hardware Solo: ESP32 Prototype to Deployment</title>
+      <link>https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here&apos;s the full journey.</description>
+      <category>Hardware &amp; PropTech</category>
+    </item>
+    <item>
+      <title>Vibe Coding vs Real Engineering: Where I Draw the Line</title>
+      <link>https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I use AI to write code daily and run 54 production bots on real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.</description>
+      <category>AI &amp; Engineering</category>
+    </item>
+    <item>
+      <title>What Breaks When You Automate Everything as a Solo Founder</title>
+      <link>https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/</guid>
+      <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I run 54 automated bots, IoT hardware, and an iOS app — all solo. Here&apos;s what actually breaks, how failures cascade, and what I&apos;ve learned you can&apos;t automate.</description>
+      <category>Solo Founder Operations</category>
+    </item>
+    <item>
+      <title>How I Built 54 Trading Bots as a Side Project</title>
+      <link>https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/</guid>
+      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I run 54 trading bots across 5 markets. Here&apos;s what 3 years taught me about strategy decay, slippage, correlated drawdowns, and what actually breaks.</description>
+      <category>Automation &amp; Trading</category>
+    </item>
+    <item>
+      <title>How I Build in Public as a Technical Founder</title>
+      <link>https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/</guid>
+      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I run 54 trading bots, ship iOS apps, and build IoT hardware — all solo. Here&apos;s what I share, what I keep private, and why transparency compounds.</description>
+      <category>Building in Public</category>
+    </item>
+    <item>
+      <title>Solo Founder Automation Stack: 54 Python Bots</title>
+      <link>https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/</guid>
+      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I run 54 automated bots on a single Mac using Python and launchctl — for $8/month. Full architecture, real failures, and cost analysis vs. cloud.</description>
+      <category>Automation &amp; Systems</category>
+    </item>
+    <item>
+      <title>Why I&apos;m a Commercial Real Estate Broker Who Codes</title>
+      <link>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</guid>
+      <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
+      <description>I&apos;m a licensed CRE broker who also runs 54 trading bots and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.</description>
+      <category>Hardware &amp; PropTech</category>
+    </item>
+    <item>
+      <title>Financial Modeling Fundamentals for M&amp;A</title>
+      <link>https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/</guid>
+      <pubDate>Sat, 15 Mar 2025 00:00:00 GMT</pubDate>
+      <description>DCF, LBO, and merger models explained — the three financial models that drive every M&amp;A valuation, with synergy frameworks and sensitivity analysis.</description>
+      <category>Finance</category>
+    </item>
+  </channel>
+</rss>

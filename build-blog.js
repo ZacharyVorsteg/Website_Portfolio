@@ -42,6 +42,55 @@ function parseFrontmatter(content) {
   return { metadata, content: body.trim() };
 }
 
+// Validate frontmatter fields
+function validateFrontmatter(slug, metadata, warnings) {
+  const requiredFields = {
+    title: { maxLen: 70, warnAt: 60 },
+    description: { maxLen: 160, warnAt: 155 },
+    date: { format: 'YYYY-MM-DD' },
+    pillar: { maxLen: null },
+    keywords: { maxLen: null }
+  };
+
+  for (const [field, rules] of Object.entries(requiredFields)) {
+    const value = metadata[field];
+
+    if (!value || value.trim() === '') {
+      warnings.push(`⚠ [${slug}]: Missing required field "${field}"`);
+      continue;
+    }
+
+    if (rules.format === 'YYYY-MM-DD') {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        warnings.push(`⚠ [${slug}]: Invalid date format "${value}" (expected YYYY-MM-DD)`);
+      }
+    }
+
+    if (rules.maxLen) {
+      if (value.length > rules.maxLen) {
+        warnings.push(`⚠ [${slug}]: Field "${field}" exceeds max length ${rules.maxLen} (${value.length} chars)`);
+      } else if (rules.warnAt && value.length > rules.warnAt) {
+        warnings.push(`⚠ [${slug}]: Field "${field}" is ${value.length} chars (recommended max: ${rules.warnAt})`);
+      }
+    }
+  }
+}
+
+// Count words in content
+function countWords(content) {
+  return content.trim().split(/\s+/).length;
+}
+
+// Validate word count
+function validateWordCount(slug, content, warnings) {
+  const wordCount = countWords(content);
+  if (wordCount < 1500) {
+    warnings.push(`⚠ [${slug}]: Word count ${wordCount} (minimum recommended: 1500)`);
+  } else if (wordCount > 4000) {
+    warnings.push(`⚠ [${slug}]: Word count ${wordCount} (maximum recommended: 4000)`);
+  }
+}
+
 // Format date as readable string
 function formatDate(dateStr) {
   const date = new Date(dateStr);
@@ -153,20 +202,79 @@ function getRelatedArticles(articles, currentSlug, pillar, limit = 3) {
     }));
 }
 
+// Check for broken internal links
+function validateInternalLinks(slug, htmlContent, validSlugs, warnings) {
+  const linkRegex = /href="\/blog\/([^/]+)\//g;
+  let match;
+  while ((match = linkRegex.exec(htmlContent)) !== null) {
+    const linkedSlug = match[1];
+    if (!validSlugs.has(linkedSlug)) {
+      warnings.push(`⚠ [${slug}]: Broken internal link to /blog/${linkedSlug}/`);
+    }
+  }
+}
+
+// Generate RSS feed
+function generateRSS(articles) {
+  const items = articles
+    .map(a => {
+      const pubDate = new Date(a.dateStr);
+      const rfc822Date = pubDate.toUTCString();
+      const guid = `${SITE_URL}/blog/${a.slug}/`;
+      const link = `${SITE_URL}/blog/${a.slug}/`;
+
+      return `    <item>
+      <title>${escapeXml(a.title)}</title>
+      <link>${link}</link>
+      <guid isPermaLink="true">${guid}</guid>
+      <pubDate>${rfc822Date}</pubDate>
+      <description>${escapeXml(a.description)}</description>
+      <category>${escapeXml(a.pillar)}</category>
+    </item>`;
+    })
+    .join('\n');
+
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zachary Vorsteg</title>
+    <link>${SITE_URL}/blog/</link>
+    <description>Insights on finance, real estate, automation, and building.</description>
+    <language>en-us</language>
+    <atom:link href="${SITE_URL}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+${items}
+  </channel>
+</rss>`;
+
+  fs.writeFileSync(path.join(OUTPUT_DIR, 'feed.xml'), rss);
+}
+
+// Escape XML special characters
+function escapeXml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 // Build all articles
 function build() {
   if (!fs.existsSync(CONTENT_DIR)) {
     console.log('No blog-content directory found. Skipping build.');
-    return [];
+    return { articles: [], warnings: [] };
   }
 
   const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
   if (files.length === 0) {
     console.log('No markdown files found in blog-content. Skipping build.');
-    return [];
+    return { articles: [], warnings: [] };
   }
 
   const articles = [];
+  const warnings = [];
 
   files.forEach(file => {
     const content = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf-8');
@@ -178,6 +286,12 @@ function build() {
     const keywords = metadata.keywords || '';
     const dateStr = metadata.date || new Date().toISOString().split('T')[0];
     const pillar = metadata.pillar || 'Finance';
+
+    // Validate frontmatter
+    validateFrontmatter(slug, metadata, warnings);
+
+    // Validate word count
+    validateWordCount(slug, body, warnings);
 
     const speakable = metadata.speakable || '';
     const dateFormatted = formatDate(dateStr);
@@ -203,15 +317,22 @@ function build() {
   // Sort by date descending
   articles.sort((a, b) => new Date(b.dateStr) - new Date(a.dateStr));
 
+  // Build a set of valid slugs for link validation
+  const validSlugs = new Set(articles.map(a => a.slug));
+
   // Read template
   const template = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
 
   // Generate article pages
   articles.forEach(article => {
+    // Validate internal links
+    validateInternalLinks(article.slug, article.content, validSlugs, warnings);
+
     const relatedArticles = getRelatedArticles(articles, article.slug, article.pillar);
-    const relatedHtml = relatedArticles
-      .map(
-        a => `
+    const relatedHtml = relatedArticles.length > 0
+      ? relatedArticles
+          .map(
+            a => `
       <div class="related-card">
         <a href="/blog/${a.slug}/">
           <h4>${a.title}</h4>
@@ -220,8 +341,9 @@ function build() {
         </a>
       </div>
     `
-      )
-      .join('');
+          )
+          .join('')
+      : '';
 
     const faqPairs = extractFAQPairs(article.content);
     const extraSchema = generateExtraSchema(article, faqPairs);
@@ -245,7 +367,7 @@ function build() {
     console.log(`✓ ${article.slug}`);
   });
 
-  return articles;
+  return { articles, warnings };
 }
 
 // Generate blog index
@@ -303,12 +425,20 @@ function updateSitemap(articles) {
 
 // Main
 console.log('Building blog...\n');
-const articles = build();
+const { articles, warnings } = build();
 
 if (articles.length > 0) {
   generateIndex(articles);
   updateSitemap(articles);
-  console.log(`\n✓ Blog built: ${articles.length} articles`);
+  generateRSS(articles);
+  console.log('✓ RSS feed generated');
+
+  if (warnings.length > 0) {
+    console.log('\nWarnings:');
+    warnings.forEach(w => console.log(w));
+  }
+
+  console.log(`\n✓ Blog built: ${articles.length} articles, ${warnings.length} warnings`);
 } else {
   console.log('\n✓ No articles to build.');
 }

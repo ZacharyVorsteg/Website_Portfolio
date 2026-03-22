@@ -70,6 +70,8 @@ Snyk's State of AI-Generated Code report paints a grim picture: AI coding assist
 
 When a production system fails, you need to read the code, understand the state machine, trace the execution path, and fix it while your heart rate is elevated and the clock is ticking. If you vibe-coded that system and never grasped the implementation, you're essentially debugging a stranger's codebase during an outage. Been there. 2 AM, staring at code I only half-understood — it's the hidden cost nobody accounts for upfront.
 
+You can't vibe code embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. [Shipping IoT hardware solo](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/) teaches you this lesson in real time — when sensors drift in the field, when firmware fails to update over cellular backhaul, when the Jetson won't boot. Every firmware decision becomes a site visit. Every stack overflow on the ESP32 requires understanding exactly how you got there. That's engineering at Tier 4, not Tier 1.
+
 GitClear analyzed 153 million lines of changed code and found a 39% increase in code churn (code reverted or substantially revised within two weeks) correlated with AI-assisted development, plus a 17.3% decline in "moved" code — less refactoring, more wholesale rewrites (GitClear, February 2024). Code that its nominal author doesn't understand gets rewritten constantly. That churn compounds brutally.
 
 ### Anything with a Multi-Year Lifespan

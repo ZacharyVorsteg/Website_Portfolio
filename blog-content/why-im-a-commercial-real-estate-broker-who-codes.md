@@ -157,7 +157,7 @@ The opportunity cost is real — every hour coding is an hour not prospecting. B
 
 ---
 
-CRE and code is where I find the best problems — and the widest moat. The [54 trading bots](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/) across five markets, the [automation infrastructure](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/) powering everything, the [financial modeling](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/) bridging M&A and deal evaluation, the [context engineering](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/) powering my AI workflow, the [vibe coding framework](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/) for knowing when to trust AI output, the [agentic engineering methodology](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/) for working with AI in each session, [agentic AI across all four ventures](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/), [what breaks when you automate everything](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/), and [building publicly](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/) — it's all connected. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+CRE and code is where I find the best problems — and the widest moat. The competitive advantage compounds: faster deal analysis, custom automation, real-time market intelligence. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:
