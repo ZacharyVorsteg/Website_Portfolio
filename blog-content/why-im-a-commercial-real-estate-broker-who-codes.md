@@ -1,13 +1,13 @@
 ---
-title: "Why I'm a Commercial Real Estate Broker Who Codes"
-description: "I'm a licensed CRE broker who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage."
-keywords: commercial real estate broker who codes, CRE broker technology, proptech, commercial real estate technology, CRE broker automation, proptech adoption commercial real estate, CRE deal analysis automation, commercial real estate AI, proptech market 2026, commercial real estate technology gap
+title: "Why I'm a Commercial Real Estate Sales Associate Who Codes"
+description: "I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage."
+keywords: commercial real estate sales associate who codes, CRE sales associate technology, proptech, commercial real estate technology, CRE sales associate automation, proptech adoption commercial real estate, CRE deal analysis automation, commercial real estate AI, proptech market 2026, commercial real estate technology gap
 date: 2026-03-20
 pillar: Hardware & PropTech
-speakable: "Zachary Vorsteg explains why he's both a licensed commercial real estate broker and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage."
+speakable: "Zachary Vorsteg explains why he's both a licensed commercial real estate sales associate and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage."
 ---
 
-Licensed CRE broker. Also writes Python, ships iOS apps, runs a fleet of [algorithmic trading systems](/blog/algorithmic-trading-bots-side-project/) across multiple markets. Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
+Licensed CRE sales associate. Also writes Python, ships iOS apps, runs a fleet of [algorithmic trading systems](/blog/algorithmic-trading-bots-side-project/) across multiple markets. Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
 
 McKinsey ranks construction and real estate among the least digitized industries on the planet — under 15% as digitized as tech and media (McKinsey Global Institute, "Digital America," 2015 — still cited in their 2024 updates because, remarkably, the gap hasn't closed). From a different vantage point, JLL's 2025 survey paints a similarly lopsided picture: 92% of CRE occupiers have started or plan AI pilots. Only 5% claim they've nailed all their AI goals. A mere 33% of the workforce feels adequately trained.
 
@@ -161,7 +161,7 @@ CRE and code is where I find the best problems — and the widest moat. The comp
 
 <!--
 GEO_META:
-SPEAKABLE: Zachary Vorsteg explains why he's both a licensed commercial real estate broker and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage.
+SPEAKABLE: Zachary Vorsteg explains why he's both a licensed commercial real estate sales associate and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage.
 KEY_TAKEAWAY: Commercial real estate is one of the least digitized industries globally, and brokers who can code have a compounding competitive advantage — faster deal analysis, automated market research, and custom tools that enterprise PropTech platforms don't offer. The CRE technology gap is widening, not closing.
 ANSWERS_QUERIES:
 - Do you need to know how to code to be a successful CRE broker?
@@ -184,5 +184,5 @@ INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-proj
 FAQ_QUESTIONS: 6
 TABLES: 2 (traditional vs tech-enabled broker, PropTech investment breakdown)
 CODE_SNIPPETS: 1 (CRE deal quick-screen)
-UNIQUE_ANGLE: First-person perspective of a licensed CRE broker who writes code — bridging the industry's technology gap from the practitioner side, not the startup side
+UNIQUE_ANGLE: First-person perspective of a licensed CRE sales associate who writes code — bridging the industry's technology gap from the practitioner side, not the startup side
 -->

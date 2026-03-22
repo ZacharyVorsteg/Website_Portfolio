@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg explains how building in public works for technical 
 
 Most "building in public" content amounts to indie hackers tweeting MRR screenshots. Fine for SaaS solo acts — but that barely scratches what transparency looks like when you're simultaneously juggling trading bots, an iOS app, and sensor networks across multiple sites.
 
-I'm a [licensed commercial real estate broker who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a builder shipping across trading automation, iOS apps, IoT hardware, and this site. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
+I'm a [licensed commercial real estate sales associate who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a builder shipping across trading automation, iOS apps, IoT hardware, and this site. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
 
 What I share, what stays private, and the returns I've actually measured — that's what follows. If the "just be authentic" crowd burned you, consider this the tactical antidote.
 
