@@ -3,7 +3,25 @@ const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
 
-const SITE_URL = 'https://zacharyvorsteg.com';
+// Site configuration — reads from blog-config.json or uses defaults
+const CONFIG_PATH = path.join(__dirname, 'blog-config.json');
+const DEFAULT_CONFIG = {
+  siteUrl: 'https://zacharyvorsteg.com',
+  siteName: 'Zachary Vorsteg',
+  siteDescription: 'Insights on finance, real estate, automation, and building.',
+  authorName: 'Zachary Vorsteg',
+  authorUrl: 'https://zacharyvorsteg.com',
+  authorImage: '/images/zach-headshot.jpg',
+  authorBio: 'Technical founder building across commercial real estate, algorithmic trading, and AI-driven automation. Writing about what actually works.',
+  contactPhone: '(561) 718-6725',
+  contactPhoneLink: 'tel:5617186725',
+  language: 'en-us'
+};
+
+const siteConfig = fs.existsSync(CONFIG_PATH)
+  ? { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8')) }
+  : DEFAULT_CONFIG;
+
 const CONTENT_DIR = path.join(__dirname, 'blog-content');
 const OUTPUT_DIR = path.join(__dirname, 'blog');
 const TEMPLATE_PATH = path.join(__dirname, 'blog', '_template.html');
@@ -180,7 +198,7 @@ function generateExtraSchema(article, faqPairs) {
         "@type": "SpeakableSpecification",
         "cssSelector": [".article-header h1", ".article-description"]
       },
-      "url": `https://zacharyvorsteg.com/blog/${article.slug}/`
+      "url": `${siteConfig.siteUrl}/blog/${article.slug}/`
     }, null, 6)}
     </script>`);
   }
@@ -220,8 +238,8 @@ function generateRSS(articles) {
     .map(a => {
       const pubDate = new Date(a.dateStr);
       const rfc822Date = pubDate.toUTCString();
-      const guid = `${SITE_URL}/blog/${a.slug}/`;
-      const link = `${SITE_URL}/blog/${a.slug}/`;
+      const guid = `${siteConfig.siteUrl}/blog/${a.slug}/`;
+      const link = `${siteConfig.siteUrl}/blog/${a.slug}/`;
 
       return `    <item>
       <title>${escapeXml(a.title)}</title>
@@ -237,11 +255,11 @@ function generateRSS(articles) {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Zachary Vorsteg</title>
-    <link>${SITE_URL}/blog/</link>
-    <description>Insights on finance, real estate, automation, and building.</description>
-    <language>en-us</language>
-    <atom:link href="${SITE_URL}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <title>${siteConfig.siteName}</title>
+    <link>${siteConfig.siteUrl}/blog/</link>
+    <description>${siteConfig.siteDescription}</description>
+    <language>${siteConfig.language}</language>
+    <atom:link href="${siteConfig.siteUrl}/blog/feed.xml" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>
 </rss>`;
@@ -359,7 +377,15 @@ function build() {
       .replace(/{{PILLAR}}/g, article.pillar)
       .replace(/{{READ_TIME}}/g, article.readTime)
       .replace(/{{RELATED_ARTICLES}}/g, relatedHtml)
-      .replace(/{{EXTRA_SCHEMA}}/g, extraSchema);
+      .replace(/{{EXTRA_SCHEMA}}/g, extraSchema)
+      .replace(/{{SITE_URL}}/g, siteConfig.siteUrl)
+      .replace(/{{SITE_NAME}}/g, siteConfig.siteName)
+      .replace(/{{AUTHOR_NAME}}/g, siteConfig.authorName)
+      .replace(/{{AUTHOR_URL}}/g, siteConfig.authorUrl)
+      .replace(/{{AUTHOR_IMAGE}}/g, siteConfig.authorImage)
+      .replace(/{{AUTHOR_BIO}}/g, siteConfig.authorBio)
+      .replace(/{{CONTACT_PHONE}}/g, siteConfig.contactPhone)
+      .replace(/{{CONTACT_PHONE_LINK}}/g, siteConfig.contactPhoneLink);
 
     const articleDir = path.join(OUTPUT_DIR, article.slug);
     if (!fs.existsSync(articleDir)) fs.mkdirSync(articleDir, { recursive: true });
@@ -402,14 +428,16 @@ function generateIndex(articles) {
 function updateSitemap(articles) {
   let sitemap = fs.existsSync(SITEMAP_PATH) ? fs.readFileSync(SITEMAP_PATH, 'utf-8') : '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>';
 
-  // Remove existing blog entries
-  sitemap = sitemap.replace(/\s*<url>\s*<loc>https:\/\/zacharyvorsteg\.com\/blog\/[\s\S]*?<\/url>/g, '');
+  // Remove existing blog entries (escape the domain for use in regex)
+  const escapedDomain = siteConfig.siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const blogEntryRegex = new RegExp(`\\s*<url>\\s*<loc>${escapedDomain}\\/blog\\/[\\s\\S]*?<\\/url>`, 'g');
+  sitemap = sitemap.replace(blogEntryRegex, '');
 
   const blogEntries = articles
     .map(
       a => `
   <url>
-    <loc>${SITE_URL}/blog/${a.slug}/</loc>
+    <loc>${siteConfig.siteUrl}/blog/${a.slug}/</loc>
     <lastmod>${a.dateISO}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} | Zachary Vorsteg</title>
+    <title>{{TITLE}} | {{SITE_NAME}}</title>
     <meta name="description" content="{{DESCRIPTION}}">
     <meta name="keywords" content="{{KEYWORDS}}">
-    <link rel="canonical" href="https://zacharyvorsteg.com/blog/{{SLUG}}/">
+    <link rel="canonical" href="{{SITE_URL}}/blog/{{SLUG}}/">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{{TITLE}}">
     <meta property="og:description" content="{{DESCRIPTION}}">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://zacharyvorsteg.com/blog/{{SLUG}}/">
-    <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
+    <meta property="og:url" content="{{SITE_URL}}/blog/{{SLUG}}/">
+    <meta property="og:image" content="{{SITE_URL}}/og-image.jpg">
     <meta property="article:published_time" content="{{DATE}}">
-    <meta property="article:author" content="Zachary Vorsteg">
+    <meta property="article:author" content="{{AUTHOR_NAME}}">
     <meta property="article:section" content="{{PILLAR}}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{TITLE}}">
     <meta name="twitter:description" content="{{DESCRIPTION}}">
-    <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
+    <meta name="twitter:image" content="{{SITE_URL}}/og-image.jpg">
 
     <!-- Article Schema -->
     <script type="application/ld+json">
@@ -31,21 +31,17 @@
       "@type": "Article",
       "headline": "{{TITLE}}",
       "description": "{{DESCRIPTION}}",
-      "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "image": "{{SITE_URL}}/og-image.jpg",
       "datePublished": "{{DATE}}",
       "author": {
         "@type": "Person",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com",
-        "jobTitle": "Commercial Real Estate Broker & Software Developer",
-        "sameAs": [
-          "https://zacharyvorsteg.com"
-        ]
+        "name": "{{AUTHOR_NAME}}",
+        "url": "{{AUTHOR_URL}}"
       },
       "publisher": {
         "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
+        "name": "{{SITE_NAME}}",
+        "url": "{{SITE_URL}}"
       }
     }
     </script>
@@ -60,19 +56,19 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://zacharyvorsteg.com"
+          "item": "{{SITE_URL}}"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://zacharyvorsteg.com/blog/"
+          "item": "{{SITE_URL}}/blog/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "{{TITLE}}",
-          "item": "https://zacharyvorsteg.com/blog/{{SLUG}}/"
+          "item": "{{SITE_URL}}/blog/{{SLUG}}/"
         }
       ]
     }
@@ -488,6 +484,13 @@
             border-bottom: 1px solid var(--accent);
         }
 
+        .article-body img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 24px 0;
+        }
+
         /* Tables */
         .article-body table {
             width: 100%;
@@ -517,11 +520,23 @@
             white-space: nowrap;
         }
 
+        @media (max-width: 768px) {
+            .article-body th {
+                white-space: normal;
+            }
+        }
+
         .article-body td {
             padding: 12px 16px;
             color: var(--gray-700);
             border-bottom: 1px solid var(--gray-100);
             line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .article-body td {
+                padding: 8px 12px;
+            }
         }
 
         .article-body tbody tr:hover {
@@ -542,6 +557,13 @@
             color: var(--gray-700);
             font-style: italic;
             line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .article-body blockquote {
+                padding: 16px;
+                margin: 24px 0;
+            }
         }
 
         .article-body code {
@@ -567,6 +589,12 @@
             background: none;
             padding: 0;
             color: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .article-body pre {
+                font-size: 13px;
+            }
         }
 
         /* Author Bio */
@@ -770,12 +798,40 @@
             animation: fadeIn 0.6s ease forwards;
         }
 
+        /* Print Styles */
+        @media print {
+            header, footer, .article-cta, .related-section, .blog-disclaimer, .mobile-menu-overlay {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .article-body {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .article-body a {
+                color: black;
+                text-decoration: underline;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .article-author {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                gap: 16px;
+            }
+
+            .author-photo {
+                width: 64px;
+                height: 64px;
             }
 
             .article-breadcrumb {
@@ -783,7 +839,15 @@
             }
 
             .article-body {
+                padding: 30px 0;
+            }
+
+            .article-header {
                 padding: 40px 0;
+            }
+
+            .article-cta {
+                padding: 24px;
             }
         }
     </style>
@@ -793,14 +857,14 @@
     <header>
         <div class="container">
             <div class="header-container">
-                <a href="/" class="logo">Zachary Vorsteg</a>
+                <a href="/" class="logo">{{SITE_NAME}}</a>
 
                 <nav class="desktop-nav">
                     <a href="/#work">Work</a>
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
+                    <a href="{{SITE_URL}}/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
                     <a href="/#contact" class="btn btn-primary">Work With Me</a>
                 </nav>
 
@@ -823,7 +887,7 @@
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                <a href="{{SITE_URL}}/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     Pro Forma Tool
                 </a>
@@ -866,10 +930,10 @@
 
         <!-- Author Bio -->
         <section class="article-author">
-            <div class="author-photo"><img src="/images/zach-headshot.jpg" alt="Zachary Vorsteg"></div>
+            <div class="author-photo"><img src="{{AUTHOR_IMAGE}}" alt="{{AUTHOR_NAME}}"></div>
             <div class="author-info">
-                <h4>Zachary Vorsteg</h4>
-                <p>Commercial real estate broker and software developer. I structure deals, write code, and build the systems that run both.</p>
+                <h4>{{AUTHOR_NAME}}</h4>
+                <p>{{AUTHOR_BIO}}</p>
             </div>
         </section>
 
@@ -903,7 +967,7 @@
         <div class="container">
             <div class="footer-content">
                 <div style="color: var(--gray-600); font-size: 14px;">
-                    © 2025 Zachary Vorsteg | <a href="tel:5617186725" style="color: var(--gray-600); text-decoration: none;">(561) 718-6725</a>
+                    © 2025 {{SITE_NAME}} | <a href="{{CONTACT_PHONE_LINK}}" style="color: var(--gray-600); text-decoration: none;">{{CONTACT_PHONE}}</a>
                 </div>
             </div>
         </div>
