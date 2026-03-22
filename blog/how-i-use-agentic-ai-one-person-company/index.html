@@ -983,7 +983,7 @@
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
                         <time class="article-date">March 20, 2026</time>
-                        <span class="article-time">17 min read</span>
+                        <span class="article-time">18 min read</span>
                     </div>
 
                     <h1>How I Use Agentic AI to Run a One-Person Company</h1>
@@ -1037,7 +1037,7 @@ ACTION ITEMS: 4 requiring human decision
 <h3>Code Generation and Review</h3>
 <p>Boilerplate, test scaffolding, build scripts, well-defined feature work — the agent handles all of it. For the iOS app, that means UI components and data binding. For blog infrastructure, markdown processing and schema generation. My <a href="/blog/vibe-coding-vs-real-engineering/">tier framework</a> sets the review bar — production code gets full human review, low-stakes glue code ships with a quick visual scan and a prayer. (Kidding. Mostly.)</p>
 <h3>System Monitoring and Triage</h3>
-<p>My <a href="/blog/algorithmic-trading-bots-side-project/">54 trading bots</a> run on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.</p>
+<p>My <a href="/blog/algorithmic-trading-bots-side-project/">production trading infrastructure</a> runs on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.</p>
 <h3>Content Pipeline Automation</h3>
 <p>Running this blog involves a multi-stage pipeline: keyword research, deduplication, writing, source verification, GEO optimization, SEO markup, prose polish. The agent owns research, drafting, fact-checking, and schema generation. I own voice, editorial judgment, and final approval — the parts that make it mine instead of generic. What used to be a multi-day process per post now takes 3-4 hours of my time spread across the pipeline stages.</p>
 <h3>Deal Screening and Analysis</h3>
@@ -1195,6 +1195,10 @@ HUMAN-ONLY (no agent involvement):
 </code></pre>
 <p>460+ agent-executed actions. 8 human-in-the-loop decisions. 6 human-only tasks. That ratio — roughly 97% agent-touchable, 60% fully autonomous — is what makes the one-person company work in practice. Not because the AI handles everything. Because it absorbs enough operational volume that one person can run four ventures without drowning in logistics or losing their mind.</p>
 <p>The real question isn&#39;t whether agentic AI is useful. Obviously it is. The real question is whether you&#39;ve built the <a href="/blog/context-engineering-ai-agents/">context engineering layer</a> that makes it reliable, set up the <a href="/blog/vibe-coding-vs-real-engineering/">quality framework</a> that keeps it safe, and accepted — genuinely accepted — that the delegation ceiling is permanent. Not something the next model release will magically fix.</p>
+<h2>The Takeaway</h2>
+<p>Agentic AI isn&#39;t magic. It&#39;s leverage — applied correctly, verified constantly, and bounded by judgment no model can replicate. Context engineering makes it reliable, a quality framework keeps it safe, and the automation infrastructure gives it somewhere to run.</p>
+<p>Build the <a href="/blog/context-engineering-ai-agents/">context layer</a>. Stick to the <a href="/blog/vibe-coding-vs-real-engineering/">quality boundaries</a>. Accept that the delegation ceiling is permanent, not a limitation you&#39;ll engineer past. Do those three things consistently, and one person can run four ventures without losing their mind.</p>
+<hr>
 <h2>Frequently Asked Questions</h2>
 <h3>What is agentic AI and how is it different from regular AI assistants?</h3>
 <p>Agentic AI operates autonomously within an environment — taking multi-step actions, using tools, accessing memory, and making decisions — rather than simply responding to prompts. Regular AI assistants answer questions in a chat window. Agentic AI spawns sub-tasks, runs parallel operations, monitors systems, and executes workflows with minimal human intervention. Fortune Business Insights values the agentic AI market at $7.29 billion in 2025, reflecting the shift from conversational AI to action-oriented systems (Fortune Business Insights, 2025).</p>
@@ -1209,7 +1213,6 @@ HUMAN-ONLY (no agent involvement):
 <h3>Is the one-person company model sustainable long-term?</h3>
 <p>With agentic AI handling operational volume, yes — as long as you maintain the verification layer. Carta&#39;s data showing solo founders at 36.3% of new startups (Carta, 2025) and Dario Amodei&#39;s prediction of a billion-dollar one-person company by 2026 (Inc., May 2025) both point to structural viability. The risk isn&#39;t AI replacing the need for a team. It&#39;s building on AI outputs you don&#39;t verify, which compounds errors silently until something expensive breaks.</p>
 <hr>
-<p>Agentic AI isn&#39;t magic. It&#39;s leverage — applied correctly, verified constantly, and bounded by judgment no model can replicate. Context engineering makes it reliable, a quality framework keeps it safe, and the automation infrastructure gives it somewhere to run. See <a href="https://zacharyvorsteg.com/#work">what I&#39;m working on</a> or <a href="https://zacharyvorsteg.com/#contact">reach out</a> if you&#39;re building something similar.</p>
 <!--
 GEO_META:
 SPEAKABLE: Zachary Vorsteg describes how agentic AI operates in his daily workflow across four concurrent ventures — commercial real estate, algorithmic trading, IoT hardware, and iOS development. The post details specific tasks delegated to AI agents, real time savings measured across each business line, where agentic AI consistently fails, and why the one-person company model works only when you understand the delegation ceiling.

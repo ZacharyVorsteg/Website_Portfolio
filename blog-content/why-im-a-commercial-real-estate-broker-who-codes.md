@@ -7,7 +7,7 @@ pillar: Hardware & PropTech
 speakable: "Zachary Vorsteg explains why he's both a licensed commercial real estate sales associate and a software developer. The post covers the CRE industry's technology adoption gap, how coding creates competitive advantages in deal analysis and client service, the $47 billion PropTech market opportunity, and practical examples of automation applied to commercial real estate brokerage."
 ---
 
-Licensed CRE sales associate. Also writes Python, ships iOS apps, runs a fleet of [algorithmic trading systems](/blog/algorithmic-trading-bots-side-project/) across multiple markets. Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
+Licensed CRE sales associate. Also writes Python, ships iOS apps, operates algorithmic trading systems across multiple markets. Most people in commercial real estate couldn't explain what an API does if you spotted them the acronym — and that's not a knock on anyone. It's an observation about the single fattest competitive advantage I've stumbled into across every industry I operate in.
 
 McKinsey ranks construction and real estate among the least digitized industries on the planet — under 15% as digitized as tech and media (McKinsey Global Institute, "Digital America," 2015 — still cited in their 2024 updates because, remarkably, the gap hasn't closed). From a different vantage point, JLL's 2025 survey paints a similarly lopsided picture: 92% of CRE occupiers have started or plan AI pilots. Only 5% claim they've nailed all their AI goals. A mere 33% of the workforce feels adequately trained.
 
@@ -157,7 +157,7 @@ The opportunity cost is real — every hour coding is an hour not prospecting. B
 
 ---
 
-CRE and code is where I find the best problems — and the widest moat. The competitive advantage compounds: faster deal analysis, custom automation, real-time market intelligence. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+The CRE technology gap exists because practitioners and developers operate in separate universes. If you're a broker curious about code, or a developer curious about commercial real estate — the advantage goes to whoever bridges the gap first. Build the tools your practice actually needs. [Start here if you want to learn the fundamentals](https://zacharyvorsteg.com/#contact) or [see what I've built](https://zacharyvorsteg.com/#work).
 
 <!--
 GEO_META:

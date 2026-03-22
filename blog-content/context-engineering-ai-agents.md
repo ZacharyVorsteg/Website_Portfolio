@@ -197,7 +197,7 @@ Context engineering replaces that entire loop with a one-time configuration inve
 
 Where's the industry headed? AI agent adoption sits at 79% (PwC, 2025), and Gartner predicts 40% of enterprise applications will embed agentic AI by end of 2026, up from under 5% the year prior (Gartner, August 2025). The adoption wave is undeniable — but adoption without context engineering means most of those organizations are running agents blind. No codebase conventions loaded. No permission boundaries defined. No failure playbooks written. Just raw model output and crossed fingers.
 
-Solo founders grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than at any point in the last decade. AI agents are the force multiplier — but only if you engineer the context that makes them reliable instead of chaotic. A misconfigured agent is worse than no agent. Much worse. It moves fast in the wrong direction and you don't notice until the damage is done. Context engineering is what makes that possible without a team. Not better prompts. Better systems.
+One-person operations grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building independently than at any point in the last decade. AI agents are the force multiplier — but only if you engineer the context that makes them reliable instead of chaotic. A misconfigured agent is worse than no agent. Much worse. It moves fast in the wrong direction and you don't notice until the damage is done. Context engineering is what makes that possible without a team. Not better prompts. Better systems.
 
 ## Frequently Asked Questions
 
@@ -227,7 +227,7 @@ No. The principles — persistent instructions, tool routing, memory architectur
 
 ---
 
-Context engineering isn't a buzzword. It's the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. I build it publicly because documenting forces understanding. If you're building with AI agents or want to see how this system evolves, check out [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact).
+Context engineering isn't a buzzword. It's the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you're running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, [dig into what I'm shipping](https://zacharyvorsteg.com/#work) or [connect with me to compare approaches](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

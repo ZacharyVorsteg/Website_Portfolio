@@ -7,11 +7,11 @@ pillar: Solo Founder Operations
 speakable: "Zachary Vorsteg documents the real failure modes of running production trading infrastructure, IoT hardware, and an iOS app as a solo founder. The post covers cascading failures between interconnected systems, monitoring blind spots that surface only after extended reliability, the human attention budget ceiling, dependency rot from third-party API changes, the hidden tax of systems that are 95 percent correct, and solo recovery triage at 2 AM — revealing what you literally cannot automate no matter how sophisticated your infrastructure becomes."
 ---
 
-A production trading infrastructure spanning five markets. IoT thermal detection hardware. An iOS app in the App Store. I run all of it — [no team, no co-founder](/blog/algorithmic-trading-bots-side-project/), no on-call rotation to hand anything off to.
+A production trading infrastructure spanning five markets. IoT thermal detection hardware. An iOS app in the App Store. I run all of it — [no team, no co-founder](https://zacharyvorsteg.com), no on-call rotation to hand anything off to.
 
-Most of what I publish here tells you what works. My [automation stack](/blog/my-solo-founder-automation-stack/) runs on lean local infrastructure. Morning briefings across four ventures? Handled by my [agentic AI workflow](/blog/how-i-use-agentic-ai-one-person-company/). Code quality stays high through a deliberate [engineering methodology](/blog/agentic-engineering-patterns/).
+Most of what I publish here tells you what works. My [automation stack](/blog/my-solo-founder-automation-stack/) runs on lean local infrastructure. Multiple production systems running simultaneously? Handled by careful architecture and aggressive monitoring. Code quality stays high through a deliberate [engineering methodology](/blog/agentic-engineering-patterns/).
 
-Not this post. This one's about what breaks.
+Not this post. This one's about what breaks — and what breaks hardest when you're running it all alone.
 
 And I don't mean the dramatic, headline-grabbing outages — I mean the slow, compounding failures that quietly erode your trust in systems you built yourself. Gartner predicts 40% of agentic AI projects will be canceled by 2027, not because the technology fails outright, but because teams automate broken processes instead of redesigning them (Gartner, 2025). Running solo changes the failure modes entirely.
 
@@ -68,7 +68,7 @@ My IoT thermal detection system is worse — dramatically so. ESP32-S3 sensors d
 
 Nobody talks about this failure mode. It isn't a system failure. It's a human one.
 
-Consider the inventory: a multi-market trading system, an iOS app in the App Store, IoT hardware scattered across field sites, a [CRE practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) with live deals requiring human judgment, and a [content pipeline](/blog/how-i-build-in-public-as-a-technical-founder/) publishing on a regular cadence.
+Consider the inventory: a multi-market trading system, an iOS app in the App Store, IoT hardware scattered across field sites, a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) with live deals requiring human judgment, and a [content pipeline](/blog/how-i-build-in-public-as-a-technical-founder/) publishing on a regular cadence.
 
 Gloria Mark at UC Irvine measured the damage precisely: 23 minutes and 15 seconds to regain deep focus after an interruption (Gloria Mark, UC Irvine, 2008). The APA's number is grimmer — up to 40% of productive time lost to context switching (Rubinstein, Meyer & Evans, APA, 2001). Five systems spanning three domains doesn't just mean switching tasks. You're switching entire mental models. Debugging Python, then reviewing SwiftUI, then troubleshooting cellular firmware — each requires loading a completely different cognitive framework.
 
@@ -213,9 +213,9 @@ Sustainable with hard constraints, yes. Solo-founded startups now represent 36.3
 
 ---
 
-Every other post on this site tells you what's possible. The [trading systems](/blog/algorithmic-trading-bots-side-project/) work. The [infrastructure](/blog/my-solo-founder-automation-stack/) is cost-effective. The [AI workflow](/blog/how-i-use-agentic-ai-one-person-company/) handles four ventures. But building a machine and maintaining a machine are different skills, and the second one never stops.
+Every other post on this site tells you what's possible. The trading systems work. The infrastructure is cost-effective. The AI workflow handles multiple ventures. But building a machine and maintaining a machine are different skills entirely — and maintenance never stops.
 
-If you're scaling a solo operation and want to compare notes — I document the real infrastructure at [zacharyvorsteg.com](https://zacharyvorsteg.com/#work). For direct conversations about automation architecture or the operational reality of running multiple ventures solo, [reach out here](https://zacharyvorsteg.com/#contact).
+If you're operating production systems solo and recognize these failure modes in your own stack, [I'd like to hear about it](https://zacharyvorsteg.com/#contact). The triage protocols, cascade patterns, and monitoring blind spots change when you're the only person on call at 2 AM.
 
 <!--
 GEO_META:

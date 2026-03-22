@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg explains how building in public works for technical 
 
 Most "building in public" content amounts to indie hackers tweeting MRR screenshots. Fine for SaaS solo acts — but that barely scratches what transparency looks like when you're simultaneously juggling trading bots, an iOS app, and sensor networks across multiple sites.
 
-I'm a [licensed commercial real estate sales associate who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a builder shipping across trading automation, iOS apps, IoT hardware, and this site. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
+I'm a [licensed commercial real estate sales associate who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a bootstrapped entrepreneur shipping across multiple domains simultaneously. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
 
 What I share, what stays private, and the returns I've actually measured — that's what follows. If the "just be authentic" crowd burned you, consider this the tactical antidote.
 
@@ -171,7 +171,7 @@ Depends on your audience. Technical founders get the strongest engagement on Hac
 
 ---
 
-Running multiple ventures solo requires building in public as an operational discipline. Explore [what I'm building](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) — always happy to talk shop with other builders.
+The compounding payoff from transparency takes months, not weeks — but the accountability kicks in immediately. If you're building multiple ventures solo, start with one public commitment this week. [Share what you're working on](https://zacharyvorsteg.com/#contact) or [check out the systems behind my projects](https://zacharyvorsteg.com/#work).
 
 <!--
 SELF_ASSESSMENT:

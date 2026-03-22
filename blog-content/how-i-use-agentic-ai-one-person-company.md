@@ -72,7 +72,7 @@ Boilerplate, test scaffolding, build scripts, well-defined feature work — the 
 
 ### System Monitoring and Triage
 
-My [54 trading bots](/blog/algorithmic-trading-bots-side-project/) run on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.
+My [production trading infrastructure](/blog/algorithmic-trading-bots-side-project/) runs on launchctl across Schwab, OANDA, Polymarket, and Solana. The agent checks health, flags errors, and runs recovery sequences from predefined playbooks. Auth token expired? Auto-renewed, no human needed. API endpoint returning 500s? Switch to backup automatically. Bot in drawdown beyond threshold? That one pings me — humans decide when to pull the plug on a losing strategy, not algorithms.
 
 ### Content Pipeline Automation
 
@@ -177,6 +177,14 @@ HUMAN-ONLY (no agent involvement):
 
 The real question isn't whether agentic AI is useful. Obviously it is. The real question is whether you've built the [context engineering layer](/blog/context-engineering-ai-agents/) that makes it reliable, set up the [quality framework](/blog/vibe-coding-vs-real-engineering/) that keeps it safe, and accepted — genuinely accepted — that the delegation ceiling is permanent. Not something the next model release will magically fix.
 
+## The Takeaway
+
+Agentic AI isn't magic. It's leverage — applied correctly, verified constantly, and bounded by judgment no model can replicate. Context engineering makes it reliable, a quality framework keeps it safe, and the automation infrastructure gives it somewhere to run.
+
+Build the [context layer](/blog/context-engineering-ai-agents/). Stick to the [quality boundaries](/blog/vibe-coding-vs-real-engineering/). Accept that the delegation ceiling is permanent, not a limitation you'll engineer past. Do those three things consistently, and one person can run four ventures without losing their mind.
+
+---
+
 ## Frequently Asked Questions
 
 ### What is agentic AI and how is it different from regular AI assistants?
@@ -204,8 +212,6 @@ Context window exhaustion on long sessions, confidently wrong outputs that sound
 With agentic AI handling operational volume, yes — as long as you maintain the verification layer. Carta's data showing solo founders at 36.3% of new startups (Carta, 2025) and Dario Amodei's prediction of a billion-dollar one-person company by 2026 (Inc., May 2025) both point to structural viability. The risk isn't AI replacing the need for a team. It's building on AI outputs you don't verify, which compounds errors silently until something expensive breaks.
 
 ---
-
-Agentic AI isn't magic. It's leverage — applied correctly, verified constantly, and bounded by judgment no model can replicate. Context engineering makes it reliable, a quality framework keeps it safe, and the automation infrastructure gives it somewhere to run. See [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're building something similar.
 
 <!--
 GEO_META:

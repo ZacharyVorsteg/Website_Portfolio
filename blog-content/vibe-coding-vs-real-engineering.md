@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg breaks down the vibe coding debate from a practition
 
 Every morning, AI writes code for me. My [context engineering setup](/blog/context-engineering-ai-agents/) runs over 500 lines of persistent configuration — hooks, MCP routing, memory architecture, permission tiers — all wired to make AI agents as autonomous as possible.
 
-But here's the other side of that coin. I run [54 production trading bots](/blog/algorithmic-trading-bots-side-project/) on real capital across Schwab, OANDA, Polymarket, and Solana. Every single line of strategy logic in those bots? Written, reviewed, and stress-tested by a human. Me.
+But here's the other side of that coin. I run [production trading infrastructure](/blog/algorithmic-trading-bots-side-project/) handling real capital across Schwab, OANDA, Polymarket, and Solana. Every single line of strategy logic? Written, reviewed, and stress-tested by a human. Me.
 
 So yeah — I sit squarely on both sides of the vibe coding debate. And honestly? Most people arguing about it are stuck on the wrong question entirely.
 
@@ -140,7 +140,7 @@ Let me give you a concrete example. I maintain a production trading system acros
 
 ### The Solo Founder Calculation
 
-Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone, and AI coding tools are the obvious force multiplier — but solo founders walk face-first into a specific trap if they aren't careful.
+One-person-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building independently, and AI coding tools are the obvious force multiplier — but bootstrapped founders walk face-first into a specific trap if they aren't careful.
 
 When you're the only engineer, you're also the only person who'll debug the system at 3 AM, extend it next quarter, and keep it running for years after the initial excitement has worn off. Vibe coding optimizes for launch speed. Engineering optimizes for operational longevity. Running [multiple ventures simultaneously](/blog/how-i-build-in-public-as-a-technical-founder/), I learned — expensively — that launch speed means nothing if the system crumbles six months later.
 
@@ -174,7 +174,7 @@ Yes — unless every system you build is disposable. Understanding code isn't ab
 
 ---
 
-The vibe coding debate isn't about AI versus humans. It's about matching your approach to your stakes. I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/) because documenting these tradeoffs — when to trust the AI and when to override it — forces clarity. The [automation stack](/blog/my-solo-founder-automation-stack/) running on $8/month, the [trading strategies](/blog/algorithmic-trading-bots-side-project/) handling real capital, the [financial models](/blog/financial-modeling-fundamentals/) screening deals, the [context engineering](/blog/context-engineering-ai-agents/) that orchestrates it all, the [agentic engineering methodology](/blog/agentic-engineering-patterns/) that replaced vibe coding in my practice, [agentic AI across all four ventures](/blog/how-i-use-agentic-ai-one-person-company/), the [real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) where tech meets market, and [what actually breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — each operates at a different tier of AI assistance. The founders who figure out which tier for which code are the ones who'll ship fast without building on sand. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact) if you're navigating the same tradeoffs.
+The vibe coding debate isn't about AI versus humans. It's about matching your approach to consequences. I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/) because documenting these tradeoffs — when to trust the AI and when to rip out every generated line — clarifies what's actually at stake. The [automation stack](/blog/my-solo-founder-automation-stack/) running on $8/month, the [trading strategies](/blog/algorithmic-trading-bots-side-project/) handling real capital, the [financial models](/blog/financial-modeling-fundamentals/) screening acquisitions, the [context engineering](/blog/context-engineering-ai-agents/) that orchestrates autonomy, the [agentic engineering methodology](/blog/agentic-engineering-patterns/) that replaced vibe coding in my actual work, [distributed agentic AI managing four ventures](/blog/how-i-use-agentic-ai-one-person-company/), the [licensed real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) where code meets commission, and [the 3 AM failures nobody warns you about](/blog/what-breaks-when-you-automate-everything/) — each operates on a different tier of AI assistance. The builders who figure out which tier for which code ship fast without the consequent wreckage. Want to discuss where the lines are? [See what I'm building](https://zacharyvorsteg.com/#work) or [connect and compare approaches](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

@@ -11,7 +11,7 @@ Software developers think shipping means pushing code. Hardware developers know 
 
 I built an IoT thermal detection system from scratch. ESP32-S3 microcontrollers. MLX90640 infrared sensor arrays. Quectel EG25-G cellular modules for backhaul. Jetson Orin Nano for edge processing. Designed, prototyped, programmed, deployed — all solo, with zero formal hardware engineering training.
 
-I've written about the [software automation infrastructure](/blog/my-solo-founder-automation-stack/) running alongside this hardware, the [CRE business](/blog/why-im-a-commercial-real-estate-broker-who-codes/) that created the need for thermal detection in commercial buildings, and [what breaks when these systems hit the field](/blog/what-breaks-when-you-automate-everything/). Here's the origin story — how a software developer ships real hardware, what the breadboard-to-deployment journey actually looks like, and what I'd do differently.
+I've written extensively about the [software automation stack](/blog/my-solo-founder-automation-stack/) running alongside this hardware and the [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) that created the core need for thermal monitoring. I've documented [what breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — the blind spots, the failures, the 3 AM debugging sessions. This post is the hardware layer — how a software developer ships production IoT systems, what the breadboard-to-ceiling-mount journey actually involves, and what I'd do differently on iteration two.
 
 ## Why a Software Developer Started Building Hardware
 
@@ -176,7 +176,7 @@ Espressif's ESP32-P4 represents a generational leap: dual-core RISC-V (an open-s
 
 Nordic Semiconductor's nRF54LM20B, announced at CES 2026, integrates a dedicated Axon NPU (neural processing unit — specialized silicon for machine learning inference) that runs TinyML inference 15x faster than the Cortex-M33 CPU alone, while adding Bluetooth LE, Thread, and Matter support (Nordic Semiconductor, January 2026). That's AI inference on battery-powered wireless sensors — no edge hub required. My current architecture needs the Jetson for inference. The next generation might not.
 
-Carta's 2025 data: solo-founded startups now represent 36.3% of all new company incorporations, up from 23.7% in 2019. More people building alone, and the toolchain has caught up. That gap between "I can write firmware" and "I can ship a hardware product" used to require a team. Now it requires persistence and a credit card for JLCPCB.
+Carta's 2025 data: independent-founder startups now represent 36.3% of all new company incorporations, up from 23.7% in 2019. More people building alone, and the toolchain has caught up. That gap between "I can write firmware" and "I can ship a hardware product" used to require a team. Now it requires persistence and a credit card for JLCPCB.
 
 My [agentic engineering methodology](/blog/agentic-engineering-patterns/) I use for software applies to firmware too — with caveats. You can't [vibe code](/blog/vibe-coding-vs-real-engineering/) embedded systems. There's no undo button for a bricked microcontroller deployed on a roof three miles away. Every line of firmware gets the line-by-line review treatment, period.
 
@@ -216,9 +216,9 @@ Espressif has shipped over one billion chips globally (Espressif Systems), and t
 
 ---
 
-Every other post on this site describes software systems — [bots that trade markets](/blog/algorithmic-trading-bots-side-project/), [automation infrastructure](/blog/my-solo-founder-automation-stack/), [AI workflows](/blog/how-i-use-agentic-ai-one-person-company/) managing four ventures. This is the post about the physical layer underneath all of that — sensors bolted to ceilings, cellular modules negotiating tower handoffs, firmware running for months without a restart. Hardware is where software meets reality, and reality doesn't accept pull requests.
+Most posts on this site cover software infrastructure — [trading bot strategies](/blog/algorithmic-trading-bots-side-project/), [automation systems](/blog/my-solo-founder-automation-stack/), [AI agent orchestration](/blog/how-i-use-agentic-ai-one-person-company/). This post tackles the atoms-not-bits layer — sensors bolted to commercial ceilings, cellular modules negotiating tower handoffs 24/7, firmware running for months between reboots. This is where the gap between "software works perfectly" and "hardware fails in ways software never does" becomes visceral and expensive.
 
-If you're a software developer considering hardware — or building IoT systems and want to compare approaches — see [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact).
+If you're a software developer evaluating the hardware transition, or you're building IoT systems and want a ground-truth comparison, [here's what I'm shipping](https://zacharyvorsteg.com/#work) — you can kick the tires directly or [let's trade war stories](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

@@ -214,7 +214,7 @@ I run all 54 bots alongside a [commercial real estate practice](/blog/why-im-a-c
 
 ---
 
-54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](/blog/my-solo-founder-automation-stack/). If you're building automated trading systems or weighing whether to start, explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](/blog/my-solo-founder-automation-stack/). Ready to build your own algorithmic trading system? Start with one bot, not a framework. Paper trade first, validate on live market data, then scale. [Explore what I'm working on](https://zacharyvorsteg.com/#work) or [talk about strategy architecture](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

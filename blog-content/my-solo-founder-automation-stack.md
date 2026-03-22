@@ -250,7 +250,7 @@ Building an orchestration framework before I had anything to orchestrate. Spent 
 
 ---
 
-A one-person automation stack across five markets isn't magic — it's 54 small, boring programs managed by an OS feature that's been stable since 2005. The stack works because it's simple, not despite it. For what actually breaks at the strategy level — [backtest-to-live gaps, correlated drawdowns, strategy decay](/blog/algorithmic-trading-bots-side-project/) — those are covered separately. Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [get in touch](https://zacharyvorsteg.com/#contact).
+One person, one machine, 54 bots across five markets. It works because the architecture is simple — separate processes, shared nothing, local execution. Cloud orchestration tools solve distributed system problems I don't have. If you're running automation on macOS and considering the cloud infrastructure path, ask yourself: am I solving a scaling problem or falling for an architectural complexity trap? [See what I'm working on](https://zacharyvorsteg.com/#work) or [discuss infrastructure tradeoffs](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:

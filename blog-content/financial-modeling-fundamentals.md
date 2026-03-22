@@ -158,7 +158,7 @@ Enterprise value (EV — the total value of a business including debt, minus cas
 
 Run your next M&A candidate through this framework. Start with a 3-statement model, layer in your value drivers, stress-test every assumption. The model's only as good as what you feed it — make inputs explicit, source them, update as reality diverges from projections.
 
-I apply the same analytical rigor to [evaluating CRE deals with code](/blog/why-im-a-commercial-real-estate-broker-who-codes/) and [running production trading strategies](/blog/algorithmic-trading-bots-side-project/). Explore [what I'm working on](https://zacharyvorsteg.com/#work) or [reach out](https://zacharyvorsteg.com/#contact).
+This same discipline applies whether you're [evaluating real estate acquisitions as a sales associate](/blog/why-im-a-commercial-real-estate-broker-who-codes/) or [screening targets for a portfolio — the discipline doesn't change, only the asset class](/blog/algorithmic-trading-bots-side-project/). Want to discuss valuation approaches or see models in action? [Here's what I'm building](https://zacharyvorsteg.com/#work) or [let's talk shop](https://zacharyvorsteg.com/#contact).
 
 <!--
 SELF_ASSESSMENT:
