@@ -537,6 +537,7 @@ section {
 .venture-featured:hover {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .venture-featured h3 {
@@ -551,6 +552,30 @@ section {
     line-height: 1.7;
     margin-bottom: 16px;
     max-width: 600px;
+}
+
+.venture-platforms {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+}
+
+.platform-badge svg {
+    opacity: 0.9;
 }
 
 .venture-visit {
@@ -574,21 +599,48 @@ section {
 /* Venture grid */
 .ventures-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
     max-width: 800px;
     margin: 0 auto;
 }
 
 @media (min-width: 600px) {
     .ventures-grid {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 }
 
 @media (min-width: 900px) {
     .ventures-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 599px) {
+    .venture-featured {
+        padding: 28px 24px;
+    }
+
+    .venture-featured h3 {
+        font-size: 22px;
+    }
+
+    .venture-card {
+        padding: 18px;
+    }
+
+    .venture-card h3 {
+        font-size: 15px;
+    }
+
+    .venture-card p {
+        font-size: 13px;
+    }
+
+    .platform-badge {
+        font-size: 12px;
+        padding: 5px 10px;
     }
 }
 
@@ -607,6 +659,7 @@ section {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .venture-card h3 {
