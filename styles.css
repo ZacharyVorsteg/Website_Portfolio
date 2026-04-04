@@ -502,47 +502,82 @@ section {
     opacity: 0.7;
 }
 
-/* Featured Section - Trusenda */
-.featured-section {
+/* Ventures Section */
+.ventures-section {
     background: var(--gray-900);
     color: var(--white);
 }
 
-.featured-badge {
-    display: inline-block;
-    padding: 6px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.featured-content {
-    max-width: 800px;
-    margin: 0 auto;
+.ventures-intro {
+    max-width: 700px;
+    margin: 0 auto 48px;
     text-align: center;
 }
 
-.featured-content h2 {
-    margin-bottom: 20px;
-}
-
-.featured-problem {
-    font-size: clamp(18px, 2.5vw, 22px);
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 24px;
-    line-height: 1.5;
-    font-style: italic;
-}
-
-.featured-solution {
-    font-size: 17px;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 32px;
+.ventures-intro p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.7;
+}
+
+.ventures-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+    .ventures-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .ventures-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.venture-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    color: var(--white);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    display: block;
+}
+
+.venture-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.venture-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.venture-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.venture-card p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    margin-bottom: 0;
 }
 
 /* Pro Forma Section */
