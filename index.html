@@ -440,7 +440,7 @@
     </script>
 
     <link rel="preload" as="image" href="images/zach-headshot.jpg">
-    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
     <!-- Header -->
@@ -493,17 +493,17 @@
     <!-- Hero Section - Split Layout with Headshot -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content fade-in">
+            <div class="hero-content">
                 <div class="hero-text">
-                    <div class="hero-eyebrow">Software · Finance · Commercial Real Estate · Marketing</div>
-                    <h1>I build systems<br>that run businesses.</h1>
-                    <p class="hero-subtitle">M&amp;A models, SaaS platforms, real estate operations, and marketing engines — designed, built, and deployed. Seven ventures. One operator. West Palm Beach, FL.</p>
-                    <div class="hero-cta">
+                    <div class="hero-eyebrow hero-reveal hero-reveal-1">Software · Finance · Commercial Real Estate · Marketing</div>
+                    <h1 class="hero-reveal hero-reveal-2">I build <span class="highlight-accent">systems</span><br>that run businesses.</h1>
+                    <p class="hero-subtitle hero-reveal hero-reveal-3">M&amp;A models, SaaS platforms, real estate operations, and marketing engines — designed, built, and deployed. Seven ventures. One operator. West Palm Beach, FL.</p>
+                    <div class="hero-cta hero-reveal hero-reveal-4">
                         <a href="#disciplines" class="btn btn-primary">Start a Project</a>
                         <a href="#ventures" class="btn btn-secondary">See What I've Shipped</a>
                     </div>
                 </div>
-                <div class="hero-photo">
+                <div class="hero-photo hero-reveal hero-reveal-2">
                     <img src="images/zach-headshot.jpg" alt="Zachary Vorsteg - Full-Stack Developer, Financial Analyst, Commercial Real Estate Sales Associate, and Growth Operator based in West Palm Beach, Florida" width="320" height="320">
                 </div>
             </div>
@@ -542,6 +542,7 @@
     <section class="disciplines-section" id="disciplines">
         <div class="container">
             <div class="disciplines-intro">
+                <div class="eyebrow">Four Disciplines</div>
                 <h2>What I Do</h2>
                 <p>Four disciplines. One operator. Every engagement gets the full stack from day one — code that ships, models that hold up, deals that close clean, and marketing that compounds.</p>
             </div>
@@ -665,6 +666,7 @@
     <section class="ventures-section" id="ventures">
         <div class="container">
             <div class="ventures-intro">
+                <div class="eyebrow eyebrow-light">Selected Ventures</div>
                 <h2>Sites &amp; Apps I've Shipped</h2>
                 <p>Every one of these is live. Every one is code I wrote, designed, and deployed myself. <a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600;">See my GitHub →</a></p>
             </div>
@@ -752,6 +754,7 @@
     <section class="work-section">
         <div class="container">
             <div class="text-center mb-8">
+                <div class="eyebrow" style="justify-content: center;">Case Work</div>
                 <h2>Selected Work</h2>
                 <p style="font-size: 18px; color: var(--gray-600);">Recent client work.</p>
             </div>
@@ -785,6 +788,7 @@
     <section class="templates-section" id="templates">
         <div class="container">
             <div class="templates-intro">
+                <div class="eyebrow eyebrow-light">Free Downloads</div>
                 <h2>Templates</h2>
                 <p class="main-desc">Proven frameworks. Free to download.</p>
                 <p class="sub-desc">Clean, functional frameworks you can use today. Custom engagements build on these foundations with automation, multi-entity logic, and scenario engines.</p>
@@ -824,6 +828,7 @@
     <section class="services-section" id="services">
         <div class="container">
             <div class="services-intro">
+                <div class="eyebrow" style="justify-content: center;">Engagement Models</div>
                 <h2>How I Work</h2>
                 <p style="font-size: 18px; color: var(--gray-600); text-align: center; max-width: 680px; margin: 8px auto 0;">Clear scope. Direct access. Engagements shaped around outcomes, not hours.</p>
             </div>
@@ -929,24 +934,49 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 16px; font-size: 13px;">
-                    <a href="https://trusenda.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Trusenda</a>
-                    <a href="https://adshandled.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Ads Handled</a>
-                    <a href="https://palmbeachwarehouses.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Palm Beach Warehouses</a>
-                    <a href="https://customlab.ai" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">CustomLab.ai</a>
-                    <a href="https://palmbeachwebsites.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Palm Beach Websites</a>
-                    <a href="https://palmbeachhomesrealty.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Palm Beach Homes Realty</a>
-                    <a href="https://palmbeachquotes.com" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">Palm Beach Quotes</a>
-                    <a href="https://www.linkedin.com/in/zacharyvorsteg" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">LinkedIn</a>
-                    <a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener" style="color: var(--gray-500); text-decoration: none; transition: color 0.2s;">GitHub</a>
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="footer-name">Zachary Vorsteg</div>
+                    <p class="footer-tagline">Operator. Analyst. Developer. Building seven ventures from West Palm Beach.</p>
                 </div>
-                <div style="color: var(--gray-500); font-size: 12px; margin-bottom: 10px; letter-spacing: 0.3px;">
-                    FAU '20 Finance · Florida Licensed Real Estate Sales Associate SL3603483 · Cornerstone Realty · West Palm Beach, FL
+                <div class="footer-col">
+                    <div class="footer-label">Software</div>
+                    <ul>
+                        <li><a href="https://trusenda.com" target="_blank" rel="noopener">Trusenda</a></li>
+                        <li><a href="https://adshandled.com" target="_blank" rel="noopener">Ads Handled</a></li>
+                        <li><a href="https://customlab.ai" target="_blank" rel="noopener">CustomLab.ai</a></li>
+                        <li><a href="https://palmbeachwebsites.com" target="_blank" rel="noopener">Palm Beach Websites</a></li>
+                    </ul>
                 </div>
-                <div style="color: var(--gray-600); font-size: 14px;">
-                    © 2026 Zachary Vorsteg | <a href="tel:5617186725" style="color: var(--gray-600); text-decoration: none;">(561) 718-6725</a> | <a href="mailto:zachary.vorsteg@gmail.com" style="color: var(--gray-600); text-decoration: none;">zachary.vorsteg@gmail.com</a>
+                <div class="footer-col">
+                    <div class="footer-label">Real Estate</div>
+                    <ul>
+                        <li><a href="https://palmbeachwarehouses.com" target="_blank" rel="noopener">Palm Beach Warehouses</a></li>
+                        <li><a href="https://palmbeachhomesrealty.com" target="_blank" rel="noopener">Palm Beach Homes Realty</a></li>
+                        <li><a href="https://palmbeachquotes.com" target="_blank" rel="noopener">Palm Beach Quotes</a></li>
+                    </ul>
                 </div>
+                <div class="footer-col">
+                    <div class="footer-label">Connect</div>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/in/zacharyvorsteg" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="tel:5617186725">(561) 718-6725</a></li>
+                        <li><a href="mailto:zachary.vorsteg@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-label">Credentials</div>
+                    <ul class="footer-credentials">
+                        <li>FAU '20 Finance</li>
+                        <li>FL Licensed Sales Associate</li>
+                        <li>SL3603483 · Cornerstone Realty</li>
+                        <li>West Palm Beach, FL</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Zachary Vorsteg · All ventures built and operated independently.
             </div>
         </div>
     </footer>
@@ -954,7 +984,7 @@
     </main>
 
 
-    <script src="app.js?v=3" defer></script>
+    <script src="app.js?v=4" defer></script>
     <script>
     window.addEventListener('load', function() {
       var s = document.createElement('script');
