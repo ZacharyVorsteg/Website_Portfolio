@@ -158,7 +158,7 @@ Enterprise value (EV — the total value of a business including debt, minus cas
 
 Run your next M&A candidate through this framework. Start with a 3-statement model, layer in your value drivers, stress-test every assumption. The model's only as good as what you feed it — make inputs explicit, source them, update as reality diverges from projections.
 
-This same discipline applies whether you're [evaluating real estate acquisitions as a sales associate](/blog/why-im-a-commercial-real-estate-broker-who-codes/) or [screening targets for a portfolio — the discipline doesn't change, only the asset class](/blog/algorithmic-trading-bots-side-project/). Want to discuss valuation approaches or see models in action? [Here's what I'm building](https://zacharyvorsteg.com/#work) or [let's talk shop](https://zacharyvorsteg.com/#contact).
+This same discipline applies whether you're [evaluating real estate acquisitions as a sales associate](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) or [screening targets for a portfolio — the discipline doesn't change, only the asset class](/blog/algorithmic-trading-bots-side-project/). Want to discuss valuation approaches or see models in action? [Here's what I'm building](https://zacharyvorsteg.com/#work) or [let's talk shop](https://zacharyvorsteg.com/#contact).
 
 <!--
 SELF_ASSESSMENT:
@@ -168,7 +168,7 @@ SOURCED_STATS: 10 (HBR 70-90% failure rate, Damodaran terminal value, Bain PE ov
 FAQ_COUNT: 6
 TABLE_COUNT: 2
 CODE_SNIPPETS: 1
-INTERNAL_LINKS: 11 unique destinations (/blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/algorithmic-trading-bots-side-project/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/algorithmic-trading-bots-side-project/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /#work, /#contact)
 -->
 
 <!--

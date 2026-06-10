@@ -11,7 +11,7 @@ Software developers think shipping means pushing code. Hardware developers know 
 
 I built an IoT thermal detection system from scratch. ESP32-S3 microcontrollers. MLX90640 infrared sensor arrays. Quectel EG25-G cellular modules for backhaul. Jetson Orin Nano for edge processing. Designed, prototyped, programmed, deployed — all solo, with zero formal hardware engineering training.
 
-I've written extensively about the [software automation stack](/blog/my-solo-founder-automation-stack/) running alongside this hardware and the [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) that created the core need for thermal monitoring. I've documented [what breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — the blind spots, the failures, the 3 AM debugging sessions. This post is the hardware layer — how a software developer ships production IoT systems, what the breadboard-to-ceiling-mount journey actually involves, and what I'd do differently on iteration two.
+I've written extensively about the [software automation stack](/blog/my-solo-founder-automation-stack/) running alongside this hardware and the [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) that created the core need for thermal monitoring. I've documented [what breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/) — the blind spots, the failures, the 3 AM debugging sessions. This post is the hardware layer — how a software developer ships production IoT systems, what the breadboard-to-ceiling-mount journey actually involves, and what I'd do differently on iteration two.
 
 ## Why a Software Developer Started Building Hardware
 

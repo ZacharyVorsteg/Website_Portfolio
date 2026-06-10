@@ -47,23 +47,30 @@ if (discoveryForm) {
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
 
-        fetch('/', {
+        // POST must target /index.html — Netlify's pretty-urls processing 404s form POSTs to bare /
+        fetch('/index.html', {
             method: 'POST',
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams(formData).toString()
         })
-        .then(() => {
-            submitBtn.textContent = 'Sent!';
+        .then(res => {
+            if (!res.ok) throw new Error('Form POST failed: ' + res.status);
             discoveryForm.reset();
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
+            const success = document.createElement('div');
+            success.className = 'form-success';
+            success.innerHTML = "<strong>Got it — your message is in.</strong> I review every inquiry personally and typically reply within one business day. Urgent? Call <a href='tel:5617186725'>(561) 718-6725</a>.";
+            discoveryForm.replaceWith(success);
         })
         .catch(error => {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
-            alert('Error submitting. Please call (561) 718-6725.');
+            let err = discoveryForm.querySelector('.form-error');
+            if (!err) {
+                err = document.createElement('p');
+                err.className = 'form-error';
+                discoveryForm.appendChild(err);
+            }
+            err.innerHTML = "Something went wrong sending that. Email <a href='mailto:zachary.vorsteg@gmail.com'>zachary.vorsteg@gmail.com</a> or call <a href='tel:5617186725'>(561) 718-6725</a> instead.";
         });
     });
 }

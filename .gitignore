@@ -48,3 +48,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 node_modules/
+
+# Local Netlify folder
+.netlify
+
+# Internal working docs — Netlify publishes the repo root, committing these would make them public
+AUDIT_REPORT.md
+AUDIT_ACTION_ITEMS.md
+BLOG_AUDIT_REPORT.md
+CONTENT_AUDIT_DEDUPLICATION.md
+INTERNAL-LINKING-AUDIT.md
+LINKING-FIX-CHECKLIST.md
+pipeline/

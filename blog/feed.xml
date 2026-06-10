@@ -7,6 +7,14 @@
     <language>en-us</language>
     <atom:link href="https://zacharyvorsteg.com/blog/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>What My AI Development Stack Actually Costs</title>
+      <link>https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/</guid>
+      <pubDate>Mon, 30 Mar 2026 00:00:00 GMT</pubDate>
+      <description>My AI development stack costs $257/month as a solo founder. Every tool, every dollar — what delivers ROI, what I dropped, and what&apos;s worth paying for.</description>
+      <category>Finance</category>
+    </item>
+    <item>
       <title>Agentic Engineering: What Replaced Vibe Coding</title>
       <link>https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</guid>
@@ -80,8 +88,8 @@
     </item>
     <item>
       <title>Why I&apos;m a Commercial Real Estate Sales Associate Who Codes</title>
-      <link>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</link>
-      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</guid>
+      <link>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/</link>
+      <guid isPermaLink="true">https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/</guid>
       <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
       <description>I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.</description>
       <category>Hardware &amp; PropTech</category>

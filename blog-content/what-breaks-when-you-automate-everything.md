@@ -68,7 +68,7 @@ My IoT thermal detection system is worse — dramatically so. ESP32-S3 sensors d
 
 Nobody talks about this failure mode. It isn't a system failure. It's a human one.
 
-Consider the inventory: a multi-market trading system, an iOS app in the App Store, IoT hardware scattered across field sites, a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) with live deals requiring human judgment, and a [content pipeline](/blog/how-i-build-in-public-as-a-technical-founder/) publishing on a regular cadence.
+Consider the inventory: a multi-market trading system, an iOS app in the App Store, IoT hardware scattered across field sites, a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) with live deals requiring human judgment, and a [content pipeline](/blog/how-i-build-in-public-as-a-technical-founder/) publishing on a regular cadence.
 
 Gloria Mark at UC Irvine measured the damage precisely: 23 minutes and 15 seconds to regain deep focus after an interruption (Gloria Mark, UC Irvine, 2008). The APA's number is grimmer — up to 40% of productive time lost to context switching (Rubinstein, Meyer & Evans, APA, 2001). Five systems spanning three domains doesn't just mean switching tasks. You're switching entire mental models. Debugging Python, then reviewing SwiftUI, then troubleshooting cellular firmware — each requires loading a completely different cognitive framework.
 

@@ -14,6 +14,12 @@
   </url>
 
   <url>
+    <loc>https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -68,7 +74,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-broker-who-codes/</loc>
+    <loc>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/</loc>
     <lastmod>2026-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

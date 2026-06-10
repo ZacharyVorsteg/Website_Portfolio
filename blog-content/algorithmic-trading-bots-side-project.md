@@ -152,7 +152,7 @@ Here's what separates a portfolio approach from single-strategy gambling:
 
 **Rigorous position sizing.** No single strategy ever represents more than 5% of total capital. Most arb bots run at 1-2%. A strategy that goes spectacularly wrong costs me a bad week. Never a bad year.
 
-The [financial modeling fundamentals](/blog/financial-modeling-fundamentals/) I use for evaluating strategy economics come from the same analytical framework I apply to deal analysis in my [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) — NPV (net present value), risk-adjusted return, sensitivity analysis. Different asset class, same math.
+The [financial modeling fundamentals](/blog/financial-modeling-fundamentals/) I use for evaluating strategy economics come from the same analytical framework I apply to deal analysis in my [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) — NPV (net present value), risk-adjusted return, sensitivity analysis. Different asset class, same math.
 
 ## How I Decide to Kill a Strategy
 
@@ -210,7 +210,7 @@ Correlated drawdowns. All your strategies lose money on the same day. CBOE's Imp
 
 ### Can I build trading bots as a side project, or does it require full-time attention?
 
-I run all 54 bots alongside a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) and multiple software products. The infrastructure is automated — I covered how in [my automation stack post](/blog/my-solo-founder-automation-stack/). The trading layer takes about 30 minutes daily: morning log review, strategy health checks, occasional parameter adjustments. Building your first profitable bot takes real time — weeks to months of development and testing. But ongoing operations absolutely fit a side-project schedule.
+I run all 54 bots alongside a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) and multiple software products. The infrastructure is automated — I covered how in [my automation stack post](/blog/my-solo-founder-automation-stack/). The trading layer takes about 30 minutes daily: morning log review, strategy health checks, occasional parameter adjustments. Building your first profitable bot takes real time — weeks to months of development and testing. But ongoing operations absolutely fit a side-project schedule.
 
 ---
 
@@ -237,7 +237,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,650
 DATA_POINTS: 17 (specific stats/figures with named sources)
 SOURCED_STATS: 12 (Mordor Intelligence, QuantConnect, JPMorgan, BIS Triennial Survey, Wall Street Journal, CoinDesk, Suhonen/Journal of Portfolio Management, Bailey/Journal of Computational Finance, Maven Securities, CBOE x2, IOSCO, Chague et al.)
-INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (market comparison, broker API comparison)
 CODE_SNIPPETS: 2 (auth pre-flight check, strategy health evaluation)

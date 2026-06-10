@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg explains how building in public works for technical 
 
 Most "building in public" content amounts to indie hackers tweeting MRR screenshots. Fine for SaaS solo acts — but that barely scratches what transparency looks like when you're simultaneously juggling trading bots, an iOS app, and sensor networks across multiple sites.
 
-I'm a [licensed commercial real estate sales associate who codes](/blog/why-im-a-commercial-real-estate-broker-who-codes/), the founder of [Trusenda](https://trusenda.com), and a bootstrapped entrepreneur shipping across multiple domains simultaneously. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
+I'm a [licensed commercial real estate sales associate who codes](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/), the founder of [Trusenda](https://trusenda.com), and a bootstrapped entrepreneur shipping across multiple domains simultaneously. Building in public isn't some growth hack for me. Honestly? It's the only reliable mechanism I've found for keeping myself accountable across all of it.
 
 What I share, what stays private, and the returns I've actually measured — that's what follows. If the "just be authentic" crowd burned you, consider this the tactical antidote.
 
@@ -17,7 +17,7 @@ What I share, what stays private, and the returns I've actually measured — tha
 
 Followers weren't the motivation. Drowning was.
 
-Dozens of [trading strategies](/blog/algorithmic-trading-bots-side-project/) across multiple markets. An iOS app in active development. IoT sensor networks. A [full CRE practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/). All running simultaneously. Things slip through cracks when you operate like that — invisible things, the kind that surface three months later when you discover a system's been silently failing since Tuesday.
+Dozens of [trading strategies](/blog/algorithmic-trading-bots-side-project/) across multiple markets. An iOS app in active development. IoT sensor networks. A [full CRE practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/). All running simultaneously. Things slip through cracks when you operate like that — invisible things, the kind that surface three months later when you discover a system's been silently failing since Tuesday.
 
 Building in public forced a discipline: articulate what you're working on, why it matters, what actually happened. Even when zero people are reading, that act of writing catches problems early. Rubber duck debugging, but for your entire operation.
 
@@ -181,7 +181,7 @@ SOURCED_STATS: 9 (Carta solo founders 22%→38%, Edelman 60% trust/transparency,
 FAQ_COUNT: 6
 TABLE_COUNT: 2
 CODE_SNIPPETS: 0
-INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/algorithmic-trading-bots-side-project/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/algorithmic-trading-bots-side-project/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
 -->
 
 <!--

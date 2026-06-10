@@ -9,7 +9,7 @@ speakable: "Zachary Vorsteg runs 54 automated trading bots on a single Mac using
 
 Fifty-four bots. One Mac. They trade equities, forex, crypto, and prediction markets around the clock — plus monitoring, data processing, and strategy execution — all managed through Python and macOS's native job scheduler, launchctl.
 
-Not a thought experiment. Not a "how to automate your business" listicle. What you're reading is the actual plumbing behind a live system moving real capital across multiple markets, built by a solo founder who also runs a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/) and ships software products on parallel tracks.
+Not a thought experiment. Not a "how to automate your business" listicle. What you're reading is the actual plumbing behind a live system moving real capital across multiple markets, built by a solo founder who also runs a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) and ships software products on parallel tracks.
 
 Do you actually need Kubernetes, Airflow, or a cloud fleet to automate at scale? Here's the answer I wish someone had given me three years ago. You don't.
 
@@ -273,7 +273,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,700
 DATA_POINTS: 14 (specific stats/figures with named sources)
 SOURCED_STATS: 11 (TIOBE, GitHub Octoverse, PyPI, Stack Overflow Dev Survey, McKinsey, ITIC x2, MBO Partners x2, Gusto, Retool)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /#work, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (launchctl vs alternatives, local vs cloud cost)
 CODE_SNIPPETS: 2 (plist XML, bash commands)

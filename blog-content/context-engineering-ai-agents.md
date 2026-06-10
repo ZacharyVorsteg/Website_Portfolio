@@ -250,7 +250,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,550
 DATA_POINTS: 17 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Tobi Lutke, Andrej Karpathy, Gartner x2, MarketsandMarkets, QCon London/Patrick Debois, Stack Overflow, Anthropic/Linux Foundation, LangChain, Gloria Mark/UC Irvine, Capgemini, Peng et al./arXiv, PwC, Carta)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (context engineering vs prompt engineering, MCP routing)
 CODE_SNIPPETS: 3 (CLAUDE.md permission tiers, hooks JSON configuration, memory file format)

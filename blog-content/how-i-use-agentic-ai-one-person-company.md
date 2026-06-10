@@ -7,7 +7,7 @@ pillar: AI Workflow & Context Engineering
 speakable: "Zachary Vorsteg describes how agentic AI operates in his daily workflow across four concurrent ventures — commercial real estate, algorithmic trading, IoT hardware, and iOS development. The post details specific tasks delegated to AI agents, real time savings measured across each business line, where agentic AI consistently fails, and why the one-person company model works only when you understand the delegation ceiling."
 ---
 
-Four ventures run simultaneously under one roof: a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-broker-who-codes/), [54 algorithmic trading bots](/blog/algorithmic-trading-bots-side-project/), IoT thermal detection hardware, and an iOS app. No employees. No co-founder. No virtual assistant answering emails.
+Four ventures run simultaneously under one roof: a [commercial real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/), [54 algorithmic trading bots](/blog/algorithmic-trading-bots-side-project/), IoT thermal detection hardware, and an iOS app. No employees. No co-founder. No virtual assistant answering emails.
 
 What makes this operationally survivable isn't willpower or 80-hour weeks. It's agentic AI — AI that acts autonomously within defined boundaries, not AI that sits idle waiting for prompts.
 
@@ -80,7 +80,7 @@ Running this blog involves a multi-stage pipeline: keyword research, deduplicati
 
 ### Deal Screening and Analysis
 
-The agent runs [financial models](/blog/financial-modeling-fundamentals/) on incoming CRE deals — cap rate analysis, DSCR (debt service coverage ratio — the property's net operating income divided by its debt payments) calculations, comp adjustments. It screens 10-15 listings per week and surfaces the 2-3 worth my serious attention. Previously I screened 3-4 per week manually and almost certainly missed better opportunities buried in the noise. The [CRE technology gap](/blog/why-im-a-commercial-real-estate-broker-who-codes/) is exactly why this edge matters — most practitioners still do all of this by hand.
+The agent runs [financial models](/blog/financial-modeling-fundamentals/) on incoming CRE deals — cap rate analysis, DSCR (debt service coverage ratio — the property's net operating income divided by its debt payments) calculations, comp adjustments. It screens 10-15 listings per week and surfaces the 2-3 worth my serious attention. Previously I screened 3-4 per week manually and almost certainly missed better opportunities buried in the noise. The [CRE technology gap](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) is exactly why this edge matters — most practitioners still do all of this by hand.
 
 ## What I Still Do Myself — And Why the Delegation Ceiling Exists
 
@@ -234,7 +234,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,650
 DATA_POINTS: 22 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Fortune Business Insights 2025, Gartner August 2025, IBM June 2025, Gloria Mark/UC Irvine 2008, Anthropic 2026 Agentic Coding Trends March 2026, Peng et al./arXiv February 2023, Capgemini 2025, Anthropic internal 2025, Anthropic research November 2025, GREY Journal 2026, Inc./Dario Amodei May 2025, Carta 2025, TechCrunch/Base44 June 2025, TechCrunch/Cursor March 2026)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (Delegation routing by venture; Before/after time savings across ventures)
 CODE_SNIPPETS: 2 (Morning briefing output; Weekly task routing log)

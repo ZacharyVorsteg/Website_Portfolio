@@ -279,7 +279,7 @@ McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKi
 
 ### Is agentic engineering only for coding?
 
-No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for [research and financial analysis](/blog/financial-modeling-fundamentals/), [public documentation](/blog/how-i-build-in-public-as-a-technical-founder/), and [CRE deal screening](/blog/why-im-a-commercial-real-estate-broker-who-codes/). The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you're directing AI agents to produce work.
+No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for [research and financial analysis](/blog/financial-modeling-fundamentals/), [public documentation](/blog/how-i-build-in-public-as-a-technical-founder/), and [CRE deal screening](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/). The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you're directing AI agents to produce work.
 
 ---
 
@@ -307,7 +307,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,700
 DATA_POINTS: 24 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Andrej Karpathy/X February 2026, 9to5Mac March 2026, Simon Willison/simonwillison.net March 2026, IBM March 2026, NVIDIA GTC 2026, ICSE 2026, Anthropic January 2026, TechCrunch/Bloomberg March 2026, Gartner December 2025, Garry Tan/Y Combinator March 2025, McKinsey June 2023, Peng et al./arXiv February 2023, Stack Overflow 2025, Carta 2025)
-INTERNAL_LINKS: 11 unique destinations (/blog/how-i-use-agentic-ai-one-person-company/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-broker-who-codes/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/how-i-use-agentic-ai-one-person-company/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (Karpathy vs Willison framework comparison; Task decomposition specificity gradient)
 CODE_SNIPPETS: 3 (Trust calibration by domain; Session 1 cross-codebase bug fix walkthrough; Session 2 new feature build walkthrough)
