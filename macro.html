@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Intelligence Terminal | Zachary Vorsteg</title>
+    <meta name="description" content="Real-time macro economic intelligence dashboard tracking 12 FRED indicators. Correlation analysis, causal chains, forecasts, and composite signals.">
+    <meta name="author" content="Zachary Vorsteg">
+    <meta name="theme-color" content="#0A0C10">
+    <meta property="og:title" content="Macro Intelligence Terminal | Zachary Vorsteg">
+    <meta property="og:description" content="12-indicator economic dashboard with correlation matrix, causal chain analysis, 6-month forecasts, and composite signals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zacharyvorsteg.com/macro.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background-color: #0A0C10;
+            color: #E2E8F0;
+            line-height: 1.6;
+        }
+
+        body {
+            padding: 0;
+        }
+
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background-color: #12141A;
+            border-bottom: 1px solid #1E2028;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .back-link {
+            color: #64748B;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #94A3B8;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+        }
+
+        .data-badge {
+            background-color: #1A1D25;
+            border: 1px solid #1E2028;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: #94A3B8;
+        }
+
+        .timestamp {
+            color: #64748B;
+            font-size: 12px;
+        }
+
+        .banner-fallback {
+            background-color: #1A1D25;
+            border-bottom: 1px solid #F59E0B;
+            padding: 12px 32px;
+            font-size: 12px;
+            color: #F59E0B;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 16px;
+            border-bottom: 1px solid #1E2028;
+            margin-bottom: 32px;
+        }
+
+        .tab-button {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            color: #94A3B8;
+        }
+
+        .tab-button.active {
+            color: #3B82F6;
+            border-bottom-color: #3B82F6;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #1E2028;
+            border-top-color: #3B82F6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 48px;
+            color: #64748B;
+        }
+
+        /* Overview Tab */
+        .indicator-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .indicator-card {
+            background-color: #12141A;
+            border: 1px solid #1E2028;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.2s;
+        }
+
+        .indicator-card:hover {
+            border-color: #2D3139;
+            background-color: #1A1D25;
+        }
+
+        .indicator-label {
+            font-size: 11px;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .indicator-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .indicator-change {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .indicator-change.positive {
+            color: #22C55E;
+        }
+
+        .indicator-change.negative {
+            color: #EF4444;
+        }
+
+        .indicator-change.neutral {
+            color: #64748B;
+        }
+
+        .chart-container {
+            background-color: #12141A;
+            border: 1px solid #1E2028;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .time-range-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .time-range-btn {
+            padding: 6px 12px;
+            background-color: #1A1D25;
+            border: 1px solid #1E2028;
+            color: #94A3B8;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .time-range-btn:hover {
+            border-color: #2D3139;
+        }
+
+        .time-range-btn.active {
+            background-color: #3B82F6;
+            border-color: #3B82F6;
+            color: #FFFFFF;
+        }
+
+        .series-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .series-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .series-checkbox input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        .series-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        /* Correlation Matrix */
+        .correlation-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 32px;
+            background-color: #12141A;
+            border: 1px solid #1E2028;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 11px;
+        }
+
+        .correlation-matrix th,
+        .correlation-matrix td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #1E2028;
+        }
+
+        .correlation-matrix th {
+            background-color: #1A1D25;
+            font-weight: 600;
+            color: #94A3B8;
+            max-width: 60px;
+            word-break: break-word;
+        }
+
+        .correlation-cell {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .correlation-cell:hover {
+            opacity: 0.8;
+        }
+
+        .causal-chains {
+            margin-top: 32px;
+        }
+
+        .causal-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .causal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .causal-card {
+            background-color: #12141A;
+            border: 1px solid #1E2028;
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .causal-card:hover {
+            border-color: #2D3139;
+            background-color: #1A1D25;
+        }
+
+        .causal-arrow {
+            font-size: 18px;
+            margin: 8px 0;
+            color: #3B82F6;
+        }
+
+        .causal-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #E2E8F0;
+        }
+
+        .causal-lag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #94A3B8;
+            margin-bottom: 8px;
+        }
+
+        .causal-correlation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #F59E0B;
+            margin-bottom: 8px;
+        }
+
+        .causal-description {
+            font-size: 12px;
+            color: #64748B;
+            line-height: 1.5;
+        }
+
+        /* Forecast Tab */
+        .forecast-selector {
+            margin-bottom: 24px;
+        }
+
+        .forecast-label {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .forecast-dropdown {
+            padding: 10px 12px;
+            background-color: #1A1D25;
+            border: 1px solid #1E2028;
+            color: #E2E8F0;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .forecast-dropdown:hover {
+            border-color: #2D3139;
+        }
+
+        .forecast-dropdown:focus {
+            outline: none;
+            border-color: #3B82F6;
+        }
+
+        .forecast-method {
+            font-size: 11px;
+            color: #64748B;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #1E2028;
+            font-style: italic;
+        }
+
+        /* Signals Tab */
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .signal-card {
+            background-color: #12141A;
+            border: 1px solid #1E2028;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+
+        .signal-card:hover {
+            border-color: #2D3139;
+            background-color: #1A1D25;
+        }
+
+        .signal-name {
+            font-size: 12px;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .signal-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .signal-status.elevated {
+            background-color: #7F1D1D;
+            color: #FCA5A5;
+        }
+
+        .signal-status.watch {
+            background-color: #78350F;
+            color: #FCD34D;
+        }
+
+        .signal-status.low {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-status.hot {
+            background-color: #7F1D1D;
+            color: #FCA5A5;
+        }
+
+        .signal-status.moderate {
+            background-color: #78350F;
+            color: #FCD34D;
+        }
+
+        .signal-status.cool {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-status.weakening {
+            background-color: #7F1D1D;
+            color: #FCA5A5;
+        }
+
+        .signal-status.healthy {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-status.strong {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-status.stressed {
+            background-color: #7F1D1D;
+            color: #FCA5A5;
+        }
+
+        .signal-status.normal {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-status.eased {
+            background-color: #1B4332;
+            color: #86EFAC;
+        }
+
+        .signal-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .signal-trend {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .signal-arrow {
+            font-size: 16px;
+        }
+
+        .signal-arrow.up {
+            color: #22C55E;
+        }
+
+        .signal-arrow.down {
+            color: #EF4444;
+        }
+
+        .signal-arrow.flat {
+            color: #64748B;
+        }
+
+        .signal-sparkline {
+            width: 100%;
+            height: 40px;
+            margin-top: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 16px;
+            }
+
+            .indicator-strip {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .signals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* SVG Charts */
+        .recharts-wrapper {
+            width: 100% !important;
+        }
+
+        .recharts-surface {
+            width: 100% !important;
+        }
+
+        .recharts-legend-wrapper {
+            margin-top: 16px;
+        }
+
+        .recharts-tooltip {
+            background-color: #1A1D25 !important;
+            border: 1px solid #1E2028 !important;
+            border-radius: 8px !important;
+        }
+
+        .recharts-tooltip-label {
+            color: #94A3B8 !important;
+        }
+
+        .recharts-tooltip-item {
+            color: #E2E8F0 !important;
+        }
+
+        /* Text utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-24 {
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- React, ReactDOM, Recharts from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js"></script>
+    <script crossorigin src="https://unpkg.com/recharts@2.15.0/umd/Recharts.js"></script>
+
+    <script type="module">
+        import htm from 'https://esm.sh/htm@3.1.1';
+
+        const html = htm.bind(React.createElement);
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+
+        // ============ CONSTANTS ============
+        const SERIES = {
+            FEDFUNDS: { name: 'Fed Funds Rate', unit: '%', color: '#3B82F6', category: 'rates', freq: 'daily' },
+            DGS10: { name: '10Y Treasury', unit: '%', color: '#8B5CF6', category: 'rates', freq: 'daily' },
+            DGS2: { name: '2Y Treasury', unit: '%', color: '#A855F7', category: 'rates', freq: 'daily' },
+            T10Y2Y: { name: '10Y-2Y Spread', unit: 'pp', color: '#EC4899', category: 'rates', freq: 'daily' },
+            CPIAUCSL: { name: 'CPI', unit: 'index', color: '#F59E0B', category: 'inflation', freq: 'monthly' },
+            PCEPI: { name: 'PCE Price Index', unit: 'index', color: '#F97316', category: 'inflation', freq: 'monthly' },
+            DCOILWTICO: { name: 'WTI Crude Oil', unit: '$/bbl', color: '#10B981', category: 'commodities', freq: 'daily' },
+            UNRATE: { name: 'Unemployment', unit: '%', color: '#EF4444', category: 'labor', freq: 'monthly' },
+            PAYEMS: { name: 'Nonfarm Payrolls', unit: 'K', color: '#06B6D4', category: 'labor', freq: 'monthly' },
+            GDPC1: { name: 'Real GDP', unit: 'B$', color: '#22C55E', category: 'output', freq: 'quarterly' },
+            FRGSHPUSM649NCIS: { name: 'Supply Chain Pressure', unit: 'σ', color: '#6366F1', category: 'output', freq: 'monthly' },
+            AMTMNO: { name: 'Mfg New Orders', unit: 'M$', color: '#14B8A6', category: 'output', freq: 'monthly' },
+        };
+
+        const CAUSAL_CHAINS = [
+            { from: 'FRGSHPUSM649NCIS', to: 'GDPC1', lag: 4, label: 'Supply Chain → GDP', desc: 'Supply chain pressure leads GDP changes by ~4 months. Disruptions in freight and logistics cascade into output.' },
+            { from: 'DCOILWTICO', to: 'CPIAUCSL', lag: 3, label: 'Oil → CPI', desc: 'Energy costs feed into consumer prices with ~3 month lag through transportation and production costs.' },
+            { from: 'T10Y2Y', to: 'UNRATE', lag: 12, label: 'Yield Curve → Recession', desc: 'Yield curve inversion has preceded every recession since 1970. Lead time averages ~12 months.' },
+            { from: 'CPIAUCSL', to: 'FEDFUNDS', lag: 2, label: 'CPI → Fed Funds', desc: 'The Fed adjusts rates in response to inflation data with a ~2 month policy lag.' },
+            { from: 'PAYEMS', to: 'GDPC1', lag: 2, label: 'Jobs → GDP', desc: 'Employment growth leads GDP by ~2 months as labor market strength drives consumption.' },
+            { from: 'DCOILWTICO', to: 'FRGSHPUSM649NCIS', lag: 1, label: 'Oil → Supply Chain', desc: 'Oil price shocks impact supply chain pressure within ~1 month through fuel costs.' },
+        ];
+
+        // ============ FALLBACK DATA ============
+        function generateFallbackData() {
+            const data = {};
+            const startDate = new Date('2019-01-01');
+            const endDate = new Date('2026-03-23');
+
+            const patterns = {
+                FEDFUNDS: { start: 2.4, min: 0.08, max: 5.33, trend: 'sine', volatility: 0.5 },
+                DGS10: { start: 2.5, min: 0.6, max: 4.8, trend: 'sine', volatility: 0.3 },
+                DGS2: { start: 1.8, min: 0.1, max: 5.1, trend: 'sine', volatility: 0.4 },
+                T10Y2Y: { start: 0.7, min: -1.0, max: 2.5, trend: 'wave', volatility: 0.3 },
+                CPIAUCSL: { start: 252, min: 252, max: 315, trend: 'linear', volatility: 0.05 },
+                PCEPI: { start: 109, min: 109, max: 127, trend: 'linear', volatility: 0.05 },
+                DCOILWTICO: { start: 60, min: -37, max: 120, trend: 'sine', volatility: 1.5 },
+                UNRATE: { start: 3.5, min: 3.4, max: 14.7, trend: 'spike', volatility: 0.2 },
+                PAYEMS: { start: 152000, min: 130000, max: 157000, trend: 'linear', volatility: 2000 },
+                GDPC1: { start: 19000, min: 17300, max: 22500, trend: 'linear', volatility: 500 },
+                FRGSHPUSM649NCIS: { start: -0.5, min: -1.5, max: 4.5, trend: 'spike', volatility: 0.3 },
+                AMTMNO: { start: 480000, min: 460000, max: 590000, trend: 'linear', volatility: 5000 },
+            };
+
+            for (const [series, pattern] of Object.entries(patterns)) {
+                data[series] = [];
+                let currentDate = new Date(startDate);
+                let value = pattern.start;
+                const dayInMs = 24 * 60 * 60 * 1000;
+
+                while (currentDate <= endDate) {
+                    const daysElapsed = (currentDate - startDate) / dayInMs;
+                    const progress = daysElapsed / ((endDate - startDate) / dayInMs);
+
+                    // Apply trend
+                    let trendValue = 0;
+                    if (pattern.trend === 'linear') {
+                        trendValue = pattern.start + (pattern.max - pattern.start) * progress * 0.3;
+                    } else if (pattern.trend === 'sine') {
+                        trendValue = pattern.start + Math.sin(progress * Math.PI * 4) * (pattern.max - pattern.start) * 0.3;
+                    } else if (pattern.trend === 'wave') {
+                        trendValue = pattern.start + Math.sin(progress * Math.PI * 6) * (pattern.max - pattern.min) * 0.5;
+                    } else if (pattern.trend === 'spike') {
+                        if (progress > 0.6 && progress < 0.75) {
+                            trendValue = pattern.max * (1 - Math.abs(progress - 0.675) / 0.075);
+                        } else {
+                            trendValue = (pattern.min + pattern.max) / 2;
+                        }
+                    }
+
+                    // Add volatility
+                    const noise = (Math.random() - 0.5) * pattern.volatility;
+                    value = trendValue + noise;
+                    value = Math.max(pattern.min, Math.min(pattern.max, value));
+
+                    const dateStr = currentDate.toISOString().split('T')[0];
+                    data[series].push({ date: dateStr, value: parseFloat(value.toFixed(4)) });
+
+                    currentDate = new Date(currentDate.getTime() + dayInMs);
+                }
+            }
+
+            return data;
+        }
+
+        // ============ MATH FUNCTIONS ============
+        function pearson(x, y) {
+            const n = Math.min(x.length, y.length);
+            if (n < 3) return 0;
+            const xs = x.slice(0, n);
+            const ys = y.slice(0, n);
+            const mx = xs.reduce((a, b) => a + b, 0) / n;
+            const my = ys.reduce((a, b) => a + b, 0) / n;
+            let num = 0, dx2 = 0, dy2 = 0;
+            for (let i = 0; i < n; i++) {
+                const dx = xs[i] - mx;
+                const dy = ys[i] - my;
+                num += dx * dy;
+                dx2 += dx * dx;
+                dy2 += dy * dy;
+            }
+            const denom = Math.sqrt(dx2 * dy2);
+            return denom === 0 ? 0 : num / denom;
+        }
+
+        function lagCorrelation(leader, follower, maxLag) {
+            let bestR = 0, bestLag = 0;
+            for (let lag = 0; lag <= maxLag; lag++) {
+                const x = leader.slice(0, leader.length - lag);
+                const y = follower.slice(lag);
+                const r = pearson(x, y);
+                if (Math.abs(r) > Math.abs(bestR)) {
+                    bestR = r;
+                    bestLag = lag;
+                }
+            }
+            return { r: bestR, lag: bestLag };
+        }
+
+        function toMonthly(observations) {
+            const monthly = {};
+            for (const obs of observations) {
+                const key = obs.date.slice(0, 7);
+                monthly[key] = obs.value;
+            }
+            return monthly;
+        }
+
+        function alignSeries(allData, seriesIds) {
+            const monthlyMaps = {};
+            for (const id of seriesIds) {
+                monthlyMaps[id] = toMonthly(allData[id] || []);
+            }
+
+            const allMonths = new Set();
+            for (const id of seriesIds) {
+                Object.keys(monthlyMaps[id]).forEach(m => allMonths.add(m));
+            }
+            const months = [...allMonths].sort();
+
+            const aligned = {};
+            const commonMonths = [];
+            for (const id of seriesIds) aligned[id] = [];
+
+            for (const month of months) {
+                if (seriesIds.every(id => monthlyMaps[id][month] !== undefined)) {
+                    commonMonths.push(month);
+                    for (const id of seriesIds) {
+                        aligned[id].push(monthlyMaps[id][month]);
+                    }
+                }
+            }
+
+            return { aligned, months: commonMonths };
+        }
+
+        function forecast(values, months = 6) {
+            const n = values.length;
+            if (n < 6) return { forecast: [], upper: [], lower: [] };
+
+            const window = Math.min(n, 24);
+            const recent = values.slice(-window);
+
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+            for (let i = 0; i < window; i++) {
+                sumX += i;
+                sumY += recent[i];
+                sumXY += i * recent[i];
+                sumX2 += i * i;
+            }
+            const slope = (window * sumXY - sumX * sumY) / (window * sumX2 - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / window;
+
+            const mom3 = recent.length >= 4
+                ? (recent[recent.length - 1] - recent[recent.length - 4]) / 3
+                : 0;
+            const blendedSlope = slope * 0.7 + mom3 * 0.3;
+
+            let sse = 0;
+            for (let i = 0; i < window; i++) {
+                const pred = intercept + slope * i;
+                sse += (recent[i] - pred) ** 2;
+            }
+            const sigma = Math.sqrt(sse / (window - 2));
+
+            const result = [];
+            for (let i = 1; i <= months; i++) {
+                const t = window - 1 + i;
+                const val = intercept + blendedSlope * t;
+                result.push({
+                    value: val,
+                    upper: val + 1.5 * sigma,
+                    lower: val - 1.5 * sigma,
+                });
+            }
+            return result;
+        }
+
+        function filterByTimeRange(data, range) {
+            const today = new Date();
+            let cutoff;
+
+            if (range === '1Y') cutoff = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+            else if (range === '2Y') cutoff = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate());
+            else if (range === '5Y') cutoff = new Date(today.getFullYear() - 5, today.getMonth(), today.getDate());
+            else return data;
+
+            return data.filter(d => new Date(d.date) >= cutoff);
+        }
+
+        // ============ COMPONENTS ============
+
+        function Header({ lastUpdated, usingFallback }) {
+            return html`
+                <div class="header">
+                    <div class="header-left">
+                        <div class="header-title">Macro Intelligence Terminal</div>
+                        <a href="/" class="back-link">← Back to zacharyvorsteg.com</a>
+                    </div>
+                    <div class="header-right">
+                        <div class="data-badge">Data: FRED</div>
+                        <div class="timestamp">Updated: ${lastUpdated}</div>
+                    </div>
+                </div>
+                ${usingFallback && html`
+                    <div class="banner-fallback">
+                        ⚠️ Using sample data (FRED API unavailable)
+                    </div>
+                `}
+            `;
+        }
+
+        function IndicatorStrip({ data }) {
+            const seriesIds = Object.keys(SERIES);
+
+            return html`
+                <div class="indicator-strip">
+                    ${seriesIds.map(id => {
+                        const series = SERIES[id];
+                        const obs = data[id] || [];
+                        if (obs.length === 0) return null;
+
+                        const latest = obs[obs.length - 1].value;
+                        const prev = obs.length > 1 ? obs[obs.length - 2].value : latest;
+                        const change = latest - prev;
+                        const pct = prev !== 0 ? ((change / prev) * 100).toFixed(1) : 0;
+                        const isPositive = change > 0;
+                        const isNegative = change < 0;
+
+                        return html`
+                            <div class="indicator-card" style=${{ borderColor: series.color + '40' }}>
+                                <div class="indicator-label">${series.name}</div>
+                                <div class="indicator-value" style=${{ color: series.color }}>
+                                    ${latest.toFixed(2)}${series.unit}
+                                </div>
+                                <div class="indicator-change ${isPositive ? 'positive' : isNegative ? 'negative' : 'neutral'}">
+                                    ${isPositive ? '↑' : isNegative ? '↓' : '→'}
+                                    ${Math.abs(pct)}%
+                                </div>
+                            </div>
+                        `;
+                    })}
+                </div>
+            `;
+        }
+
+        function OverviewChart({ data, visibleSeries, timeRange, onTimeRangeChange, onToggleSeries }) {
+            const filteredData = {};
+            const seriesIds = Object.keys(SERIES).filter(id => visibleSeries[id]);
+
+            for (const id of seriesIds) {
+                filteredData[id] = filterByTimeRange(data[id] || [], timeRange);
+            }
+
+            const commonDates = [];
+            if (seriesIds.length > 0 && filteredData[seriesIds[0]].length > 0) {
+                const dateSet = new Set();
+                for (const id of seriesIds) {
+                    filteredData[id].forEach(d => dateSet.add(d.date));
+                }
+                commonDates.push(...[...dateSet].sort());
+            }
+
+            const chartData = commonDates.map(date => {
+                const row = { date };
+                for (const id of seriesIds) {
+                    const obs = filteredData[id].find(d => d.date === date);
+                    row[id] = obs ? obs.value : null;
+                }
+                return row;
+            });
+
+            return html`
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">Market Overview</div>
+                        <div class="time-range-buttons">
+                            ${['1Y', '2Y', '5Y', 'All'].map(range => html`
+                                <button
+                                    class="time-range-btn ${timeRange === range ? 'active' : ''}"
+                                    onClick=${() => onTimeRangeChange(range)}
+                                >
+                                    ${range}
+                                </button>
+                            `)}
+                        </div>
+                    </div>
+
+                    <div class="series-toggle">
+                        ${Object.entries(SERIES).map(([id, series]) => html`
+                            <label class="series-checkbox">
+                                <input
+                                    type="checkbox"
+                                    checked=${visibleSeries[id]}
+                                    onChange=${(e) => onToggleSeries(id, e.target.checked)}
+                                />
+                                <span class="series-dot" style=${{ backgroundColor: series.color }}></span>
+                                <span>${series.name}</span>
+                            </label>
+                        `)}
+                    </div>
+
+                    <div style=${{ width: '100%' }}>
+                        ${chartData.length > 0 ? html`
+                            <${Recharts.ResponsiveContainer} width="100%" height=${400}>
+                                <${Recharts.LineChart} data=${chartData} margin=${{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                                    <${Recharts.CartesianGrid} strokeDasharray="3 3" stroke="#1E2028" />
+                                    <${Recharts.XAxis}
+                                        dataKey="date"
+                                        stroke="#64748B"
+                                        tick=${{ fontSize: 12 }}
+                                        interval=${Math.floor(chartData.length / 10)}
+                                    />
+                                    <${Recharts.YAxis}
+                                        stroke="#64748B"
+                                        tick=${{ fontSize: 12 }}
+                                    />
+                                    <${Recharts.Tooltip}
+                                        contentStyle=${{ backgroundColor: '#1A1D25', border: '1px solid #1E2028', borderRadius: '8px' }}
+                                        labelStyle=${{ color: '#94A3B8' }}
+                                    />
+                                    ${seriesIds.map(id => html`
+                                        <${Recharts.Line}
+                                            type="monotone"
+                                            dataKey=${id}
+                                            stroke=${SERIES[id].color}
+                                            dot=${false}
+                                            isAnimationActive=${false}
+                                        />
+                                    `)}
+                                    <${Recharts.Legend} wrapperStyle=${{ color: '#94A3B8' }} />
+                                <//>
+                            <//>
+                        ` : html`<div class="text-center mt-24">No data available</div>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        function CorrelationTab({ data }) {
+            const seriesIds = Object.keys(SERIES);
+            const { aligned } = alignSeries(data, seriesIds);
+
+            // Build correlation matrix
+            const matrix = {};
+            for (const id of seriesIds) {
+                matrix[id] = {};
+                for (const otherId of seriesIds) {
+                    if (id === otherId) {
+                        matrix[id][otherId] = 1.0;
+                    } else if (!matrix[otherId] || matrix[otherId][id] === undefined) {
+                        const r = pearson(aligned[id] || [], aligned[otherId] || []);
+                        matrix[id][otherId] = r;
+                    } else {
+                        matrix[id][otherId] = matrix[otherId][id];
+                    }
+                }
+            }
+
+            const getColor = (r) => {
+                if (r >= 0) {
+                    const intensity = Math.min(r, 1);
+                    return `rgba(239, 68, 68, ${intensity * 0.7})`;
+                } else {
+                    const intensity = Math.min(Math.abs(r), 1);
+                    return `rgba(59, 130, 246, ${intensity * 0.7})`;
+                }
+            };
+
+            return html`
+                <table class="correlation-matrix">
+                    <thead>
+                        <tr>
+                            <th>Series</th>
+                            ${seriesIds.map(id => html`<th title=${SERIES[id].name}>${id}</th>`)}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${seriesIds.map(rowId => html`
+                            <tr>
+                                <th title=${SERIES[rowId].name}>${rowId}</th>
+                                ${seriesIds.map(colId => {
+                                    const r = matrix[rowId][colId];
+                                    return html`
+                                        <td style=${{ backgroundColor: getColor(r) }} class="correlation-cell" title=${`${rowId} vs ${colId}: ${r.toFixed(3)}`}>
+                                            ${r.toFixed(2)}
+                                        </td>
+                                    `;
+                                })}
+                            </tr>
+                        `)}
+                    </tbody>
+                </table>
+
+                <div class="causal-chains">
+                    <div class="causal-section-title">Causal Chains & Lead Indicators</div>
+                    <div class="causal-grid">
+                        ${CAUSAL_CHAINS.map(chain => {
+                            const { aligned: alignedData } = alignSeries(data, [chain.from, chain.to]);
+                            let lagR = 0;
+                            if (alignedData[chain.from] && alignedData[chain.to]) {
+                                const result = lagCorrelation(alignedData[chain.from], alignedData[chain.to], chain.lag + 3);
+                                lagR = result.r;
+                            }
+
+                            return html`
+                                <div class="causal-card">
+                                    <div class="causal-label">${chain.label}</div>
+                                    <div class="causal-arrow">→</div>
+                                    <div class="causal-lag">Lead time: ${chain.lag} months</div>
+                                    <div class="causal-correlation">Correlation: ${lagR.toFixed(3)}</div>
+                                    <div class="causal-description">${chain.desc}</div>
+                                </div>
+                            `;
+                        })}
+                    </div>
+                </div>
+            `;
+        }
+
+        function ForecastTab({ data }) {
+            const [selectedSeries, setSelectedSeries] = React.useState('FEDFUNDS');
+            const seriesIds = Object.keys(SERIES);
+            const observations = data[selectedSeries] || [];
+            const monthlyObs = toMonthly(observations);
+            const monthlyValues = Object.entries(monthlyObs).sort(([a], [b]) => a.localeCompare(b)).map(([, v]) => v);
+
+            const forecastResult = forecast(monthlyValues, 6);
+            const lastDate = new Date(Math.max(...Object.keys(monthlyObs).map(m => new Date(m + '-01'))));
+
+            const chartData = [];
+            for (const [month, value] of Object.entries(monthlyObs).sort()) {
+                chartData.push({
+                    date: month,
+                    historical: value,
+                    forecast: null,
+                    upper: null,
+                    lower: null,
+                    isForecast: false,
+                });
+            }
+
+            for (let i = 0; i < forecastResult.length; i++) {
+                const d = new Date(lastDate);
+                d.setMonth(d.getMonth() + i + 1);
+                const dateStr = d.toISOString().slice(0, 7);
+                chartData.push({
+                    date: dateStr,
+                    historical: null,
+                    forecast: forecastResult[i].value,
+                    upper: forecastResult[i].upper,
+                    lower: forecastResult[i].lower,
+                    isForecast: true,
+                });
+            }
+
+            return html`
+                <div>
+                    <div class="forecast-selector">
+                        <div class="forecast-label">Select Indicator</div>
+                        <select
+                            class="forecast-dropdown"
+                            value=${selectedSeries}
+                            onChange=${(e) => setSelectedSeries(e.target.value)}
+                        >
+                            ${seriesIds.map(id => html`
+                                <option value=${id}>${SERIES[id].name}</option>
+                            `)}
+                        </select>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">${SERIES[selectedSeries].name} - 6 Month Forecast</div>
+                        </div>
+
+                        <div style=${{ width: '100%' }}>
+                            ${chartData.length > 0 ? html`
+                                <${Recharts.ResponsiveContainer} width="100%" height=${400}>
+                                    <${Recharts.LineChart} data=${chartData} margin=${{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                                        <${Recharts.CartesianGrid} strokeDasharray="3 3" stroke="#1E2028" />
+                                        <${Recharts.XAxis}
+                                            dataKey="date"
+                                            stroke="#64748B"
+                                            tick=${{ fontSize: 12 }}
+                                            interval=${Math.floor(chartData.length / 10)}
+                                        />
+                                        <${Recharts.YAxis}
+                                            stroke="#64748B"
+                                            tick=${{ fontSize: 12 }}
+                                        />
+                                        <${Recharts.Tooltip}
+                                            contentStyle=${{ backgroundColor: '#1A1D25', border: '1px solid #1E2028', borderRadius: '8px' }}
+                                            labelStyle=${{ color: '#94A3B8' }}
+                                        />
+                                        <${Recharts.Line}
+                                            type="monotone"
+                                            dataKey="historical"
+                                            stroke=${SERIES[selectedSeries].color}
+                                            dot=${false}
+                                            isAnimationActive=${false}
+                                            strokeWidth=${2}
+                                            name="Historical"
+                                        />
+                                        <${Recharts.Line}
+                                            type="monotone"
+                                            dataKey="forecast"
+                                            stroke=${SERIES[selectedSeries].color}
+                                            strokeDasharray="5 5"
+                                            dot=${false}
+                                            isAnimationActive=${false}
+                                            strokeWidth=${2}
+                                            name="Forecast"
+                                        />
+                                        <${Recharts.Line}
+                                            type="monotone"
+                                            dataKey="upper"
+                                            stroke="#64748B"
+                                            strokeDasharray="2 4"
+                                            dot=${false}
+                                            isAnimationActive=${false}
+                                            strokeWidth=${1}
+                                            name="Upper Band"
+                                        />
+                                        <${Recharts.Line}
+                                            type="monotone"
+                                            dataKey="lower"
+                                            stroke="#64748B"
+                                            strokeDasharray="2 4"
+                                            dot=${false}
+                                            isAnimationActive=${false}
+                                            strokeWidth=${1}
+                                            name="Lower Band"
+                                        />
+                                        <${Recharts.Legend} wrapperStyle=${{ color: '#94A3B8' }} />
+                                    <//>
+                                <//>
+                            ` : html`<div class="text-center mt-24">No data available</div>`}
+                        </div>
+
+                        <div class="forecast-method">
+                            Method: Linear regression (24-month window) blended with 3-month momentum. Confidence bands: ±1.5σ residual standard deviation.
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function SignalsTab({ data }) {
+            // T10Y2Y with null safety
+            const t10y2yObs = data.T10Y2Y || [];
+            const t10y2y = t10y2yObs.length > 0 ? t10y2yObs[t10y2yObs.length - 1].value : 0;
+
+            // CPI: sort by date, compute true YoY (12-month lookback)
+            const cpiMon = toMonthly(data.CPIAUCSL || []);
+            const cpiSorted = Object.entries(cpiMon).sort(([a], [b]) => a.localeCompare(b));
+            const cpiLatest = cpiSorted.length > 0 ? cpiSorted[cpiSorted.length - 1][1] : 0;
+            const cpi12MonthsAgo = cpiSorted.length > 12 ? cpiSorted[cpiSorted.length - 13][1] : cpiLatest;
+            const cpiYoY = cpi12MonthsAgo !== 0 ? ((cpiLatest - cpi12MonthsAgo) / cpi12MonthsAgo) * 100 : 0;
+
+            // Unemployment: sort by date for correct trend
+            const unrateMon = toMonthly(data.UNRATE || []);
+            const unrateSorted = Object.entries(unrateMon).sort(([a], [b]) => a.localeCompare(b));
+            const unrateValues = unrateSorted.map(([, v]) => v);
+            const unrateLatest = unrateValues.length > 0 ? unrateValues[unrateValues.length - 1] : 0;
+            const unrateTrend = unrateValues.length > 3
+                ? unrateValues[unrateValues.length - 1] - unrateValues[unrateValues.length - 4]
+                : 0;
+
+            // Supply chain: sort by date
+            const supplyMon = toMonthly(data.FRGSHPUSM649NCIS || []);
+            const supplySorted = Object.entries(supplyMon).sort(([a], [b]) => a.localeCompare(b));
+            const supplyValues = supplySorted.map(([, v]) => v);
+            const supplyLatest = supplyValues.length > 0 ? supplyValues[supplyValues.length - 1] : 0;
+
+            // T10Y2Y monthly for recession sparkline
+            const t10y2yMon = toMonthly(t10y2yObs);
+
+            // Signal 1: Recession Risk
+            let recessionStatus = 'low';
+            if (t10y2y < 0) recessionStatus = 'elevated';
+            else if (t10y2y < 0.5) recessionStatus = 'watch';
+
+            // Signal 2: Inflation Pressure
+            let inflationStatus = 'cool';
+            if (cpiYoY > 4) inflationStatus = 'hot';
+            else if (cpiYoY >= 2 && cpiYoY <= 4) inflationStatus = 'moderate';
+
+            // Signal 3: Labor Market
+            let laborStatus = 'healthy';
+            if (unrateTrend > 0.2) laborStatus = 'weakening';
+            else if (unrateTrend < -0.2) laborStatus = 'strong';
+
+            // Signal 4: Supply Chain
+            let supplyStatus = 'normal';
+            if (supplyLatest > 1) supplyStatus = 'stressed';
+            else if (supplyLatest < -1) supplyStatus = 'eased';
+
+            const Sparkline = ({ data: sparkData, color }) => {
+                if (sparkData.length === 0) return null;
+                const min = Math.min(...sparkData);
+                const max = Math.max(...sparkData);
+                const range = max - min || 1;
+                const normalized = sparkData.map(v => (v - min) / range);
+                const points = normalized.map((v, i) => `${(i / (sparkData.length - 1)) * 100},${(1 - v) * 100}`).join(' ');
+                return html`
+                    <svg class="signal-sparkline" preserveAspectRatio="none" viewBox="0 0 100 100">
+                        <polyline points=${points} fill="none" stroke=${color} stroke-width="2" vector-effect="non-scaling-stroke" />
+                    </svg>
+                `;
+            };
+
+            return html`
+                <div class="signals-grid">
+                    <div class="signal-card">
+                        <div class="signal-name">Recession Risk</div>
+                        <div class="signal-status ${recessionStatus}">${recessionStatus.toUpperCase()}</div>
+                        <div class="signal-value">${t10y2y.toFixed(3)}pp</div>
+                        <div class="signal-trend">
+                            <span>10Y-2Y Spread</span>
+                        </div>
+                        <${Sparkline} data=${Object.entries(t10y2yMon).sort(([a], [b]) => a.localeCompare(b)).map(([, v]) => v).slice(-12)} color="#EC4899" />
+                    </div>
+
+                    <div class="signal-card">
+                        <div class="signal-name">Inflation Pressure</div>
+                        <div class="signal-status ${inflationStatus}">${inflationStatus.toUpperCase()}</div>
+                        <div class="signal-value">${cpiYoY.toFixed(2)}%</div>
+                        <div class="signal-trend">
+                            <span>CPI YoY</span>
+                        </div>
+                        <${Sparkline} data=${cpiSorted.map(([, v]) => v).slice(-12)} color="#F59E0B" />
+                    </div>
+
+                    <div class="signal-card">
+                        <div class="signal-name">Labor Market</div>
+                        <div class="signal-status ${laborStatus}">${laborStatus.toUpperCase()}</div>
+                        <div class="signal-value">${unrateLatest.toFixed(2)}%</div>
+                        <div class="signal-trend">
+                            <span class="signal-arrow ${unrateTrend > 0 ? 'down' : unrateTrend < 0 ? 'up' : 'flat'}">
+                                ${unrateTrend > 0 ? '↓' : unrateTrend < 0 ? '↑' : '→'}
+                            </span>
+                            <span>Unemployment</span>
+                        </div>
+                        <${Sparkline} data=${unrateValues.slice(-12)} color="#EF4444" />
+                    </div>
+
+                    <div class="signal-card">
+                        <div class="signal-name">Supply Chain</div>
+                        <div class="signal-status ${supplyStatus}">${supplyStatus.toUpperCase()}</div>
+                        <div class="signal-value">${supplyLatest.toFixed(2)}σ</div>
+                        <div class="signal-trend">
+                            <span>Global Pressure Index</span>
+                        </div>
+                        <${Sparkline} data=${supplyValues.slice(-12)} color="#6366F1" />
+                    </div>
+                </div>
+            `;
+        }
+
+        function MacroTerminal() {
+            const [tab, setTab] = React.useState('overview');
+            const [data, setData] = React.useState(null);
+            const [loading, setLoading] = React.useState(true);
+            const [usingFallback, setUsingFallback] = React.useState(false);
+            const [lastUpdated, setLastUpdated] = React.useState('--');
+            const [timeRange, setTimeRange] = React.useState('2Y');
+            const [visibleSeries, setVisibleSeries] = React.useState(
+                Object.keys(SERIES).reduce((acc, id) => ({ ...acc, [id]: true }), {})
+            );
+
+            React.useEffect(() => {
+                const fetchData = async () => {
+                    try {
+                        const seriesIds = Object.keys(SERIES).join(',');
+                        const response = await fetch(`/.netlify/functions/fred?series=${seriesIds}&start=2019-01-01`);
+                        if (response.ok) {
+                            const result = await response.json();
+                            setData(result);
+                            setUsingFallback(false);
+                        } else {
+                            throw new Error('API error');
+                        }
+                    } catch (error) {
+                        console.error('FRED API error:', error);
+                        setData(generateFallbackData());
+                        setUsingFallback(true);
+                    } finally {
+                        setLastUpdated(new Date().toLocaleString());
+                        setLoading(false);
+                    }
+                };
+
+                fetchData();
+            }, []);
+
+            if (loading) {
+                return html`
+                    <${Header} lastUpdated=${lastUpdated} usingFallback=${usingFallback} />
+                    <div class="container">
+                        <div class="loading-container">
+                            <div class="spinner"></div>
+                            <span>Loading macro data...</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return html`
+                <${Header} lastUpdated=${lastUpdated} usingFallback=${usingFallback} />
+                <div class="container">
+                    <div class="tabs">
+                        ${['overview', 'correlations', 'forecast', 'signals'].map(t => html`
+                            <button
+                                class="tab-button ${tab === t ? 'active' : ''}"
+                                onClick=${() => setTab(t)}
+                            >
+                                ${t.charAt(0).toUpperCase() + t.slice(1)}
+                            </button>
+                        `)}
+                    </div>
+
+                    <div class="tab-content ${tab === 'overview' ? 'active' : ''}">
+                        <${IndicatorStrip} data=${data} />
+                        <${OverviewChart}
+                            data=${data}
+                            visibleSeries=${visibleSeries}
+                            timeRange=${timeRange}
+                            onTimeRangeChange=${(r) => setTimeRange(r)}
+                            onToggleSeries=${(id, visible) => setVisibleSeries({ ...visibleSeries, [id]: visible })}
+                        />
+                    </div>
+
+                    <div class="tab-content ${tab === 'correlations' ? 'active' : ''}">
+                        <${CorrelationTab} data=${data} />
+                    </div>
+
+                    <div class="tab-content ${tab === 'forecast' ? 'active' : ''}">
+                        <${ForecastTab} data=${data} />
+                    </div>
+
+                    <div class="tab-content ${tab === 'signals' ? 'active' : ''}">
+                        <${SignalsTab} data=${data} />
+                    </div>
+                </div>
+            `;
+        }
+
+        root.render(html`<${MacroTerminal} />`);
+    </script>
+</body>
+</html>

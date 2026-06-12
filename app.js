@@ -70,7 +70,7 @@ if (discoveryForm) {
                 err.className = 'form-error';
                 discoveryForm.appendChild(err);
             }
-            err.innerHTML = "Something went wrong sending that. Email <a href='mailto:zachary.vorsteg@gmail.com'>zachary.vorsteg@gmail.com</a> or call <a href='tel:5617186725'>(561) 718-6725</a> instead.";
+            err.innerHTML = "Something went wrong sending that. Email <a href='mailto:zacharyvorsteg@gmail.com'>zacharyvorsteg@gmail.com</a> or call <a href='tel:5617186725'>(561) 718-6725</a> instead.";
         });
     });
 }
