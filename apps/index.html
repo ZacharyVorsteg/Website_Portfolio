@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>iOS Apps | Zachary Vorsteg</title>
+    <meta name="description" content="Native iOS apps I've designed and shipped: Trusenda (CRM for commercial real estate brokers) and BidPro (bidding platform for construction contractors).">
+    <meta name="keywords" content="iOS apps, SwiftUI, Trusenda CRM, BidPro, App Store, native iOS development">
+    <meta name="author" content="Zachary Vorsteg">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="iOS Apps | Zachary Vorsteg">
+    <meta property="og:description" content="Native iOS apps designed and shipped by Zachary Vorsteg. Trusenda (CRM for industrial RE brokers) and BidPro (contractor bidding platform).">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zacharyvorsteg.com/apps">
+    <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Zachary Vorsteg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="iOS Apps | Zachary Vorsteg">
+    <meta name="twitter:description" content="Native iOS apps: Trusenda (CRM) and BidPro (bidding platform).">
+    <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
+
+    <link rel="stylesheet" href="/styles.css?v=6">
+    <style>
+        /* Apps-specific styles */
+        .apps-hero {
+            padding: 120px 0 80px;
+            margin-top: 72px;
+        }
+
+        .apps-hero-content {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .apps-hero-content .hero-eyebrow {
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .apps-hero-content h1 {
+            margin-bottom: 16px;
+        }
+
+        .apps-hero-content p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 620px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        /* App Cards Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .apps-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        .app-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s var(--ease-out);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+
+        .app-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 16px 48px rgba(0, 102, 204, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .app-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+
+        .status-live {
+            color: var(--success);
+        }
+
+        .status-live::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-coming {
+            color: var(--gray-600);
+        }
+
+        .status-coming::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-400);
+        }
+
+        .app-card h2 {
+            font-size: 28px;
+            margin: 0 0 12px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .app-tagline {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .app-description {
+            font-size: 16px;
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .app-features {
+            list-style: none;
+            margin-bottom: 32px;
+            padding: 0;
+        }
+
+        .app-features li {
+            font-size: 15px;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .app-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .app-cta-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .app-card .btn {
+            text-align: center;
+            width: 100%;
+            margin: 0;
+        }
+
+        .app-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .app-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .app-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Featured app (Trusenda) */
+        .app-card.featured {
+            grid-column: 1 / -1;
+            padding: 48px;
+            background: linear-gradient(135deg, var(--accent-tint) 0%, transparent 100%);
+            border: 2px solid var(--accent);
+        }
+
+        @media (min-width: 768px) {
+            .app-card.featured {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+                align-items: center;
+            }
+
+            .app-card.featured .app-content {
+                order: -1;
+            }
+        }
+
+        .app-content {
+            flex: 1;
+        }
+
+        .app-icon-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 28px;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            font-size: 48px;
+        }
+
+        /* Coming Soon styling */
+        .coming-soon .app-cta-group {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .coming-soon .btn {
+            background: var(--gray-300);
+            color: var(--gray-600);
+            cursor: not-allowed;
+        }
+
+        /* Footer links */
+        .apps-footer-links {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .apps-footer-links p {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .apps-footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 16px;
+        }
+
+        .apps-footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 767px) {
+            .apps-hero {
+                padding: 100px 0 60px;
+            }
+
+            .app-card {
+                padding: 32px;
+            }
+
+            .app-card h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">Zachary Vorsteg</div>
+
+                <nav class="desktop-nav">
+                    <a href="/#software">Software</a>
+                    <a href="/#finance">Finance</a>
+                    <a href="/#real-estate">Real Estate</a>
+                    <a href="/#marketing">Marketing</a>
+                    <a href="/#ventures">Work</a>
+                    <a href="/apps" style="color: var(--accent); font-weight: 600;">Apps</a>
+                    <a href="/blog/">Blog</a>
+                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                </nav>
+
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <button class="mobile-menu-close" aria-label="Close menu">×</button>
+            <nav>
+                <a href="/#software">Software</a>
+                <a href="/#finance">Finance</a>
+                <a href="/#real-estate">Real Estate</a>
+                <a href="/#marketing">Marketing</a>
+                <a href="/#ventures">Work</a>
+                <a href="/apps" style="color: var(--accent); font-weight: 600;">Apps</a>
+                <a href="/blog/">Blog</a>
+                <a href="/#contact" class="btn btn-primary">Work With Me</a>
+            </nav>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section class="apps-hero">
+            <div class="container">
+                <div class="apps-hero-content">
+                    <div class="hero-eyebrow">Native iOS Apps</div>
+                    <h1>iOS apps I've designed &amp; shipped</h1>
+                    <p>Full-stack iOS development using SwiftUI. Each app handles real business problems — lead management, bidding, operations — with clean architecture and a direct line to the person who built it.</p>
+                </div>
+
+                <!-- Apps Grid -->
+                <div class="apps-grid">
+                    <!-- Trusenda - Featured -->
+                    <div class="app-card featured">
+                        <div class="app-content">
+                            <div class="app-status status-live">
+                                Live on App Store
+                            </div>
+                            <h2>Trusenda</h2>
+                            <div class="app-tagline">CRM for industrial real estate brokers</div>
+                            <div class="app-description">Lead tracking, deal management, and pipeline automation purpose-built for commercial real estate brokers. Native iOS app with full web platform. Designed to close deals faster and never lose a lead again.</div>
+
+                            <ul class="app-features">
+                                <li>Native SwiftUI + iOS 15+</li>
+                                <li>Lead lifecycle management (Hot, Warm, Cold)</li>
+                                <li>Property tracking and scoping</li>
+                                <li>Automated follow-up reminders</li>
+                                <li>Real-time sync across devices</li>
+                                <li>Web dashboard included</li>
+                            </ul>
+
+                            <div class="app-cta-group">
+                                <a href="https://apps.apple.com/app/id6754225499" target="_blank" rel="noopener" class="btn btn-accent">Download on App Store</a>
+                                <a href="https://trusenda.com" target="_blank" rel="noopener" class="btn btn-secondary">Visit Trusenda.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BidPro - Coming Soon -->
+                    <div class="app-card coming-soon">
+                        <div class="app-status status-coming">
+                            Coming Soon
+                        </div>
+                        <h2>BidPro</h2>
+                        <div class="app-tagline">Bidding platform for construction contractors</div>
+                        <div class="app-description">Create, send, and track bids in minutes. Manage clients, jobs, and proposals from your phone. Built for contractors who need speed without complexity.</div>
+
+                        <ul class="app-features">
+                            <li>Native SwiftUI development</li>
+                            <li>Create &amp; send bids in seconds</li>
+                            <li>Track bid status &amp; follow-ups</li>
+                            <li>Client &amp; job management</li>
+                            <li>Photo attachments</li>
+                            <li>Job costing &amp; history</li>
+                        </ul>
+
+                        <div class="app-cta-group">
+                            <button class="btn" style="background: var(--gray-300); color: var(--gray-600); cursor: not-allowed;">Coming to App Store</button>
+                        </div>
+
+                        <div class="app-links">
+                            <a href="/bidpro/privacy">Privacy Policy</a>
+                            <a href="/bidpro/terms">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Links -->
+        <section class="apps-footer-links">
+            <div class="container">
+                <p>Both apps are built solo — code, design, and deployment. No templates, no cookie-cutter frameworks.</p>
+                <div>
+                    <a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">See my code on GitHub</a>
+                    <a href="/#ventures">View all ventures</a>
+                    <a href="/#contact">Start a project</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as homepage) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="footer-name">Zachary Vorsteg</div>
+                    <p class="footer-tagline">Operator. Analyst. Developer. Building seven ventures from West Palm Beach.</p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-label">Software</div>
+                    <ul>
+                        <li><a href="https://trusenda.com" target="_blank" rel="noopener">Trusenda</a></li>
+                        <li><a href="https://adshandled.com" target="_blank" rel="noopener">Ads Handled</a></li>
+                        <li><a href="https://customlab.ai" target="_blank" rel="noopener">CustomLab.ai</a></li>
+                        <li><a href="https://palmbeachwebsites.com" target="_blank" rel="noopener">Palm Beach Websites</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-label">Real Estate</div>
+                    <ul>
+                        <li><a href="https://palmbeachwarehouses.com" target="_blank" rel="noopener">Palm Beach Warehouses</a></li>
+                        <li><a href="https://palmbeachhomesrealty.com" target="_blank" rel="noopener">Palm Beach Homes Realty</a></li>
+                        <li><a href="https://palmbeachquotes.com" target="_blank" rel="noopener">Palm Beach Quotes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-label">Connect</div>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/in/zacharyvorsteg" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">GitHub</a></li>
+                        <li><a href="tel:5617186725">(561) 718-6725</a></li>
+                        <li><a href="mailto:zacharyvorsteg@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-label">Credentials</div>
+                    <ul class="footer-credentials">
+                        <li>FAU '20 Finance</li>
+                        <li>FL Licensed Sales Associate</li>
+                        <li>SL3603483 · Cornerstone Realty</li>
+                        <li>West Palm Beach, FL</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Zachary Vorsteg · All ventures built and operated independently.
+            </div>
+        </div>
+    </footer>
+
+    <script src="/app.js?v=4" defer></script>
+</body>
+</html>
