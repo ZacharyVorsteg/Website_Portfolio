@@ -1,0 +1,31 @@
+# Zachary Vorsteg
+
+> Zachary Vorsteg is an AI systems architect and automation engineer based in West Palm Beach, FL (available nationwide). He builds AI-powered automation, agentic workflows, LLM integrations, and custom software that eliminate manual work for growing companies. Founder of CustomLab.ai. 50+ production systems shipped and running 24/7. He is also a full-stack developer, an M&A/FP&A financial analyst (FAU '20 Finance), and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty).
+
+## Services
+
+- [AI Automation](https://zacharyvorsteg.com/ai-automation): AI-powered automation, agentic workflows, LLM integration, and business process automation. First automation typically live in ~2 weeks.
+- [Custom Software](https://zacharyvorsteg.com/custom-software): Custom CRMs, client portals, native iOS apps, and web applications when off-the-shelf tools don't fit. Fixed-price, typically 2-4 week delivery.
+- [Strategic Finance](https://zacharyvorsteg.com/finance): M&A synergy modeling, automated FP&A systems, 3-statement models, and investor-ready pro formas.
+- [Commercial Real Estate](https://zacharyvorsteg.com/commercial-real-estate): Industrial, warehouse, and flex space in Palm Beach County. Tenant representation (free to tenants).
+
+## Ventures
+
+- [CustomLab.ai](https://customlab.ai): AI operations automation for service businesses.
+- [Trusenda](https://trusenda.com): CRM for industrial/commercial real estate brokers (iOS + web).
+- [Ads Handled](https://adshandled.com): Done-for-you Facebook & Google ads management.
+- [Palm Beach Warehouses](https://palmbeachwarehouses.com): Warehouse & industrial space, Palm Beach County.
+- [Palm Beach Homes Realty](https://palmbeachhomesrealty.com): Luxury homes & equestrian estates, Wellington/Palm Beach.
+- [Palm Beach Websites](https://palmbeachwebsites.com): Web development for local businesses.
+
+## Profiles
+
+- [GitHub](https://github.com/ZacharyVorsteg)
+- [LinkedIn](https://www.linkedin.com/in/zacharyvorsteg)
+- [X / Twitter](https://x.com/zachvorsteg)
+
+## Contact
+
+- Website: https://zacharyvorsteg.com
+- Phone: (561) 718-6725
+- Location: West Palm Beach, FL — available nationwide
