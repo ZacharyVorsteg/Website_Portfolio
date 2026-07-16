@@ -1,6 +1,6 @@
 # Zachary Vorsteg
 
-> Zachary Vorsteg is an AI systems architect and automation engineer based in West Palm Beach, FL (available nationwide). He builds AI-powered automation, agentic workflows, LLM integrations, and custom software that eliminate manual work for growing companies. Founder of CustomLab.ai. 50+ production systems shipped and running 24/7. He is also a full-stack developer, an M&A/FP&A financial analyst (FAU '20 Finance), and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty).
+> Zachary Vorsteg is an AI systems architect and automation engineer based in West Palm Beach, FL (available nationwide). He builds AI-powered automation, agentic workflows, LLM integrations, and custom software that eliminate manual work for growing companies. Founder of CustomLab.ai, with a portfolio of shipped products across AI SaaS, CRM, and ad management (including Trusenda and AdsHandled — see Ventures). He is also a full-stack developer, an M&A/FP&A financial analyst (FAU '20 Finance), and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty).
 
 ## Services
 

@@ -1,4 +1,28 @@
+# Zachary Vorsteg — robots.txt
+# All crawlers welcome, including AI answer engines (explicit allows for clarity).
+
 User-agent: *
 Allow: /
 
+# AI / answer-engine crawlers (explicitly welcomed)
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://zacharyvorsteg.com/sitemap.xml
+# AI-readable profile: https://zacharyvorsteg.com/llms.txt
