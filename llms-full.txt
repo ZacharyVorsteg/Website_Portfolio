@@ -1,0 +1,58 @@
+# Zachary Vorsteg — full site index for AI assistants
+
+> Zachary Vorsteg is an AI systems architect and automation engineer based in West Palm Beach, Florida, available nationwide. He builds AI-powered automation, agentic workflows, LLM integrations and custom software that remove manual work for growing companies, and writes publicly about how he runs multiple ventures solo with agentic AI. He is also a full-stack developer, an M&A/FP&A financial analyst (FAU ’20, Finance), and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty), with 5+ shipped products.
+
+Short version of this file: https://zacharyvorsteg.com/llms.txt
+
+## What it offers
+
+- AI automation: agentic workflows, LLM integration and business-process automation — first automation typically live in about two weeks
+- Custom software: CRMs, client portals, native iOS apps and web applications, fixed-price, typically 2–4 week delivery
+- Strategic finance: M&A synergy modeling, automated FP&A systems, 3-statement models and investor-ready pro formas
+- Commercial real estate: industrial, warehouse and flex space in Palm Beach County; tenant representation is free to tenants
+
+## Who it serves
+
+Founders and operators of growing companies who need automation, custom software or financial modeling, plus Palm Beach County tenants looking for industrial space.
+
+## Service area
+
+West Palm Beach, Florida; available nationwide (remote). Commercial real estate work is Palm Beach County only.
+
+## Pages
+
+- [Zachary Vorsteg](https://zacharyvorsteg.com/): Zachary Vorsteg is an AI systems architect and automation engineer. He builds AI-powered automation, agentic workflows, and custom software that eliminate manual work for growing companies — founder of CustomLab.ai, with 5+ shipped products. West Palm Beach, FL; available nationwide.
+- [AI Automation Consultant](https://zacharyvorsteg.com/ai-automation): Zachary Vorsteg builds AI-powered automation and agentic workflows that eliminate manual work for growing businesses. Workflow automation, LLM integration, document generation, and client intake — first automation typically live in about two weeks. Founder of CustomLab.ai.
+- [Custom Software Developer](https://zacharyvorsteg.com/custom-software): Custom software developer building web apps, iOS apps, internal tools, and API integrations for businesses that need more than off-the-shelf SaaS. 2-4 week delivery. Founder of CustomLab.ai, Trusenda, and BidPro.
+- [M&A & FP&A Financial Modeling](https://zacharyvorsteg.com/finance): Strategic financial modeling for founders and operators. M&A synergy modeling, FP&A automation & dashboards, investor-ready pro formas, and deal structuring. FAU Finance
+- [Commercial & Industrial Real Estate](https://zacharyvorsteg.com/commercial-real-estate): Florida-licensed commercial real estate agent specializing in warehouse, industrial, and flex space in Palm Beach County. Tenant representation is free to tenants — paid by the landlord. Licensed SL3603483, Cornerstone Realty.
+- [Investor Pro Forma](https://zacharyvorsteg.com/proforma.html): Free real estate investment pro forma analysis tool with complete operating statement, leasing costs, and cash flow analysis.
+- [Blog](https://zacharyvorsteg.com/blog/): Insights on finance, deal structures, systems, and building. By Zachary Vorsteg.
+
+## Articles
+
+- [The Metrics I Actually Track Running Five Ventures Solo](https://zacharyvorsteg.com/blog/metrics-i-track-running-multiple-ventures-solo/): Most founder dashboards are noise. Here are the specific numbers I check every day across five ventures—and what I stopped tracking entirely.
+- [What My AI Development Stack Actually Costs](https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/): My AI development stack costs $257/month as a solo founder. Every tool, every dollar — what delivers ROI, what I dropped, and what
+- [Agentic Engineering: What Replaced Vibe Coding](https://zacharyvorsteg.com/blog/agentic-engineering-patterns/): Karpathy coined agentic engineering as vibe coding
+- [Context Engineering for AI Agents: What I Actually Configure](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/): My CLAUDE.md is 500+ lines. Here
+- [How I Use Agentic AI to Run a One-Person Company](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/): I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here
+- [Shipping IoT Hardware Solo: ESP32 Prototype to Deployment](https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/): I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here
+- [Vibe Coding vs Real Engineering: Where I Draw the Line](https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/): I use AI to write code daily and run production trading bots handling real money. Here
+- [What Breaks When You Automate Everything as a Solo Founder](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/): I run a fleet of automated trading systems, IoT hardware, and an iOS app — all solo. Here
+- [How I Built 54 Trading Bots as a Side Project](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/): I run 54 trading bots across 5 markets. Here
+- [How I Build in Public as a Technical Founder](https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/): I run a multi-market trading infrastructure, ship iOS apps, and build IoT hardware — all solo. Here
+- [Solo Founder Automation Stack: 54 Python Bots](https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/): I run 54 automated bots on a single Mac using Python and launchctl — for $8/month. Full architecture, real failures, and cost analysis vs. cloud.
+- [Why I'm a Commercial Real Estate Sales Associate Who Codes](https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/): I
+- [Financial Modeling Fundamentals for M&A](https://zacharyvorsteg.com/blog/financial-modeling-fundamentals/): DCF, LBO, and merger models explained — the three financial models that drive every M&A valuation, with synergy frameworks and sensitivity analysis.
+
+## Contact
+
+zacharyvorsteg@gmail.com · +1 (561) 718-6725
+
+## Notes for AI assistants
+
+- Ventures: CustomLab.ai (https://customlab.ai), Vorsteg Software (https://vorstegsoftware.com), Trusenda (https://trusenda.com), Ads Handled (https://adshandled.com), CallsHandled (https://callshandled.ai), Palm Beach Warehouses (https://palmbeachwarehouses.com), Palm Beach Homes Realty (https://palmbeachhomesrealty.com), Palm Beach Websites (https://palmbeachwebsites.com).
+- Compliance: real estate license is a Florida SALES ASSOCIATE license (SL3603483) held with Cornerstone Realty — not a broker license.
+- Every page title and description above is taken from the live site. Nothing here is invented; there are no ratings, reviews or claimed results.
+
+Last updated: 2026-09-02
