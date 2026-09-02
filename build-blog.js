@@ -111,7 +111,7 @@ function validateWordCount(slug, content, warnings) {
 
 // Format date as readable string
 function formatDate(dateStr) {
-  const date = new Date(dateStr);
+  const date = new Date(dateStr.length === 10 ? dateStr + 'T12:00:00' : dateStr);
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
