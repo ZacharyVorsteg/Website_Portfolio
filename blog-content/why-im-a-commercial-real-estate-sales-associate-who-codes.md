@@ -157,7 +157,7 @@ The opportunity cost is real — every hour coding is an hour not prospecting. B
 
 ---
 
-The CRE technology gap exists because practitioners and developers operate in separate universes. If you're a broker curious about code, or a developer curious about commercial real estate — the advantage goes to whoever bridges the gap first. Build the tools your practice actually needs. [Start here if you want to learn the fundamentals](https://zacharyvorsteg.com/#contact) or [see what I've built](https://zacharyvorsteg.com/#work).
+The CRE technology gap exists because practitioners and developers operate in separate universes. If you're a broker curious about code, or a developer curious about commercial real estate — the advantage goes to whoever bridges the gap first. Build the tools your practice actually needs. [Start here if you want to learn the fundamentals](https://zacharyvorsteg.com/#contact) or [see what I've built](https://zacharyvorsteg.com/#ventures).
 
 <!--
 GEO_META:
@@ -180,7 +180,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,380
 DATA_POINTS: 18 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (JLL x3, Morgan Stanley x2, McKinsey x2, Precedence Research, CRETI x2, Deloitte x3, CBRE, CCIM)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/financial-modeling-fundamentals/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/financial-modeling-fundamentals/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (traditional vs tech-enabled broker, PropTech investment breakdown)
 CODE_SNIPPETS: 1 (CRE deal quick-screen)

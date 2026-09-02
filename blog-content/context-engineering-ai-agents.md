@@ -227,7 +227,7 @@ No. The principles — persistent instructions, tool routing, memory architectur
 
 ---
 
-Context engineering isn't a buzzword. It's the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you're running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, [dig into what I'm shipping](https://zacharyvorsteg.com/#work) or [connect with me to compare approaches](https://zacharyvorsteg.com/#contact).
+Context engineering isn't a buzzword. It's the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you're running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, [dig into what I'm shipping](https://zacharyvorsteg.com/#ventures) or [connect with me to compare approaches](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:
@@ -250,7 +250,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,550
 DATA_POINTS: 17 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Tobi Lutke, Andrej Karpathy, Gartner x2, MarketsandMarkets, QCon London/Patrick Debois, Stack Overflow, Anthropic/Linux Foundation, LangChain, Gloria Mark/UC Irvine, Capgemini, Peng et al./arXiv, PwC, Carta)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (context engineering vs prompt engineering, MCP routing)
 CODE_SNIPPETS: 3 (CLAUDE.md permission tiers, hooks JSON configuration, memory file format)

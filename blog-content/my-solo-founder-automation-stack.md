@@ -250,7 +250,7 @@ Building an orchestration framework before I had anything to orchestrate. Spent 
 
 ---
 
-One person, one machine, 54 bots across five markets. It works because the architecture is simple — separate processes, shared nothing, local execution. Cloud orchestration tools solve distributed system problems I don't have. If you're running automation on macOS and considering the cloud infrastructure path, ask yourself: am I solving a scaling problem or falling for an architectural complexity trap? [See what I'm working on](https://zacharyvorsteg.com/#work) or [discuss infrastructure tradeoffs](https://zacharyvorsteg.com/#contact).
+One person, one machine, 54 bots across five markets. It works because the architecture is simple — separate processes, shared nothing, local execution. Cloud orchestration tools solve distributed system problems I don't have. If you're running automation on macOS and considering the cloud infrastructure path, ask yourself: am I solving a scaling problem or falling for an architectural complexity trap? [See what I'm working on](https://zacharyvorsteg.com/#ventures) or [discuss infrastructure tradeoffs](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:
@@ -273,7 +273,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,700
 DATA_POINTS: 14 (specific stats/figures with named sources)
 SOURCED_STATS: 11 (TIOBE, GitHub Octoverse, PyPI, Stack Overflow Dev Survey, McKinsey, ITIC x2, MBO Partners x2, Gusto, Retool)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (launchctl vs alternatives, local vs cloud cost)
 CODE_SNIPPETS: 2 (plist XML, bash commands)

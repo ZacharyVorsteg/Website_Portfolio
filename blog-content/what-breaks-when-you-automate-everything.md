@@ -239,7 +239,7 @@ WORD_COUNT: 2,800
 DATA_POINTS: 24+ citable facts
 SOURCED_STATS: 14 (Gartner, Cockroach Labs x2, Uptime Institute, SolarWinds x2, Memfault, Gloria Mark/UC Irvine, APA/Rubinstein et al., Sophie Leroy/UW, Xavier et al./IEEE SANER, Theneo, Carta, Octopus Ventures, Anthropic)
 NAMED_ENTITIES: 37+ (Schwab, OANDA, Polymarket, Kalshi, Solana, Grafana, Python, PyPI, launchctl, ESP32-S3, MLX90640, Quectel EG25-G, Gartner, SolarWinds, Cockroach Labs, Uptime Institute, Carta, Octopus Ventures, APA, ACM, Anthropic, Memfault, Theneo, Gloria Mark, Sophie Leroy, UC Irvine, University of Washington, BidPro, SwiftUI, App Store, DigitalOcean, WebSocket, JSON, OAuth, Supabase, iOS)
-INTERNAL_LINKS: 11 (Posts 1-9 + /#work + /#contact)
+INTERNAL_LINKS: 11 (Posts 1-9 + /#ventures + /#contact)
 H2_SECTIONS: 8
 NON_FAQ_H3: 7 (target 8-10; constrained by 2,800 word ceiling)
 FAQ_QUESTIONS: 6

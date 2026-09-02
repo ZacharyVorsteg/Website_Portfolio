@@ -234,7 +234,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,650
 DATA_POINTS: 22 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Fortune Business Insights 2025, Gartner August 2025, IBM June 2025, Gloria Mark/UC Irvine 2008, Anthropic 2026 Agentic Coding Trends March 2026, Peng et al./arXiv February 2023, Capgemini 2025, Anthropic internal 2025, Anthropic research November 2025, GREY Journal 2026, Inc./Dario Amodei May 2025, Carta 2025, TechCrunch/Base44 June 2025, TechCrunch/Cursor March 2026)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (Delegation routing by venture; Before/after time savings across ventures)
 CODE_SNIPPETS: 2 (Morning briefing output; Weekly task routing log)

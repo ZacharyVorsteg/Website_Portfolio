@@ -180,4 +180,4 @@ Claude Code Pro or Cursor Pro at $20/month plus free tiers for everything else �
 
 ---
 
-*The full stack lives at [zacharyvorsteg.com](/#work). If you're auditing your own tool spend and want to compare line items — or you've found a tool delivering ROI that I'm missing — [let's compare notes](/#contact).*
+*The full stack lives at [zacharyvorsteg.com](/#ventures). If you're auditing your own tool spend and want to compare line items — or you've found a tool delivering ROI that I'm missing — [let's compare notes](/#contact).*

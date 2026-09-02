@@ -218,7 +218,7 @@ Espressif has shipped over one billion chips globally (Espressif Systems), and t
 
 Most posts on this site cover software infrastructure — [trading bot strategies](/blog/algorithmic-trading-bots-side-project/), [automation systems](/blog/my-solo-founder-automation-stack/), [AI agent orchestration](/blog/how-i-use-agentic-ai-one-person-company/). This post tackles the atoms-not-bits layer — sensors bolted to commercial ceilings, cellular modules negotiating tower handoffs 24/7, firmware running for months between reboots. This is where the gap between "software works perfectly" and "hardware fails in ways software never does" becomes visceral and expensive.
 
-If you're a software developer evaluating the hardware transition, or you're building IoT systems and want a ground-truth comparison, [here's what I'm shipping](https://zacharyvorsteg.com/#work) — you can kick the tires directly or [let's trade war stories](https://zacharyvorsteg.com/#contact).
+If you're a software developer evaluating the hardware transition, or you're building IoT systems and want a ground-truth comparison, [here's what I'm shipping](https://zacharyvorsteg.com/#ventures) — you can kick the tires directly or [let's trade war stories](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:
@@ -243,7 +243,7 @@ WORD_COUNT: ~2,700
 DATA_POINTS: 24+ citable facts
 SOURCED_STATS: 14 (IoT Analytics 2025 — 21.1B devices, CBInsights — 97% hardware startups, Espressif — 1B+ chips, Global Market Statistics 2025 — $1.24B TinyML, Nordic Semiconductor CES 2026 — 15x NPU speedup, IoT Analytics Q1 2025 — 23% cellular growth, IoT Analytics Q1 2025 — Quectel 40% share, JLCPCB 2026 — $2 PCBs, Precedence Research 2025 — $36.23B MCU market, Predictable Designs 2025 — 3-5+ iterations, Carta 2025 — 36.3% solo founders, Espressif 2025 — ESP32-P4 400MHz RISC-V AI extensions, ABI Research — TinyML 15M to 2.5B devices 2020-2030, Memfault 2026 — firmware/config drift top failures)
 NAMED_ENTITIES: 40 (ESP32-S3, ESP32-P4, MLX90640, MLX90641, MLX90614, AMG8833, FLIR Lepton 3.5, Melexis, Panasonic, Espressif Systems, Quectel EG25-G, Jetson Orin Nano, NVIDIA, Nordic Semiconductor, nRF54LM20B, Axon NPU, Cortex-M33, RISC-V, FreeRTOS, ESP-IDF, TensorRT, MQTT, Telegram, JLCPCB, IoT Analytics, CBInsights, Carta, Precedence Research, Global Market Statistics, ABI Research, Memfault, Predictable Designs, I2C, SPI, PLA, ABS, IP65, Bluetooth LE, LTE Cat 4)
-INTERNAL_LINKS: 12 (Posts 1-10 + /#work + /#contact)
+INTERNAL_LINKS: 12 (Posts 1-10 + /#ventures + /#contact)
 H2_SECTIONS: 8 (Why a Software Developer Started Building Hardware, Choosing the Right Sensor, ESP32-S3, Cellular Backhaul, Jetson Orin Nano Edge Processing, Field Deployment, Where Solo Hardware Development Is Heading, What I'd Tell a Software Developer Starting Hardware)
 NON_FAQ_H3: 7 (What I Evaluated and Why, My First Firmware, The Quectel EG25-G Decision, What Cellular Gets Right, The Pipeline, Enclosures Weatherproofing Mounting, The Calibration Problem + ESP32-P4 + Nordic NPU)
 FAQ_QUESTIONS: 6

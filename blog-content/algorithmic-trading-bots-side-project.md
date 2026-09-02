@@ -214,7 +214,7 @@ I run all 54 bots alongside a [commercial real estate practice](/blog/why-im-a-c
 
 ---
 
-54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](/blog/my-solo-founder-automation-stack/). Ready to build your own algorithmic trading system? Start with one bot, not a framework. Paper trade first, validate on live market data, then scale. [Explore what I'm working on](https://zacharyvorsteg.com/#work) or [talk about strategy architecture](https://zacharyvorsteg.com/#contact).
+54 bots, continuous rotation: deploy, monitor, decay, kill, replace. The strategies are disposable. The evaluation framework — and the discipline to actually kill what isn't working — is the real asset. For the infrastructure underneath, see [my full automation stack](/blog/my-solo-founder-automation-stack/). Ready to build your own algorithmic trading system? Start with one bot, not a framework. Paper trade first, validate on live market data, then scale. [Explore what I'm working on](https://zacharyvorsteg.com/#ventures) or [talk about strategy architecture](https://zacharyvorsteg.com/#contact).
 
 <!--
 GEO_META:
@@ -237,7 +237,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,650
 DATA_POINTS: 17 (specific stats/figures with named sources)
 SOURCED_STATS: 12 (Mordor Intelligence, QuantConnect, JPMorgan, BIS Triennial Survey, Wall Street Journal, CoinDesk, Suhonen/Journal of Portfolio Management, Bailey/Journal of Computational Finance, Maven Securities, CBOE x2, IOSCO, Chague et al.)
-INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (market comparison, broker API comparison)
 CODE_SNIPPETS: 2 (auth pre-flight check, strategy health evaluation)

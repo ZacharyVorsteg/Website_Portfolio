@@ -171,7 +171,7 @@ Depends on your audience. Technical founders get the strongest engagement on Hac
 
 ---
 
-The compounding payoff from transparency takes months, not weeks — but the accountability kicks in immediately. If you're building multiple ventures solo, start with one public commitment this week. [Share what you're working on](https://zacharyvorsteg.com/#contact) or [check out the systems behind my projects](https://zacharyvorsteg.com/#work).
+The compounding payoff from transparency takes months, not weeks — but the accountability kicks in immediately. If you're building multiple ventures solo, start with one public commitment this week. [Share what you're working on](https://zacharyvorsteg.com/#contact) or [check out the systems behind my projects](https://zacharyvorsteg.com/#ventures).
 
 <!--
 SELF_ASSESSMENT:
@@ -181,7 +181,7 @@ SOURCED_STATS: 9 (Carta solo founders 22%→38%, Edelman 60% trust/transparency,
 FAQ_COUNT: 6
 TABLE_COUNT: 2
 CODE_SNIPPETS: 0
-INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/algorithmic-trading-bots-side-project/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/my-solo-founder-automation-stack/, /blog/algorithmic-trading-bots-side-project/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 -->
 
 <!--
