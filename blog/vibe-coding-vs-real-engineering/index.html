@@ -35,11 +35,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "headline": "Vibe Coding vs Real Engineering: Where I Draw the Line",
       "description": "I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/"
+      },
+      "url": "https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/",
       "datePublished": "2026-03-21",
+      "dateModified": "2026-03-21",
+      "articleSection": "AI & Engineering",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "name": "Zachary Vorsteg",
@@ -930,6 +938,7 @@
             }
         }
     </style>
+  <script src="https://customlab.ai/fleet-telemetry.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -939,7 +948,7 @@
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
                 <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
+                    <a href="/#ventures">Work</a>
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
@@ -962,7 +971,7 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
+                <a href="/#ventures">Work</a>
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
@@ -990,7 +999,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI & Engineering</span>
-                        <time class="article-date">March 20, 2026</time>
+                        <time class="article-date">March 21, 2026</time>
                         <span class="article-time">17 min read</span>
                     </div>
 
@@ -1176,7 +1185,7 @@ Never: Delete files, send messages without draft review
 <h3>Should I learn to code if AI can write code for me?</h3>
 <p>Yes — unless every system you build is disposable. Understanding code isn&#39;t about typing syntax. It&#39;s about debugging at 3 AM, extending the system next quarter, and catching the security vulnerability the AI introduced silently. Gartner projects 75% of enterprise engineers will use AI code assistants by 2028 (Gartner, 2024). The engineers who thrive will be the ones who understand what the AI wrote — not just that it compiled and ran.</p>
 <hr>
-<p>The vibe coding debate isn&#39;t about AI versus humans. It&#39;s about matching your approach to consequences. I <a href="/blog/how-i-build-in-public-as-a-technical-founder/">build in public</a> because documenting these tradeoffs — when to trust the AI and when to rip out every generated line — clarifies what&#39;s actually at stake. The <a href="/blog/my-solo-founder-automation-stack/">automation stack</a> running on $8/month, the <a href="/blog/algorithmic-trading-bots-side-project/">trading strategies</a> handling real capital, the <a href="/blog/financial-modeling-fundamentals/">financial models</a> screening acquisitions, the <a href="/blog/context-engineering-ai-agents/">context engineering</a> that orchestrates autonomy, the <a href="/blog/agentic-engineering-patterns/">agentic engineering methodology</a> that replaced vibe coding in my actual work, <a href="/blog/how-i-use-agentic-ai-one-person-company/">distributed agentic AI managing four ventures</a>, the <a href="/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">licensed real estate practice</a> where code meets commission, and <a href="/blog/what-breaks-when-you-automate-everything/">the 3 AM failures nobody warns you about</a> — each operates on a different tier of AI assistance. The builders who figure out which tier for which code ship fast without the consequent wreckage. Want to discuss where the lines are? <a href="https://zacharyvorsteg.com/#work">See what I&#39;m building</a> or <a href="https://zacharyvorsteg.com/#contact">connect and compare approaches</a>.</p>
+<p>The vibe coding debate isn&#39;t about AI versus humans. It&#39;s about matching your approach to consequences. I <a href="/blog/how-i-build-in-public-as-a-technical-founder/">build in public</a> because documenting these tradeoffs — when to trust the AI and when to rip out every generated line — clarifies what&#39;s actually at stake. The <a href="/blog/my-solo-founder-automation-stack/">automation stack</a> running on $8/month, the <a href="/blog/algorithmic-trading-bots-side-project/">trading strategies</a> handling real capital, the <a href="/blog/financial-modeling-fundamentals/">financial models</a> screening acquisitions, the <a href="/blog/context-engineering-ai-agents/">context engineering</a> that orchestrates autonomy, the <a href="/blog/agentic-engineering-patterns/">agentic engineering methodology</a> that replaced vibe coding in my actual work, <a href="/blog/how-i-use-agentic-ai-one-person-company/">distributed agentic AI managing four ventures</a>, the <a href="/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">licensed real estate practice</a> where code meets commission, and <a href="/blog/what-breaks-when-you-automate-everything/">the 3 AM failures nobody warns you about</a> — each operates on a different tier of AI assistance. The builders who figure out which tier for which code ship fast without the consequent wreckage. Want to discuss where the lines are? <a href="https://zacharyvorsteg.com/#ventures">See what I&#39;m building</a> or <a href="https://zacharyvorsteg.com/#contact">connect and compare approaches</a>.</p>
 <!--
 GEO_META:
 SPEAKABLE: Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining production trading infrastructure handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch.
@@ -1199,7 +1208,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,650
 DATA_POINTS: 19 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Karpathy/X, Stack Overflow 2025, Cursor/The Information, GitHub 2025, Y Combinator/Garry Tan, Peng et al./arXiv, FINRA 2024, Snyk 2024, GitClear 2024, McKinsey 2023, Gartner 2024, Carta 2025, DORA/Google Cloud 2024, GitHub Octoverse 2025)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (Vibe Coding vs AI-Assisted Engineering comparison; Four-Tier AI Development Spectrum)
 CODE_SNIPPETS: 1 (CLAUDE.md permission tiers)

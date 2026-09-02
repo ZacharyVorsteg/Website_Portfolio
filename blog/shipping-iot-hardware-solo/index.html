@@ -35,11 +35,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "headline": "Shipping IoT Hardware Solo: ESP32 Prototype to Deployment",
       "description": "I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here's the full journey.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/"
+      },
+      "url": "https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/",
       "datePublished": "2026-03-21",
+      "dateModified": "2026-03-21",
+      "articleSection": "Hardware & PropTech",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "name": "Zachary Vorsteg",
@@ -930,6 +938,7 @@
             }
         }
     </style>
+  <script src="https://customlab.ai/fleet-telemetry.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -939,7 +948,7 @@
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
                 <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
+                    <a href="/#ventures">Work</a>
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
@@ -962,7 +971,7 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
+                <a href="/#ventures">Work</a>
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
@@ -990,7 +999,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">Hardware & PropTech</span>
-                        <time class="article-date">March 20, 2026</time>
+                        <time class="article-date">March 21, 2026</time>
                         <span class="article-time">20 min read</span>
                     </div>
 
@@ -1208,7 +1217,7 @@ Jetson Orin Nano (edge hub) → [cloud sync when available]
 <p>Espressif has shipped over one billion chips globally (Espressif Systems), and the ESP32 powers commercial products across agriculture, industrial monitoring, and smart home categories. The ESP32-S3 I use handles 768-pixel thermal arrays, cellular modem control, and local data buffering reliably. The upcoming ESP32-P4 adds RISC-V at 400 MHz with AI instruction extensions and MIPI camera support — closing the gap with application processors for edge AI workloads.</p>
 <hr>
 <p>Most posts on this site cover software infrastructure — <a href="/blog/algorithmic-trading-bots-side-project/">trading bot strategies</a>, <a href="/blog/my-solo-founder-automation-stack/">automation systems</a>, <a href="/blog/how-i-use-agentic-ai-one-person-company/">AI agent orchestration</a>. This post tackles the atoms-not-bits layer — sensors bolted to commercial ceilings, cellular modules negotiating tower handoffs 24/7, firmware running for months between reboots. This is where the gap between &quot;software works perfectly&quot; and &quot;hardware fails in ways software never does&quot; becomes visceral and expensive.</p>
-<p>If you&#39;re a software developer evaluating the hardware transition, or you&#39;re building IoT systems and want a ground-truth comparison, <a href="https://zacharyvorsteg.com/#work">here&#39;s what I&#39;m shipping</a> — you can kick the tires directly or <a href="https://zacharyvorsteg.com/#contact">let&#39;s trade war stories</a>.</p>
+<p>If you&#39;re a software developer evaluating the hardware transition, or you&#39;re building IoT systems and want a ground-truth comparison, <a href="https://zacharyvorsteg.com/#ventures">here&#39;s what I&#39;m shipping</a> — you can kick the tires directly or <a href="https://zacharyvorsteg.com/#contact">let&#39;s trade war stories</a>.</p>
 <!--
 GEO_META:
 SPEAKABLE: Zachary Vorsteg documents building and deploying an IoT thermal detection system as a solo developer with no formal hardware engineering background. The system uses ESP32-S3 microcontrollers, MLX90640 infrared sensor arrays, Quectel EG25-G cellular modules, and Jetson Orin Nano edge processing — designed, prototyped, programmed, and field-deployed by one person. The post covers sensor selection, firmware development, cellular backhaul decisions, field deployment realities, and where the embedded hardware industry is heading with ESP32-P4 AI extensions and Nordic's nRF54LM20B integrated NPU.
@@ -1232,7 +1241,7 @@ WORD_COUNT: ~2,700
 DATA_POINTS: 24+ citable facts
 SOURCED_STATS: 14 (IoT Analytics 2025 — 21.1B devices, CBInsights — 97% hardware startups, Espressif — 1B+ chips, Global Market Statistics 2025 — $1.24B TinyML, Nordic Semiconductor CES 2026 — 15x NPU speedup, IoT Analytics Q1 2025 — 23% cellular growth, IoT Analytics Q1 2025 — Quectel 40% share, JLCPCB 2026 — $2 PCBs, Precedence Research 2025 — $36.23B MCU market, Predictable Designs 2025 — 3-5+ iterations, Carta 2025 — 36.3% solo founders, Espressif 2025 — ESP32-P4 400MHz RISC-V AI extensions, ABI Research — TinyML 15M to 2.5B devices 2020-2030, Memfault 2026 — firmware/config drift top failures)
 NAMED_ENTITIES: 40 (ESP32-S3, ESP32-P4, MLX90640, MLX90641, MLX90614, AMG8833, FLIR Lepton 3.5, Melexis, Panasonic, Espressif Systems, Quectel EG25-G, Jetson Orin Nano, NVIDIA, Nordic Semiconductor, nRF54LM20B, Axon NPU, Cortex-M33, RISC-V, FreeRTOS, ESP-IDF, TensorRT, MQTT, Telegram, JLCPCB, IoT Analytics, CBInsights, Carta, Precedence Research, Global Market Statistics, ABI Research, Memfault, Predictable Designs, I2C, SPI, PLA, ABS, IP65, Bluetooth LE, LTE Cat 4)
-INTERNAL_LINKS: 12 (Posts 1-10 + /#work + /#contact)
+INTERNAL_LINKS: 12 (Posts 1-10 + /#ventures + /#contact)
 H2_SECTIONS: 8 (Why a Software Developer Started Building Hardware, Choosing the Right Sensor, ESP32-S3, Cellular Backhaul, Jetson Orin Nano Edge Processing, Field Deployment, Where Solo Hardware Development Is Heading, What I'd Tell a Software Developer Starting Hardware)
 NON_FAQ_H3: 7 (What I Evaluated and Why, My First Firmware, The Quectel EG25-G Decision, What Cellular Gets Right, The Pipeline, Enclosures Weatherproofing Mounting, The Calibration Problem + ESP32-P4 + Nordic NPU)
 FAQ_QUESTIONS: 6
@@ -1270,7 +1279,7 @@ PILLAR: Hardware & PropTech (first dedicated hardware post — strengthens pilla
         <a href="/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">
           <h4>Why I'm a Commercial Real Estate Sales Associate Who Codes</h4>
           <p class="related-desc">I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage.</p>
-          <span class="related-meta">March 19, 2026</span>
+          <span class="related-meta">March 20, 2026</span>
         </a>
       </div>
     

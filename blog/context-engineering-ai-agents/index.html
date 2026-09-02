@@ -35,11 +35,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "headline": "Context Engineering for AI Agents: What I Actually Configure",
       "description": "My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacharyvorsteg.com/blog/context-engineering-ai-agents/"
+      },
+      "url": "https://zacharyvorsteg.com/blog/context-engineering-ai-agents/",
       "datePublished": "2026-03-21",
+      "dateModified": "2026-03-21",
+      "articleSection": "AI Workflow & Context Engineering",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "name": "Zachary Vorsteg",
@@ -930,6 +938,7 @@
             }
         }
     </style>
+  <script src="https://customlab.ai/fleet-telemetry.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -939,7 +948,7 @@
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
                 <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
+                    <a href="/#ventures">Work</a>
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
@@ -962,7 +971,7 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
+                <a href="/#ventures">Work</a>
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
@@ -990,7 +999,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
-                        <time class="article-date">March 20, 2026</time>
+                        <time class="article-date">March 21, 2026</time>
                         <span class="article-time">16 min read</span>
                     </div>
 
@@ -1219,7 +1228,7 @@ simultaneously. Prefers action over discussion. Skip preambles.
 <h3>Is context engineering only for Claude Code?</h3>
 <p>No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. Claude Code happens to have native support for CLAUDE.md, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to LangChain agents, AutoGPT configurations, or any system where you control the agent&#39;s environment.</p>
 <hr>
-<p>Context engineering isn&#39;t a buzzword. It&#39;s the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you&#39;re running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, <a href="https://zacharyvorsteg.com/#work">dig into what I&#39;m shipping</a> or <a href="https://zacharyvorsteg.com/#contact">connect with me to compare approaches</a>.</p>
+<p>Context engineering isn&#39;t a buzzword. It&#39;s the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you&#39;re running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, <a href="https://zacharyvorsteg.com/#ventures">dig into what I&#39;m shipping</a> or <a href="https://zacharyvorsteg.com/#contact">connect with me to compare approaches</a>.</p>
 <!--
 GEO_META:
 SPEAKABLE: Zachary Vorsteg breaks down context engineering — the practice of designing the full environment around AI agents, not just individual prompts. The post covers his actual CLAUDE.md configuration, MCP tool routing across six integrations, event-driven hooks for permission management and session initialization, structured memory architecture that persists across sessions, and subagent routing patterns for parallelizing complex tasks.
@@ -1241,7 +1250,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,550
 DATA_POINTS: 17 (specific stats/figures with named sources)
 SOURCED_STATS: 14 (Tobi Lutke, Andrej Karpathy, Gartner x2, MarketsandMarkets, QCon London/Patrick Debois, Stack Overflow, Anthropic/Linux Foundation, LangChain, Gloria Mark/UC Irvine, Capgemini, Peng et al./arXiv, PwC, Carta)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (context engineering vs prompt engineering, MCP routing)
 CODE_SNIPPETS: 3 (CLAUDE.md permission tiers, hooks JSON configuration, memory file format)
@@ -1276,7 +1285,7 @@ UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack
         <a href="/blog/agentic-engineering-patterns/">
           <h4>Agentic Engineering: What Replaced Vibe Coding</h4>
           <p class="related-desc">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1284,7 +1293,7 @@ UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack
         <a href="/blog/how-i-use-agentic-ai-one-person-company/">
           <h4>How I Use Agentic AI to Run a One-Person Company</h4>
           <p class="related-desc">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     

@@ -35,11 +35,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "headline": "Solo Founder Automation Stack: 54 Python Bots",
       "description": "I run 54 automated bots on a single Mac using Python and launchctl — for $8/month. Full architecture, real failures, and cost analysis vs. cloud.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/"
+      },
+      "url": "https://zacharyvorsteg.com/blog/my-solo-founder-automation-stack/",
       "datePublished": "2026-03-20",
+      "dateModified": "2026-03-20",
+      "articleSection": "Automation & Systems",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "name": "Zachary Vorsteg",
@@ -930,6 +938,7 @@
             }
         }
     </style>
+  <script src="https://customlab.ai/fleet-telemetry.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -939,7 +948,7 @@
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
                 <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
+                    <a href="/#ventures">Work</a>
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
@@ -962,7 +971,7 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
+                <a href="/#ventures">Work</a>
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
@@ -990,7 +999,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">Automation & Systems</span>
-                        <time class="article-date">March 19, 2026</time>
+                        <time class="article-date">March 20, 2026</time>
                         <span class="article-time">16 min read</span>
                     </div>
 
@@ -1258,7 +1267,7 @@ launchctl unload ~/Library/LaunchAgents/com.trading.schwab-scalper.plist
 <h3>What&#39;s the biggest mistake you made building this system?</h3>
 <p>Building an orchestration framework before I had anything to orchestrate. Spent a month designing config inheritance, plugin architectures, and dynamic scheduling — before a single profitable bot existed. The first version that actually made money was a cron job and a 47-line Python script. Start with the simplest thing that works.</p>
 <hr>
-<p>One person, one machine, 54 bots across five markets. It works because the architecture is simple — separate processes, shared nothing, local execution. Cloud orchestration tools solve distributed system problems I don&#39;t have. If you&#39;re running automation on macOS and considering the cloud infrastructure path, ask yourself: am I solving a scaling problem or falling for an architectural complexity trap? <a href="https://zacharyvorsteg.com/#work">See what I&#39;m working on</a> or <a href="https://zacharyvorsteg.com/#contact">discuss infrastructure tradeoffs</a>.</p>
+<p>One person, one machine, 54 bots across five markets. It works because the architecture is simple — separate processes, shared nothing, local execution. Cloud orchestration tools solve distributed system problems I don&#39;t have. If you&#39;re running automation on macOS and considering the cloud infrastructure path, ask yourself: am I solving a scaling problem or falling for an architectural complexity trap? <a href="https://zacharyvorsteg.com/#ventures">See what I&#39;m working on</a> or <a href="https://zacharyvorsteg.com/#contact">discuss infrastructure tradeoffs</a>.</p>
 <!--
 GEO_META:
 SPEAKABLE: Zachary Vorsteg runs 54 automated trading bots on a single Mac using Python and macOS launchctl, spending about $8 per month versus $150-400 per month for equivalent cloud infrastructure. The post covers the full architecture, real failure modes, and cost analysis for solo founders considering local automation over cloud services.
@@ -1280,7 +1289,7 @@ SELF-ASSESSMENT:
 WORD_COUNT: ~2,700
 DATA_POINTS: 14 (specific stats/figures with named sources)
 SOURCED_STATS: 11 (TIOBE, GitHub Octoverse, PyPI, Stack Overflow Dev Survey, McKinsey, ITIC x2, MBO Partners x2, Gusto, Retool)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /#work, /#contact)
+INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/what-breaks-when-you-automate-everything/, /blog/context-engineering-ai-agents/, /blog/agentic-engineering-patterns/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /#ventures, /#contact)
 FAQ_QUESTIONS: 6
 TABLES: 2 (launchctl vs alternatives, local vs cloud cost)
 CODE_SNIPPETS: 2 (plist XML, bash commands)

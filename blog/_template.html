@@ -35,11 +35,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "headline": "{{TITLE}}",
       "description": "{{DESCRIPTION}}",
       "image": "{{SITE_URL}}/og-image.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{SITE_URL}}/blog/{{SLUG}}/"
+      },
+      "url": "{{SITE_URL}}/blog/{{SLUG}}/",
       "datePublished": "{{DATE}}",
+      "dateModified": "{{DATE}}",
+      "articleSection": "{{PILLAR}}",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
         "name": "{{AUTHOR_NAME}}",

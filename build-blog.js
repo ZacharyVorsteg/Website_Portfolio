@@ -109,6 +109,24 @@ function validateWordCount(slug, content, warnings) {
   }
 }
 
+// Normalize a heading/title for comparison (case + punctuation insensitive)
+function normalizeHeading(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[‘’“”]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+// The blog factory repeats the frontmatter title as a leading H1 in the body.
+// The template already renders an <h1>, so strip it to avoid duplicate H1s.
+function stripDuplicateH1(body, title) {
+  const match = body.match(/^\s*#\s+(.+?)[ \t]*(\r?\n|$)/);
+  if (!match) return body;
+  if (normalizeHeading(match[1]) !== normalizeHeading(title)) return body;
+  return body.slice(match[0].length).replace(/^\s*\n/, '');
+}
+
 // Format date as readable string
 function formatDate(dateStr) {
   const date = new Date(dateStr.length === 10 ? dateStr + 'T12:00:00' : dateStr);
@@ -163,6 +181,24 @@ function extractFAQPairs(htmlContent) {
       pairs.push({ question, answer });
     }
   }
+
+  // Fallback: some posts write FAQ questions as bold paragraphs (**Question?**)
+  // instead of H3s. Marked renders those as <p><strong>…</strong></p>.
+  if (pairs.length === 0) {
+    const boldRegex = /<p><strong>(.*?)<\/strong><\/p>([\s\S]*?)(?=<p><strong>|$)/g;
+    let boldMatch;
+    while ((boldMatch = boldRegex.exec(faqSection)) !== null) {
+      const question = decodeEntities(boldMatch[1].replace(/<[^>]+>/g, '').trim());
+      const answer = decodeEntities(boldMatch[2]
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim());
+      if (question && answer) {
+        pairs.push({ question, answer });
+      }
+    }
+  }
+
   return pairs;
 }
 
@@ -298,7 +334,10 @@ function build() {
     return { articles: [], warnings: [] };
   }
 
-  const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md'));
+  // Skip templates/drafts: any file starting with "_" or "draft-"
+  const files = fs
+    .readdirSync(CONTENT_DIR)
+    .filter(f => f.endsWith('.md') && !f.startsWith('_') && !f.startsWith('draft-'));
   if (files.length === 0) {
     console.log('No markdown files found in blog-content. Skipping build.');
     return { articles: [], warnings: [] };
@@ -310,6 +349,8 @@ function build() {
   files.forEach(file => {
     const content = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf-8');
     const { metadata, content: body } = parseFrontmatter(content);
+
+    if (String(metadata.draft || '').toLowerCase() === 'true') return;
 
     const slug = path.basename(file, '.md');
     const title = metadata.title || 'Untitled';
@@ -328,7 +369,7 @@ function build() {
     const dateFormatted = formatDate(dateStr);
     const dateISO = formatDateISO(dateStr);
     const readTimeStr = readTime(body);
-    const htmlContent = marked(body);
+    const htmlContent = marked(stripDuplicateH1(body, title));
 
     articles.push({
       slug,
@@ -447,7 +488,17 @@ function updateSitemap(articles) {
   const blogEntryRegex = new RegExp(`\\s*<url>\\s*<loc>${escapedDomain}\\/blog\\/[\\s\\S]*?<\\/url>`, 'g');
   sitemap = sitemap.replace(blogEntryRegex, '');
 
-  const blogEntries = articles
+  // Blog index itself, stamped with the newest post's date
+  const newestDate = articles.length ? articles[0].dateISO : new Date().toISOString().split('T')[0];
+  const indexEntry = `
+  <url>
+    <loc>${siteConfig.siteUrl}/blog/</loc>
+    <lastmod>${newestDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+
+  const blogEntries = indexEntry + articles
     .map(
       a => `
   <url>
