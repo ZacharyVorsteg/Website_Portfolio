@@ -128,6 +128,14 @@ function readTime(content) {
   return `${minutes} min read`;
 }
 
+// Shorten title to fit within 65 chars (SEO standard for <title> tags)
+function shortenTitle(title, maxLength = 65) {
+  if (title.length <= maxLength) return title;
+  const truncated = title.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  return lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated;
+}
+
 // Decode HTML entities in extracted text
 function decodeEntities(text) {
   return text
@@ -328,7 +336,14 @@ function build() {
     const dateFormatted = formatDate(dateStr);
     const dateISO = formatDateISO(dateStr);
     const readTimeStr = readTime(body);
-    const htmlContent = marked(body);
+    let htmlContent = marked(body);
+    // Ensure external links with target="_blank" have rel="noopener nofollow"
+    htmlContent = htmlContent.replace(/<a\b[^>]*?target="_blank"[^>]*?>/gi, (match) => {
+      if (!match.includes('rel=')) {
+        return match.replace(/(\s+)target="_blank"/i, '$1target="_blank" rel="noopener nofollow"');
+      }
+      return match;
+    });
 
     articles.push({
       slug,
@@ -379,9 +394,10 @@ function build() {
 
     const faqPairs = extractFAQPairs(article.content);
     const extraSchema = generateExtraSchema(article, faqPairs);
+    const displayTitle = shortenTitle(article.title);
 
     const html = template
-      .replace(/{{TITLE}}/g, article.title)
+      .replace(/{{TITLE}}/g, displayTitle)
       .replace(/{{DESCRIPTION}}/g, article.description)
       .replace(/{{KEYWORDS}}/g, article.keywords)
       .replace(/{{SLUG}}/g, article.slug)

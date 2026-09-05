@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} | {{SITE_NAME}}</title>
+    <title>{{TITLE}}</title>
     <meta name="description" content="{{DESCRIPTION}}">
     <meta name="keywords" content="{{KEYWORDS}}">
     <link rel="canonical" href="{{SITE_URL}}/blog/{{SLUG}}/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{{TITLE}}">
@@ -90,6 +91,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+        *:focus:not(:focus-visible) { outline: none; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
+        .skip-link:focus { top: 0; }
 
         :root {
             --black: #000000;
@@ -861,6 +866,7 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
     <header>
         <div class="container">
@@ -872,7 +878,7 @@
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
-                    <a href="{{SITE_URL}}/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
+                    <a href="{{SITE_URL}}/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
                     <a href="/#contact" class="btn btn-primary">Work With Me</a>
                 </nav>
 
@@ -895,7 +901,7 @@
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
-                <a href="{{SITE_URL}}/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                <a href="{{SITE_URL}}/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     Pro Forma Tool
                 </a>
@@ -919,7 +925,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">{{PILLAR}}</span>
-                        <time class="article-date">{{DATE_FORMATTED}}</time>
+                        <time class="article-date" datetime="{{DATE}}">{{DATE_FORMATTED}}</time>
                         <span class="article-time">{{READ_TIME}}</span>
                     </div>
 

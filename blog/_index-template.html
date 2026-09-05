@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog | Zachary Vorsteg</title>
-    <meta name="description" content="Insights on finance, deal structures, systems, and building. By Zachary Vorsteg.">
+    <meta name="description" content="Technical founder writing about finance, real estate, algorithmic trading, and AI-driven automation. Insights on what actually works in building.">
     <meta name="keywords" content="finance, M&A, FP&A, systems, technology, real estate">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Blog | Zachary Vorsteg">
@@ -49,6 +50,17 @@
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zacharyvorsteg.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://zacharyvorsteg.com/blog/" }
+      ]
+    }
+    </script>
+
     <style>
         /* Reset & Base Styles */
         * {
@@ -56,6 +68,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+        *:focus:not(:focus-visible) { outline: none; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
+        .skip-link:focus { top: 0; }
 
         :root {
             --black: #000000;
@@ -516,6 +532,7 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
     <header>
         <div class="container">
