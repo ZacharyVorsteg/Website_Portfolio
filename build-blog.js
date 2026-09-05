@@ -337,6 +337,8 @@ function build() {
     const dateISO = formatDateISO(dateStr);
     const readTimeStr = readTime(body);
     let htmlContent = marked(body);
+    // Strip leading H1 from content (title is rendered separately in template)
+    htmlContent = htmlContent.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
     // Ensure external links with target="_blank" have rel="noopener nofollow"
     htmlContent = htmlContent.replace(/<a\b[^>]*?target="_blank"[^>]*?>/gi, (match) => {
       if (!match.includes('rel=')) {
