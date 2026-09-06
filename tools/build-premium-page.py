@@ -20,7 +20,7 @@ PAGE = dict(
         "run underneath the company: how inquiries are captured and answered, how follow-up happens, how the owner sees "
         "the numbers, how the business shows up in search and in AI assistants. Designed by me, built by me, monitored "
         "continuously, reported in plain English."),
-  cta2=("/ai-consultant-palm-beach-county/", "How I work"),
+  cta2=("/production/", "See the production layer"),
   sections=[
    ("What you are actually buying",
     ["Not software, and not advice. An accountable person who owns an outcome: the parts of your operation that should "
@@ -59,7 +59,7 @@ PAGE = dict(
    ("What do you need from us?", "Access to the tools you already use, a decision-maker for the quarterly review, and honesty about where time is lost. Almost nothing else."),
   ],
   close=("If your time is the constraint", "A short conversation is enough to tell whether there's an engagement here. I'll say so plainly either way."),
-  crosslinks=[("/ai-consultant-palm-beach-county/", "AI consultant, Palm Beach County"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-systems-architect-florida/", "AI systems architecture"), ("/about", "About Zachary")],
+  crosslinks=[("/production/", "Production: reels, stills, kinetic pieces"), ("/ai-consultant-palm-beach-county/", "AI consultant, Palm Beach County"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-systems-architect-florida/", "AI systems architecture"), ("/about", "About Zachary")],
   service_name="AI Operating Layer — Private Engagements", service_type="AI systems architecture, build and operation (annual engagement)",
 )
 
@@ -160,7 +160,7 @@ def studio_blocks():
                "".join(f'<div class="step"><div class="n">{n}</div><h3>{t}</h3><p>{d}</p></div>' for n, t, d in steps) + "</div></div></section>")
     deliverables = ["An intake and response system across phone, web, text and email", "Follow-up cadences with an owner and a receipt for every step",
                     "A daily plain-English status line and a monthly outcomes report", "Quarterly review materials and a written roadmap",
-                    "Entity-structured search and AI-assistant presence on your domain", "Monitoring with alerts that reach you before customers notice",
+                    "Entity-structured search and AI-assistant presence on your domain", "Content production: signature stills, detail reels and kinetic pieces, verified and posted with receipts (<a href=\"/production/\">see the work</a>)", "Monitoring with alerts that reach you before customers notice",
                     "Documentation your team can operate from", "Custom software where off-the-shelf fails"]
     deliv = ('<section class="svc-section" aria-labelledby="deliv-h"><div class="container"><p class="stu-label">03 · Deliverables</p>'
              '<h2 id="deliv-h" style="margin-top:0">What you receive</h2><ul class="deliv">' + "".join(f"<li>{d}</li>" for d in deliverables) + "</ul></div></section>")

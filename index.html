@@ -374,7 +374,7 @@
     </script>
 
     <link rel="preload" as="image" href="images/zach-headshot.jpg?v=3">
-    <link rel="stylesheet" href="styles.css?v=6">
+    <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
     <!-- Header -->
@@ -387,6 +387,7 @@
                     <a href="/about">About</a>
                     <a href="/portfolio">Portfolio</a>
                     <a href="/ai-automation">AI Automation</a>
+                    <a href="/production/">Production</a>
                     <a href="#software">Software</a>
                     <a href="#finance">Finance</a>
                     <a href="#real-estate">Real Estate</a>
@@ -413,6 +414,7 @@
                 <a href="/about">About</a>
                 <a href="/portfolio">Portfolio</a>
                 <a href="/ai-automation">AI Automation</a>
+                    <a href="/production/">Production</a>
                 <a href="#software">Software</a>
                 <a href="#finance">Finance</a>
                 <a href="#real-estate">Real Estate</a>
@@ -522,6 +524,35 @@
             </div>
         </div>
     </section>
+
+
+    <!-- Production teaser (2026-09-06): our own reels, produced and verified by the system; the page sells the service -->
+    <style>
+    .pt{background:#0b0d12;color:#e8ecf2;padding:64px 0 56px}
+    .pt .pt-label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#8b93a3;margin:0 0 10px}
+    .pt h2{color:#fff;margin:0 0 8px;font-size:2rem;letter-spacing:-.02em}
+    .pt p.pt-sub{color:#a7aeba;max-width:720px;margin:0 0 26px;font-size:1.05rem;line-height:1.55}
+    .pt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .pt-reel{margin:0;position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#12151c}
+    .pt-reel video{display:block;width:100%;height:100%;object-fit:cover}
+    .pt-reel figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#e8ecf2;font-size:.9rem;line-height:1.3}
+    .pt-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .pt-cta .btn-dark{background:#fff;color:#0b0d12;border-radius:8px;padding:12px 20px;font-weight:600;text-decoration:none}
+    .pt-cta .btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:12px 20px;text-decoration:none}
+    @media(max-width:900px){.pt-grid{grid-template-columns:repeat(3,1fr)}.pt-reel:nth-child(n+4){display:none}}
+    @media(max-width:520px){.pt-grid{grid-template-columns:1fr 1fr}.pt-reel:nth-child(n+3){display:none}.pt h2{font-size:1.5rem}}
+    @media(prefers-reduced-motion:reduce){.pt-reel video{display:none}.pt-reel{background:#12151c url() center/cover}}
+    </style>
+    <section class="pt" id="production-teaser" aria-labelledby="pt-h"><div class="container">
+      <p class="pt-label">Production · made and verified by the system</p>
+      <h2 id="pt-h">Content that looks like this, every week, without you touching it.</h2>
+      <p class="pt-sub">Signature renders turned into motion and short kinetic pieces, produced on a schedule, checked against a written standard and posted with a receipt. Below: one week of our own output across five brands.</p>
+      <div class="pt-grid"><figure class="pt-reel"><video muted loop playsinline preload="none" poster="/images/production/reel-zv.jpg" data-src="/images/production/reel-zv.mp4" aria-label="Rain on glass at dusk over the Intracoastal"></video><figcaption>The system underneath the company.</figcaption></figure><figure class="pt-reel"><video muted loop playsinline preload="none" poster="/images/production/reel-ah.jpg" data-src="/images/production/reel-ah.mp4" aria-label="A phone on a truck dashboard at dusk"></video><figcaption>Booked jobs, not busy work.</figcaption></figure><figure class="pt-reel"><video muted loop playsinline preload="none" poster="/images/production/reel-ch.jpg" data-src="/images/production/reel-ch.mp4" aria-label="A desk phone in a dim office at night"></video><figcaption>The call that got answered.</figcaption></figure><figure class="pt-reel"><video muted loop playsinline preload="none" poster="/images/production/reel-pbw.jpg" data-src="/images/production/reel-pbw.mp4" aria-label="A warehouse loading dock at dawn"></video><figcaption>Dock high. Ready now.</figcaption></figure><figure class="pt-reel"><video muted loop playsinline preload="none" poster="/images/production/reel-cl.jpg" data-src="/images/production/reel-cl.mp4" aria-label="A workbench with a laptop at first light"></video><figcaption>Your process. Now software.</figcaption></figure></div>
+      <div class="pt-cta"><a class="btn-dark" href="/production/">See the production layer</a><a class="btn-ghost" href="#contact">Request a conversation</a></div>
+    </div></section>
+    <script>(function(){var vs=[].slice.call(document.querySelectorAll('.pt-reel video'));if(!vs.length||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+    var load=function(v){if(v.dataset.loaded)return;var s=document.createElement('source');s.src=v.dataset.src;s.type='video/mp4';v.appendChild(s);v.dataset.loaded='1';v.load()};
+    if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){load(v);v.play().catch(function(){})}else{v.pause()}})},{rootMargin:'120px',threshold:.2});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){load(v);v.play().catch(function(){})})}})();</script>
 
     <!-- Websites for Small Businesses (dedicated section) -->
     <section class="websites-section" id="websites">
@@ -886,6 +917,7 @@
                         <li><a href="https://adshandled.com" target="_blank" rel="noopener">Ads Handled</a></li>
                         <li><a href="https://customlab.ai" target="_blank" rel="noopener">CustomLab.ai</a></li>
                         <li><a href="/ai-operating-layer/">Private engagements</a></li>
+                        <li><a href="/production/">Production</a></li>
                         <li><a href="/ai-consultant-palm-beach-county/">AI consultant, Palm Beach County</a></li>
                         <li><a href="/ai-automation-palm-beach-county/">AI automation for contractors</a></li>
                         <li><a href="/agentic-ai-engineer-west-palm-beach/">Agentic AI engineer, West Palm Beach</a></li>

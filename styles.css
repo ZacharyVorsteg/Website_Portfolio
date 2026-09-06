@@ -2197,3 +2197,8 @@ footer {
         gap: 24px;
     }
 }
+
+/* 2026-09-06: nav gained a Production item; keep every link and the CTA on one row on 1024–1439px laptops */
+@media (min-width: 768px) and (max-width: 1439px) { .desktop-nav { gap: 18px; } .desktop-nav a { font-size: 0.88rem; white-space: nowrap; } .desktop-nav .btn { padding-left: 14px; padding-right: 14px; } }
+@media (min-width: 768px) and (max-width: 1150px) { .desktop-nav { gap: 12px; } .desktop-nav a { font-size: 0.82rem; } }
+@media (min-width: 768px) and (max-width: 1150px) { .desktop-nav a[href="/portfolio"] { display: none; } }  /* Portfolio stays reachable from the hero button and Work */
