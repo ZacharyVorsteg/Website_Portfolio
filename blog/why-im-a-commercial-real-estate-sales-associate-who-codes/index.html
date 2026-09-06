@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why I'm a Commercial Real Estate Sales Associate Who Codes</title>
-    <meta name="description" content="I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage.">
+    <title>Why I&apos;m a Commercial Real Estate Sales Associate Who Codes</title>
+    <meta name="description" content="I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.">
     <meta name="keywords" content="commercial real estate sales associate who codes, CRE sales associate technology, proptech, commercial real estate technology, CRE sales associate automation, proptech adoption commercial real estate, CRE deal analysis automation, commercial real estate AI, proptech market 2026, commercial real estate technology gap">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -12,14 +12,14 @@
     <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Why I'm a Commercial Real Estate Sales Associate Who Codes">
-    <meta property="og:description" content="I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage.">
+    <meta property="og:title" content="Why I&apos;m a Commercial Real Estate Sales Associate Who Codes">
+    <meta property="og:description" content="I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Why I'm a Commercial Real Estate Sales Associate Who Codes">
+    <meta property="og:image:alt" content="Why I&apos;m a Commercial Real Estate Sales Associate Who Codes">
     <meta property="og:site_name" content="Zachary Vorsteg">
     <meta property="og:locale" content="en_US">
     <meta property="article:published_time" content="2026-03-20">
@@ -28,8 +28,8 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Why I'm a Commercial Real Estate Sales Associate Who Codes">
-    <meta name="twitter:description" content="I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage.">
+    <meta name="twitter:title" content="Why I&apos;m a Commercial Real Estate Sales Associate Who Codes">
+    <meta name="twitter:description" content="I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
     <!-- Article Schema -->
@@ -42,11 +42,7 @@
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-20",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -160,8 +156,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -185,6 +181,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -232,7 +229,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -300,7 +297,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -341,7 +338,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -596,7 +593,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -930,6 +927,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -941,17 +949,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=other#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -966,21 +972,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -990,17 +991,17 @@
                         <span>/</span>
                         <a href="/blog/">Blog</a>
                         <span>/</span>
-                        <span>Why I'm a Commercial Real Estate Sales Associate Who Codes</span>
+                        <span>Why I&apos;m a Commercial Real Estate Sales Associate Who Codes</span>
                     </div>
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">Hardware & PropTech</span>
-                        <time class="article-date" datetime="2026-03-20">March 19, 2026</time>
+                        <time class="article-date" datetime="2026-03-20">March 20, 2026</time>
                         <span class="article-time">16 min read</span>
                     </div>
 
-                    <h1>Why I'm a Commercial Real Estate Sales Associate Who Codes</h1>
-                    <p class="article-description">I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage.</p>
+                    <h1>Why I&apos;m a Commercial Real Estate Sales Associate Who Codes</h1>
+                    <p class="article-description">I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.</p>
                 </div>
             </div>
         </section>
@@ -1192,9 +1193,9 @@ UNIQUE_ANGLE: First-person perspective of a licensed CRE sales associate who wri
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=other#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1206,8 +1207,8 @@ UNIQUE_ANGLE: First-person perspective of a licensed CRE sales associate who wri
       <div class="related-card">
         <a href="/blog/shipping-iot-hardware-solo/">
           <h4>Shipping IoT Hardware Solo: ESP32 Prototype to Deployment</h4>
-          <p class="related-desc">I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here's the full journey.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here&apos;s the full journey.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1234,45 +1235,6 @@ UNIQUE_ANGLE: First-person perspective of a licensed CRE sales associate who wri
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

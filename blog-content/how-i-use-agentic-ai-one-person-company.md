@@ -25,7 +25,7 @@ When I start a session, the agent doesn't wait around. Project context loads aut
 
 A chatbot responds to one prompt. An agentic AI inhabits an environment — persistent instructions, tool access, memory, automation hooks — and takes multi-step actions. It spawns sub-tasks. Runs parallel searches. Monitors background processes while I'm heads-down on something else entirely, maybe debugging firmware or on the phone with a tenant.
 
-IBM's 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (IBM, June 2025). That tracks with what I've experienced firsthand — but only because I invested heavily in the [context engineering](/blog/context-engineering-ai-agents/) that makes agents reliable instead of just impressive. Strip that layer away and what you've got is a chatbot with more tools and fewer guardrails. Worse, actually.
+An enterprise technology provider's 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (enterprise technology provider, June 2025). That tracks with what I've experienced firsthand — but only because I invested heavily in the [context engineering](/blog/context-engineering-ai-agents/) that makes agents reliable instead of just impressive. Strip that layer away and what you've got is a chatbot with more tools and fewer guardrails. Worse, actually.
 
 ## A Typical Morning: What the Agent Handles Before I Start
 
@@ -60,7 +60,7 @@ Four ventures. Four minutes. Before agentic AI, this morning triage devoured 45-
 
 ## Five Task Categories I've Handed Off
 
-Not everything transfers cleanly. Anthropic's 2026 Agentic Coding Trends Report: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks — the rest demands active oversight (Anthropic, March 2026). My ratios look similar. Here are the five categories where agents run with minimal babysitting:
+Not everything transfers cleanly. The 2026 Agentic Coding Trends Report published by a model developer: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks — the rest demands active oversight (model-developer research, March 2026). My ratios look similar. Here are the five categories where agents run with minimal babysitting:
 
 ### Research and Due Diligence
 
@@ -96,11 +96,11 @@ Capgemini surveyed 1,500 executives across 14 countries: only 2% of organization
 
 The pattern is consistent across every line of business: anything touching external relationships, financial commitment, or architectural judgment stays with me. Information retrieval, pattern execution, system monitoring — those get delegated without hesitation.
 
-That 0-20% full delegation range from Anthropic's report isn't a limitation of today's tools. It's a feature of complex work itself. Some tasks need context that won't fit in a prompt, a config file, or a memory store — no matter how sophisticated. They need you physically in the room, reading body language across a negotiation table, or carrying scar tissue from the failure that teaches you what the next one smells like before it arrives.
+That 0-20% full delegation range from that coding trends report isn't a limitation of today's tools. It's a feature of complex work itself. Some tasks need context that won't fit in a prompt, a config file, or a memory store — no matter how sophisticated. They need you physically in the room, reading body language across a negotiation table, or carrying scar tissue from the failure that teaches you what the next one smells like before it arrives.
 
 ## Before and After: Real Time Savings Across Four Ventures
 
-Anthropic's own engineers produce 67% more merged pull requests per day after adopting Claude Code, with 59% of their work now involving AI assistance — up from 28% a year prior (Anthropic, 2025). A separate study analyzing 100,000 real conversations found a median 84% time savings on individual tasks (Anthropic, November 2025).
+The model developer reported that its engineers produced 67% more merged pull requests per day after adopting its coding agent, with 59% of their work now involving AI assistance — up from 28% a year prior (model-developer research, 2025). A separate study analyzing 100,000 real conversations found a median 84% time savings on individual tasks (model-developer research, November 2025).
 
 Here's what my numbers actually look like:
 
@@ -147,9 +147,9 @@ I pay the tax because doing everything manually across four ventures isn't a rea
 
 ## The Solo Founder Force Multiplier — With Real Numbers
 
-Dario Amodei, Anthropic's CEO, gave 70-80% odds that the first billion-dollar one-person company will emerge by 2026 — proprietary trading and developer tools the most likely sectors (Inc., May 2025). Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than ever before. Agentic AI is what makes it operationally survivable rather than just theoretically possible.
+Dario Amodei, the CEO of a model developer, gave 70-80% odds that the first billion-dollar one-person company will emerge by 2026 — proprietary trading and developer tools the most likely sectors (Inc., May 2025). Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than ever before. Agentic AI is what makes it operationally survivable rather than just theoretically possible.
 
-Maor Shlomo built Base44 solo and sold it to Wix for $80 million in six months — 250,000 users before acquisition (TechCrunch, June 2025). Cursor hit $2 billion in annualized revenue by February 2026, the fastest any SaaS (software as a service) company has scaled from $1M to $500M ARR (TechCrunch, March 2026). Small, AI-leveraged teams are rewriting the economics of what's possible. Dramatically.
+Maor Shlomo built an AI app-building platform solo and sold it to Wix for $80 million in six months — 250,000 users before acquisition (TechCrunch, June 2025). An AI code-editor business hit $2 billion in annualized revenue by February 2026, the fastest any SaaS (software as a service) company has scaled from $1M to $500M ARR (TechCrunch, March 2026). Small, AI-leveraged teams are rewriting the economics of what's possible. Dramatically.
 
 Here's a real week in aggregate:
 
@@ -197,11 +197,11 @@ A complete solo-founder AI stack runs $3,000-$12,000 per year in 2026 — coveri
 
 ### Can agentic AI really replace a team?
 
-Not entirely. Anthropic's 2026 Agentic Coding Trends Report found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (Anthropic, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn't replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment.
+Not entirely. The 2026 Agentic Coding Trends Report published by a model developer found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (model-developer research, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn't replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment.
 
 ### What tools do you use for your agentic AI workflow?
 
-My primary agent is Claude Code with a 500+ line CLAUDE.md configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the [full context engineering setup](/blog/context-engineering-ai-agents/) and the [automation infrastructure](/blog/my-solo-founder-automation-stack/) in separate posts.
+My primary coding agent uses a 500+ line persistent instruction configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the [full context engineering setup](/blog/context-engineering-ai-agents/) and the [automation infrastructure](/blog/my-solo-founder-automation-stack/) in separate posts.
 
 ### Where does agentic AI fail the most?
 
@@ -212,31 +212,3 @@ Context window exhaustion on long sessions, confidently wrong outputs that sound
 With agentic AI handling operational volume, yes — as long as you maintain the verification layer. Carta's data showing solo founders at 36.3% of new startups (Carta, 2025) and Dario Amodei's prediction of a billion-dollar one-person company by 2026 (Inc., May 2025) both point to structural viability. The risk isn't AI replacing the need for a team. It's building on AI outputs you don't verify, which compounds errors silently until something expensive breaks.
 
 ---
-
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg describes how agentic AI operates in his daily workflow across four concurrent ventures — commercial real estate, algorithmic trading, IoT hardware, and iOS development. The post details specific tasks delegated to AI agents, real time savings measured across each business line, where agentic AI consistently fails, and why the one-person company model works only when you understand the delegation ceiling.
-KEY_TAKEAWAY: Agentic AI enables a solo founder to operate four concurrent ventures by handling 60% of tasks autonomously and supporting another 37% with human-in-the-loop oversight — but the 0-20% full delegation ceiling is permanent, not temporary. The model works because AI handles operational volume while the founder handles judgment, verification, and relationships.
-ANSWERS_QUERIES:
-- What is agentic AI and how do solo founders use it?
-- How much does an agentic AI workflow cost?
-- Can one person run a company with AI agents?
-- Where does agentic AI fail in practice?
-- What tasks can you delegate to AI agents?
-CITABLE_FACTS: 22
-NAMED_ENTITIES: 34 (Dario Amodei, Anthropic, Fortune Business Insights, Gartner, IBM, Gloria Mark, UC Irvine, Capgemini, Peng et al., arXiv, GitHub Copilot, GREY Journal, Inc., Carta, Maor Shlomo, Base44, Wix, TechCrunch, Cursor, Anysphere, Claude Code, CLAUDE.md, MCP, Model Context Protocol, Schwab, OANDA, Polymarket, Solana, BidPro, Python, macOS, launchctl, Linux Foundation, Brave Search)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
-
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,650
-DATA_POINTS: 22 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Fortune Business Insights 2025, Gartner August 2025, IBM June 2025, Gloria Mark/UC Irvine 2008, Anthropic 2026 Agentic Coding Trends March 2026, Peng et al./arXiv February 2023, Capgemini 2025, Anthropic internal 2025, Anthropic research November 2025, GREY Journal 2026, Inc./Dario Amodei May 2025, Carta 2025, TechCrunch/Base44 June 2025, TechCrunch/Cursor March 2026)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (Delegation routing by venture; Before/after time savings across ventures)
-CODE_SNIPPETS: 2 (Morning briefing output; Weekly task routing log)
-UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four concurrent ventures — real time savings, real failure modes, real task delegation ratios — from a solo founder who built the context engineering layer and now shows what it produces daily
--->

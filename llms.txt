@@ -1,40 +1,51 @@
 # Zachary Vorsteg
 
-> Zachary Vorsteg is an AI systems architect and automation engineer based in West Palm Beach, FL (available nationwide). He builds AI-powered automation, agentic workflows, LLM integrations, and custom software that eliminate manual work for growing companies. Founder of CustomLab.ai, with a portfolio of shipped products across AI SaaS, CRM, and ad management (including Trusenda and AdsHandled — see Ventures). He is also a full-stack developer, an M&A/FP&A financial analyst (FAU '20 Finance), and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty).
+> Zachary Vorsteg is a technical founder based in West Palm Beach, Florida. He works on business operations, AI automation, custom software and financial systems, with selected work and a direct conversation path on his personal site. He is also a Florida-licensed real estate sales associate affiliated with Cornerstone Realty. Software and automation work is available remotely nationwide; property service areas depend on the engagement.
 
-## Services
+## Start here
 
-- [AI Automation](https://zacharyvorsteg.com/ai-automation): AI-powered automation, agentic workflows, LLM integration, and business process automation. First automation typically live in ~2 weeks.
-- [Custom Software](https://zacharyvorsteg.com/custom-software): Custom CRMs, client portals, native iOS apps, and web applications when off-the-shelf tools don't fit. Fixed-price, typically 2-4 week delivery.
-- [Strategic Finance](https://zacharyvorsteg.com/finance): M&A synergy modeling, automated FP&A systems, 3-statement models, and investor-ready pro formas.
-- [Commercial Real Estate](https://zacharyvorsteg.com/commercial-real-estate): Industrial, warehouse, and flex space in Palm Beach County. Tenant representation (free to tenants).
+- [About Zach](https://zacharyvorsteg.com/about/): Background, experience and how he works.
+- [Selected work](https://zacharyvorsteg.com/portfolio/): Founder-built products and business projects. A founder-owned venture is not a client testimonial.
+- [Apps](https://zacharyvorsteg.com/apps/): Native app projects and their published availability.
+- [Insights](https://zacharyvorsteg.com/blog/): Engineering, business, finance and real estate writing.
+- [Start a conversation](https://zacharyvorsteg.com/#contact): Describe the process, project or business question. A reply is expected within one business day. This is an inquiry, not an automatically scheduled appointment.
 
-## AI in Palm Beach County
+## Ways to work together
 
-- [Production — reels, stills and kinetic pieces, produced and verified by the system](https://zacharyvorsteg.com/production/)
-- [AI Operating Layer — private annual engagements](https://zacharyvorsteg.com/ai-operating-layer/)
+- [AI automation](https://zacharyvorsteg.com/ai-automation/): Intake, document work, reporting and connected workflows. Scope, timeline and ongoing responsibility are agreed before work starts.
+- [Custom software](https://zacharyvorsteg.com/custom-software/): Applications, internal tools and integrations built around a defined business need.
+- [Finance](https://zacharyvorsteg.com/finance/): Financial modeling, FP&A systems, scenario planning and pro formas.
+- [Commercial real estate](https://zacharyvorsteg.com/commercial-real-estate/): Industrial, warehouse and flex property work through the applicable brokerage relationship.
+- [AI Operating Layer](https://zacharyvorsteg.com/ai-operating-layer/): Direct involvement in the design and operation of business systems. Discuss fit, responsibilities and terms.
+- [Production](https://zacharyvorsteg.com/production/): Selected reels, stills and motion work.
+
+## Local AI pages
+
 - [AI consultant, Palm Beach County](https://zacharyvorsteg.com/ai-consultant-palm-beach-county/)
 - [AI automation for contractors](https://zacharyvorsteg.com/ai-automation-palm-beach-county/)
 - [Agentic AI engineer, West Palm Beach](https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/)
 - [AI systems architect, Florida](https://zacharyvorsteg.com/ai-systems-architect-florida/)
 
-## Ventures
+## Related ventures and service brands
 
-- [CustomLab.ai](https://customlab.ai): AI operations automation for service businesses.
-- [Trusenda](https://trusenda.com): CRM for industrial/commercial real estate brokers (iOS + web).
-- [Ads Handled](https://adshandled.com): Done-for-you Facebook & Google ads management.
-- [Palm Beach Warehouses](https://palmbeachwarehouses.com): Warehouse & industrial space, Palm Beach County.
-- [Palm Beach Homes Realty](https://palmbeachhomesrealty.com): Luxury homes & equestrian estates, Wellington/Palm Beach.
-- [Palm Beach Websites](https://palmbeachwebsites.com): Web development for local businesses.
+These are distinct offers associated with Zach, not alternate identities for the person. Follow each offer's current page for its scope, availability, pricing and terms.
 
-## Profiles
+- [Vorsteg Software](https://vorstegsoftware.com/): Custom business applications and ongoing care.
+- [CustomLab.ai](https://customlab.ai/): Operations automation across existing business tools.
+- [Trusenda](https://trusenda.com/): CRM for independent commercial real estate brokers, on web and iPhone.
+- [AdsHandled](https://adshandled.com/): Paid advertising management for local businesses.
+- [CallsHandled](https://callshandled.ai/): AI call handling for service businesses.
+- [Palm Beach Websites](https://palmbeachwebsites.com/): Website services for local businesses.
+- [Palm Beach Warehouses](https://palmbeachwarehouses.com/): Industrial property service brand; brokerage attribution and current inventory are on its site.
+- [Palm Beach Homes Realty](https://palmbeachhomesrealty.com/): Residential property service brand focused on Palm Beach County.
+- [PalmBeachQuotes](https://palmbeachquotes.com/): Local home-service quote requests.
 
-- [GitHub](https://github.com/ZacharyVorsteg)
+## Profiles and contact
+
 - [LinkedIn](https://www.linkedin.com/in/zacharyvorsteg)
-- [X / Twitter](https://x.com/zachvorsteg)
-
-## Contact
-
-- Website: https://zacharyvorsteg.com
+- [GitHub](https://github.com/ZacharyVorsteg)
+- [X](https://x.com/zachvorsteg)
 - Phone: (561) 718-6725
-- Location: West Palm Beach, FL — available nationwide
+- Location: West Palm Beach, Florida
+
+This file is a reading guide. It does not establish search indexing, ranking, AI citations, product capabilities, or a guarantee of results. Use the current page and applicable agreement to confirm an offer's details.

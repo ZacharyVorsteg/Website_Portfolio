@@ -17,23 +17,26 @@ ASSETS = ROOT / "images" / "production"
 
 PAGE = dict(
   slug="production",
-  eyebrow="Production · content that converts, verified before it posts",
+  eyebrow="Production · reels, stills and kinetic pieces",
   title="Content Production for Premium Brands | Zachary Vorsteg",
   description="Cinematic reels, stills and kinetic pieces produced on a schedule, checked against a written standard and posted with a receipt. For owner-led Palm Beach brands.",
-  h1="Content that looks like this, every week, without you touching it.",
-  lede=("Below is our own output: signature renders turned into motion, and short kinetic pieces built to a written production "
-        "standard. Each one was produced by the system, checked by the system, and posted by the system with a receipt. The same "
-        "production layer is available to a small number of brands on annual terms."),
+  h1="A consistent look for your brand, produced every week.",
+  lede=("Signature stills, detail reels and kinetic pieces built around your brand and offers. The work below was produced "
+        "for my own businesses. An annual scope sets the formats, cadence, review responsibilities and publishing destinations, "
+        "so you know what is being produced and where it goes."),
+  cta_href="/?topic=production#contact",
+  cta_label="Request a conversation",
   cta2=("/ai-operating-layer/", "Private engagements"),
   sections=[
-   ("Why it converts",
-    ["A feed of consistently cinematic pieces does two things at once: it makes the brand feel established before anyone reads a word, "
-     "and it gives every ad, every follow-up and every referral something worth pointing at. The visuals carry the mood. The caption "
-     "carries the offer. The receipt proves it posted.",
-     "What you see here is one week of the system's own work across five brands — no agency, no editor, no shoot day."]),
+   ("How the work supports a conversation",
+    ["The aim is a recognizable visual identity paired with a clear offer and a relevant next step. A reel can introduce the brand; "
+     "the caption explains the offer; the destination gives an interested visitor a way to act.",
+     "This collection shows production work across five of my brands. It demonstrates the style and formats available. "
+     "To assess commercial results, measure destination clicks, qualified inquiries and resulting business alongside the posts."]),
    ("Where it fits",
-    ["Production is part of Operating Layer and Embedded engagements, and available as a standalone annual engagement. Your brand kit "
-     "goes in once; from then on the system produces, checks and posts to the destinations you approve, and reports what it did."]),
+    ["Production can be included in Operating Layer and Embedded scopes, or agreed as a standalone annual engagement. "
+     "I work with you on the brand kit, offers, destinations and approval responsibilities. The agreed process covers production, "
+     "checks, publishing and reporting; the written scope sets the formats and cadence."]),
   ],
   grid=("What a month produces", [
    ("Signature stills", "Cinematic renders in your brand's world, one idea per frame, with a restrained wordmark. Used across the feed, ads and the site."),
@@ -54,9 +57,9 @@ PAGE = dict(
   faq=[
    ("Is this stock footage or templates?", "No. Every still is generated for the brand; every clip is made from that still; every kinetic piece is built from the brand's own claim-locked lines. Nothing on this page comes from a library."),
    ("Will it look like everyone else's AI content?", "The look is set by a house style and a written standard, not by a prompt someone typed once. The same restraint you see here — one idea per frame, no text burned into images, no invented people — is enforced on every piece."),
-   ("Who approves what goes out?", "You approve the destinations and the brand kit. Pieces that fail the standard cannot post. You can review before posting if you prefer; most clients read the receipts instead."),
+   ("Who approves what goes out?", "You approve the brand kit, offers, destinations and publishing permissions. We agree which pieces require your review before posting. Production checks support that process; they do not replace approval of your business claims."),
    ("What do you need from us?", "Logo files, colours, the offers you actually want promoted, and access to the social accounts you want used. A brand kit takes one conversation."),
-   ("How is it priced?", "Annually, against a scope in writing, as part of an Operating Layer or Embedded engagement or on its own. If the fee is a material line for the business, Ads Handled or CallsHandled is the better starting point."),
+   ("How is it priced?", "Annually, against a scope in writing, as part of an Operating Layer or Embedded engagement or on its own. We agree the formats, cadence, destinations, review responsibilities and reporting before work starts. A focused advertising need can be discussed through Ads Handled; production and campaign results are evaluated separately."),
   ],
   close=("If your brand should look like this", "Send me one thing you sell and the platforms you care about. I'll reply with what a first month would produce."),
   crosslinks=[("/ai-operating-layer/", "Private engagements"), ("/ai-consultant-palm-beach-county/", "AI consultant, Palm Beach County"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/about", "About Zachary")],
@@ -100,7 +103,7 @@ def blocks():
 .method figure img,.method figure video{display:block;width:100%;height:100%;object-fit:cover}
 .method figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#cfd5df;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase}
 .receipt{margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6b7280}
-@media(prefers-reduced-motion:reduce){.pv{display:none}.reel img.still{display:block}}
+@media(prefers-reduced-motion:reduce){.snd{display:none}}
 </style>"""
     # ---- reel wall: our detail reels (FLUX still → Seedance 2.5 push-in), five words each ----
     reels = ""
@@ -142,10 +145,13 @@ def blocks():
               '</div><div class="receipt">Every step writes a receipt: source, seed, checksum, verdict. Nothing ships without one.</div></div></section>')
     js = """
 <script>(function(){var vs=[].slice.call(document.querySelectorAll('video.pv'));if(!vs.length)return;
-var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)return;
+var motion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');var visible=new Set();
 var load=function(v){if(v.dataset.loaded)return;var s=document.createElement('source');s.src=v.dataset.src;s.type='video/mp4';v.appendChild(s);v.dataset.loaded='1';v.load()};
-if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){load(v);v.play().catch(function(){})}else{v.pause()}})},{rootMargin:'120px',threshold:.25});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){load(v);v.play().catch(function(){})})}
-document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v)return;v.muted=!v.muted;btn.textContent=v.muted?'\\u266A':'\\u25A0';if(!v.muted){document.querySelectorAll('video.pv').forEach(function(o){if(o!==v)o.muted=true})}})});})();</script>"""
+var soundButtons=function(){document.querySelectorAll('.snd').forEach(function(btn){var v=btn.parentNode.querySelector('video');btn.textContent=v.muted?'♪':'■';btn.setAttribute('aria-label',v.muted?'Turn sound on':'Turn sound off');btn.setAttribute('aria-pressed',String(!v.muted))})};
+var update=function(v){if(motion&&motion.matches){v.pause();v.muted=true;v.querySelectorAll('source').forEach(function(s){s.remove()});delete v.dataset.loaded;v.load();soundButtons();return;}if(visible.has(v)){load(v);v.play().catch(function(){})}else{v.pause()}};
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting)visible.add(v);else visible.delete(v);update(v)})},{rootMargin:'120px',threshold:.25});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){visible.add(v);update(v)})}
+if(motion&&motion.addEventListener)motion.addEventListener('change',function(){vs.forEach(update)});
+document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v||(motion&&motion.matches))return;v.muted=!v.muted;if(!v.muted)vs.forEach(function(o){if(o!==v)o.muted=true});soundButtons()})});soundButtons();})();</script>"""
     return css, wall, kinetic, stills, method, js
 
 if __name__ == "__main__":

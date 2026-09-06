@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Premium engagement page — /ai-operating-layer/ (draft 2026-09-06).
 
-Positioning (Zach): attract premium, owner-led Palm Beach County businesses on annual engagements where the
-fee is immaterial to them; avoid churn by becoming the operating plumbing. Understated, evidence-led,
-one accountable person. No "#1", no guarantees, no invented counts.
+Positioning: annual systems engagements for owner-led Palm Beach County businesses, with a clear scope,
+first-month priorities and one accountable person. Understated, evidence-led. No "#1", no guarantees,
+no invented counts.
 Reuses the query-page generator so nav/design stay native.
 """
 import importlib.util, pathlib, re
@@ -18,45 +18,47 @@ PAGE = dict(
   h1="I build and run the AI operating layer for owner-led businesses.",
   lede=("For a small number of businesses in Palm Beach County each year, I take responsibility for the systems that "
         "run underneath the company: how inquiries are captured and answered, how follow-up happens, how the owner sees "
-        "the numbers, how the business shows up in search and in AI assistants. Designed by me, built by me, monitored "
-        "continuously, reported in plain English."),
+        "the numbers, how the business shows up in search and in AI assistants. I lead the design, build and operation, "
+        "with the scope, responsibilities and reporting agreed in writing."),
+  cta_href="/?topic=ai#contact",
+  cta_label="Request a conversation",
   cta2=("/production/", "See the production layer"),
   sections=[
    ("What you are actually buying",
-    ["Not software, and not advice. An accountable person who owns an outcome: the parts of your operation that should "
-     "run without you, running without you — and staying that way. Every system I put in place verifies its own work "
-     "and tells you, in one line a day, whether it did.",
-     "I run the same systems for my own companies. The fleet behind this site publishes, checks and audits itself across "
-     "fifteen properties on a schedule; the lead-handling infrastructure behind my ad and call businesses is the same "
-     "infrastructure I install for clients. You are not the test."]),
+    ["A defined set of operational systems, with me responsible for their architecture, implementation and ongoing review. "
+     "The written scope identifies what each workflow should produce, how it is monitored, and which decisions remain "
+     "with your team. A daily status line and monthly report make the work visible.",
+     "I operate related publishing and lead-handling systems in my own businesses. The examples below show that work; "
+     "your engagement starts with the workflows, tools and constraints of your business."]),
    ("Who this is for",
     ["Owner-led businesses in Palm Beach County with real revenue and a back office that has stopped scaling: private "
      "wealth and family-office operations, luxury residential and development, aesthetic and medical practices, marine "
      "services, boutique law and accounting, design-build and high-end trades. The common thread is that the owner's "
-     "time is the constraint, and the fee for removing that constraint is immaterial next to what it returns."]),
+     "time is the constraint. We assess the work, expected value and investment together before agreeing to a scope."]),
   ],
   grid=("Three engagement levels", [
    ("Foundation", "One operational system, end to end — usually intake and follow-up — with monitoring and a monthly report. The right place to start when you want to see how I work before handing over more."),
-   ("Operating Layer", "Intake, follow-up, reporting, and your search and AI presence, run as one system with a quarterly review. Most clients live here."),
+   ("Operating Layer", "Intake, follow-up, reporting, and your search and AI presence, coordinated under one scope with a quarterly review."),
    ("Embedded", "I act as your head of systems: roadmap, build, operation, vendor decisions, and a seat at the quarterly review. A handful of these exist at any time."),
-   ("Annual terms", "Twelve-month engagements with an onboarding fee. A system that is judged at day thirty is judged at its worst; annual terms let it compound."),
-   ("Quarterly review", "A board-style session: what ran, what it produced, what to add. Scope expands there, not by surprise invoice."),
-   ("One accountable person", "You work with me, not an account manager. When something needs a decision you hear from me; otherwise it simply runs."),
+   ("Annual terms", "Twelve-month engagements with an onboarding fee. The first month establishes the agreed workflow, access, first implementation and monitoring. We review progress against that scope before choosing the next priorities."),
+   ("Quarterly review", "A working session on what ran, what it produced and what needs attention. Changes to scope and fees are agreed in writing."),
+   ("One accountable person", "I lead the architecture, implementation and review. Your team approves business decisions and provides the access and operational context the work needs."),
   ]),
   why_title="How the engagement runs",
   why=[
    "Discovery: a 45-minute conversation about where your time goes and what the business needs to do without you.",
    "Scope in writing: the systems, what each should produce, the reporting you'll receive, the annual fee. Nothing starts before you've read it.",
-   "Onboarding: your existing tools stay; I build around them. First system live within the first month.",
+   "Onboarding: work around your existing tools, confirm access and approval responsibilities, and plan the first system for the first month. Dependencies and readiness are reviewed against the scope.",
    "Operation: continuous monitoring, a daily plain-English line, a monthly report, a quarterly review.",
    "Ownership: your accounts, your data, your platforms stay yours. The operating infrastructure is licensed while we work together.",
   ],
   faq=[
-   ("What does this cost?", "Engagements are priced annually against the scope in writing. As a reference, Foundation engagements begin in the low five figures per year; Operating Layer and Embedded engagements run into six figures. If the fee is a material line for the business, this is probably not the right fit yet — my productized services (Ads Handled, CallsHandled) are built for that stage."),
-   ("Why annual?", "Because the systems compound. Intake improves as data accrues, search presence builds over months, and the quarterly review is where the real expansion happens. Month-to-month arrangements optimise for the wrong thing."),
+   ("What does this cost?", "Engagements are priced annually against the scope in writing. As a reference, Foundation engagements begin in the low five figures per year; Operating Layer and Embedded engagements run into six figures. We compare the proposed work, expected value and investment before deciding whether to proceed. A specific advertising or call-handling need may fit Ads Handled or CallsHandled instead."),
+   ("Why annual?", "The engagement includes implementation, operation and quarterly review. The first month has defined onboarding and implementation priorities; later reviews use the reporting to decide what to improve. The annual scope sets out fees, responsibilities and what is included before work begins."),
    ("How many clients do you take?", "A handful of engagements a year, by design. I do the work myself, and the value is in that."),
-   ("What if we already have an agency or an IT provider?", "They usually stay. I own the operating layer — the systems between your tools — and coordinate with whoever runs marketing or infrastructure. Often I make their work measurable for the first time."),
-   ("What do you need from us?", "Access to the tools you already use, a decision-maker for the quarterly review, and honesty about where time is lost. Almost nothing else."),
+   ("What if we already have an agency or an IT provider?", "We identify who owns each part of the workflow before starting. I coordinate the agreed systems work with the people responsible for marketing and infrastructure, including access, approvals, monitoring and reporting."),
+   ("How do your other businesses fit?", "Ads Handled and CallsHandled focus on specific advertising and call-handling needs. This personal engagement is for work that needs my involvement across several systems. We choose any specialist service because it fits the agreed scope; its role and responsibilities are explicit."),
+   ("What do you need from us?", "A decision-maker, someone who knows the current workflow, and appropriate access to the tools in scope. Your team confirms the business rules and approves the first workflow before it goes live. We agree who receives alerts and who makes decisions when an exception needs attention."),
   ],
   close=("If your time is the constraint", "A short conversation is enough to tell whether there's an engagement here. I'll say so plainly either way."),
   crosslinks=[("/production/", "Production: reels, stills, kinetic pieces"), ("/ai-consultant-palm-beach-county/", "AI consultant, Palm Beach County"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-systems-architect-florida/", "AI systems architecture"), ("/about", "About Zachary")],
@@ -99,17 +101,18 @@ def showcase_html():
 </style>"""
     js = """
 <script>(function(){var t=document.getElementById('worktrack');if(!t)return;var w=function(){var c=t.querySelector('.work-card');return c?c.getBoundingClientRect().width+18:400};
-document.getElementById('workprev').addEventListener('click',function(){t.scrollBy({left:-w(),behavior:'smooth'})});
-document.getElementById('worknext').addEventListener('click',function(){t.scrollBy({left:w(),behavior:'smooth'})});})();</script>"""
+var behavior=function(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'};
+document.getElementById('workprev').addEventListener('click',function(){t.scrollBy({left:-w(),behavior:behavior()})});
+document.getElementById('worknext').addEventListener('click',function(){t.scrollBy({left:w(),behavior:behavior()})});})();</script>"""
     return (css + '<section class="work svc-section" aria-labelledby="work-h"><div class="container"><h2 id="work-h">Selected work — live systems, not mockups</h2>'
-            '<p class="work-sub">Every item below is running today. Screenshots are taken from the live sites.</p>'
+            '<p class="work-sub">Screenshots of products and sites I have built. Founder projects and the client example are identified below.</p>'
             f'<div class="work-track" id="worktrack" tabindex="0" aria-label="Selected work, scroll horizontally">{cards}</div>'
             '<div class="work-nav"><button type="button" id="workprev" aria-label="Previous">&larr;</button><button type="button" id="worknext" aria-label="Next">&rarr;</button></div>'
             '</div></section>' + js)
 
 def studio_blocks():
-    """Structure borrowed from studio-grade sites (numbered micro-labels, a live 'render', marquee, numbered process,
-    deliverables). Every figure shown is a real receipt from the system, never a mockup."""
+    """Numbered operating snapshot, process and deliverables. Snapshot values retain their recorded date;
+    publishing checks and output counts are not a measurement of client conversion results."""
     css = """
 <style>
 .stu-label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#6b7280;margin:0 0 10px}
@@ -137,22 +140,22 @@ def studio_blocks():
 @media(max-width:640px){.deliv{columns:1}.tile b{font-size:1.6rem}}
 </style>"""
     render = ('<section class="svc-section" aria-labelledby="live-h"><div class="container">'
-              '<p class="stu-label">01 · Live render — the system, right now</p>'
+              '<p class="stu-label">01 · Operating snapshot · September 6, 2026</p>'
               '<h2 id="live-h" style="margin-top:0">What "running" looks like</h2>'
               '<div class="render"><p class="stu-label">Receipts · read from the operating layer on 2026-09-06</p><div class="render-grid">'
-              '<div class="tile"><b>15 / 15</b><span>websites meet the written publishing standard, checked daily</span><em>blog standard</em></div>'
+              '<div class="tile"><b>15 / 15</b><span>websites recorded as passing the internal publishing check</span><em>blog standard</em></div>'
               '<div class="tile"><b>30</b><span>articles researched, written, gated, published and verified in the last seven days</span><em>7-day output</em></div>'
               '<div class="tile"><b>28</b><span>assertions in the never-twice registry — one per past failure, run every day</span><em>regression watch</em></div>'
               '<div class="tile"><b>9 / 9</b><span>operator channels connected; every announcement in plain English</span><em>fleet</em></div>'
               '<div class="tile"><b>&lt; 60s</b><span>missed-call text-back on the receptionist line</span><em>callshandled</em></div>'
               '<div class="tile"><b>1 day</b><span>to onboard a client site: builder, schema, standard check, first verified post</span><em>tspectrumtech.com</em></div>'
-              '</div><div class="render-foot">Figures are live receipts, not projections · updated as the systems run</div></div>'
+              '</div><div class="render-foot">Recorded internal activity · publishing checks and output counts do not measure client conversion results</div></div>'
               '</div></section>')
     mq_items = ["Private wealth", "Luxury residential", "Developers", "Aesthetic &amp; medical", "Marine", "Boutique law &amp; CPA", "Design-build", "High-end trades"]
     mq = '<div class="marquee" aria-hidden="true"><div>' + "".join(f"<span>{x} •</span>" for x in mq_items * 2) + "</div></div>"
     steps = [("01", "Discovery", "Where your time goes, and what the business must do without you."),
              ("02", "Scope", "Systems, outputs, reporting and the annual fee — in writing before anything starts."),
-             ("03", "Onboarding", "Built around the tools you already run. First system live within the first month."),
+             ("03", "Onboarding", "Confirm access, business rules and approvals; plan the first system for the first month and review readiness against the scope."),
              ("04", "Operation", "Continuous monitoring, a daily plain-English line, a monthly report."),
              ("05", "Review", "A board-style quarterly session: what ran, what it produced, what comes next.")]
     process = ('<section class="svc-section" aria-labelledby="proc-h"><div class="container"><p class="stu-label">02 · Process</p>'
@@ -160,10 +163,10 @@ def studio_blocks():
                "".join(f'<div class="step"><div class="n">{n}</div><h3>{t}</h3><p>{d}</p></div>' for n, t, d in steps) + "</div></div></section>")
     deliverables = ["An intake and response system across phone, web, text and email", "Follow-up cadences with an owner and a receipt for every step",
                     "A daily plain-English status line and a monthly outcomes report", "Quarterly review materials and a written roadmap",
-                    "Entity-structured search and AI-assistant presence on your domain", "Content production: signature stills, detail reels and kinetic pieces, verified and posted with receipts (<a href=\"/production/\">see the work</a>)", "Monitoring with alerts that reach you before customers notice",
+                    "Structured website content and entity information for search and AI discovery", "Content production: signature stills, detail reels and kinetic pieces, verified and posted with receipts (<a href=\"/production/\">see the work</a>)", "Monitoring and an agreed route for alerts and exceptions",
                     "Documentation your team can operate from", "Custom software where off-the-shelf fails"]
     deliv = ('<section class="svc-section" aria-labelledby="deliv-h"><div class="container"><p class="stu-label">03 · Deliverables</p>'
-             '<h2 id="deliv-h" style="margin-top:0">What you receive</h2><ul class="deliv">' + "".join(f"<li>{d}</li>" for d in deliverables) + "</ul></div></section>")
+             '<h2 id="deliv-h" style="margin-top:0">What the scope can include</h2><p>The written engagement identifies which of these systems and outputs are included.</p><ul class="deliv">' + "".join(f"<li>{d}</li>" for d in deliverables) + "</ul></div></section>")
     return css, render, mq, process, deliv
 
 if __name__ == "__main__":
@@ -181,11 +184,14 @@ if __name__ == "__main__":
                 '<figure class="sig">'
                 # living render: a 5s image-to-video push-in generated from the same still (render-forge video); the still is the poster
                 # and the only thing shown when the visitor prefers reduced motion or the video cannot play.
-                '<video class="sig-video" autoplay muted loop playsinline preload="metadata" poster="/images/renders/render-06.jpg" aria-label="A quiet studio at dusk over the Intracoastal, one monitor showing an orderly dashboard" style="display:block;width:100%;height:min(72vh,720px);object-fit:cover;object-position:center 60%">'
-                '<source src="/images/renders/hero-loop.mp4" type="video/mp4"></video>'
-                '<style>@media(prefers-reduced-motion:reduce){.sig-video{display:none!important}.sig .sig-still{display:block!important}}</style>'
-                '<img class="sig-still" src="/images/renders/render-06.jpg" alt="A quiet studio at dusk over the Intracoastal, one monitor showing an orderly dashboard" width="1600" height="893" style="display:none">'
-                '<figcaption>Signature render · the operating layer, West Palm Beach, dusk</figcaption></figure>')
+                '<video class="sig-video" muted loop playsinline preload="none" poster="/images/renders/render-06.jpg" data-src="/images/renders/hero-loop.mp4" aria-label="A quiet studio at dusk over the Intracoastal, one monitor showing an orderly dashboard" style="display:block;width:100%;height:min(72vh,720px);object-fit:cover;object-position:center 60%"></video>'
+                '<figcaption>Signature render · the operating layer, West Palm Beach, dusk</figcaption></figure>'
+                '<script>(function(){var v=document.querySelector(".sig-video");if(!v)return;'
+                'var motion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)");var visible=false;'
+                'function update(){if(motion&&motion.matches){v.pause();v.removeAttribute("src");v.load();return;}'
+                'if(!visible){v.pause();return;}if(!v.getAttribute("src")){v.src=v.dataset.src;v.load();}v.play().catch(function(){});}'
+                'if("IntersectionObserver" in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;update();},{threshold:.1}).observe(v);}else{visible=true;update();}'
+                'if(motion&&motion.addEventListener)motion.addEventListener("change",update);})();</script>')
     out = out[:hero_end] + hero_fig + mq + render + showcase_html() + out[hero_end:]
     faq_at = out.find('<h2>Frequently asked questions</h2>')
     sec_start = out.rfind('<section class="svc-section">', 0, faq_at)

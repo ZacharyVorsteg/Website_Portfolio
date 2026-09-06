@@ -8,7 +8,7 @@ buyer-query pages, each cloned from the proven /ai-automation template so design
 Every claim below is one already published on the site or verifiable from a shipped system.
 No "#1", no guarantees, no invented counts (see feedback_canonical_bio_no_inflated_counts).
 """
-import json, re, pathlib, html
+import argparse, json, re, pathlib, html
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TEMPLATE = (ROOT / "ai-automation" / "index.html").read_text(encoding="utf-8")
@@ -30,8 +30,8 @@ PERSON = {
     "jobTitle": "AI Systems Architect & Automation Engineer",
     "description": ("AI systems architect and automation engineer based in West Palm Beach, Florida. Designs and ships "
                     "agentic AI systems, LLM integrations, and custom software that remove manual work for small and "
-                    "mid-sized businesses across Palm Beach County and nationwide. Founder of CustomLab.ai, with 5+ shipped "
-                    "products across AI SaaS, CRM, and ad management (Trusenda, Ads Handled, and more). Also an M&A/FP&A "
+                    "mid-sized businesses across Palm Beach County and nationwide. Founder of CustomLab.ai, with shipped "
+                    "products including Trusenda and Ads Handled. Also an M&A/FP&A "
                     "financial analyst and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone "
                     "Realty). FAU Finance '20."),
     "hasOccupation": [
@@ -53,12 +53,6 @@ PERSON = {
     "hasCredential": {"@type": "EducationalOccupationalCredential", "credentialCategory": "license",
                       "name": "Florida Real Estate Sales Associate License",
                       "recognizedBy": {"@type": "GovernmentOrganization", "name": "Florida Department of Business and Professional Regulation"}},
-    "founder": [  # inverse link: the Organization blocks on the homepage carry "founder": {"@id": PERSON_ID}
-        {"@type": "Organization", "@id": "https://customlab.ai/#organization", "name": "CustomLab.ai", "url": "https://customlab.ai"},
-        {"@type": "Organization", "@id": "https://adshandled.com/#organization", "name": "Ads Handled", "url": "https://adshandled.com"},
-        {"@type": "Organization", "@id": "https://trusenda.com/#organization", "name": "Trusenda", "url": "https://trusenda.com"},
-        {"@type": "Organization", "@id": "https://palmbeachwebsites.com/#organization", "name": "Palm Beach Websites", "url": "https://palmbeachwebsites.com"}
-    ],
     "knowsAbout": [
         "AI Consulting for Small and Mid-Sized Businesses", "Agentic AI Engineering", "AI Systems Architecture",
         "AI Agents", "Large Language Model Applications", "LLM Integration", "Retrieval-Augmented Generation (RAG)",
@@ -76,18 +70,17 @@ PERSON = {
         {"@type": "WebPage", "@id": DOMAIN + "/ai-systems-architect-florida/"}
     ],
     "sameAs": [
-        "https://www.linkedin.com/in/zacharyvorsteg", "https://github.com/ZacharyVorsteg", "https://x.com/zachvorsteg",
-        "https://customlab.ai", "https://trusenda.com", "https://adshandled.com", "https://callshandled.ai",
-        "https://palmbeachwebsites.com", "https://palmbeachwarehouses.com", "https://palmbeachhomesrealty.com",
-        "https://palmbeachquotes.com", "https://vorstegsoftware.com"
+        "https://www.linkedin.com/in/zacharyvorsteg", "https://github.com/ZacharyVorsteg", "https://x.com/zachvorsteg"
     ]
 }
+
+SERVICE_AREAS = PERSON.pop("areaServed")
 
 # ----------------------------------------------------------------------------- the four query pages
 PROOF = [  # shipped, verifiable systems — stated as what they are
     ("Trusenda", "a CRM I designed, built and shipped to the App Store, with its own billing, push notifications and lead pipeline."),
     ("Ads Handled and CallsHandled", "done-for-you ad management and an AI receptionist for home-service contractors, running on infrastructure I built: lead routing, call handling, missed-call text-back and a consolidated owner inbox."),
-    ("An autonomous content system", "that researches, writes, quality-gates, publishes and verifies articles across fifteen websites on a schedule — and checks its own work against a written standard every day."),
+    ("An autonomous content system", "that researches, writes, quality-gates, publishes and verifies articles across the venture sites on a schedule — and checks its own work against a written standard every day."),
     ("CustomLab.ai", "AI operations automation for service businesses: intake, follow-up and reporting built around the tools a business already runs."),
 ]
 
@@ -136,9 +129,9 @@ PAGES = [
   faq=[
    ("Are you an AI consultant or an AI engineer?", "Both, in the order that matters: I consult by building. The advice is grounded in systems I have designed, shipped and kept running, including my own products."),
    ("Which parts of Palm Beach County do you serve?", f"All of it — {CITIES}. Discovery calls are remote; I meet in person when it helps."),
-   ("What does an engagement look like?", "A short discovery call, a written scope with the hours it should save, a first automation live in about two weeks, then monitoring and iteration. No long retainers to get started."),
+   ("What does an engagement look like?", "Start with a conversation about the workflow. We agree the deliverables, timing, investment and any ongoing support before work starts. The appropriate engagement depends on the scope."),
    ("Do I need to be technical?", "No. You need to know where your team loses time. I handle the architecture, the build and the plain-English reporting."),
-   ("What have you actually shipped?", "A CRM on the App Store (Trusenda), ad management and an AI receptionist for contractors (Ads Handled, CallsHandled), CustomLab.ai, and an autonomous content system that publishes and verifies articles across fifteen websites — 5+ shipped products in total."),
+   ("What have you actually shipped?", "A CRM on the App Store (Trusenda), ad management and an AI receptionist for contractors (Ads Handled, CallsHandled), CustomLab.ai, and a content system that publishes and verifies articles across the venture sites."),
   ],
   close=("Start with the work your team does by hand", "Tell me the task you'd most like to never do again. If there's a real system in it, I'll scope it and tell you what it should save."),
   crosslinks=[("/ai-automation-palm-beach-county/", "AI automation for contractors"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-systems-architect-florida/", "AI systems architecture"), ("/ai-automation", "AI automation services")],
@@ -215,7 +208,7 @@ PAGES = [
    ("Production examples",
     ["A fleet of operator agents that manufactures demand for several businesses: research, outreach drafting, "
      "call handling, follow-up and reporting, each within caps and a ledger. An autonomous content system that "
-     "researches, writes, gates, publishes and verifies articles across fifteen websites and audits its own output "
+     "researches, writes, gates, publishes and verifies articles across the venture sites and audits its own output "
      "against a written standard daily. A consolidated owner inbox built so no inbound is missed."]),
   ],
   grid=("What I engineer", [
@@ -280,13 +273,13 @@ PAGES = [
    "Provider-agnostic design: frontier models with fallbacks, no lock-in to a single vendor.",
    "Built on the tools a business already runs; migration only when it earns its cost.",
    "Documented so your team can operate it; I don't build systems only I can run.",
-   "Founder of CustomLab.ai; 5+ shipped products across AI SaaS, CRM and ad management.",
+   "Founder of CustomLab.ai, with work across business automation, CRM and ad management.",
   ],
   faq=[
    ("What's the difference between an AI architect and an AI developer?", "A developer implements a feature. An architect decides the system: what the model may do, where code must be deterministic, how data flows, how failures surface. I do both, but the architecture is what determines whether the project holds up."),
    ("Do you build it yourself or hand off a design?", "I build it — alone or alongside your team — and stay on for operation. A design that nobody can run is not finished."),
    ("Which industries?", "Home services and contractors, professional services, real estate and property operators, and multi-venture founders. The patterns transfer; the tools are chosen per business."),
-   ("How do you price architecture work?", "Scoped engagements with a written deliverable and the hours or revenue it should affect. Discovery calls are free; no retainer is required to start."),
+   ("How do you price architecture work?", "We agree a written scope, deliverables, investment and any ongoing commitment before work starts. The initial conversation is free."),
    ("Where are you based?", "West Palm Beach, Florida. I serve Palm Beach County in person and the rest of Florida and the United States remotely."),
   ],
   close=("Design it once, run it for years", "If you're about to build — or rebuild — an AI system, a short architecture conversation now saves a rewrite later."),
@@ -303,6 +296,8 @@ def ld(obj): return '<script type="application/ld+json">' + json.dumps(obj, ensu
 
 def page_html(p):
     url = f"{DOMAIN}/{p['slug']}/"
+    cta_href = p.get("cta_href", "/?topic=ai#contact")
+    cta_label = p.get("cta_label", "Start a conversation")
     h = TEMPLATE
     # ---- head
     h = re.sub(r"<title>.*?</title>", f"<title>{esc(p['title'])}</title>", h, count=1, flags=re.S)
@@ -316,7 +311,7 @@ def page_html(p):
     # ---- structured data: replace every ld+json block with this page's set
     schema = [
         {"@context": "https://schema.org", "@type": "Service", "name": p["service_name"], "serviceType": p["service_type"],
-         "provider": {"@id": PERSON_ID}, "areaServed": PERSON["areaServed"], "url": url, "description": p["description"]},
+         "provider": {"@id": PERSON_ID}, "areaServed": SERVICE_AREAS, "url": url, "description": p["description"]},
         {"@context": "https://schema.org", "@type": "WebPage", "@id": url, "url": url, "name": p["title"],
          "description": p["description"], "about": {"@id": PERSON_ID}, "isPartOf": {"@type": "WebSite", "url": DOMAIN, "name": "Zachary Vorsteg"}},
         {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -341,20 +336,20 @@ def page_html(p):
     c_title, c_text = p["close"]
     cross = "".join(f'<a href="{esc(href)}"{" target=\"_blank\" rel=\"noopener\"" if href.startswith("http") else ""}>{esc(t)}</a>' for href, t in p["crosslinks"])
     close = (f'<section class="svc-close"><div class="container"><h2>{esc(c_title)}</h2><p>{esc(c_text)}</p>'
-             f'<a href="/#contact" class="btn btn-accent">Start a project</a><div class="svc-crosslinks">{cross}</div></div></section>')
+             f'<a href="{esc(cta_href)}" class="btn btn-accent">{esc(cta_label)}</a><p class="svc-response">I reply within one business day.</p><div class="svc-crosslinks">{cross}</div></div></section>')
     c2h, c2t = p["cta2"]
     hero = (f'<section class="svc-hero"><div class="container"><div class="svc-hero-content"><div class="hero-eyebrow">{esc(p["eyebrow"])}</div>'
-            f'<h1>{esc(p["h1"])}</h1><p>{esc(p["lede"])}</p><div class="svc-cta-row"><a href="/#contact" class="btn btn-accent">Start a project</a>'
+            f'<h1>{esc(p["h1"])}</h1><p>{esc(p["lede"])}</p><div class="svc-cta-row"><a href="{esc(cta_href)}" class="btn btn-accent">{esc(cta_label)}</a>'
             f'<a href="{esc(c2h)}"{" target=\"_blank\" rel=\"noopener\"" if c2h.startswith("http") else ""} class="btn btn-secondary">{esc(c2t)}</a></div></div></div></section>')
     main = "<main>" + hero + sections[:len(sections)] + grid + why + faq + close + "</main>"
     # keep the first section, insert grid after it: build order hero, s1, grid, s2, why, faq, close
     s_html = [f'<section class="svc-section"><div class="container"><h2>{esc(t)}</h2>' + "".join(f"<p>{esc(x)}</p>" for x in paras) + "</div></section>" for t, paras in p["sections"]]
-    main = "<main>" + hero + s_html[0] + grid + "".join(s_html[1:]) + why + faq + close + "</main>"
-    h = re.sub(r"<main>.*?</main>", lambda m: main, h, count=1, flags=re.S)
+    main = '<main id="main" tabindex="-1">' + hero + s_html[0] + grid + "".join(s_html[1:]) + why + faq + close + "</main>"
+    h = re.sub(r"<main\b[^>]*>.*?</main>", lambda m: main, h, count=1, flags=re.S)
     # ---- nav highlight: mark AI Automation link as current section
     return h
 
-def main():
+def main(sync_homepage=False):
     written = []
     for p in PAGES:
         out = page_html(p)
@@ -366,7 +361,13 @@ def main():
         d = ROOT / p["slug"]; d.mkdir(exist_ok=True)
         (d / "index.html").write_text(out, encoding="utf-8")
         written.append(f"/{p['slug']}/ ({len(out)} bytes, title {len(p['title'])}c, desc {len(p['description'])}c)")
-    # ---- homepage Person entity: replace the existing Person block in place
+    (ROOT / "entity").mkdir(exist_ok=True)
+    (ROOT / "entity" / "person.jsonld").write_text(json.dumps(PERSON, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print("\n".join("  wrote " + w for w in written))
+    print("  entity/person.jsonld written")
+    if not sync_homepage:
+        return
+    # Homepage is maintained independently; syncing it requires an explicit opt-in.
     idx = ROOT / "index.html"
     h = idx.read_text(encoding="utf-8")
     blocks = list(re.finditer(r'<script type="application/ld\+json">(.*?)</script>', h, re.S))
@@ -379,10 +380,9 @@ def main():
     # link the Organization blocks back to the person by @id (inverse founder link)
     h = re.sub(r'("founder":\s*\{)\s*"@type":\s*"Person",\s*"name":\s*"Zachary Vorsteg"', r'\1"@id": "' + PERSON_ID + '", "@type": "Person", "name": "Zachary Vorsteg"', h)
     idx.write_text(h, encoding="utf-8")
-    (ROOT / "entity" ).mkdir(exist_ok=True)
-    (ROOT / "entity" / "person.jsonld").write_text(json.dumps(PERSON, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print("\n".join("  wrote " + w for w in written))
-    print("  homepage Person schema replaced; entity/person.jsonld written; founder back-links:", len(re.findall(PERSON_ID + '", "@type": "Person"', h)))
+    print("  homepage Person schema replaced; founder back-links:", len(re.findall(PERSON_ID + '", "@type": "Person"', h)))
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--sync-homepage", action="store_true", help="Explicitly replace the standalone homepage Person schema")
+    main(sync_homepage=parser.parse_args().sync_homepage)

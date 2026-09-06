@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Coding vs Real Engineering: Where I Draw the Line</title>
-    <meta name="description" content="I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.">
+    <meta name="description" content="I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.">
     <meta name="keywords" content="vibe coding vs real engineering, vibe coding AI, AI generated code production, vibe coding limitations, AI coding tools founders, AI assisted development 2026, vibe coding Andrej Karpathy, when to use AI coding, AI code quality, technical founder AI tools">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -13,7 +13,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Vibe Coding vs Real Engineering: Where I Draw the Line">
-    <meta property="og:description" content="I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.">
+    <meta property="og:description" content="I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
@@ -29,7 +29,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vibe Coding vs Real Engineering: Where I Draw the Line">
-    <meta name="twitter:description" content="I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.">
+    <meta name="twitter:description" content="I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
     <!-- Article Schema -->
@@ -42,11 +42,7 @@
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-21",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -105,7 +101,7 @@
                   "name": "What AI coding tools do technical founders actually use in 2026?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The dominant tools are Cursor (crossed $100M ARR in roughly a year per The Information, December 2024), GitHub Copilot (used by millions of developers as reported in GitHub Octoverse 2025), and Claude Code (which supports persistent configuration via CLAUDE.md files and context engineering). Each suits different workflows — Cursor for rapid inline iteration, Copilot for autocomplete-style suggestions, Claude Code for agent-level autonomy with structured context."
+                        "text": "The useful categories are editors with inline suggestions, autocomplete assistants, and coding agents that work across files with persistent context. Choose by workflow: rapid iteration, small completions, or supervised multi-step changes. Tool choice does not replace code review, permission boundaries or testing."
                   }
             },
             {
@@ -160,8 +156,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -185,6 +181,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -232,7 +229,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -300,7 +297,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -341,7 +338,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -596,7 +593,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -930,6 +927,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -941,17 +949,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -966,21 +972,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -995,12 +996,12 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI & Engineering</span>
-                        <time class="article-date" datetime="2026-03-21">March 20, 2026</time>
-                        <span class="article-time">17 min read</span>
+                        <time class="article-date" datetime="2026-03-21">March 21, 2026</time>
+                        <span class="article-time">16 min read</span>
                     </div>
 
                     <h1>Vibe Coding vs Real Engineering: Where I Draw the Line</h1>
-                    <p class="article-description">I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.</p>
+                    <p class="article-description">I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.</p>
                 </div>
             </div>
         </section>
@@ -1012,8 +1013,8 @@
 <p>But here&#39;s the other side of that coin. I run <a href="/blog/algorithmic-trading-bots-side-project/">production trading infrastructure</a> handling real capital across Schwab, OANDA, Polymarket, and Solana. Every single line of strategy logic? Written, reviewed, and stress-tested by a human. Me.</p>
 <p>So yeah — I sit squarely on both sides of the vibe coding debate. And honestly? Most people arguing about it are stuck on the wrong question entirely.</p>
 <h2>What Vibe Coding Actually Means</h2>
-<p>Andrej Karpathy — former Tesla AI director and OpenAI co-founder — coined the term in February 2025. His description: a coding style where you &quot;fully give in to the vibes, embrace exponentials, and forget that the code even exists.&quot; You describe what you want in plain English. The AI generates it. Accept, run, iterate. No line-by-line review. No real understanding of the implementation. Just vibes (Andrej Karpathy, X/Twitter, February 2025).</p>
-<p>The label stuck because it named something everybody was already seeing unfold. By Q3 2025, AI coding tools had reached mass adoption: 84% of developers using them according to Stack Overflow&#39;s 2025 survey of 49,000+ respondents (Stack Overflow, 2025). Cursor crossed $100M in annual recurring revenue in roughly a year — faster than Wiz, Deel, or Ramp (The Information, December 2024). Copilot was generating over 40% of code for its users, up from roughly 30% the year prior (GitHub, 2025).</p>
+<p>Andrej Karpathy — former Tesla AI director and AI researcher — coined the term in February 2025. His description: a coding style where you &quot;fully give in to the vibes, embrace exponentials, and forget that the code even exists.&quot; You describe what you want in plain English. The AI generates it. Accept, run, iterate. No line-by-line review. No real understanding of the implementation. Just vibes (Andrej Karpathy, X/Twitter, February 2025).</p>
+<p>The label stuck because it named something everybody was already seeing unfold. By Q3 2025, AI coding tools had reached mass adoption: 84% of developers using them according to Stack Overflow&#39;s 2025 survey of 49,000+ respondents (Stack Overflow, 2025). An AI code-editor business crossed $100M in annual recurring revenue in roughly a year — faster than Wiz, Deel, or Ramp (The Information, December 2024). The previous coding assistant was generating over 40% of code for its users, up from roughly 30% the year prior (GitHub, 2025).</p>
 <p>Good enough to justify &quot;don&#39;t even look at the code&quot; — for certain use cases. The debate that followed, though, collapsed an entire spectrum into a false binary. That&#39;s where everything went sideways.</p>
 <table>
 <thead>
@@ -1073,7 +1074,7 @@
 <h3>Learning and Exploration</h3>
 <p>When I&#39;m poking around a new library or some unfamiliar API surface, the AI takes first pass. Faster than reading docs for initial orientation — by a wide margin. I&#39;m not shipping any of this code. I&#39;m mapping the territory before writing real implementations.</p>
 <h3>Demos and Proof-of-Concepts</h3>
-<p>Client-facing demos, investor prototypes, hackathon entries — anything with a lifespan measured in hours or maybe days. Speed matters. Maintainability doesn&#39;t. Not even a little. Peng et al. found that developers using GitHub Copilot completed tasks 55.8% faster in controlled experiments (Peng et al., arXiv, February 2023). For throwaway code, that speed advantage is pure upside with zero downside risk.</p>
+<p>Client-facing demos, investor prototypes, hackathon entries — anything with a lifespan measured in hours or maybe days. Speed matters. Maintainability doesn&#39;t. Not even a little. Peng et al. found that developers using an AI coding assistant completed tasks 55.8% faster in controlled experiments (Peng et al., arXiv, February 2023). For throwaway code, that speed advantage is pure upside with zero downside risk.</p>
 <h2>Where Vibe Coding Breaks Down</h2>
 <p>Here&#39;s where I part ways with the &quot;just vibe it&quot; crowd. Sharply.</p>
 <h3>Financial Systems Handling Real Money</h3>
@@ -1086,7 +1087,7 @@
 <p>You can&#39;t vibe code embedded systems. There&#39;s no undo button for a bricked microcontroller deployed on a roof three miles away. <a href="/blog/shipping-iot-hardware-solo/">Shipping IoT hardware solo</a> teaches you this lesson in real time — when sensors drift in the field, when firmware fails to update over cellular backhaul, when the Jetson won&#39;t boot. Every firmware decision becomes a site visit. Every stack overflow on the ESP32 requires understanding exactly how you got there. That&#39;s engineering at Tier 4, not Tier 1.</p>
 <p>GitClear analyzed 153 million lines of changed code and found a 39% increase in code churn (code reverted or substantially revised within two weeks) correlated with AI-assisted development, plus a 17.3% decline in &quot;moved&quot; code — less refactoring, more wholesale rewrites (GitClear, February 2024). Code that its nominal author doesn&#39;t understand gets rewritten constantly. That churn compounds brutally.</p>
 <h3>Anything with a Multi-Year Lifespan</h3>
-<p>My automation stack has been running for three years now. Systems that survive that long need clean architecture, clear naming, consistent error handling, and an author who can extend them without re-learning the entire thing from scratch each time. DORA&#39;s (DevOps Research and Assessment) 2024 State of DevOps report puts elite-performing teams at a change failure rate below 5%, with incident recovery under an hour (DORA / Google Cloud, 2024). You don&#39;t hit those numbers with code nobody understands. Period.</p>
+<p>My automation stack has been running for three years now. Systems that survive that long need clean architecture, clear naming, consistent error handling, and an author who can extend them without re-learning the entire thing from scratch each time. DORA&#39;s (DevOps Research and Assessment) 2024 State of DevOps report puts elite-performing teams at a change failure rate below 5%, with incident recovery under an hour (DORA / the report publisher, 2024). You don&#39;t hit those numbers with code nobody understands. Period.</p>
 <h2>The AI-Assisted Development Spectrum</h2>
 <p>Here&#39;s what frustrates me about this debate. It frames everything as binary: vibe coding versus &quot;real&quot; engineering. Broken framing. It&#39;s actually a spectrum with at least four distinct tiers, and I move between them constantly depending on what&#39;s at stake.</p>
 <table>
@@ -1139,7 +1140,7 @@
 <p>Here&#39;s what it looks like day to day — not the polished version, the real one.</p>
 <h3>The Context Engineering Layer</h3>
 <p>My <a href="/blog/context-engineering-ai-agents/">context engineering setup</a> defines permission tiers, tool routing, and behavioral rules that load automatically at every session start. None of this is vibe coding — it&#39;s systems engineering applied to AI tooling.</p>
-<pre><code class="language-yaml"># Permission Tiers (from CLAUDE.md)
+<pre><code class="language-yaml"># Permission tiers — schematic excerpt from my instruction file
 Just Do It: Read, search, run tests, git status
 Brief Confirmation: Edit code, create files, commits
 Always Ask: Production deploys, financial actions, sends
@@ -1152,7 +1153,7 @@ Never: Delete files, send messages without draft review
 <li><strong>Blog infrastructure, build scripts, static site tooling</strong> — 80% AI-generated, 20% human review. Tier 2.</li>
 <li><strong>iOS app features (BidPro)</strong> — 60% AI-generated, 40% human-authored. Tier 3. UI components get AI-generated drafts; data persistence and state management I write by hand because I&#39;ve been burned by AI-generated CoreData code that silently dropped records.</li>
 <li><strong>Trading bot strategy logic</strong> — 10% AI-generated (boilerplate and API wrappers only), 90% human-authored. Tier 4. Evaluation frameworks, entry/exit conditions, risk controls — all hand-written and stress-tested against historical data before a single dollar touches them.</li>
-<li><strong>Context engineering configs (CLAUDE.md, hooks, MCP routing)</strong> — 100% human-authored. These define the AI&#39;s operating boundaries. Having the AI configure its own constraints isn&#39;t a productivity hack — it&#39;s a governance problem waiting to detonate.</li>
+<li><strong>Context engineering configs (instruction files, hooks, MCP routing)</strong> — 100% human-authored. These define the AI&#39;s operating boundaries. Having the AI configure its own constraints isn&#39;t a productivity hack — it&#39;s a governance problem waiting to detonate.</li>
 </ul>
 <p>McKinsey measured 20-45% time savings on coding tasks with AI assistance — highest gains on well-defined, moderate-complexity work, lowest on novel high-complexity problems (McKinsey &amp; Company, June 2023). My experience tracks precisely with those findings: AI excels at generating known patterns and falls apart on novel logic where the correctness criteria live in your head, not in the training data.</p>
 <h2>What the Debate Gets Wrong</h2>
@@ -1173,7 +1174,7 @@ Never: Delete files, send messages without draft review
 <h3>Is vibe coding good enough for production?</h3>
 <p>For low-stakes production systems like internal tools and content sites, it can work with light oversight (Tier 2 in the framework above). For anything handling money, user data, or requiring multi-year maintenance, no — you need at minimum Tier 3 with full code review and automated tests. The Snyk State of AI-Generated Code report found AI assistants reproduced known security vulnerabilities in 36% of tested scenarios (Snyk, 2024).</p>
 <h3>What AI coding tools do technical founders actually use in 2026?</h3>
-<p>The dominant tools are Cursor (crossed $100M ARR in roughly a year per The Information, December 2024), GitHub Copilot (used by millions of developers as reported in GitHub Octoverse 2025), and Claude Code (which supports persistent configuration via CLAUDE.md files and context engineering). Each suits different workflows — Cursor for rapid inline iteration, Copilot for autocomplete-style suggestions, Claude Code for agent-level autonomy with structured context.</p>
+<p>The useful categories are editors with inline suggestions, autocomplete assistants, and coding agents that work across files with persistent context. Choose by workflow: rapid iteration, small completions, or supervised multi-step changes. Tool choice does not replace code review, permission boundaries or testing.</p>
 <h3>How much code should I let AI generate?</h3>
 <p>It depends entirely on the consequences of failure. McKinsey found 20-45% time savings on coding tasks with AI, with the highest gains on moderate-complexity work (McKinsey &amp; Company, June 2023). I let AI generate 80% of low-stakes code (build scripts, UI prototypes) and only 10% of high-stakes code (trading strategies, auth flows). The four-tier framework — not a fixed percentage — is the right mental model.</p>
 <h3>Will vibe coding make software engineers obsolete?</h3>
@@ -1182,34 +1183,7 @@ Never: Delete files, send messages without draft review
 <p>Yes — unless every system you build is disposable. Understanding code isn&#39;t about typing syntax. It&#39;s about debugging at 3 AM, extending the system next quarter, and catching the security vulnerability the AI introduced silently. Gartner projects 75% of enterprise engineers will use AI code assistants by 2028 (Gartner, 2024). The engineers who thrive will be the ones who understand what the AI wrote — not just that it compiled and ran.</p>
 <hr>
 <p>The vibe coding debate isn&#39;t about AI versus humans. It&#39;s about matching your approach to consequences. I <a href="/blog/how-i-build-in-public-as-a-technical-founder/">build in public</a> because documenting these tradeoffs — when to trust the AI and when to rip out every generated line — clarifies what&#39;s actually at stake. The <a href="/blog/my-solo-founder-automation-stack/">automation stack</a> running on $8/month, the <a href="/blog/algorithmic-trading-bots-side-project/">trading strategies</a> handling real capital, the <a href="/blog/financial-modeling-fundamentals/">financial models</a> screening acquisitions, the <a href="/blog/context-engineering-ai-agents/">context engineering</a> that orchestrates autonomy, the <a href="/blog/agentic-engineering-patterns/">agentic engineering methodology</a> that replaced vibe coding in my actual work, <a href="/blog/how-i-use-agentic-ai-one-person-company/">distributed agentic AI managing four ventures</a>, the <a href="/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">licensed real estate practice</a> where code meets commission, and <a href="/blog/what-breaks-when-you-automate-everything/">the 3 AM failures nobody warns you about</a> — each operates on a different tier of AI assistance. The builders who figure out which tier for which code ship fast without the consequent wreckage. Want to discuss where the lines are? <a href="https://zacharyvorsteg.com/#work">See what I&#39;m building</a> or <a href="https://zacharyvorsteg.com/#contact">connect and compare approaches</a>.</p>
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining production trading infrastructure handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch.
-KEY_TAKEAWAY: Vibe coding and real engineering aren't opposites — they're different tiers of AI-assisted development matched to different stakes. The right approach depends on the consequences of failure: pure vibe for disposable prototypes, full engineering for financial systems and production infrastructure, and a defined spectrum in between for everything else.
-ANSWERS_QUERIES:
-- What is vibe coding and is it good or bad?
-- Is vibe coding good enough for production code?
-- What AI coding tools do technical founders use in 2026?
-- How much code should I let AI generate?
-- Will vibe coding and AI replace software engineers?
-- Vibe coding vs real engineering — which is better for startups?
-CITABLE_FACTS: 19
-NAMED_ENTITIES: 32 (Andrej Karpathy, Tesla, OpenAI, Stack Overflow, Cursor, Wiz, Deel, Ramp, GitHub, GitHub Copilot, Y Combinator, Garry Tan, Peng et al., arXiv, FINRA, Snyk, GitClear, McKinsey, Gartner, Google Cloud, DORA, Carta, Schwab, OANDA, Polymarket, Solana, BidPro, Claude Code, The Information, CLAUDE.md, MCP, GitHub Octoverse)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
 
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,650
-DATA_POINTS: 19 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Karpathy/X, Stack Overflow 2025, Cursor/The Information, GitHub 2025, Y Combinator/Garry Tan, Peng et al./arXiv, FINRA 2024, Snyk 2024, GitClear 2024, McKinsey 2023, Gartner 2024, Carta 2025, DORA/Google Cloud 2024, GitHub Octoverse 2025)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (Vibe Coding vs AI-Assisted Engineering comparison; Four-Tier AI Development Spectrum)
-CODE_SNIPPETS: 1 (CLAUDE.md permission tiers)
-UNIQUE_ANGLE: First-person decision framework from a practitioner who operates on both sides — AI-first context engineering AND hand-tuned production trading bots — defining a four-tier spectrum for when to vibe-code and when to engineer
--->
             </div>
         </article>
 
@@ -1224,9 +1198,9 @@ UNIQUE_ANGLE: First-person decision framework from a practitioner who operates o
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=ai#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1237,9 +1211,9 @@ UNIQUE_ANGLE: First-person decision framework from a practitioner who operates o
                     
       <div class="related-card">
         <a href="/blog/ai-systems-architect-palm-beach-florida/">
-          <h4>What I've Learned as an AI Systems Architect in Palm Beach</h4>
+          <h4>What I&apos;ve Learned as an AI Systems Architect in Palm Beach</h4>
           <p class="related-desc">Zach Vorsteg on AI systems architecture as a solo technical founder in Palm Beach — tools, costs, and what the job market data misses.</p>
-          <span class="related-meta">September 4, 2026</span>
+          <span class="related-meta">September 5, 2026</span>
         </a>
       </div>
     
@@ -1266,45 +1240,6 @@ UNIQUE_ANGLE: First-person decision framework from a practitioner who operates o
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How I Use Agentic AI to Run a One-Person Company</title>
-    <meta name="description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.">
+    <meta name="description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.">
     <meta name="keywords" content="agentic AI workflow solo founder, agentic AI automation one person company, AI agent daily workflow, solo founder AI tools 2026, agentic AI real workflow, one person company AI, AI agent task delegation, solo founder productivity AI, agentic AI limitations, AI automated business operations">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -13,7 +13,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="How I Use Agentic AI to Run a One-Person Company">
-    <meta property="og:description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.">
+    <meta property="og:description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
@@ -29,7 +29,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="How I Use Agentic AI to Run a One-Person Company">
-    <meta name="twitter:description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.">
+    <meta name="twitter:description" content="I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
     <!-- Article Schema -->
@@ -42,11 +42,7 @@
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-21",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -105,7 +101,7 @@
                   "name": "Can agentic AI really replace a team?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Not entirely. Anthropic's 2026 Agentic Coding Trends Report found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (Anthropic, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn't replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment."
+                        "text": "Not entirely. The 2026 Agentic Coding Trends Report published by a model developer found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (model-developer research, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn't replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment."
                   }
             },
             {
@@ -113,7 +109,7 @@
                   "name": "What tools do you use for your agentic AI workflow?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "My primary agent is Claude Code with a 500+ line CLAUDE.md configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the full context engineering setup and the automation infrastructure in separate posts."
+                        "text": "My primary coding agent uses a 500+ line persistent instruction configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the full context engineering setup and the automation infrastructure in separate posts."
                   }
             },
             {
@@ -160,8 +156,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -185,6 +181,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -232,7 +229,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -300,7 +297,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -341,7 +338,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -596,7 +593,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -930,6 +927,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -941,17 +949,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -966,21 +972,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -995,12 +996,12 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
-                        <time class="article-date" datetime="2026-03-21">March 20, 2026</time>
-                        <span class="article-time">18 min read</span>
+                        <time class="article-date" datetime="2026-03-21">March 21, 2026</time>
+                        <span class="article-time">16 min read</span>
                     </div>
 
                     <h1>How I Use Agentic AI to Run a One-Person Company</h1>
-                    <p class="article-description">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
+                    <p class="article-description">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.</p>
                 </div>
             </div>
         </section>
@@ -1017,7 +1018,7 @@
 <p>When I start a session, the agent doesn&#39;t wait around. Project context loads automatically — which systems I manage, which files changed recently, what failed overnight. Standing permission to read any file, run any test, search any codebase. For writes, pushes, and financial actions, it stops and asks. That boundary matters more than people realize.</p>
 <h3>The Distinction That Actually Matters</h3>
 <p>A chatbot responds to one prompt. An agentic AI inhabits an environment — persistent instructions, tool access, memory, automation hooks — and takes multi-step actions. It spawns sub-tasks. Runs parallel searches. Monitors background processes while I&#39;m heads-down on something else entirely, maybe debugging firmware or on the phone with a tenant.</p>
-<p>IBM&#39;s 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (IBM, June 2025). That tracks with what I&#39;ve experienced firsthand — but only because I invested heavily in the <a href="/blog/context-engineering-ai-agents/">context engineering</a> that makes agents reliable instead of just impressive. Strip that layer away and what you&#39;ve got is a chatbot with more tools and fewer guardrails. Worse, actually.</p>
+<p>An enterprise technology provider&#39;s 2025 executive survey — 2,900 respondents — puts the number at 83% expecting AI agents to improve process efficiency by 2026 (enterprise technology provider, June 2025). That tracks with what I&#39;ve experienced firsthand — but only because I invested heavily in the <a href="/blog/context-engineering-ai-agents/">context engineering</a> that makes agents reliable instead of just impressive. Strip that layer away and what you&#39;ve got is a chatbot with more tools and fewer guardrails. Worse, actually.</p>
 <h2>A Typical Morning: What the Agent Handles Before I Start</h2>
 <p>6:47 AM. Terminal open. The agent&#39;s SessionStart hook has already fired — loaded accumulated knowledge, detected the project directory, checked git status, pulled in project-specific configuration. All before I&#39;ve finished my coffee.</p>
 <p>My first input isn&#39;t a task. It&#39;s a briefing request. Three parallel sub-agents spin up — trading infrastructure, CRE listings, development status:</p>
@@ -1044,7 +1045,7 @@ ACTION ITEMS: 4 requiring human decision
 </code></pre>
 <p>Four ventures. Four minutes. Before agentic AI, this morning triage devoured 45-60 minutes — manually pulling up trading logs, scanning listing alerts, reviewing build output, reading overnight emails one by one. Gloria Mark at UC Irvine measured the cost of context switching: 23 minutes on average to regain deep focus after a single interruption (Gloria Mark, UC Irvine, 2008). When you&#39;re bouncing between trading infrastructure, real estate deals, iOS bugs, and hardware — every avoided context switch is 23 minutes you keep in your pocket. The morning briefing eliminates four of those switches before 7 AM.</p>
 <h2>Five Task Categories I&#39;ve Handed Off</h2>
-<p>Not everything transfers cleanly. Anthropic&#39;s 2026 Agentic Coding Trends Report: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks — the rest demands active oversight (Anthropic, March 2026). My ratios look similar. Here are the five categories where agents run with minimal babysitting:</p>
+<p>Not everything transfers cleanly. The 2026 Agentic Coding Trends Report published by a model developer: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks — the rest demands active oversight (model-developer research, March 2026). My ratios look similar. Here are the five categories where agents run with minimal babysitting:</p>
 <h3>Research and Due Diligence</h3>
 <p>A new CRE listing crosses my desk — the agent pulls comps, zoning data, tenant background, and market context without being asked twice. Need to verify a statistic for a blog post? Spawns a web research sub-agent and cross-references multiple sources against each other. Evaluating a new trading signal? Academic paper search plus a structured summary of prior work in that area. Peng et al. measured a 55.8% speed improvement for developers using AI assistance (Peng et al., arXiv, February 2023). Research tasks obliterate that number because they&#39;re almost pure information retrieval — the AI&#39;s natural habitat.</p>
 <h3>Code Generation and Review</h3>
@@ -1098,9 +1099,9 @@ ACTION ITEMS: 4 requiring human decision
 </tr>
 </tbody></table>
 <p>The pattern is consistent across every line of business: anything touching external relationships, financial commitment, or architectural judgment stays with me. Information retrieval, pattern execution, system monitoring — those get delegated without hesitation.</p>
-<p>That 0-20% full delegation range from Anthropic&#39;s report isn&#39;t a limitation of today&#39;s tools. It&#39;s a feature of complex work itself. Some tasks need context that won&#39;t fit in a prompt, a config file, or a memory store — no matter how sophisticated. They need you physically in the room, reading body language across a negotiation table, or carrying scar tissue from the failure that teaches you what the next one smells like before it arrives.</p>
+<p>That 0-20% full delegation range from that coding trends report isn&#39;t a limitation of today&#39;s tools. It&#39;s a feature of complex work itself. Some tasks need context that won&#39;t fit in a prompt, a config file, or a memory store — no matter how sophisticated. They need you physically in the room, reading body language across a negotiation table, or carrying scar tissue from the failure that teaches you what the next one smells like before it arrives.</p>
 <h2>Before and After: Real Time Savings Across Four Ventures</h2>
-<p>Anthropic&#39;s own engineers produce 67% more merged pull requests per day after adopting Claude Code, with 59% of their work now involving AI assistance — up from 28% a year prior (Anthropic, 2025). A separate study analyzing 100,000 real conversations found a median 84% time savings on individual tasks (Anthropic, November 2025).</p>
+<p>The model developer reported that its engineers produced 67% more merged pull requests per day after adopting its coding agent, with 59% of their work now involving AI assistance — up from 28% a year prior (model-developer research, 2025). A separate study analyzing 100,000 real conversations found a median 84% time savings on individual tasks (model-developer research, November 2025).</p>
 <p>Here&#39;s what my numbers actually look like:</p>
 <table>
 <thead>
@@ -1185,8 +1186,8 @@ ACTION ITEMS: 4 requiring human decision
 <p>This one sneaks up on you over weeks and months. Every output that&#39;s 90-95% correct still needs human review to catch the 5-10% that&#39;s wrong. Across dozens of delegated tasks per day, that review overhead accumulates into something substantial. Some days it approaches what doing the task manually would have cost — especially on work where correctness is binary. A DSCR calculation is right or it&#39;s wrong. &quot;Mostly right&quot; doesn&#39;t exist in financial underwriting.</p>
 <p>I pay the tax because doing everything manually across four ventures isn&#39;t a real option anymore. But anyone selling agentic AI as &quot;fully autonomous&quot; either hasn&#39;t deployed it against problems with genuine consequences, or isn&#39;t checking the outputs carefully enough to notice the errors.</p>
 <h2>The Solo Founder Force Multiplier — With Real Numbers</h2>
-<p>Dario Amodei, Anthropic&#39;s CEO, gave 70-80% odds that the first billion-dollar one-person company will emerge by 2026 — proprietary trading and developer tools the most likely sectors (Inc., May 2025). Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than ever before. Agentic AI is what makes it operationally survivable rather than just theoretically possible.</p>
-<p>Maor Shlomo built Base44 solo and sold it to Wix for $80 million in six months — 250,000 users before acquisition (TechCrunch, June 2025). Cursor hit $2 billion in annualized revenue by February 2026, the fastest any SaaS (software as a service) company has scaled from $1M to $500M ARR (TechCrunch, March 2026). Small, AI-leveraged teams are rewriting the economics of what&#39;s possible. Dramatically.</p>
+<p>Dario Amodei, the CEO of a model developer, gave 70-80% odds that the first billion-dollar one-person company will emerge by 2026 — proprietary trading and developer tools the most likely sectors (Inc., May 2025). Solo-founded startups grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building alone than ever before. Agentic AI is what makes it operationally survivable rather than just theoretically possible.</p>
+<p>Maor Shlomo built an AI app-building platform solo and sold it to Wix for $80 million in six months — 250,000 users before acquisition (TechCrunch, June 2025). An AI code-editor business hit $2 billion in annualized revenue by February 2026, the fastest any SaaS (software as a service) company has scaled from $1M to $500M ARR (TechCrunch, March 2026). Small, AI-leveraged teams are rewriting the economics of what&#39;s possible. Dramatically.</p>
 <p>Here&#39;s a real week in aggregate:</p>
 <pre><code>TASK ROUTING — Week of 2026-03-11
 
@@ -1218,41 +1219,15 @@ HUMAN-ONLY (no agent involvement):
 <h3>How much does an agentic AI workflow cost for a solo founder?</h3>
 <p>A complete solo-founder AI stack runs $3,000-$12,000 per year in 2026 — covering AI model subscriptions, cloud compute, and tool integrations — representing a 95-98% cost reduction versus equivalent traditional staffing (GREY Journal, 2026). My own stack runs on an <a href="/blog/my-solo-founder-automation-stack/">$8/month local infrastructure</a> base for trading bots, plus AI model subscriptions and MCP integrations for the agent layer.</p>
 <h3>Can agentic AI really replace a team?</h3>
-<p>Not entirely. Anthropic&#39;s 2026 Agentic Coding Trends Report found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (Anthropic, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn&#39;t replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment.</p>
+<p>Not entirely. The 2026 Agentic Coding Trends Report published by a model developer found developers fully delegate only 0-20% of tasks to AI agents even when using AI in 60% of their work (model-developer research, March 2026). Agentic AI replaces team capacity for research, monitoring, code generation, and triage. It doesn&#39;t replace human judgment on financial decisions, client relationships, or architectural choices. The solo founder model works because AI handles volume while the founder handles judgment.</p>
 <h3>What tools do you use for your agentic AI workflow?</h3>
-<p>My primary agent is Claude Code with a 500+ line CLAUDE.md configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the <a href="/blog/context-engineering-ai-agents/">full context engineering setup</a> and the <a href="/blog/my-solo-founder-automation-stack/">automation infrastructure</a> in separate posts.</p>
+<p>My primary coding agent uses a 500+ line persistent instruction configuration, six MCP (Model Context Protocol — an open standard connecting AI models to external tools) integrations, event-driven hooks for automation, and structured memory that persists across sessions. I detailed the <a href="/blog/context-engineering-ai-agents/">full context engineering setup</a> and the <a href="/blog/my-solo-founder-automation-stack/">automation infrastructure</a> in separate posts.</p>
 <h3>Where does agentic AI fail the most?</h3>
 <p>Context window exhaustion on long sessions, confidently wrong outputs that sound authoritative, cross-system coordination gaps where tasks span multiple domains, and the cumulative &quot;almost right&quot; tax where 90-95% accuracy still requires human review on every output. The failures are predictable and manageable — but anyone claiming fully autonomous AI operations is either working on trivial problems or not checking the outputs.</p>
 <h3>Is the one-person company model sustainable long-term?</h3>
 <p>With agentic AI handling operational volume, yes — as long as you maintain the verification layer. Carta&#39;s data showing solo founders at 36.3% of new startups (Carta, 2025) and Dario Amodei&#39;s prediction of a billion-dollar one-person company by 2026 (Inc., May 2025) both point to structural viability. The risk isn&#39;t AI replacing the need for a team. It&#39;s building on AI outputs you don&#39;t verify, which compounds errors silently until something expensive breaks.</p>
 <hr>
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg describes how agentic AI operates in his daily workflow across four concurrent ventures — commercial real estate, algorithmic trading, IoT hardware, and iOS development. The post details specific tasks delegated to AI agents, real time savings measured across each business line, where agentic AI consistently fails, and why the one-person company model works only when you understand the delegation ceiling.
-KEY_TAKEAWAY: Agentic AI enables a solo founder to operate four concurrent ventures by handling 60% of tasks autonomously and supporting another 37% with human-in-the-loop oversight — but the 0-20% full delegation ceiling is permanent, not temporary. The model works because AI handles operational volume while the founder handles judgment, verification, and relationships.
-ANSWERS_QUERIES:
-- What is agentic AI and how do solo founders use it?
-- How much does an agentic AI workflow cost?
-- Can one person run a company with AI agents?
-- Where does agentic AI fail in practice?
-- What tasks can you delegate to AI agents?
-CITABLE_FACTS: 22
-NAMED_ENTITIES: 34 (Dario Amodei, Anthropic, Fortune Business Insights, Gartner, IBM, Gloria Mark, UC Irvine, Capgemini, Peng et al., arXiv, GitHub Copilot, GREY Journal, Inc., Carta, Maor Shlomo, Base44, Wix, TechCrunch, Cursor, Anysphere, Claude Code, CLAUDE.md, MCP, Model Context Protocol, Schwab, OANDA, Polymarket, Solana, BidPro, Python, macOS, launchctl, Linux Foundation, Brave Search)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
 
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,650
-DATA_POINTS: 22 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Fortune Business Insights 2025, Gartner August 2025, IBM June 2025, Gloria Mark/UC Irvine 2008, Anthropic 2026 Agentic Coding Trends March 2026, Peng et al./arXiv February 2023, Capgemini 2025, Anthropic internal 2025, Anthropic research November 2025, GREY Journal 2026, Inc./Dario Amodei May 2025, Carta 2025, TechCrunch/Base44 June 2025, TechCrunch/Cursor March 2026)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (Delegation routing by venture; Before/after time savings across ventures)
-CODE_SNIPPETS: 2 (Morning briefing output; Weekly task routing log)
-UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four concurrent ventures — real time savings, real failure modes, real task delegation ratios — from a solo founder who built the context engineering layer and now shows what it produces daily
--->
             </div>
         </article>
 
@@ -1267,9 +1242,9 @@ UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four con
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=ai#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1281,16 +1256,16 @@ UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four con
       <div class="related-card">
         <a href="/blog/agentic-engineering-patterns/">
           <h4>Agentic Engineering: What Replaced Vibe Coding</h4>
-          <p class="related-desc">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
       <div class="related-card">
         <a href="/blog/context-engineering-ai-agents/">
           <h4>Context Engineering for AI Agents: What I Actually Configure</h4>
-          <p class="related-desc">My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1317,45 +1292,6 @@ UNIQUE_ANGLE: First-person operational walkthrough of agentic AI across four con
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

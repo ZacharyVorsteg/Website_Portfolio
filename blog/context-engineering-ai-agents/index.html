@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Context Engineering for AI Agents: What I Actually Configure</title>
-    <meta name="description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
-    <meta name="keywords" content="context engineering AI agents, context engineering vs prompt engineering, CLAUDE.md configuration, MCP model context protocol, AI agent hooks, AI agent memory architecture, context engineering solo founder, AI agent subagent routing, context engineering practical guide, AI agent configuration 2026">
+    <meta name="description" content="How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.">
+    <meta name="keywords" content="context engineering AI agents, context engineering vs prompt engineering, persistent instruction configuration, MCP model context protocol, AI agent hooks, AI agent memory architecture, context engineering solo founder, AI agent subagent routing, context engineering practical guide, AI agent configuration 2026">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -13,7 +13,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Context Engineering for AI Agents: What I Actually Configure">
-    <meta property="og:description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
+    <meta property="og:description" content="How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
@@ -29,7 +29,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Context Engineering for AI Agents: What I Actually Configure">
-    <meta name="twitter:description" content="My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.">
+    <meta name="twitter:description" content="How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
     <!-- Article Schema -->
@@ -38,15 +38,11 @@
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "Context Engineering for AI Agents: What I Actually Configure",
-      "description": "My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.",
+      "description": "How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-21",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -102,10 +98,10 @@
             },
             {
                   "@type": "Question",
-                  "name": "What is CLAUDE.md and why does it matter?",
+                  "name": "What is a persistent instruction file and why does it matter?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "CLAUDE.md is a configuration file that loads automatically at the start of every Claude Code session. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent's operating manual rather than a single instruction."
+                        "text": "A persistent instruction file provides rules that an agent loads at the start of a session. The filename and loading behavior depend on the tool. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent's operating manual rather than a single instruction."
                   }
             },
             {
@@ -113,7 +109,7 @@
                   "name": "What is MCP (Model Context Protocol)?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "MCP is an open standard launched by Anthropic in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It's how AI agents interact with the real world beyond text generation."
+                        "text": "MCP is an open standard launched in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It's how AI agents interact with the real world beyond text generation."
                   }
             },
             {
@@ -121,15 +117,15 @@
                   "name": "Do I need to be a developer to use context engineering?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt conventions like CLAUDE.md and MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts."
+                        "text": "The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt persistent instruction files and standards such as MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts."
                   }
             },
             {
                   "@type": "Question",
-                  "name": "Is context engineering only for Claude Code?",
+                  "name": "Is context engineering tied to one coding tool?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. Claude Code happens to have native support for CLAUDE.md, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to LangChain agents, AutoGPT configurations, or any system where you control the agent's environment."
+                        "text": "No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. My setup supports persistent instruction files, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to agent-framework applications, autonomous-agent configurations, or any system where you control the agent's environment."
                   }
             }
       ]
@@ -160,8 +156,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -185,6 +181,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -232,7 +229,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -300,7 +297,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -341,7 +338,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -596,7 +593,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -930,6 +927,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -941,17 +949,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -966,21 +972,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -995,12 +996,12 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
-                        <time class="article-date" datetime="2026-03-21">March 20, 2026</time>
-                        <span class="article-time">16 min read</span>
+                        <time class="article-date" datetime="2026-03-21">March 21, 2026</time>
+                        <span class="article-time">15 min read</span>
                     </div>
 
                     <h1>Context Engineering for AI Agents: What I Actually Configure</h1>
-                    <p class="article-description">My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</p>
+                    <p class="article-description">How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.</p>
                 </div>
             </div>
         </section>
@@ -1009,7 +1010,7 @@
         <article class="article-body">
             <div class="container">
                 <p>I don&#39;t write prompts for my AI agents anymore. I configure environments.</p>
-<p>My primary CLAUDE.md file — the persistent instruction set that loads every time I start a Claude Code session — runs over 500 lines. Behavioral directives, permission tiers, MCP (Model Context Protocol — an open standard for connecting AI models to external tools) routing tables, failure playbooks, memory architecture, subagent delegation rules. None of that is a prompt. All of it determines whether the agent ships real work or burns my afternoon chasing hallucinations.</p>
+<p>My primary instruction file — the persistent instruction set that loads every time I start a coding-agent session — runs over 500 lines. The examples below use vendor-neutral filenames and paths to explain the structure; adapt them to your agent tool. Behavioral directives, permission tiers, MCP (Model Context Protocol — an open standard for connecting AI models to external tools) routing tables, failure playbooks, memory architecture, subagent delegation rules. None of that is a prompt. All of it determines whether the agent ships real work or burns my afternoon chasing hallucinations.</p>
 <p>There&#39;s a name for this now. Tobi Lutke, Shopify&#39;s CEO, put it plainly in June 2025: the core skill for working with AI agents isn&#39;t prompting — it&#39;s &quot;context engineering,&quot; the art of providing all the context for a task to be plausibly solvable by the LLM (Tobi Lutke, X/Twitter, June 2025). Karpathy cosigned that same week, calling context engineering &quot;the delicate art and science of filling the context window with just the right information for the next step&quot; (Andrej Karpathy, X/Twitter, June 25, 2025).</p>
 <p>So what does that actually look like when you build it? Here&#39;s the full stack.</p>
 <h2>Context Engineering Is Not Prompt Engineering</h2>
@@ -1057,7 +1058,7 @@
 </tr>
 </tbody></table>
 <p>Multi-agent AI inquiries surged 1,445% from Q1 2024 to Q2 2025 (Gartner, December 2025), and MarketsandMarkets projects the AI agent market hitting $52.62 billion by 2030 — a 46.3% CAGR (compound annual growth rate) from $7.84 billion today (MarketsandMarkets, 2025). Patrick Debois titled his QCon London 2026 presentation &quot;Context Is the New Code.&quot; The industry is barreling toward this at full speed. Are you configuring agents or still typing better questions into chat windows?</p>
-<h2>What a 500-Line CLAUDE.md Actually Contains</h2>
+<h2>What a 500-Line Instruction File Contains</h2>
 <p>People hear &quot;500 lines&quot; and assume it&#39;s bloated. It isn&#39;t. Every section earned its place through a specific failure that cost me time.</p>
 <h3>Behavioral Rules and Permission Tiers</h3>
 <p>First section: operating rules. Not task instructions — behavioral defaults that govern how the agent behaves regardless of what I&#39;m working on:</p>
@@ -1097,7 +1098,7 @@ Hard Rules (Never Break):
 </ul>
 <p>How much do the failure playbooks save me? Roughly 10-15 minutes per incident. Without them, the agent guesses its way through recovery — tries random things, wastes tokens, sometimes makes the problem actively worse. With them, it follows a tested sequence I&#39;ve refined over months. Gloria Mark at UC Irvine measured the cost of context-switching: 23 minutes on average to regain deep focus after an interruption (Gloria Mark, UC Irvine). Every avoided switch is 23 minutes I keep. That math compounds fast.</p>
 <h2>The MCP Layer: Right Tool, Right Task</h2>
-<p>Anthropic launched MCP — the Model Context Protocol — as an open standard in November 2024. In just over a year, the ecosystem exploded: 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads across npm and PyPI (Anthropic / Linux Foundation, 2025). MCP gives AI agents access to external tools — browsers, databases, APIs, file systems — through a standardized interface instead of fragile custom integrations.</p>
+<p>MCP — the Model Context Protocol — launched as an open standard in November 2024. In just over a year, the ecosystem exploded: 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads across npm and PyPI (MCP project / Linux Foundation, 2025). MCP gives AI agents access to external tools — browsers, databases, APIs, file systems — through a standardized interface instead of fragile custom integrations.</p>
 <p>Six MCP integrations in my setup. Each one exists because I hit a concrete wall without it:</p>
 <table>
 <thead>
@@ -1139,28 +1140,29 @@ Hard Rules (Never Break):
 </tr>
 </tbody></table>
 <p>Before I codified this routing table, the agent kept making boneheaded choices. Chrome MCP for headless scraping — wrong, Chrome needs a display server. Playwright for sites with anti-bot detection — wrong, gets blocked instantly. I burned two full sessions debugging tool misrouting before I gave up diagnosing individual failures and just wrote the damn table. Now routing is explicit: anti-bot sites go to Chrome, localhost testing goes to Playwright, and the agent stops improvising.</p>
-<p>Want proof this matters beyond my setup? LangChain&#39;s 2025 State of AI Agents report: 32% of builders cite quality as the top barrier, and failures overwhelmingly trace to poor context — not model limitations (LangChain, 2025). Hand the model a routing table and it routes correctly. Without one, it freelances badly.</p>
+<p>Want proof this matters beyond my setup? An agent-framework provider&#39;s 2025 State of AI Agents report: 32% of builders cite quality as the top barrier, and failures overwhelmingly trace to poor context — not model limitations (agent-framework provider, 2025). Hand the model a routing table and it routes correctly. Without one, it freelances badly.</p>
 <h2>Hooks: Event-Driven Automation Without Manual Triggers</h2>
-<p>Hooks are shell commands that fire automatically in response to agent lifecycle events — no human intervention needed. Claude Code supports four hook points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, and <code>Stop</code>. I use all four.</p>
+<p>Hooks are shell commands that fire automatically in response to agent lifecycle events — no human intervention needed. My setup uses four lifecycle hook points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, and <code>Stop</code>. I use all four.</p>
+<p>This schematic configuration uses example paths under <code>~/.agent/</code>; it is not a drop-in configuration for every tool.</p>
 <pre><code class="language-json">{
   &quot;hooks&quot;: {
     &quot;SessionStart&quot;: [{
-      &quot;command&quot;: &quot;cat ~/.claude/memory/learnings.md&quot;,
+      &quot;command&quot;: &quot;cat ~/.agent/memory/learnings.md&quot;,
       &quot;description&quot;: &quot;Load accumulated knowledge at session start&quot;
     }],
     &quot;PreToolUse&quot;: [{
-      &quot;command&quot;: &quot;~/.claude/hooks/log-modifications.sh&quot;,
+      &quot;command&quot;: &quot;~/.agent/hooks/log-modifications.sh&quot;,
       &quot;description&quot;: &quot;Log file modifications before they happen&quot;
     }],
     &quot;PostToolUse&quot;: [{
-      &quot;command&quot;: &quot;~/.claude/hooks/track-git-actions.sh&quot;,
+      &quot;command&quot;: &quot;~/.agent/hooks/track-git-actions.sh&quot;,
       &quot;description&quot;: &quot;Track git operations for audit trail&quot;
     }]
   }
 }
 </code></pre>
 <h3>Permission Auto-Approval</h3>
-<p>One hook transformed my workflow more than all the others combined: permission checking. Out of the box, Claude Code asks permission for every file read, every search, every git operation. Safe, yes. Also agonizingly slow when you&#39;re trying to stay in flow and the agent interrupts you fourteen times to read fourteen files. My <code>permission-check.sh</code> hook auto-approves a whitelist of safe operations:</p>
+<p>One hook transformed my workflow more than all the others combined: permission checking. Out of the box, my coding agent asks permission for every file read, every search, every git operation. Safe, yes. Also agonizingly slow when you&#39;re trying to stay in flow and the agent interrupts you fourteen times to read fourteen files. My <code>permission-check.sh</code> hook auto-approves a whitelist of safe operations:</p>
 <ul>
 <li>All reads (file reads, glob searches, grep, web fetches)</li>
 <li>Git read operations (status, diff, log, branch, show)</li>
@@ -1204,10 +1206,10 @@ simultaneously. Prefers action over discussion. Skip preambles.
 <li><strong>Background execution</strong> — long-running processes (test suites, builds) that shouldn&#39;t block the conversation. Fire and forget.</li>
 </ul>
 <p>Cardinal rule: offload anything that doesn&#39;t need to stay in main context. I keep the primary thread for core task execution and direct interaction — nothing else. Need three search strategies run simultaneously? Spawn three Explore agents in parallel. Test suite needs to run while I keep working? Background. Simple, once you internalize the pattern.</p>
-<p>Peng et al. measured a 55.8% speed improvement for developers using GitHub Copilot (Peng et al., arXiv (open-access research preprint repository), February 2023). Proper context engineering compounds those gains further — the agent spends less time guessing and more time executing useful work. But only if routing is explicit. An agent that tries to handle everything in one thread eventually drowns in its own accumulated context, and performance craters.</p>
+<p>Peng et al. measured a 55.8% speed improvement for developers using an AI coding assistant (Peng et al., arXiv (open-access research preprint repository), February 2023). Proper context engineering compounds those gains further — the agent spends less time guessing and more time executing useful work. But only if routing is explicit. An agent that tries to handle everything in one thread eventually drowns in its own accumulated context, and performance craters.</p>
 <h2>What Context Engineering Replaces</h2>
 <p>Before I built this system, my AI workflow looked like everyone else&#39;s: open a chat, craft a detailed prompt, get mediocre output, refine the prompt, get marginally better output, sigh, do it manually anyway. Sound familiar? I&#39;d wager most developers reading this are nodding.</p>
-<p>Context engineering replaces that entire loop with a one-time configuration investment. I spent roughly a week building the initial CLAUDE.md, hooks, MCP routing, and memory architecture. Best week I&#39;ve invested in my development workflow — and I don&#39;t say that lightly, considering I&#39;ve spent weeks on trading bot infrastructure that generates actual revenue. Maintenance since then runs maybe 20 minutes a week: updating memory files, tweaking permission tiers, adding failure playbooks when something new breaks in a novel way.</p>
+<p>Context engineering replaces that entire loop with a one-time configuration investment. I spent roughly a week building the initial instruction files, hooks, MCP routing, and memory architecture. Best week I&#39;ve invested in my development workflow — and I don&#39;t say that lightly, considering I&#39;ve spent weeks on trading bot infrastructure that generates actual revenue. Maintenance since then runs maybe 20 minutes a week: updating memory files, tweaking permission tiers, adding failure playbooks when something new breaks in a novel way.</p>
 <p>Where&#39;s the industry headed? AI agent adoption sits at 79% (PwC, 2025), and Gartner predicts 40% of enterprise applications will embed agentic AI by end of 2026, up from under 5% the year prior (Gartner, August 2025). The adoption wave is undeniable — but adoption without context engineering means most of those organizations are running agents blind. No codebase conventions loaded. No permission boundaries defined. No failure playbooks written. Just raw model output and crossed fingers.</p>
 <p>One-person operations grew from 23.7% to 36.3% of all new company incorporations between 2019 and H1 2025 (Carta, 2025). More people are building independently than at any point in the last decade. AI agents are the force multiplier — but only if you engineer the context that makes them reliable instead of chaotic. A misconfigured agent is worse than no agent. Much worse. It moves fast in the wrong direction and you don&#39;t notice until the damage is done. Context engineering is what makes that possible without a team. Not better prompts. Better systems.</p>
 <h2>Frequently Asked Questions</h2>
@@ -1215,43 +1217,17 @@ simultaneously. Prefers action over discussion. Skip preambles.
 <p>Context engineering is the practice of designing the full environment around an AI agent — system prompts, tool connections, memory, hooks, permissions, and routing rules — rather than just crafting individual prompts. The term gained traction in mid-2025 when Shopify CEO Tobi Lutke and former Tesla AI director Andrej Karpathy both identified it as the critical skill for working with AI agents effectively.</p>
 <h3>How is context engineering different from prompt engineering?</h3>
 <p>Prompt engineering optimizes a single message. Context engineering designs the persistent system that shapes every interaction — instruction files that survive across sessions, tool routing tables, permission architectures, memory stores, and event-driven automation hooks. A good prompt improves one response. Good context engineering improves every response.</p>
-<h3>What is CLAUDE.md and why does it matter?</h3>
-<p>CLAUDE.md is a configuration file that loads automatically at the start of every Claude Code session. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent&#39;s operating manual rather than a single instruction.</p>
+<h3>What is a persistent instruction file and why does it matter?</h3>
+<p>A persistent instruction file provides rules that an agent loads at the start of a session. The filename and loading behavior depend on the tool. It contains persistent instructions — behavioral rules, permission tiers, project context, failure playbooks, and tool routing tables — that the agent applies to all tasks without re-prompting. Think of it as the agent&#39;s operating manual rather than a single instruction.</p>
 <h3>What is MCP (Model Context Protocol)?</h3>
-<p>MCP is an open standard launched by Anthropic in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It&#39;s how AI agents interact with the real world beyond text generation.</p>
+<p>MCP is an open standard launched in November 2024 that lets AI models connect to external tools — browsers, databases, APIs, file systems — through a standardized interface. As of 2025, the ecosystem includes 5,800+ community servers, 300+ clients, and 97 million monthly SDK downloads. It&#39;s how AI agents interact with the real world beyond text generation.</p>
 <h3>Do I need to be a developer to use context engineering?</h3>
-<p>The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt conventions like CLAUDE.md and MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts.</p>
-<h3>Is context engineering only for Claude Code?</h3>
-<p>No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. Claude Code happens to have native support for CLAUDE.md, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to LangChain agents, AutoGPT configurations, or any system where you control the agent&#39;s environment.</p>
+<p>The techniques in this post require comfort with configuration files, JSON, and command-line tools. But the core concepts — defining permissions, routing tools, persisting memory — apply to any AI agent platform. As more tools adopt persistent instruction files and standards such as MCP, the barrier will drop. Right now, the advantage belongs to builders willing to invest a week configuring their setup rather than spending months compensating with better prompts.</p>
+<h3>Is context engineering tied to one coding tool?</h3>
+<p>No. The principles — persistent instructions, tool routing, memory architecture, permission layers — apply to any AI agent framework. My setup supports persistent instruction files, hooks, and MCP, which makes implementation straightforward. But the same thinking applies to agent-framework applications, autonomous-agent configurations, or any system where you control the agent&#39;s environment.</p>
 <hr>
-<p>Context engineering isn&#39;t a buzzword. It&#39;s the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my Claude Code setup — if you&#39;re running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, <a href="https://zacharyvorsteg.com/#work">dig into what I&#39;m shipping</a> or <a href="https://zacharyvorsteg.com/#contact">connect with me to compare approaches</a>.</p>
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg breaks down context engineering — the practice of designing the full environment around AI agents, not just individual prompts. The post covers his actual CLAUDE.md configuration, MCP tool routing across six integrations, event-driven hooks for permission management and session initialization, structured memory architecture that persists across sessions, and subagent routing patterns for parallelizing complex tasks.
-KEY_TAKEAWAY: Context engineering — designing persistent instruction files, tool routing tables, memory architecture, permission tiers, and event-driven hooks — is the critical skill for making AI agents reliable and autonomous. The distinction from prompt engineering is structural: prompts optimize one message, context engineering optimizes every interaction across every session.
-ANSWERS_QUERIES:
-- What is context engineering for AI agents?
-- How is context engineering different from prompt engineering?
-- What is CLAUDE.md and how do you configure it?
-- What is MCP Model Context Protocol?
-- How do solo founders use AI agents effectively?
-CITABLE_FACTS: 17
-NAMED_ENTITIES: 29 (Tobi Lutke, Shopify, Andrej Karpathy, Tesla, OpenAI, Gartner, MarketsandMarkets, Patrick Debois, QCon London, Stack Overflow, Anthropic, Linux Foundation, LangChain, Gloria Mark, UC Irvine, Capgemini, Peng et al., arXiv, GitHub Copilot, PwC, Carta, Claude Code, MCP, Chrome, Playwright, Brave Search, Supabase, Manus AI, Meta)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
+<p>Context engineering isn&#39;t a buzzword. It&#39;s the difference between an AI agent that needs constant hand-holding and one that operates autonomously within defined boundaries. The framework here is live in my coding agent setup — if you&#39;re running agents in production and want to see a working implementation of persistent configurations, MCP routing, and memory architecture in action, <a href="https://zacharyvorsteg.com/#work">dig into what I&#39;m shipping</a> or <a href="https://zacharyvorsteg.com/#contact">connect with me to compare approaches</a>.</p>
 
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,550
-DATA_POINTS: 17 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Tobi Lutke, Andrej Karpathy, Gartner x2, MarketsandMarkets, QCon London/Patrick Debois, Stack Overflow, Anthropic/Linux Foundation, LangChain, Gloria Mark/UC Irvine, Capgemini, Peng et al./arXiv, PwC, Carta)
-INTERNAL_LINKS: 11 unique destinations (/blog/algorithmic-trading-bots-side-project/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/vibe-coding-vs-real-engineering/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (context engineering vs prompt engineering, MCP routing)
-CODE_SNIPPETS: 3 (CLAUDE.md permission tiers, hooks JSON configuration, memory file format)
-UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack — actual CLAUDE.md structure, MCP routing tables, hooks configuration, memory architecture — from a solo founder running multiple ventures simultaneously
--->
             </div>
         </article>
 
@@ -1266,9 +1242,9 @@ UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=ai#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1280,16 +1256,16 @@ UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack
       <div class="related-card">
         <a href="/blog/agentic-engineering-patterns/">
           <h4>Agentic Engineering: What Replaced Vibe Coding</h4>
-          <p class="related-desc">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
       <div class="related-card">
         <a href="/blog/how-i-use-agentic-ai-one-person-company/">
           <h4>How I Use Agentic AI to Run a One-Person Company</h4>
-          <p class="related-desc">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1316,45 +1292,6 @@ UNIQUE_ANGLE: First-person walkthrough of a production context engineering stack
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

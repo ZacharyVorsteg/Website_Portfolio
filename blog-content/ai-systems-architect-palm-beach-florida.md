@@ -7,7 +7,7 @@ pillar: AI & Engineering
 target_query: "ai systems architect palm beach"
 ---
 
-I'm a technical founder based in Palm Beach, Florida who designs and operates AI systems across 5+ shipped products — a commercial real estate CRM, an AI answering service for contractors, ad management tools, and more. AI systems architecture means deciding how the pieces fit: which model, which routing logic, which memory pattern, and how to keep it running without a team. This post covers what that actually looks like outside a 10,000-person company.
+I'm a technical founder based in Palm Beach, Florida who designs and operates AI systems across products and services — a commercial real estate CRM, an AI answering service for contractors, ad management tools, and more. AI systems architecture means deciding how the pieces fit: which model, which routing logic, which memory pattern, and how to keep it running without a team. This post covers what that actually looks like outside a 10,000-person company.
 
 ## What the Job Market Says About AI Architects
 
@@ -47,17 +47,17 @@ Here is what I operate as of September 2026, built over roughly 18 months:
 
 | Layer | Tool / Provider | Monthly Cost | What It Does |
 |---|---|---|---|
-| Primary model | Anthropic Claude (Sonnet) | ~$180–$400 | Reasoning, generation, agentic loops |
-| Orchestration | OpenClaw (local) | $0 (self-hosted) | Agent routing, scheduling, memory |
+| Primary model | General-purpose language model API | ~$180–$400 | Reasoning, generation, agentic loops |
+| Orchestration | Local agent orchestration | $0 (self-hosted) | Agent routing, scheduling, memory |
 | Memory | SQLite + file-based | $0 | Persistent context across sessions |
 | Outreach / messaging | Resend + Twilio | ~$60 | Email and SMS delivery |
 | Hosting | Netlify + Neon Postgres | ~$50 | Sites + database |
 | Trading infrastructure | macOS launchd (54 bots) | $0 (local) | Automated strategy execution |
-| Voice AI | Retell AI | ~$80 | AI receptionist for contractor clients |
+| Voice AI | Voice AI service | ~$80 | AI receptionist for contractor clients |
 
-According to Anthropic's pricing page, Claude API models are billed per token — Sonnet-class models are priced substantially below Opus-class, which is why routing decisions matter so much for cost control at any meaningful volume. [Source: Anthropic pricing.](https://www.anthropic.com/pricing) According to Retell AI's pricing, voice AI charges per minute of live conversation. [Source: Retell AI pricing.](https://www.retellai.com/pricing) According to Netlify's pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. [Source: Netlify pricing.](https://www.netlify.com/pricing/)
+The language-model API I use bills per token, with different rates by model tier. That makes model selection part of the cost calculation. [Source: model provider pricing.](https://www.anthropic.com/pricing) The voice service bills per minute of live conversation. [Source: voice AI provider pricing.](https://www.retellai.com/pricing) According to Netlify's pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. [Source: Netlify pricing.](https://www.netlify.com/pricing/)
 
-Total AI infrastructure: roughly $370–$590/month for 5+ live products. I broke down the full cost picture in [What My AI Development Stack Actually Costs](https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/).
+Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in [What My AI Development Stack Actually Costs](https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/).
 
 The operating principle: pay per token (not per seat), self-host orchestration, and never pay for a managed service where a SQLite table does the same job.
 
@@ -69,13 +69,13 @@ AI talent density is a different story. According to Axial Search (2026), Califo
 
 What Palm Beach does offer:
 
-**A real client base with no local AI competition.** South Florida contractors, commercial real estate operators, and local businesses need AI-adjacent products. They are not hiring AI architects internally — they are buying tools. The architecture decision happens once at product design time, then runs in the background.
+**Practical problems close to the work.** My products serve contractors, commercial real estate operators, and other businesses with concrete needs around calls, leads and follow-up. Working in those markets gives me problems to design around and workflows to observe. Those experiences shape my work; they are not a survey of local demand or competing providers.
 
-**No performance pressure.** There is no local AI community worth showing up to, no social pressure to work on whatever is trending in San Francisco. The focus stays on shipping products that earn revenue.
+**A focus I can choose.** I spend most of my time building and operating products, and much of my technical collaboration happens remotely. That arrangement works for me in Palm Beach. My experience is one way of working here, rather than a judgment about the local technical community.
 
 ## The Three Architecture Decisions That Actually Matter
 
-After building across five products, most AI systems design comes down to three decisions. Get these wrong and the product fails silently or costs more than it earns.
+After building across these products, most AI systems design comes down to three decisions. Get these wrong and the product fails silently or costs more than it earns.
 
 ### 1. Stateless vs. Stateful Agents
 
@@ -85,7 +85,7 @@ Most tutorials show stateless agents because they are simpler to demo. Most usef
 
 ### 2. Single Model vs. Multi-Model Routing
 
-Running one model for everything is simpler but expensive. Routing short classification tasks to a fast, cheap model and reserving capable models for complex reasoning cuts costs by 40–60% in my systems, without meaningfully degrading output quality. According to Anthropic's pricing, Sonnet-class models cost a fraction of Opus-class per token — the difference is large enough that task routing pays for its own engineering overhead at any non-trivial call volume. [Source: Anthropic pricing.](https://www.anthropic.com/pricing) The tradeoff: routing logic is code you maintain. If it breaks, the whole system degrades silently. I test routing decisions explicitly and log which model handled each task type.
+Running one model for everything is simpler but expensive. Routing short classification tasks to a fast, cheap model and reserving capable models for complex reasoning cuts costs by 40–60% in my systems, without meaningfully degrading output quality. The model pricing schedule shows different per-token rates by tier. Compare expected savings with the engineering and monitoring cost before adding a routing layer. [Source: model provider pricing.](https://www.anthropic.com/pricing) The tradeoff: routing logic is code you maintain. If it breaks, the whole system degrades silently. I test routing decisions explicitly and log which model handled each task type.
 
 ### 3. Human-in-the-Loop Gates vs. Full Automation
 
@@ -99,7 +99,7 @@ I have broken all three of the above at least once.
 
 **Stateless when stateful was needed.** AI receptionist forgot a caller's previous contact, leading to repeated intake questions on the second call. Fixed by writing call summaries to persistent storage after every session. According to the 2025 Stack Overflow Developer Survey, 45% of developers find debugging AI-produced errors more time-consuming than standard debugging — building structured logs upfront is faster than reconstructing them after a failure. [Source: Stack Overflow Developer Survey 2025.](https://survey.stackoverflow.co/2025/ai)
 
-**No routing, just brute-force capable model.** Monthly AI spend spiked above $800 when a batch job accidentally used the most expensive model for thousands of short classification tasks. Fixed by adding a routing layer that checks task complexity before model selection. According to Anthropic's pricing, the cost difference between model tiers is substantial enough that routing matters at any volume above a few hundred requests per day. [Source: Anthropic pricing.](https://www.anthropic.com/pricing)
+**No routing, just brute-force capable model.** Monthly AI spend spiked above $800 when a batch job accidentally used the most expensive model for thousands of short classification tasks. Fixed by adding a routing layer that checks task complexity before model selection. Different per-token prices made the model choice material to that batch job. [Source: model provider pricing.](https://www.anthropic.com/pricing)
 
 **Missing human gates.** An automated outreach sequence sent follow-up messages to prospects who had already replied "not interested" — the suppression logic ran after the send, not before. Fixed by inverting the check order. That incident is the reason every demand cycle now starts with a QA audit before any send goes out.
 
@@ -127,13 +127,13 @@ Design the structure of how AI models, memory, data pipelines, and output handle
 According to Axial Search (2026), many AI architecture postings specify a degree and the median experience requirement is 7 years. In practice, shipping real systems in production matters more than credentials. Most of what I know came from building under real cost and reliability pressure. [Source: Axial Search AI Architecture Jobs 2026.](https://axialsearch.com/insights/ai-architecture-jobs)
 
 **Is Palm Beach a good place for AI founders?**
-As a place to operate: yes — according to the State of Florida, there is no state income tax, which matters for multi-venture operators. [Source: State of Florida tax guide.](https://www.stateofflorida.com/taxes/) As a place to find AI talent or community: it is not a hub. The useful network for this work is mostly remote.
+Palm Beach works for the way I build: I can stay close to the business workflows my products serve while collaborating remotely on technical work. That is my experience, not a ranking of places to hire or find a community. A founder choosing a base should consider their customers, collaborators and personal constraints.
 
 **What is the hardest part of running AI systems solo?**
 Observability. A system can pass every local test and degrade silently in production. Without a team to catch it, you need instrumentation that catches problems before clients do. According to the 2025 Stack Overflow Developer Survey, 66% of developers say the biggest AI frustration is output that is almost right but not quite — in a live system, "almost right" at scale is a real problem. [Source: Stack Overflow Developer Survey 2025.](https://survey.stackoverflow.co/2025/ai)
 
 **How much does it cost to run an AI-based product solo?**
-It depends on call volume and model selection. My stack runs 5+ products for $370–$590/month. According to Anthropic's pricing, model costs vary significantly by tier — routing expensive models only to tasks that need them is the single highest-impact cost control available. [Source: Anthropic pricing.](https://www.anthropic.com/pricing)
+It depends on call volume and model selection. My September 2026 operating-cost snapshot was $370–$590/month. Model costs vary by tier; routing expensive models only to tasks that need them is one cost control to evaluate against actual workload and quality requirements. [Source: model provider pricing.](https://www.anthropic.com/pricing)
 
 Building something similar? [Reach out](https://zacharyvorsteg.com/#contact) — or see the ventures at https://zacharyvorsteg.com/#ventures.
 

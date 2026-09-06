@@ -12,11 +12,13 @@
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
+    <link rel="canonical" href="https://zacharyvorsteg.com/apps/">
+
     <!-- Open Graph -->
     <meta property="og:title" content="iOS Apps | Zachary Vorsteg">
     <meta property="og:description" content="Native iOS apps designed and shipped by Zachary Vorsteg. Trusenda (CRM for industrial RE brokers) and BidPro (contractor bidding platform).">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://zacharyvorsteg.com/apps">
+    <meta property="og:url" content="https://zacharyvorsteg.com/apps/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Zachary Vorsteg">
@@ -27,7 +29,7 @@
     <meta name="twitter:description" content="Native iOS apps: Trusenda (CRM) and BidPro (bidding platform).">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
-    <link rel="stylesheet" href="/styles.css?v=7">
+    <link rel="stylesheet" href="/styles.css?v=conversion-1">
     <style>
         /* Apps-specific styles */
         .apps-hero {
@@ -303,25 +305,22 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-container">
                 <div class="logo">Zachary Vorsteg</div>
 
-                <nav class="desktop-nav">
-                    <a href="/production/">Production</a>
-                    <a href="/#software">Software</a>
-                    <a href="/#finance">Finance</a>
-                    <a href="/#real-estate">Real Estate</a>
-                    <a href="/#marketing">Marketing</a>
-                    <a href="/#ventures">Work</a>
-                    <a href="/apps" style="color: var(--accent); font-weight: 600;">Apps</a>
-                    <a href="/blog/">Blog</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/#work">Selected work</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/">Insights</a>
+                    <a href="/?topic=software#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -334,21 +333,15 @@
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-content">
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
-            <nav>
-                <a href="/production/">Production</a>
-                    <a href="/#software">Software</a>
-                <a href="/#finance">Finance</a>
-                <a href="/#real-estate">Real Estate</a>
-                <a href="/#marketing">Marketing</a>
-                <a href="/#ventures">Work</a>
-                <a href="/apps" style="color: var(--accent); font-weight: 600;">Apps</a>
-                <a href="/blog/">Blog</a>
-                <a href="/#contact" class="btn btn-primary">Work With Me</a>
-            </nav>
+            <nav aria-label="Mobile navigation"><a href="/#disciplines">How I help</a>
+                    <a href="/#work">Selected work</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/">Insights</a>
+                    <a href="/?topic=software#contact" class="btn btn-primary">Let’s talk</a></nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Hero -->
         <section class="apps-hero">
             <div class="container">
@@ -424,7 +417,7 @@
                 <div>
                     <a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">See my code on GitHub</a>
                     <a href="/#ventures">View all ventures</a>
-                    <a href="/#contact">Start a project</a>
+                    <a href="/?topic=software#contact">Start a conversation</a>
                 </div>
             </div>
         </section>
@@ -480,6 +473,6 @@
         </div>
     </footer>
 
-    <script src="/app.js?v=4" defer></script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

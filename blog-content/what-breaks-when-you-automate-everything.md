@@ -183,7 +183,7 @@ Two years building automation infrastructure. Here's what stays human regardless
 | IoT hardware | Sensor collection, alert thresholds, dashboards | Recalibration, physical maintenance, deployment decisions |
 | Morning briefing | Multi-system status, actionable summaries | Priority ranking, judgment on flagged items |
 
-Anthropic's 2026 Agentic Coding Trends Report confirms it: developers fully delegate only 0-20% of tasks despite integrating AI into 60% of their work (Anthropic, 2026). My numbers mirror that exactly.
+The 2026 Agentic Coding Trends Report published by a model developer confirms it: developers fully delegate only 0-20% of tasks despite integrating AI into 60% of their work (model-developer research, 2026). My numbers mirror that exactly.
 
 ## FAQ
 
@@ -201,7 +201,7 @@ It shifts workload from execution to maintenance. My [automation stack](/blog/my
 
 ### What percentage of your work can AI agents actually handle?
 
-About 60% involves AI agents in some capacity, but only 0-20% is fully delegated — consistent with Anthropic's 2026 findings. The middle 40-60% requires [agentic engineering](/blog/agentic-engineering-patterns/) — I architect, agents implement, I review. The remaining 40% is pure human judgment: client relationships, strategy decisions, physical hardware maintenance.
+About 60% involves AI agents in some capacity, but only 0-20% is fully delegated — consistent with the 2026 Agentic Coding Trends Report. The middle 40-60% requires [agentic engineering](/blog/agentic-engineering-patterns/) — I architect, agents implement, I review. The remaining 40% is pure human judgment: client relationships, strategy decisions, physical hardware maintenance.
 
 ### How do you handle system failures at 2 AM with no team?
 
@@ -216,35 +216,3 @@ Sustainable with hard constraints, yes. Solo-founded startups now represent 36.3
 Every other post on this site tells you what's possible. The trading systems work. The infrastructure is cost-effective. The AI workflow handles multiple ventures. But building a machine and maintaining a machine are different skills entirely — and maintenance never stops.
 
 If you're operating production systems solo and recognize these failure modes in your own stack, [I'd like to hear about it](https://zacharyvorsteg.com/#contact). The triage protocols, cascade patterns, and monitoring blind spots change when you're the only person on call at 2 AM.
-
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg documents the real failure modes of running 54 automated trading bots, IoT hardware, and an iOS app as a solo founder. The post covers cascading failures between interconnected systems, monitoring blind spots that surface only after extended reliability, the human attention budget ceiling, dependency rot from third-party API changes, the hidden tax of systems that are 95 percent correct, and solo recovery triage at 2 AM — revealing what you literally cannot automate no matter how sophisticated your infrastructure becomes.
-KEY_TAKEAWAY: The most dangerous automation failures aren't crashes — they're cascading data quality issues, monitoring blind spots in previously reliable systems, and the hard ceiling on human attention when managing 54+ concurrent automated processes. Solo founders face a permanent delegation ceiling where judgment calls under ambiguity, relationship maintenance, architecture decisions, and physical hardware intervention always require human presence.
-ANSWERS_QUERIES:
-- What breaks when you automate everything as a solo founder?
-- What are the most common automation failure modes for solo operators?
-- How do you monitor 54 automated trading bots by yourself?
-- What can't you automate no matter how good your infrastructure is?
-- How do solo founders handle cascading system failures?
-- Is full automation sustainable long-term for solo founders?
-CITABLE_FACTS: 24
-NAMED_ENTITIES: 37 (Schwab, OANDA, Polymarket, Kalshi, Solana, Grafana, Python, launchctl, ESP32-S3, MLX90640, Quectel EG25-G, Gartner, SolarWinds, Cockroach Labs, Uptime Institute, Carta, Octopus Ventures, APA, Anthropic, Memfault, Theneo, Gloria Mark, Sophie Leroy, UC Irvine, University of Washington, BidPro, SwiftUI, App Store, DigitalOcean, WebSocket, JSON, OAuth, Supabase, iOS, IEEE SANER, Xavier et al., Rubinstein Meyer Evans)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
-
-<!-- SELF-ASSESSMENT
-WORD_COUNT: 2,800
-DATA_POINTS: 24+ citable facts
-SOURCED_STATS: 14 (Gartner, Cockroach Labs x2, Uptime Institute, SolarWinds x2, Memfault, Gloria Mark/UC Irvine, APA/Rubinstein et al., Sophie Leroy/UW, Xavier et al./IEEE SANER, Theneo, Carta, Octopus Ventures, Anthropic)
-NAMED_ENTITIES: 37+ (Schwab, OANDA, Polymarket, Kalshi, Solana, Grafana, Python, PyPI, launchctl, ESP32-S3, MLX90640, Quectel EG25-G, Gartner, SolarWinds, Cockroach Labs, Uptime Institute, Carta, Octopus Ventures, APA, ACM, Anthropic, Memfault, Theneo, Gloria Mark, Sophie Leroy, UC Irvine, University of Washington, BidPro, SwiftUI, App Store, DigitalOcean, WebSocket, JSON, OAuth, Supabase, iOS)
-INTERNAL_LINKS: 11 (Posts 1-9 + /#work + /#contact)
-H2_SECTIONS: 8
-NON_FAQ_H3: 7 (target 8-10; constrained by 2,800 word ceiling)
-FAQ_QUESTIONS: 6
-TABLES: 2 (decision cost matrix, automated vs human judgment)
-CODE_SNIPPETS: 2 (WebSocket cascade log, triage priority protocol)
-UNIQUE_ANGLE: Counternarrative failure-mode post — only "what goes wrong" content in a market where 100% of competitor articles are positive "use these tools" content. Meta-level operational failures (cascading, monitoring blind spots, attention budget, dependency rot, "almost working" tax) distinct from Posts 3/4/7/8/9 component-level coverage.
-PILLAR: Solo Founder Operations (new — first post in pillar)
--->

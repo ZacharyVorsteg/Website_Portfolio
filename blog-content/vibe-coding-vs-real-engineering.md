@@ -15,9 +15,9 @@ So yeah — I sit squarely on both sides of the vibe coding debate. And honestly
 
 ## What Vibe Coding Actually Means
 
-Andrej Karpathy — former Tesla AI director and OpenAI co-founder — coined the term in February 2025. His description: a coding style where you "fully give in to the vibes, embrace exponentials, and forget that the code even exists." You describe what you want in plain English. The AI generates it. Accept, run, iterate. No line-by-line review. No real understanding of the implementation. Just vibes (Andrej Karpathy, X/Twitter, February 2025).
+Andrej Karpathy — former Tesla AI director and AI researcher — coined the term in February 2025. His description: a coding style where you "fully give in to the vibes, embrace exponentials, and forget that the code even exists." You describe what you want in plain English. The AI generates it. Accept, run, iterate. No line-by-line review. No real understanding of the implementation. Just vibes (Andrej Karpathy, X/Twitter, February 2025).
 
-The label stuck because it named something everybody was already seeing unfold. By Q3 2025, AI coding tools had reached mass adoption: 84% of developers using them according to Stack Overflow's 2025 survey of 49,000+ respondents (Stack Overflow, 2025). Cursor crossed $100M in annual recurring revenue in roughly a year — faster than Wiz, Deel, or Ramp (The Information, December 2024). Copilot was generating over 40% of code for its users, up from roughly 30% the year prior (GitHub, 2025).
+The label stuck because it named something everybody was already seeing unfold. By Q3 2025, AI coding tools had reached mass adoption: 84% of developers using them according to Stack Overflow's 2025 survey of 49,000+ respondents (Stack Overflow, 2025). An AI code-editor business crossed $100M in annual recurring revenue in roughly a year — faster than Wiz, Deel, or Ramp (The Information, December 2024). The previous coding assistant was generating over 40% of code for its users, up from roughly 30% the year prior (GitHub, 2025).
 
 Good enough to justify "don't even look at the code" — for certain use cases. The debate that followed, though, collapsed an entire spectrum into a false binary. That's where everything went sideways.
 
@@ -50,7 +50,7 @@ When I'm poking around a new library or some unfamiliar API surface, the AI take
 
 ### Demos and Proof-of-Concepts
 
-Client-facing demos, investor prototypes, hackathon entries — anything with a lifespan measured in hours or maybe days. Speed matters. Maintainability doesn't. Not even a little. Peng et al. found that developers using GitHub Copilot completed tasks 55.8% faster in controlled experiments (Peng et al., arXiv, February 2023). For throwaway code, that speed advantage is pure upside with zero downside risk.
+Client-facing demos, investor prototypes, hackathon entries — anything with a lifespan measured in hours or maybe days. Speed matters. Maintainability doesn't. Not even a little. Peng et al. found that developers using an AI coding assistant completed tasks 55.8% faster in controlled experiments (Peng et al., arXiv, February 2023). For throwaway code, that speed advantage is pure upside with zero downside risk.
 
 ## Where Vibe Coding Breaks Down
 
@@ -76,7 +76,7 @@ GitClear analyzed 153 million lines of changed code and found a 39% increase in 
 
 ### Anything with a Multi-Year Lifespan
 
-My automation stack has been running for three years now. Systems that survive that long need clean architecture, clear naming, consistent error handling, and an author who can extend them without re-learning the entire thing from scratch each time. DORA's (DevOps Research and Assessment) 2024 State of DevOps report puts elite-performing teams at a change failure rate below 5%, with incident recovery under an hour (DORA / Google Cloud, 2024). You don't hit those numbers with code nobody understands. Period.
+My automation stack has been running for three years now. Systems that survive that long need clean architecture, clear naming, consistent error handling, and an author who can extend them without re-learning the entire thing from scratch each time. DORA's (DevOps Research and Assessment) 2024 State of DevOps report puts elite-performing teams at a change failure rate below 5%, with incident recovery under an hour (DORA / the report publisher, 2024). You don't hit those numbers with code nobody understands. Period.
 
 ## The AI-Assisted Development Spectrum
 
@@ -102,7 +102,7 @@ Here's what it looks like day to day — not the polished version, the real one.
 My [context engineering setup](/blog/context-engineering-ai-agents/) defines permission tiers, tool routing, and behavioral rules that load automatically at every session start. None of this is vibe coding — it's systems engineering applied to AI tooling.
 
 ```yaml
-# Permission Tiers (from CLAUDE.md)
+# Permission tiers — schematic excerpt from my instruction file
 Just Do It: Read, search, run tests, git status
 Brief Confirmation: Edit code, create files, commits
 Always Ask: Production deploys, financial actions, sends
@@ -118,7 +118,7 @@ The split varies wildly by project:
 - **Blog infrastructure, build scripts, static site tooling** — 80% AI-generated, 20% human review. Tier 2.
 - **iOS app features (BidPro)** — 60% AI-generated, 40% human-authored. Tier 3. UI components get AI-generated drafts; data persistence and state management I write by hand because I've been burned by AI-generated CoreData code that silently dropped records.
 - **Trading bot strategy logic** — 10% AI-generated (boilerplate and API wrappers only), 90% human-authored. Tier 4. Evaluation frameworks, entry/exit conditions, risk controls — all hand-written and stress-tested against historical data before a single dollar touches them.
-- **Context engineering configs (CLAUDE.md, hooks, MCP routing)** — 100% human-authored. These define the AI's operating boundaries. Having the AI configure its own constraints isn't a productivity hack — it's a governance problem waiting to detonate.
+- **Context engineering configs (instruction files, hooks, MCP routing)** — 100% human-authored. These define the AI's operating boundaries. Having the AI configure its own constraints isn't a productivity hack — it's a governance problem waiting to detonate.
 
 McKinsey measured 20-45% time savings on coding tasks with AI assistance — highest gains on well-defined, moderate-complexity work, lowest on novel high-complexity problems (McKinsey & Company, June 2023). My experience tracks precisely with those findings: AI excels at generating known patterns and falls apart on novel logic where the correctness criteria live in your head, not in the training data.
 
@@ -158,7 +158,7 @@ For low-stakes production systems like internal tools and content sites, it can 
 
 ### What AI coding tools do technical founders actually use in 2026?
 
-The dominant tools are Cursor (crossed $100M ARR in roughly a year per The Information, December 2024), GitHub Copilot (used by millions of developers as reported in GitHub Octoverse 2025), and Claude Code (which supports persistent configuration via CLAUDE.md files and context engineering). Each suits different workflows — Cursor for rapid inline iteration, Copilot for autocomplete-style suggestions, Claude Code for agent-level autonomy with structured context.
+The useful categories are editors with inline suggestions, autocomplete assistants, and coding agents that work across files with persistent context. Choose by workflow: rapid iteration, small completions, or supervised multi-step changes. Tool choice does not replace code review, permission boundaries or testing.
 
 ### How much code should I let AI generate?
 
@@ -175,32 +175,3 @@ Yes — unless every system you build is disposable. Understanding code isn't ab
 ---
 
 The vibe coding debate isn't about AI versus humans. It's about matching your approach to consequences. I [build in public](/blog/how-i-build-in-public-as-a-technical-founder/) because documenting these tradeoffs — when to trust the AI and when to rip out every generated line — clarifies what's actually at stake. The [automation stack](/blog/my-solo-founder-automation-stack/) running on $8/month, the [trading strategies](/blog/algorithmic-trading-bots-side-project/) handling real capital, the [financial models](/blog/financial-modeling-fundamentals/) screening acquisitions, the [context engineering](/blog/context-engineering-ai-agents/) that orchestrates autonomy, the [agentic engineering methodology](/blog/agentic-engineering-patterns/) that replaced vibe coding in my actual work, [distributed agentic AI managing four ventures](/blog/how-i-use-agentic-ai-one-person-company/), the [licensed real estate practice](/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/) where code meets commission, and [the 3 AM failures nobody warns you about](/blog/what-breaks-when-you-automate-everything/) — each operates on a different tier of AI assistance. The builders who figure out which tier for which code ship fast without the consequent wreckage. Want to discuss where the lines are? [See what I'm building](https://zacharyvorsteg.com/#work) or [connect and compare approaches](https://zacharyvorsteg.com/#contact).
-
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg breaks down the vibe coding debate from a practitioner's perspective — someone who uses AI coding tools daily while maintaining production trading infrastructure handling real money. The post defines a four-tier framework for AI-assisted development, identifies where vibe coding delivers genuine value versus where it creates hidden technical debt, and provides a decision model for technical founders choosing when to accept AI-generated output and when to engineer from scratch.
-KEY_TAKEAWAY: Vibe coding and real engineering aren't opposites — they're different tiers of AI-assisted development matched to different stakes. The right approach depends on the consequences of failure: pure vibe for disposable prototypes, full engineering for financial systems and production infrastructure, and a defined spectrum in between for everything else.
-ANSWERS_QUERIES:
-- What is vibe coding and is it good or bad?
-- Is vibe coding good enough for production code?
-- What AI coding tools do technical founders use in 2026?
-- How much code should I let AI generate?
-- Will vibe coding and AI replace software engineers?
-- Vibe coding vs real engineering — which is better for startups?
-CITABLE_FACTS: 19
-NAMED_ENTITIES: 32 (Andrej Karpathy, Tesla, OpenAI, Stack Overflow, Cursor, Wiz, Deel, Ramp, GitHub, GitHub Copilot, Y Combinator, Garry Tan, Peng et al., arXiv, FINRA, Snyk, GitClear, McKinsey, Gartner, Google Cloud, DORA, Carta, Schwab, OANDA, Polymarket, Solana, BidPro, Claude Code, The Information, CLAUDE.md, MCP, GitHub Octoverse)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
-
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,650
-DATA_POINTS: 19 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Karpathy/X, Stack Overflow 2025, Cursor/The Information, GitHub 2025, Y Combinator/Garry Tan, Peng et al./arXiv, FINRA 2024, Snyk 2024, GitClear 2024, McKinsey 2023, Gartner 2024, Carta 2025, DORA/Google Cloud 2024, GitHub Octoverse 2025)
-INTERNAL_LINKS: 11 unique destinations (/blog/context-engineering-ai-agents/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/how-i-use-agentic-ai-one-person-company/, /blog/agentic-engineering-patterns/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (Vibe Coding vs AI-Assisted Engineering comparison; Four-Tier AI Development Spectrum)
-CODE_SNIPPETS: 1 (CLAUDE.md permission tiers)
-UNIQUE_ANGLE: First-person decision framework from a practitioner who operates on both sides — AI-first context engineering AND hand-tuned production trading bots — defining a four-tier spectrum for when to vibe-code and when to engineer
--->

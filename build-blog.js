@@ -112,7 +112,7 @@ function validateWordCount(slug, content, warnings) {
 // Format date as readable string
 function formatDate(dateStr) {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 }
 
 // Format date as ISO for schema
@@ -128,13 +128,8 @@ function readTime(content) {
   return `${minutes} min read`;
 }
 
-// Shorten title to fit within 65 chars (SEO standard for <title> tags)
-function shortenTitle(title, maxLength = 65) {
-  if (title.length <= maxLength) return title;
-  const truncated = title.substring(0, maxLength);
-  const lastSpace = truncated.lastIndexOf(' ');
-  return lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated;
-}
+// Keep the authored title intact. Search engines choose their own display width;
+// truncating source text also cuts off the visible H1 and schema headline.
 
 // Decode HTML entities in extracted text
 function decodeEntities(text) {
@@ -384,8 +379,8 @@ function build() {
             a => `
       <div class="related-card">
         <a href="/blog/${a.slug}/">
-          <h4>${a.title}</h4>
-          <p class="related-desc">${a.description}</p>
+          <h4>${escapeXml(a.title)}</h4>
+          <p class="related-desc">${escapeXml(a.description)}</p>
           <span class="related-meta">${a.date}</span>
         </a>
       </div>
@@ -396,12 +391,17 @@ function build() {
 
     const faqPairs = extractFAQPairs(article.content);
     const extraSchema = generateExtraSchema(article, faqPairs);
-    const displayTitle = shortenTitle(article.title);
+    const topic = /finance|financial|trading/i.test(article.pillar) ? 'finance'
+      : /real estate/i.test(article.pillar) ? 'real-estate'
+      : /ai|automation|agent/i.test(article.pillar) ? 'ai' : 'other';
 
     const html = template
-      .replace(/{{TITLE}}/g, displayTitle)
-      .replace(/{{DESCRIPTION}}/g, article.description)
-      .replace(/{{KEYWORDS}}/g, article.keywords)
+      .replace(/{{TITLE_JSON}}/g, () => JSON.stringify(article.title).replace(/</g, '\\u003c'))
+      .replace(/{{DESCRIPTION_JSON}}/g, () => JSON.stringify(article.description).replace(/</g, '\\u003c'))
+      .replace(/{{TITLE}}/g, () => escapeXml(article.title))
+      .replace(/{{DESCRIPTION}}/g, () => escapeXml(article.description))
+      .replace(/{{KEYWORDS}}/g, () => escapeXml(article.keywords))
+      .replace(/{{CONTACT_HREF}}/g, `/?topic=${topic}#contact`)
       .replace(/{{SLUG}}/g, article.slug)
       .replace(/{{DATE}}/g, article.dateISO)
       .replace(/{{DATE_FORMATTED}}/g, article.dateFormatted)
@@ -437,8 +437,8 @@ function generateIndex(articles) {
       a => `
     <article class="article-card fade-in">
       <span class="article-pillar">${a.pillar}</span>
-      <h3><a href="/blog/${a.slug}/">${a.title}</a></h3>
-      <p>${a.description}</p>
+      <h3><a href="/blog/${a.slug}/">${escapeXml(a.title)}</a></h3>
+      <p>${escapeXml(a.description)}</p>
       <div class="article-meta">
         <time>${a.dateFormatted}</time>
         <span>${a.readTime}</span>
@@ -460,11 +460,21 @@ function generateIndex(articles) {
 function updateSitemap(articles) {
   let sitemap = fs.existsSync(SITEMAP_PATH) ? fs.readFileSync(SITEMAP_PATH, 'utf-8') : '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>';
 
+  const previousIndexDate = sitemap.match(/<loc>https:\/\/zacharyvorsteg\.com\/blog\/<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/)?.[1] || '';
+  const indexDate = [previousIndexDate, articles[0].dateISO].sort().at(-1);
+
   // Remove existing blog entries (escape the domain for use in regex)
   const escapedDomain = siteConfig.siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const blogEntryRegex = new RegExp(`\\s*<url>\\s*<loc>${escapedDomain}\\/blog\\/[\\s\\S]*?<\\/url>`, 'g');
   sitemap = sitemap.replace(blogEntryRegex, '');
 
+  const blogIndexEntry = `
+  <url>
+    <loc>${siteConfig.siteUrl}/blog/</loc>
+    <lastmod>${indexDate}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
   const blogEntries = articles
     .map(
       a => `
@@ -478,7 +488,7 @@ function updateSitemap(articles) {
     .join('');
 
   // Insert before closing tag
-  sitemap = sitemap.replace('</urlset>', `${blogEntries}\n</urlset>`);
+  sitemap = sitemap.replace('</urlset>', `${blogIndexEntry}${blogEntries}\n</urlset>`);
   fs.writeFileSync(SITEMAP_PATH, sitemap);
   console.log('✓ Sitemap updated');
 }

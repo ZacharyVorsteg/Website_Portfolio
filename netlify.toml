@@ -61,3 +61,13 @@
   from = "/blog/why-im-a-commercial-real-estate-broker-who-codes/*"
   to = "/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/:splat"
   status = 301
+
+# Canonical apps collection
+[[redirects]]
+  from = "/apps.html"
+  to = "/apps/"
+  status = 301
+  force = true
+
+# /apps and /apps/ share the canonical directory document.
+# Do not add a slash-only redirect: Netlify normalizes these paths before rules.

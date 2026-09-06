@@ -27,7 +27,7 @@
       <link>https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/</guid>
       <pubDate>Mon, 30 Mar 2026 00:00:00 GMT</pubDate>
-      <description>My AI development stack costs $257/month as a solo founder. Every tool, every dollar — what delivers ROI, what I dropped, and what&apos;s worth paying for.</description>
+      <description>A March 2026 snapshot of my $257/month development stack: coding tools, infrastructure, what I dropped and how I evaluate the cost.</description>
       <category>Finance</category>
     </item>
     <item>
@@ -43,7 +43,7 @@
       <link>https://zacharyvorsteg.com/blog/context-engineering-ai-agents/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/context-engineering-ai-agents/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>My CLAUDE.md is 500+ lines. Here&apos;s what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</description>
+      <description>How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.</description>
       <category>AI Workflow &amp; Context Engineering</category>
     </item>
     <item>

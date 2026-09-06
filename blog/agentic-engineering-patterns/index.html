@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentic Engineering: What Replaced Vibe Coding</title>
-    <meta name="description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta name="description" content="Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.">
     <meta name="keywords" content="agentic engineering, agentic engineering patterns, what replaced vibe coding, agentic engineering vs vibe coding, AI coding methodology 2026, agentic engineering solo founder, AI agent engineering workflow, task decomposition AI agents, Karpathy agentic engineering, Willison agentic engineering patterns">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/agentic-engineering-patterns/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -13,7 +13,7 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Agentic Engineering: What Replaced Vibe Coding">
-    <meta property="og:description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta property="og:description" content="Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/agentic-engineering-patterns/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
@@ -29,7 +29,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Agentic Engineering: What Replaced Vibe Coding">
-    <meta name="twitter:description" content="Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.">
+    <meta name="twitter:description" content="Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
     <!-- Article Schema -->
@@ -42,11 +42,7 @@
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-21",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -105,7 +101,7 @@
                   "name": "What tools do I need for agentic engineering?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Any AI coding tool that supports multi-step task execution — not just autocomplete. Claude Code, Cursor, and GitHub Copilot in agent mode all support agentic workflows to varying degrees. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (Anthropic / Linux Foundation, 2025), expanding what agents can act on beyond code generation."
+                        "text": "Look for multi-step task execution, repository context, permission controls and reviewable changes. Command-line agents and editors with agent modes can support those workflows; autocomplete alone serves a narrower purpose. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (MCP project / Linux Foundation, 2025), expanding what agents can act on beyond code generation."
                   }
             },
             {
@@ -113,7 +109,7 @@
                   "name": "Can beginners practice agentic engineering?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. NVIDIA's GTC 2026 featured agentic AI development platforms aimed at broadening access, and ICSE's AGENT 2026 workshop is building educational frameworks for the methodology."
+                        "text": "Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. The GTC 2026 conference featured agentic AI development platforms aimed at broadening access, and ICSE's AGENT 2026 workshop is building educational frameworks for the methodology."
                   }
             },
             {
@@ -160,8 +156,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -185,6 +181,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -232,7 +229,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -300,7 +297,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -341,7 +338,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -596,7 +593,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -930,6 +927,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -941,17 +949,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -966,21 +972,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -995,12 +996,12 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI Workflow & Context Engineering</span>
-                        <time class="article-date" datetime="2026-03-21">March 20, 2026</time>
-                        <span class="article-time">20 min read</span>
+                        <time class="article-date" datetime="2026-03-21">March 21, 2026</time>
+                        <span class="article-time">18 min read</span>
                     </div>
 
                     <h1>Agentic Engineering: What Replaced Vibe Coding</h1>
-                    <p class="article-description">Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs.</p>
+                    <p class="article-description">Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.</p>
                 </div>
             </div>
         </section>
@@ -1009,12 +1010,12 @@
         <article class="article-body">
             <div class="container">
                 <p>February 4, 2026 — exactly one year after his original vibe coding tweet — Andrej Karpathy coined &quot;agentic engineering&quot; (Andrej Karpathy, X/Twitter, February 4, 2026).</p>
-<p>Why does the distinction matter? Vibe coding — accepting AI-generated code without understanding it — still has a place in prototyping. Production demands something else entirely. Apple blocked updates for vibe coding apps like Replit and Vibecode that same month, citing App Store Guideline 2.5.2 on dynamically executed code (9to5Mac, March 18, 2026). Meanwhile, platforms like Lovable and Bolt had already watched traffic decline roughly 50% from their mid-2025 peaks as initial hype faded and mainstream tools absorbed the market. What worked for throwaway prototypes was failing hard at production.</p>
+<p>Why does the distinction matter? Vibe coding — accepting AI-generated code without understanding it — still has a place in prototyping. Production demands something else entirely. Apple blocked updates for some AI app-building tools, citing App Store Guideline 2.5.2 on dynamically executed code (9to5Mac, March 18, 2026). Meanwhile, some other AI app-building platforms had already watched traffic decline roughly 50% from their mid-2025 peaks as initial hype faded and mainstream tools absorbed the market. What worked for throwaway prototypes was failing hard at production.</p>
 <p>Agentic engineering is the professional counterpart. Not a rebrand — a fundamentally different operating mode. You architect; the AI implements. Every output passes through a human review gate. The skill isn&#39;t prompting. It isn&#39;t coding. It&#39;s knowing what to build and verifying it was built right.</p>
 <p>I&#39;ve been working this way as an independent builder across <a href="/blog/how-i-use-agentic-ai-one-person-company/">four ventures</a> — trading infrastructure, a CRE practice, IoT hardware, and an iOS app called BidPro. Other posts on this site cover <a href="/blog/context-engineering-ai-agents/">configuring the agent environment</a> and <a href="/blog/vibe-coding-vs-real-engineering/">judging code quality</a>. This one tackles the methodology itself — the actual mechanics of engineering with AI agents during a development session.</p>
 <h2>What Agentic Engineering Actually Means</h2>
 <p>Three moments in early 2026 crystallized the term. Karpathy coined it as vibe coding&#39;s professional counterpart — &quot;agentic because the new default is that you are not writing the code directly 99% of the time, you are orchestrating agents,&quot; he wrote. &quot;Engineering to emphasize that there is an art and science and expertise to it.&quot; At the Pragmatic Summit in February 2026, Simon Willison expanded on the idea with a sharper framing: delivering new code has become nearly free, but delivering good code — architecture, verification, integration — remains expensive. Engineering value shifts from writing implementations to designing the structure agents implement within (Simon Willison, simonwillison.net, March 14, 2026).</p>
-<p>Institutions picked it up fast. Remarkably fast. IBM published a formal &quot;What is Agentic Engineering&quot; explainer (IBM, March 2026). NVIDIA featured agentic AI development platforms at GTC 2026 (NVIDIA, GTC 2026). ICSE — the International Conference on Software Engineering — announced AGENT 2026, a dedicated workshop on agentic engineering practices (ICSE, 2026). From tweet to academic workshop in under two months.</p>
+<p>Institutions picked it up fast. Remarkably fast. An enterprise technology provider published a formal &quot;What is Agentic Engineering&quot; explainer in March 2026. The GTC 2026 conference featured agentic AI development platforms. ICSE — the International Conference on Software Engineering — announced AGENT 2026, a dedicated workshop on agentic engineering practices (ICSE, 2026). From tweet to academic workshop in under two months.</p>
 <h3>The Three Pillars</h3>
 <p>Every session runs on three principles:</p>
 <ol>
@@ -1024,7 +1025,7 @@
 </ol>
 <h3>Why Prompting and Vibe Coding Both Miss the Point</h3>
 <p>Prompt engineering optimizes a single message. Vibe coding strips out human oversight altogether. Agentic engineering sits above both — you&#39;re decomposing work into agent-executable tasks and reviewing results at defined checkpoints, not crafting the perfect prompt.</p>
-<p>Anthropic&#39;s 2026 Agentic Coding Trends Report captures the gap precisely: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks (Anthropic, January 2026). That 40-60% in the middle — tasks where AI participates but doesn&#39;t own the outcome — is exactly where agentic engineering lives.</p>
+<p>The 2026 Agentic Coding Trends Report published by a model developer captures the gap precisely: developers integrate AI into roughly 60% of their work but fully delegate only 0-20% of tasks (model-developer research, January 2026). That 40-60% in the middle — tasks where AI participates but doesn&#39;t own the outcome — is exactly where agentic engineering lives.</p>
 <h2>The Karpathy-Willison Framework</h2>
 <p>Both Karpathy and Willison converge on the core idea: the human&#39;s role shifts from implementation to architecture. Where they diverge is emphasis.</p>
 <table>
@@ -1110,7 +1111,7 @@
 </tr>
 </tbody></table>
 <p>What does each look like in practice? A directive: &quot;Add pagination to the blog index.&quot; Specified: &quot;Add pagination to the blog index. 10 posts per page. Generate static HTML for each page. Update the sitemap.&quot; Surgical: &quot;In build-blog.js line 47, replace the single-file generation with a loop that creates page-1.html through page-N.html based on the post count.&quot;</p>
-<p>Cursor hit $2 billion in annualized revenue by March 2026 — the fastest any SaaS company has reached that level (TechCrunch / Bloomberg, March 2026). Hunger for AI coding tools is real and accelerating. But the tool doesn&#39;t determine outcomes. Decomposition does. The same model produces wildly different results depending on whether you hand it a directive, a specification, or a surgical instruction.</p>
+<p>An AI code-editor business hit $2 billion in annualized revenue by March 2026 — the fastest any SaaS company has reached that level (TechCrunch / Bloomberg, March 2026). Hunger for AI coding tools is real and accelerating. But the tool doesn&#39;t determine outcomes. Decomposition does. The same model produces wildly different results depending on whether you hand it a directive, a specification, or a surgical instruction.</p>
 <h3>Batch Delegation vs Sequential Refinement</h3>
 <p>Some tasks decompose into parallel units. Others demand sequential passes where each step&#39;s output informs the next.</p>
 <p><strong>Batch example:</strong> &quot;Research these three libraries for WebSocket support, compare their API surfaces, and recommend one.&quot; Three independent searches feeding one synthesis. I spawn parallel agents and collate results.</p>
@@ -1176,7 +1177,7 @@ Research outputs:            CROSS-REFERENCE
 <li><strong>Gate</strong> (10-15 min per batch) — I review completed tasks against specs. Approve, revise, or reject.</li>
 <li><strong>Integrate</strong> (5-10 min) — Agent runs tests, checks for regressions, commits approved changes.</li>
 </ol>
-<p>Three to five cycles make a productive session. My ratio of active time to agent working time runs roughly 30:70 — designing and reviewing for 30% of the clock, the agent implementing for 70%. Some days I feel less like a developer and more like a technical project manager who happens to understand the codebase deeply. Peng et al. measured a 55.8% speed improvement for developers using GitHub Copilot in controlled experiments (Peng et al., arXiv, February 2023). Structured sessions beat that number by eliminating the back-and-forth prompting cycle that autocomplete tools impose.</p>
+<p>Three to five cycles make a productive session. My ratio of active time to agent working time runs roughly 30:70 — designing and reviewing for 30% of the clock, the agent implementing for 70%. Some days I feel less like a developer and more like a technical project manager who happens to understand the codebase deeply. Peng et al. measured a 55.8% speed improvement for developers using an AI coding assistant in controlled experiments (Peng et al., arXiv, February 2023). Structured sessions beat that number by eliminating the back-and-forth prompting cycle that autocomplete tools impose.</p>
 <h2>Real Session Walkthroughs</h2>
 <p>Theory is cheap. Here are two actual sessions, annotated with the decisions that mattered.</p>
 <h3>Session 1: Cross-Codebase Bug Fix</h3>
@@ -1264,43 +1265,16 @@ TIME: 1h 22min total (25 min human, 57 min agent)
 <h3>How is agentic engineering different from vibe coding?</h3>
 <p>Vibe coding accepts AI-generated code without deep review. Agentic engineering requires understanding the architecture and reviewing every output at defined checkpoints. The fundamental difference is the review gate — in agentic engineering, nothing ships without human verification scaled to the stakes involved. Apple blocking updates for vibe coding apps in early 2026 (9to5Mac, March 18, 2026) signals where the industry is heading.</p>
 <h3>What tools do I need for agentic engineering?</h3>
-<p>Any AI coding tool that supports multi-step task execution — not just autocomplete. Claude Code, Cursor, and GitHub Copilot in agent mode all support agentic workflows to varying degrees. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (Anthropic / Linux Foundation, 2025), expanding what agents can act on beyond code generation.</p>
+<p>Look for multi-step task execution, repository context, permission controls and reviewable changes. Command-line agents and editors with agent modes can support those workflows; autocomplete alone serves a narrower purpose. The tool matters less than the methodology: task decomposition, review gates, and architectural specification. MCP (Model Context Protocol) — an open standard connecting AI models to external tools — now has 97 million+ monthly SDK downloads (MCP project / Linux Foundation, 2025), expanding what agents can act on beyond code generation.</p>
 <h3>Can beginners practice agentic engineering?</h3>
-<p>Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. NVIDIA&#39;s GTC 2026 featured agentic AI development platforms aimed at broadening access, and ICSE&#39;s AGENT 2026 workshop is building educational frameworks for the methodology.</p>
+<p>Yes, but the review gate demands domain knowledge to be effective. Beginners can decompose tasks and specify constraints, but catching context failures, side effects, and subtle logic errors at review time requires genuine understanding of the system being built. Start with low-stakes projects where review failures are cheap to fix. The GTC 2026 conference featured agentic AI development platforms aimed at broadening access, and ICSE&#39;s AGENT 2026 workshop is building educational frameworks for the methodology.</p>
 <h3>How much time does agentic engineering save compared to traditional development?</h3>
 <p>McKinsey documented 20-45% time savings on coding tasks with AI assistance (McKinsey, June 2023). Structured agentic engineering — with proper task decomposition and calibrated review — compounds that gain considerably. In my practice, the 30:70 human-to-agent time ratio during sessions means I&#39;m actively working about 30% of session time while the agent implements during the other 70%. Savings scale with task decomposability: well-defined work saves more, novel exploratory work saves less.</p>
 <h3>Is agentic engineering only for coding?</h3>
 <p>No. The methodology — decompose, specify, delegate, review — applies to any knowledge work where AI agents participate. I use the same patterns for <a href="/blog/financial-modeling-fundamentals/">research and financial analysis</a>, <a href="/blog/how-i-build-in-public-as-a-technical-founder/">public documentation</a>, and <a href="/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/">CRE deal screening</a>. The engineering label reflects origins in software development, but the patterns — task decomposition, review gates, trust calibration — transfer wherever you&#39;re directing AI agents to produce work.</p>
 <hr>
 <p>Agentic engineering isn&#39;t a tool or a configuration. It&#39;s a methodology — the skill layer between <a href="/blog/context-engineering-ai-agents/">configuring your agent environment</a> and <a href="/blog/how-i-use-agentic-ai-one-person-company/">seeing the operational results</a>. It replaced <a href="/blog/vibe-coding-vs-real-engineering/">vibe coding</a> not because vibe coding was useless but because building durable systems requires human judgment at every review gate. The production code running my ventures — trading systems, iOS apps, IoT firmware — wasn&#39;t prompt-engineered into existence. It was decomposed, specified, implemented by agents, reviewed by me at defined gates, and shipped with confidence. <a href="/blog/what-breaks-when-you-automate-everything/">What actually breaks when you automate this aggressively</a> is the counterweight to this post. If you&#39;re coordinating AI agents across multiple codebases and want to discuss review gate strategies, decomposition patterns, or how judgment transfers across domains, <a href="https://zacharyvorsteg.com/#contact">let&#39;s talk</a>.</p>
-<!--
-GEO_META:
-SPEAKABLE: Zachary Vorsteg explains agentic engineering — the professional development methodology Andrej Karpathy coined as vibe coding's counterpart — through real session walkthroughs, task decomposition patterns, and review gate decisions from building across four concurrent ventures. The post compares the Karpathy and Willison frameworks, shows annotated development sessions demonstrating when to override agent output versus accept it, and argues that architecture and judgment — not prompting or code generation — are the defining skills of this methodology.
-KEY_TAKEAWAY: Agentic engineering is the development methodology where humans handle architecture, task decomposition, and review gates while AI agents handle implementation. The defining skills are breaking work into agent-delegatable units, calibrating review depth by domain stakes, and knowing when to override the agent versus accepting a different-but-valid approach. The methodology replaced vibe coding because durable systems require human judgment at every stage, not just at the prompt.
-ANSWERS_QUERIES:
-- What is agentic engineering and how is it different from vibe coding?
-- What is agentic engineering vs vibe coding?
-- How do you practice agentic engineering as a solo founder?
-- What are agentic engineering patterns and workflows?
-- How do you decompose tasks for AI coding agents?
-- What is the Karpathy Willison framework for agentic engineering?
-CITABLE_FACTS: 24
-NAMED_ENTITIES: 37 (Andrej Karpathy, Tesla, OpenAI, Simon Willison, Pragmatic Summit, IBM, NVIDIA, GTC, ICSE, Anthropic, Apple, 9to5Mac, Lovable, Bolt, Cursor, TechCrunch, Bloomberg, Y Combinator, Garry Tan, GitHub Copilot, Peng et al., arXiv, Stack Overflow, Carta, McKinsey, Gartner, Claude Code, MCP, Model Context Protocol, Linux Foundation, Supabase, BidPro, SwiftUI, Python, Schwab, OANDA, Polymarket, Solana)
-FAQ_QUESTIONS: 6
-TABLES: 2
--->
 
-<!--
-SELF-ASSESSMENT:
-WORD_COUNT: ~2,700
-DATA_POINTS: 24 (specific stats/figures with named sources)
-SOURCED_STATS: 14 (Andrej Karpathy/X February 2026, 9to5Mac March 2026, Simon Willison/simonwillison.net March 2026, IBM March 2026, NVIDIA GTC 2026, ICSE 2026, Anthropic January 2026, TechCrunch/Bloomberg March 2026, Gartner December 2025, Garry Tan/Y Combinator March 2025, McKinsey June 2023, Peng et al./arXiv February 2023, Stack Overflow 2025, Carta 2025)
-INTERNAL_LINKS: 11 unique destinations (/blog/how-i-use-agentic-ai-one-person-company/, /blog/context-engineering-ai-agents/, /blog/vibe-coding-vs-real-engineering/, /blog/algorithmic-trading-bots-side-project/, /blog/my-solo-founder-automation-stack/, /blog/how-i-build-in-public-as-a-technical-founder/, /blog/financial-modeling-fundamentals/, /blog/why-im-a-commercial-real-estate-sales-associate-who-codes/, /blog/what-breaks-when-you-automate-everything/, /#work, /#contact)
-FAQ_QUESTIONS: 6
-TABLES: 2 (Karpathy vs Willison framework comparison; Task decomposition specificity gradient)
-CODE_SNIPPETS: 3 (Trust calibration by domain; Session 1 cross-codebase bug fix walkthrough; Session 2 new feature build walkthrough)
-UNIQUE_ANGLE: First-person methodology walkthrough of agentic engineering from a practitioner who works across four codebases daily — real session walkthroughs with annotated decomposition, review gates, and override decisions, plus the Karpathy-Willison framework comparison applied to multi-venture practice
--->
             </div>
         </article>
 
@@ -1315,9 +1289,9 @@ UNIQUE_ANGLE: First-person methodology walkthrough of agentic engineering from a
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=ai#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1329,16 +1303,16 @@ UNIQUE_ANGLE: First-person methodology walkthrough of agentic engineering from a
       <div class="related-card">
         <a href="/blog/context-engineering-ai-agents/">
           <h4>Context Engineering for AI Agents: What I Actually Configure</h4>
-          <p class="related-desc">My CLAUDE.md is 500+ lines. Here's what context engineering for AI agents looks like in production — hooks, MCP routing, memory — not just prompt engineering.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
       <div class="related-card">
         <a href="/blog/how-i-use-agentic-ai-one-person-company/">
           <h4>How I Use Agentic AI to Run a One-Person Company</h4>
-          <p class="related-desc">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1365,45 +1339,6 @@ UNIQUE_ANGLE: First-person methodology walkthrough of agentic engineering from a
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>

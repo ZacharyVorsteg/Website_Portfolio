@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What I've Learned as an AI Systems Architect in Palm Beach</title>
+    <title>What I&apos;ve Learned as an AI Systems Architect in Palm Beach</title>
     <meta name="description" content="Zach Vorsteg on AI systems architecture as a solo technical founder in Palm Beach — tools, costs, and what the job market data misses.">
     <meta name="keywords" content="ai systems architect palm beach, ai architecture solo founder, ai systems design florida, technical founder ai stack, ai architect 2026">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/ai-systems-architect-palm-beach-florida/">
@@ -12,14 +12,14 @@
     <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="What I've Learned as an AI Systems Architect in Palm Beach">
+    <meta property="og:title" content="What I&apos;ve Learned as an AI Systems Architect in Palm Beach">
     <meta property="og:description" content="Zach Vorsteg on AI systems architecture as a solo technical founder in Palm Beach — tools, costs, and what the job market data misses.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://zacharyvorsteg.com/blog/ai-systems-architect-palm-beach-florida/">
     <meta property="og:image" content="https://zacharyvorsteg.com/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="What I've Learned as an AI Systems Architect in Palm Beach">
+    <meta property="og:image:alt" content="What I&apos;ve Learned as an AI Systems Architect in Palm Beach">
     <meta property="og:site_name" content="Zachary Vorsteg">
     <meta property="og:locale" content="en_US">
     <meta property="article:published_time" content="2026-09-05">
@@ -28,7 +28,7 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="What I've Learned as an AI Systems Architect in Palm Beach">
+    <meta name="twitter:title" content="What I&apos;ve Learned as an AI Systems Architect in Palm Beach">
     <meta name="twitter:description" content="Zach Vorsteg on AI systems architecture as a solo technical founder in Palm Beach — tools, costs, and what the job market data misses.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
@@ -42,11 +42,7 @@
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-09-05",
       "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Zachary Vorsteg",
-        "url": "https://zacharyvorsteg.com"
-      }
+      "publisher": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com/" }
     }
     </script>
 
@@ -89,8 +85,8 @@
         }
         *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
         *:focus:not(:focus-visible) { outline: none; }
-        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
-        .skip-link:focus { top: 0; }
+        .skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 1100; }
+        .skip-link:focus { transform: translateY(0); }
 
         :root {
             --black: #000000;
@@ -114,6 +110,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 88px;
         }
 
         body {
@@ -161,7 +158,7 @@
             cursor: pointer;
             border: none;
             min-height: 48px;
-            white-space: nowrap;
+            white-space: normal;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
             letter-spacing: -0.01em;
         }
@@ -229,7 +226,7 @@
             align-items: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .desktop-nav { display: flex; }
         }
 
@@ -270,7 +267,7 @@
             z-index: 10000;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1000px) {
             .mobile-menu-btn { display: none; }
         }
 
@@ -525,7 +522,7 @@
             font-weight: 600;
             color: var(--gray-900);
             border-bottom: 2px solid var(--gray-200);
-            white-space: nowrap;
+            white-space: normal;
         }
 
         @media (max-width: 768px) {
@@ -859,6 +856,17 @@
                 padding: 24px;
             }
         }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+        .fade-in { opacity: 1; transform: none; animation: none; }
+    [hidden] { display: none !important; }
+        body:not(.menu-ready) .mobile-menu-btn,
+        body:not(.menu-ready) .mobile-menu { display: none; }
+        body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
+        @media (max-width: 999px) {
+            body:not(.menu-ready) header { position: static; }
+            body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+            body:not(.menu-ready) main { padding-top: 0; }
+        }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
 </head>
@@ -870,17 +878,15 @@
             <div class="header-container">
                 <a href="/" class="logo">Zachary Vorsteg</a>
 
-                <nav class="desktop-nav">
-                    <a href="/#work">Work</a>
-                    <a href="/#services">Services</a>
-                    <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
-                    <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
-                    <a href="/#contact" class="btn btn-primary">Work With Me</a>
+                <nav class="desktop-nav" aria-label="Main navigation">
+                    <a href="/#work">Selected work</a>
+                    <a href="/#disciplines">How I help</a>
+                    <a href="/about/">About</a>
+                    <a href="/blog/" class="active" aria-current="page">Insights</a>
+                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
                 </nav>
 
-                <button class="mobile-menu-btn" aria-label="Menu">
+                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -895,21 +901,16 @@
             <button class="mobile-menu-close" aria-label="Close menu">×</button>
             <nav>
                 <a href="/">Home</a>
-                <a href="/#work">Work</a>
-                <a href="/#services">Services</a>
-                <a href="/#templates">Templates</a>
-                    <a href="/production/">Production</a>
+                <a href="/#work">Selected work</a>
+                <a href="/#disciplines">How I help</a>
+                <a href="/about/">About</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                    Pro Forma Tool
-                </a>
                 <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
             </nav>
         </div>
     </div>
 
-    <main>
+    <main id="main" tabindex="-1">
         <!-- Article Header -->
         <section class="article-header">
             <div class="container">
@@ -919,16 +920,16 @@
                         <span>/</span>
                         <a href="/blog/">Blog</a>
                         <span>/</span>
-                        <span>What I've Learned as an AI Systems Architect in Palm Beach</span>
+                        <span>What I&apos;ve Learned as an AI Systems Architect in Palm Beach</span>
                     </div>
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">AI & Engineering</span>
-                        <time class="article-date" datetime="2026-09-05">September 4, 2026</time>
+                        <time class="article-date" datetime="2026-09-05">September 5, 2026</time>
                         <span class="article-time">12 min read</span>
                     </div>
 
-                    <h1>What I've Learned as an AI Systems Architect in Palm Beach</h1>
+                    <h1>What I&apos;ve Learned as an AI Systems Architect in Palm Beach</h1>
                     <p class="article-description">Zach Vorsteg on AI systems architecture as a solo technical founder in Palm Beach — tools, costs, and what the job market data misses.</p>
                 </div>
             </div>
@@ -937,7 +938,7 @@
         <!-- Article Content -->
         <article class="article-body">
             <div class="container">
-                <p>I&#39;m a technical founder based in Palm Beach, Florida who designs and operates AI systems across 5+ shipped products — a commercial real estate CRM, an AI answering service for contractors, ad management tools, and more. AI systems architecture means deciding how the pieces fit: which model, which routing logic, which memory pattern, and how to keep it running without a team. This post covers what that actually looks like outside a 10,000-person company.</p>
+                <p>I&#39;m a technical founder based in Palm Beach, Florida who designs and operates AI systems across products and services — a commercial real estate CRM, an AI answering service for contractors, ad management tools, and more. AI systems architecture means deciding how the pieces fit: which model, which routing logic, which memory pattern, and how to keep it running without a team. This post covers what that actually looks like outside a 10,000-person company.</p>
 <h2>What the Job Market Says About AI Architects</h2>
 <p>The numbers are useful context before getting into the reality of doing this solo.</p>
 <p>According to Axial Search (2026), there were 16,927 US AI architecture job postings since January 2026, running at roughly 605 new postings per week with a peak of 1,272 in late April. The median salary is $189,000. The Principal IC track pays close to Director-level compensation without requiring a move into management. <a href="https://axialsearch.com/insights/ai-architecture-jobs">Full analysis: Axial Search AI Architecture Jobs 2026.</a></p>
@@ -967,13 +968,13 @@
 </thead>
 <tbody><tr>
 <td>Primary model</td>
-<td>Anthropic Claude (Sonnet)</td>
+<td>General-purpose language model API</td>
 <td>~$180–$400</td>
 <td>Reasoning, generation, agentic loops</td>
 </tr>
 <tr>
 <td>Orchestration</td>
-<td>OpenClaw (local)</td>
+<td>Local agent orchestration</td>
 <td>$0 (self-hosted)</td>
 <td>Agent routing, scheduling, memory</td>
 </tr>
@@ -1003,34 +1004,34 @@
 </tr>
 <tr>
 <td>Voice AI</td>
-<td>Retell AI</td>
+<td>Voice AI service</td>
 <td>~$80</td>
 <td>AI receptionist for contractor clients</td>
 </tr>
 </tbody></table>
-<p>According to Anthropic&#39;s pricing page, Claude API models are billed per token — Sonnet-class models are priced substantially below Opus-class, which is why routing decisions matter so much for cost control at any meaningful volume. <a href="https://www.anthropic.com/pricing">Source: Anthropic pricing.</a> According to Retell AI&#39;s pricing, voice AI charges per minute of live conversation. <a href="https://www.retellai.com/pricing">Source: Retell AI pricing.</a> According to Netlify&#39;s pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. <a href="https://www.netlify.com/pricing/">Source: Netlify pricing.</a></p>
-<p>Total AI infrastructure: roughly $370–$590/month for 5+ live products. I broke down the full cost picture in <a href="https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/">What My AI Development Stack Actually Costs</a>.</p>
+<p>The language-model API I use bills per token, with different rates by model tier. That makes model selection part of the cost calculation. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a> The voice service bills per minute of live conversation. <a href="https://www.retellai.com/pricing">Source: voice AI provider pricing.</a> According to Netlify&#39;s pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. <a href="https://www.netlify.com/pricing/">Source: Netlify pricing.</a></p>
+<p>Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in <a href="https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/">What My AI Development Stack Actually Costs</a>.</p>
 <p>The operating principle: pay per token (not per seat), self-host orchestration, and never pay for a managed service where a SQLite table does the same job.</p>
 <h2>Where Being in Palm Beach Matters</h2>
 <p>According to the State of Florida&#39;s official tax guide, Florida has no state income tax. <a href="https://www.stateofflorida.com/taxes/">Source: State of Florida tax guide.</a> For a solo founder generating revenue across multiple ventures, that difference compounds significantly over time compared to California or New York, where state income tax rates for high earners reach 9–13%.</p>
 <p>AI talent density is a different story. According to Axial Search (2026), California accounts for 19% of all US AI architecture job postings and Texas 13% — Florida does not appear in the top tier. <a href="https://axialsearch.com/insights/ai-architecture-jobs">Source: Axial Search AI Architecture Jobs 2026.</a> That matters very little when building software products: the models run in the cloud, clients are wherever they are, and the engineering work happens at a desk.</p>
 <p>What Palm Beach does offer:</p>
-<p><strong>A real client base with no local AI competition.</strong> South Florida contractors, commercial real estate operators, and local businesses need AI-adjacent products. They are not hiring AI architects internally — they are buying tools. The architecture decision happens once at product design time, then runs in the background.</p>
-<p><strong>No performance pressure.</strong> There is no local AI community worth showing up to, no social pressure to work on whatever is trending in San Francisco. The focus stays on shipping products that earn revenue.</p>
+<p><strong>Practical problems close to the work.</strong> My products serve contractors, commercial real estate operators, and other businesses with concrete needs around calls, leads and follow-up. Working in those markets gives me problems to design around and workflows to observe. Those experiences shape my work; they are not a survey of local demand or competing providers.</p>
+<p><strong>A focus I can choose.</strong> I spend most of my time building and operating products, and much of my technical collaboration happens remotely. That arrangement works for me in Palm Beach. My experience is one way of working here, rather than a judgment about the local technical community.</p>
 <h2>The Three Architecture Decisions That Actually Matter</h2>
-<p>After building across five products, most AI systems design comes down to three decisions. Get these wrong and the product fails silently or costs more than it earns.</p>
+<p>After building across these products, most AI systems design comes down to three decisions. Get these wrong and the product fails silently or costs more than it earns.</p>
 <h3>1. Stateless vs. Stateful Agents</h3>
 <p>A stateless agent runs a task and forgets it. A stateful agent maintains memory across invocations — it knows what happened yesterday, what the user last asked, what state a deal is in.</p>
 <p>Most tutorials show stateless agents because they are simpler to demo. Most useful products need stateful agents because context is what makes output actually good. I use file-based memory (markdown + SQLite) over a vector database for most low-volume cases — retrieval latency and cost matter when you are not at enterprise scale. The full pattern is in <a href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">Context Engineering for AI Agents: What I Actually Configure</a>.</p>
 <h3>2. Single Model vs. Multi-Model Routing</h3>
-<p>Running one model for everything is simpler but expensive. Routing short classification tasks to a fast, cheap model and reserving capable models for complex reasoning cuts costs by 40–60% in my systems, without meaningfully degrading output quality. According to Anthropic&#39;s pricing, Sonnet-class models cost a fraction of Opus-class per token — the difference is large enough that task routing pays for its own engineering overhead at any non-trivial call volume. <a href="https://www.anthropic.com/pricing">Source: Anthropic pricing.</a> The tradeoff: routing logic is code you maintain. If it breaks, the whole system degrades silently. I test routing decisions explicitly and log which model handled each task type.</p>
+<p>Running one model for everything is simpler but expensive. Routing short classification tasks to a fast, cheap model and reserving capable models for complex reasoning cuts costs by 40–60% in my systems, without meaningfully degrading output quality. The model pricing schedule shows different per-token rates by tier. Compare expected savings with the engineering and monitoring cost before adding a routing layer. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a> The tradeoff: routing logic is code you maintain. If it breaks, the whole system degrades silently. I test routing decisions explicitly and log which model handled each task type.</p>
 <h3>3. Human-in-the-Loop Gates vs. Full Automation</h3>
 <p>Every AI system has low-stakes reversible tasks (safe to automate) and high-stakes or irreversible tasks (require human approval). Confusing these categories is where real failures happen.</p>
 <p>My rule: if the action touches money, sends a message to a real person, or deploys code to production, it requires explicit human approval. Everything else runs automatically. The practical implementation is an approval queue — agents propose actions, the owner approves with a single tap. More on the full workflow in <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">How I Use Agentic AI to Run a One-Person Company</a>.</p>
 <h2>What Breaks When You Get Architecture Wrong</h2>
 <p>I have broken all three of the above at least once.</p>
 <p><strong>Stateless when stateful was needed.</strong> AI receptionist forgot a caller&#39;s previous contact, leading to repeated intake questions on the second call. Fixed by writing call summaries to persistent storage after every session. According to the 2025 Stack Overflow Developer Survey, 45% of developers find debugging AI-produced errors more time-consuming than standard debugging — building structured logs upfront is faster than reconstructing them after a failure. <a href="https://survey.stackoverflow.co/2025/ai">Source: Stack Overflow Developer Survey 2025.</a></p>
-<p><strong>No routing, just brute-force capable model.</strong> Monthly AI spend spiked above $800 when a batch job accidentally used the most expensive model for thousands of short classification tasks. Fixed by adding a routing layer that checks task complexity before model selection. According to Anthropic&#39;s pricing, the cost difference between model tiers is substantial enough that routing matters at any volume above a few hundred requests per day. <a href="https://www.anthropic.com/pricing">Source: Anthropic pricing.</a></p>
+<p><strong>No routing, just brute-force capable model.</strong> Monthly AI spend spiked above $800 when a batch job accidentally used the most expensive model for thousands of short classification tasks. Fixed by adding a routing layer that checks task complexity before model selection. Different per-token prices made the model choice material to that batch job. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a></p>
 <p><strong>Missing human gates.</strong> An automated outreach sequence sent follow-up messages to prospects who had already replied &quot;not interested&quot; — the suppression logic ran after the send, not before. Fixed by inverting the check order. That incident is the reason every demand cycle now starts with a QA audit before any send goes out.</p>
 <p>The common thread: failures in AI systems are usually silent. According to McKinsey&#39;s State of AI 2025, 30% of organizations experienced AI-related inaccuracy problems. <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai">Source: McKinsey State of AI 2025.</a> Observability — structured logs, output audits, exception alerting — is not optional.</p>
 <h2>The Skill Gap the Job Postings Miss</h2>
@@ -1049,11 +1050,11 @@ Design the structure of how AI models, memory, data pipelines, and output handle
 <p><strong>Do you need a Computer Science degree to work in AI architecture?</strong>
 According to Axial Search (2026), many AI architecture postings specify a degree and the median experience requirement is 7 years. In practice, shipping real systems in production matters more than credentials. Most of what I know came from building under real cost and reliability pressure. <a href="https://axialsearch.com/insights/ai-architecture-jobs">Source: Axial Search AI Architecture Jobs 2026.</a></p>
 <p><strong>Is Palm Beach a good place for AI founders?</strong>
-As a place to operate: yes — according to the State of Florida, there is no state income tax, which matters for multi-venture operators. <a href="https://www.stateofflorida.com/taxes/">Source: State of Florida tax guide.</a> As a place to find AI talent or community: it is not a hub. The useful network for this work is mostly remote.</p>
+Palm Beach works for the way I build: I can stay close to the business workflows my products serve while collaborating remotely on technical work. That is my experience, not a ranking of places to hire or find a community. A founder choosing a base should consider their customers, collaborators and personal constraints.</p>
 <p><strong>What is the hardest part of running AI systems solo?</strong>
 Observability. A system can pass every local test and degrade silently in production. Without a team to catch it, you need instrumentation that catches problems before clients do. According to the 2025 Stack Overflow Developer Survey, 66% of developers say the biggest AI frustration is output that is almost right but not quite — in a live system, &quot;almost right&quot; at scale is a real problem. <a href="https://survey.stackoverflow.co/2025/ai">Source: Stack Overflow Developer Survey 2025.</a></p>
 <p><strong>How much does it cost to run an AI-based product solo?</strong>
-It depends on call volume and model selection. My stack runs 5+ products for $370–$590/month. According to Anthropic&#39;s pricing, model costs vary significantly by tier — routing expensive models only to tasks that need them is the single highest-impact cost control available. <a href="https://www.anthropic.com/pricing">Source: Anthropic pricing.</a></p>
+It depends on call volume and model selection. My September 2026 operating-cost snapshot was $370–$590/month. Model costs vary by tier; routing expensive models only to tasks that need them is one cost control to evaluate against actual workload and quality requirements. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a></p>
 <p>Building something similar? <a href="https://zacharyvorsteg.com/#contact">Reach out</a> — or see the ventures at <a href="https://zacharyvorsteg.com/#ventures">https://zacharyvorsteg.com/#ventures</a>.</p>
 <!-- content-artifact-sha256: undefined -->
             </div>
@@ -1070,9 +1071,9 @@ It depends on call volume and model selection. My stack runs 5+ products for $37
 
         <!-- CTA -->
         <section class="article-cta">
-            <h3>Ready to build something?</h3>
-            <p>Let's talk about your challenge—deals, systems, or custom development.</p>
-            <a href="/#contact" class="btn">Start a conversation</a>
+            <h3>What are you working through?</h3>
+            <p>Tell me about the business question or process you want to improve. I reply within one business day.</p>
+            <a href="/?topic=ai#contact" class="btn">Start a conversation</a>
         </section>
 
         <!-- Related Articles -->
@@ -1084,8 +1085,8 @@ It depends on call volume and model selection. My stack runs 5+ products for $37
       <div class="related-card">
         <a href="/blog/vibe-coding-vs-real-engineering/">
           <h4>Vibe Coding vs Real Engineering: Where I Draw the Line</h4>
-          <p class="related-desc">I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point.</p>
-          <span class="related-meta">March 20, 2026</span>
+          <p class="related-desc">I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.</p>
+          <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
     
@@ -1112,45 +1113,6 @@ It depends on call volume and model selection. My stack runs 5+ products for $37
         </div>
     </footer>
 
-    <script>
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileMenuClose = document.querySelector('.mobile-menu-close');
-        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content nav a');
-
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            this.classList.add('active');
-        });
-
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-            mobileMenuBtn.classList.remove('active');
-        }
-
-        mobileMenuClose.addEventListener('click', closeMobileMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu) closeMobileMenu();
-        });
-
-        // Header scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('scrolled', window.scrollY > 100);
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
+    <script src="/app.js?v=conversion-1" defer></script>
 </body>
 </html>
