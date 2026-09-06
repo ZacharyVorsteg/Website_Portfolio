@@ -22,7 +22,7 @@ PAGE = dict(
   description="Cinematic reels, stills and kinetic pieces produced on a schedule, checked against a written standard and posted with a receipt. For owner-led Palm Beach brands.",
   h1="Content that looks like this, every week, without you touching it.",
   lede=("Below is our own output: signature renders turned into motion, and short kinetic pieces built to a written production "
-        "standard. Each one was produced by the system, checked by the system, and posted by the system with a receipt. The same "
+        "standard, and a spokesperson who is disclosed as AI on every piece she appears in. Each one was produced by the system, checked by the system, and posted by the system with a receipt. The same "
         "production layer is available to a small number of brands on annual terms."),
   cta2=("/ai-operating-layer/", "Private engagements"),
   sections=[
@@ -39,6 +39,7 @@ PAGE = dict(
    ("Signature stills", "Cinematic renders in your brand's world, one idea per frame, with a restrained wordmark. Used across the feed, ads and the site."),
    ("Detail reels", "One material, one light, one slow move: 9:16 clips made from your own stills so motion and stills share a look."),
    ("Kinetic pieces", "Short typographic pieces that make one point with one line, cut to a measured pace on a brief-verified plate."),
+   ("Spokesperson pieces", "Short talking pieces from a persistent, identity-locked spokesperson, disclosed as AI on the piece itself. A spokesperson, never a customer or a testimonial."),
    ("Captions and destinations", "Hook-first captions per platform, niche hashtags capped, a funnel link where links are clickable."),
    ("Verification", "Plates are checked frame by frame by a vision model; every piece passes a written standard gate before it can post."),
    ("Receipts", "Every post is logged with its destination and status. A monthly report says what ran, in plain English."),
@@ -49,13 +50,15 @@ PAGE = dict(
    "Motion: the still itself is animated with a single slow push-in, so stills and motion share one look.",
    "Brief verification: three frames are shown to a vision model with the brand's brief; at least two of three must agree.",
    "Standard gate: kinetic pieces are checked against the written production standard — pace, structure, plate, audio — before posting.",
+   "Spokesperson pieces: one persistent persona with a locked reference pack, a script checked for articulation, captions taken from the script, and the disclosure written on the piece before a human reviews it.",
    "Posting with receipts: the piece goes to the destinations you approved, and the log records where and whether it landed.",
   ],
   faq=[
    ("Is this stock footage or templates?", "No. Every still is generated for the brand; every clip is made from that still; every kinetic piece is built from the brand's own claim-locked lines. Nothing on this page comes from a library."),
-   ("Will it look like everyone else's AI content?", "The look is set by a house style and a written standard, not by a prompt someone typed once. The same restraint you see here — one idea per frame, no text burned into images, no invented people — is enforced on every piece."),
+   ("Will it look like everyone else's AI content?", "The look is set by a house style and a written standard, not by a prompt someone typed once. The same restraint you see here — one idea per frame, no text burned into images, no invented customers or testimonials — is enforced on every piece. Where a spokesperson is synthetic, the piece says so."),
    ("Who approves what goes out?", "You approve the destinations and the brand kit. Pieces that fail the standard cannot post. You can review before posting if you prefer; most clients read the receipts instead."),
    ("What do you need from us?", "Logo files, colours, the offers you actually want promoted, and access to the social accounts you want used. A brand kit takes one conversation."),
+   ("Which tools do you use?", "Current image, video and speech models behind our own pipeline. The models change as better ones arrive; the pipeline, the written standard and the verification are the product, and those are ours."),
    ("How is it priced?", "Annually, against a scope in writing, as part of an Operating Layer or Embedded engagement or on its own. If the fee is a material line for the business, Ads Handled or CallsHandled is the better starting point."),
   ],
   close=("If your brand should look like this", "Send me one thing you sell and the platforms you care about. I'll reply with what a first month would produce."),
@@ -140,22 +143,34 @@ def blocks():
               f'<figure>{vid("plate-pbw.mp4", "plate-pbw.jpg", "Plate", "A verified brand plate: a distribution park from above")}<figcaption>3 · Brief-verified plate</figcaption></figure>'
               f'<figure>{vid("kinetic-pbw.mp4", "kinetic-pbw.jpg", "Kinetic piece", "The finished kinetic piece on that plate", sound=True)}<figcaption>4 · Kinetic piece, gate: pass</figcaption></figure>'
               '</div><div class="receipt">Every step writes a receipt: source, seed, checksum, verdict. Nothing ships without one.</div></div></section>')
+    # ---- spokesperson pieces: Sloane (Ads Handled), disclosed as AI on the piece; a spokesperson, never a customer ----
+    UGC = [("reveal", "Everything about her is AI."), ("ads", "The ads pitch, from the car.")]
+    ug = "".join(
+        f'<figure class="reel kin">{vid(f"ugc-sloane-{k}.mp4", f"ugc-sloane-{k}.jpg", "Sloane", f"Ads Handled spokesperson piece, disclosed as AI: {t}", sound=True)}'
+        f'<button type="button" class="snd" aria-label="Toggle sound">&#9834;</button>'
+        f'<figcaption class="below"><b>{b.esc(t)}</b><span>adshandled.com · spokesperson piece · disclosed AI · 18s</span></figcaption></figure>'
+        for k, t in UGC if (ASSETS / f"ugc-sloane-{k}.mp4").exists())
+    ugc = ('<section class="wall" style="background:#0f1118" aria-labelledby="ugc-h"><div class="container"><p class="stu-label">05 · Spokesperson pieces — disclosed as AI on every one</p>'
+           '<h2 id="ugc-h">A spokesperson who can say the line, and says what she is</h2>'
+           '<p class="sub">Sloane fronts Ads Handled. The same face holds across every scene, the script is checked before it is spoken, and each piece carries its own disclosure. She is a spokesperson, never a customer and never a testimonial. Tap the note for her voice.</p>'
+           f'<div class="reels">{ug}</div>'
+           '<div class="receipt" style="color:#8b93a3">Receipts · identity-locked reference pack · script-first captions · disclosure on the piece · human review before posting</div></div></section>') if ug else ""
     js = """
 <script>(function(){var vs=[].slice.call(document.querySelectorAll('video.pv'));if(!vs.length)return;
 var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)return;
 var load=function(v){if(v.dataset.loaded)return;var s=document.createElement('source');s.src=v.dataset.src;s.type='video/mp4';v.appendChild(s);v.dataset.loaded='1';v.load()};
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){load(v);v.play().catch(function(){})}else{v.pause()}})},{rootMargin:'120px',threshold:.25});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){load(v);v.play().catch(function(){})})}
 document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v)return;v.muted=!v.muted;btn.textContent=v.muted?'\\u266A':'\\u25A0';if(!v.muted){document.querySelectorAll('video.pv').forEach(function(o){if(o!==v)o.muted=true})}})});})();</script>"""
-    return css, wall, kinetic, stills, method, js
+    return css, wall, kinetic, stills, method, ugc, js
 
 if __name__ == "__main__":
     out = b.page_html(PAGE)
-    css, wall, kinetic, stills, method, js = blocks()
+    css, wall, kinetic, stills, method, ugc, js = blocks()
     out = out.replace("</head>", css + "\n</head>", 1)
     hero_end = out.find("</section>", out.find('class="svc-hero"')) + len("</section>")
     out = out[:hero_end] + wall + kinetic + stills + out[hero_end:]
     faq_at = out.find('<h2>Frequently asked questions</h2>'); sec_start = out.rfind('<section class="svc-section">', 0, faq_at)
-    out = out[:sec_start] + method + out[sec_start:]
+    out = out[:sec_start] + method + ugc + out[sec_start:]
     out = out.replace("</body>", js + "\n</body>", 1)
     out = out.replace('class="btn btn-accent">Start a project</a>', 'class="btn btn-accent">Request a conversation</a>')
     text = re.sub(r"<[^>]+>", " ", re.sub(r"<(style|script)[^>]*>.*?</\1>", " ", out, flags=re.S))
