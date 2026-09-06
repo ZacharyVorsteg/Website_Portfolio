@@ -46,7 +46,7 @@ PAGE = dict(
   why_title="How a piece is made",
   why=[
    "Signature render: a still generated for the brand's world — no text, no logos, no faces — and kept if it passes review.",
-   "Motion: the still is animated with a single slow push-in (Seedance 2.5, image-to-video) so stills and motion match.",
+   "Motion: the still itself is animated with a single slow push-in, so stills and motion share one look.",
    "Brief verification: three frames are shown to a vision model with the brand's brief; at least two of three must agree.",
    "Standard gate: kinetic pieces are checked against the written production standard — pace, structure, plate, audio — before posting.",
    "Posting with receipts: the piece goes to the destinations you approved, and the log records where and whether it landed.",
@@ -86,6 +86,7 @@ def blocks():
 .reel{margin:0;position:relative;border-radius:14px;overflow:hidden;background:#12151c;aspect-ratio:9/16}
 .reel video,.reel img{display:block;width:100%;height:100%;object-fit:cover}
 .reel figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#e8ecf2}
+.reel.kin{aspect-ratio:auto;display:flex;flex-direction:column}.reel.kin video{aspect-ratio:9/16;height:auto}.reel figcaption.below{position:static;background:#12151c;padding:12px 14px 14px}
 .reel figcaption b{display:block;font-size:.98rem;line-height:1.3;letter-spacing:-.01em}
 .reel figcaption span{display:block;margin-top:4px;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#a7aeba}
 .reel .snd{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(5,6,10,.55);color:#fff;font-size:14px;cursor:pointer}
@@ -113,12 +114,12 @@ def blocks():
             '<h2 id="wall-h">Made from our own stills, so motion and stills share a look</h2>'
             '<p class="sub">Each clip is a signature render animated with a single push-in. No text in the frame; the caption carries the words.</p>'
             f'<div class="reels">{reels}</div>'
-            '<div class="receipt" style="color:#8b93a3">Receipts · FLUX 1.1 Ultra still → Seedance 2.5 image-to-video · brief-verified 3/3 frames each · rendered 2026-09-06</div></div></section>')
+            '<div class="receipt" style="color:#8b93a3">Receipts · signature still → single push-in · brief-verified 3/3 frames each · rendered 2026-09-06</div></div></section>')
     # ---- kinetic pieces: only those that PASSED the kinetic standard gate ----
     kin = "".join(
-        f'<figure class="reel">{vid(f"kinetic-{k}.mp4", f"kinetic-{k}.jpg", name, f"{name} kinetic piece: {t}", sound=True)}'
+        f'<figure class="reel kin">{vid(f"kinetic-{k}.mp4", f"kinetic-{k}.jpg", name, f"{name} kinetic piece: {t}", sound=True)}'
         f'<button type="button" class="snd" aria-label="Toggle sound">&#9834;</button>'
-        f'<figcaption><b>{b.esc(t)}</b><span>{b.esc(name)} · kinetic piece · standard: pass</span></figcaption></figure>'
+        f'<figcaption class="below"><b>{b.esc(t)}</b><span>{b.esc(name)} · kinetic piece · standard: pass</span></figcaption></figure>'
         for k, name, t in KINETIC if (ASSETS / f"kinetic-{k}.mp4").exists())
     kinetic = ('<section class="wall" style="background:#111420" aria-labelledby="kin-h"><div class="container"><p class="stu-label">02 · Kinetic pieces — the production standard</p>'
                '<h2 id="kin-h">One point, one line, a measured pace</h2>'
@@ -134,11 +135,11 @@ def blocks():
     # ---- method strip: still → push-in → plate → piece ----
     method = ('<section class="svc-section" aria-labelledby="me-h"><div class="container"><p class="stu-label">04 · From still to post</p>'
               '<h2 id="me-h" style="margin-top:0">The same four steps, every time</h2><div class="method">'
-              '<figure><img src="/images/production/still-pbw.jpg" alt="Signature still: a warehouse loading dock at dawn" loading="lazy"><figcaption>1 · Signature still</figcaption></figure>'
-              f'<figure>{vid("reel-pbw.mp4", "reel-pbw.jpg", "Push-in", "The same dock, animated with a slow push-in")}<figcaption>2 · Push-in (Seedance 2.5)</figcaption></figure>'
+              '<figure><img src="/images/production/reel-pbw.jpg" alt="Signature still: a warehouse loading dock at dawn" loading="lazy"><figcaption>1 · Signature still</figcaption></figure>'
+              f'<figure>{vid("reel-pbw.mp4", "reel-pbw.jpg", "Push-in", "The same dock, animated with a slow push-in")}<figcaption>2 · Push-in</figcaption></figure>'
               f'<figure>{vid("plate-pbw.mp4", "plate-pbw.jpg", "Plate", "A verified brand plate: a distribution park from above")}<figcaption>3 · Brief-verified plate</figcaption></figure>'
               f'<figure>{vid("kinetic-pbw.mp4", "kinetic-pbw.jpg", "Kinetic piece", "The finished kinetic piece on that plate", sound=True)}<figcaption>4 · Kinetic piece, gate: pass</figcaption></figure>'
-              '</div><div class="receipt">Every step writes a receipt: model, seed, checksum, verdict. Nothing ships without one.</div></div></section>')
+              '</div><div class="receipt">Every step writes a receipt: source, seed, checksum, verdict. Nothing ships without one.</div></div></section>')
     js = """
 <script>(function(){var vs=[].slice.call(document.querySelectorAll('video.pv'));if(!vs.length)return;
 var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(rm)return;
@@ -161,6 +162,6 @@ if __name__ == "__main__":
     bad = [m.group(0) for m in b.BANNED.finditer(text)]
     assert not bad, f"banned phrase {bad}"
     assert len(PAGE["title"]) <= 65 and 110 <= len(PAGE["description"]) <= 165
-    n_reels = out.count('class="reel"'); assert n_reels >= 6, f"only {n_reels} reel cards — assets missing?"
+    n_reels = out.count('<figure class="reel'); assert n_reels >= 6, f"only {n_reels} reel cards — assets missing?"
     d = ROOT / PAGE["slug"]; d.mkdir(exist_ok=True); (d / "index.html").write_text(out, encoding="utf-8")
     print(f"  wrote /{PAGE['slug']}/ ({len(out)} bytes, title {len(PAGE['title'])}c, desc {len(PAGE['description'])}c, {n_reels} video cards)")
