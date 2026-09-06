@@ -77,3 +77,47 @@ result in the new receipt.
 
 Recovery: revert the scoped regression through Git while preserving newer work, rerun the same
 checks and release normally. Do not upload a stale local directory directly to Netlify.
+
+## Published verification and delivery result
+
+The implementation commit `83f898a0d2350ec2381eb35a8a7694588f1c613c` was published by Netlify
+at 23:37:19 UTC on September 6, 2026. It preserves the concurrently added Bing ownership
+verification from `8e4d849`. The release checkout was clean and synchronized after the push.
+
+- Build/staging and all 27 browser tests passed. Public validation covered 43 HTML pages and
+  30 sitemap URLs. Nine existing blog editorial warnings remain; no build errors.
+- Live phone/desktop browser checks passed: CTA, mobile menu/Escape, contact focus, message
+  visibility, optional native video controls, production topic retention, no overflow/page errors.
+- Live source/HTTP review passed all 30 sitemap routes, both new assets, six reviewed media
+  assets, redirects, 310 internal fragment links, four visible/schema FAQ comparisons and Person
+  identity. Eleven sampled internal/unreviewed source paths remained inaccessible.
+- The affected About and Production label contrast failures were corrected and rechecked;
+  footer arrow gaps and opaque top/scrolled headers were visually confirmed. Automated media
+  contrast checks remain incomplete where manual inspection is required; no universal WCAG claim.
+- Original and reviewed media bytes were unchanged. No other domain or advertising was edited.
+
+**Exactly one approved inquiry was submitted at 23:38:32 UTC.** The browser sent the exact
+approved payload once and received HTTP 200. Netlify stored the record but classified this
+automated, explicitly labeled test as spam. All ten customer/context fields matched on readback,
+including blank optional/campaign fields. The honeypot was blank in the request and is not a
+customer field in Netlify's returned record. The form's eleven registered fields were confirmed.
+
+Only this known QA record was then marked verified. Its existing configured owner notification
+arrived in the inbox at 23:42:31 UTC; the matching reference, name and property context were read
+from the email. No second form submission, separate email, notification configuration change,
+spam-protection change, record deletion or outreach occurred.
+
+**Result:** field persistence and the verified-record notification path pass. The original test
+did not pass automatic spam classification, so this is not an unqualified end-to-end automatic
+delivery pass and does not establish the false-positive rate for real visitors. Keep spam review
+in the lead-handling process; do not disable protection based on one automated QA message.
+Netlify documents that test submissions may be classified as spam and notifications concern
+verified submissions. [Troubleshooting](https://docs.netlify.com/manage/forms/troubleshooting-tips/),
+[notification behavior](https://docs.netlify.com/manage/monitoring/notifications/).
+
+**API lesson:** the installed CLI's generated `listFormSubmissions` operation silently ignored
+an extra `state` argument because the OpenAPI method exposes only pagination. A repeated empty
+verified-list result was not proof of absent storage. Use the documented REST URL with
+`?state=spam` to inspect spam, keep existing authorization only in memory, and filter output to
+the one QA reference. Never print credentials, private record IDs or unrelated lead data.
+[Documented spam query](https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/#get-spam-submissions).

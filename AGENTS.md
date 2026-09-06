@@ -39,3 +39,4 @@ assert against `BANNED` in `tools/build-entity-pages.py`); Zach is a Florida rea
 - Run both browser test files and `tools/validate-public.py`. Check breakpoint-adjacent widths, peer CTA alignment and the actual mobile CTA-to-message-field path, after fonts and two animation frames settle. Full-page screenshots alone are insufficient.
 - Preserve visible FAQ/schema equivalence, approved media/disclosures and the property route. PBW advertising is a separate funnel.
 - Do not describe the design as statistically optimal without qualified-inquiry evidence. Use `docs/QUALIFIED-INQUIRY-EXPERIMENT.md` for measurement and experiment gates.
+- For an authorized delivery test, read both verified and spam records using supported query parameters. The September QA was initially spam; manual verification delivered its notification. Preserve that distinction and never repeat a possibly accepted POST to manufacture a pass.
