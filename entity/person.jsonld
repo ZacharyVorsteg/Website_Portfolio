@@ -1,0 +1,178 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://zacharyvorsteg.com/#person",
+  "name": "Zachary Vorsteg",
+  "alternateName": [
+    "Zach Vorsteg"
+  ],
+  "url": "https://zacharyvorsteg.com",
+  "mainEntityOfPage": "https://zacharyvorsteg.com",
+  "image": "https://zacharyvorsteg.com/images/zach-headshot.jpg",
+  "telephone": "+15617186725",
+  "email": "mailto:zacharyvorsteg@gmail.com",
+  "jobTitle": "AI Systems Architect & Automation Engineer",
+  "description": "AI systems architect and automation engineer based in West Palm Beach, Florida. Designs and ships agentic AI systems, LLM integrations, and custom software that remove manual work for small and mid-sized businesses across Palm Beach County and nationwide. Founder of CustomLab.ai, with 5+ shipped products across AI SaaS, CRM, and ad management (Trusenda, Ads Handled, and more). Also an M&A/FP&A financial analyst and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone Realty). FAU Finance '20.",
+  "hasOccupation": [
+    {
+      "@type": "Occupation",
+      "name": "AI Systems Architect",
+      "occupationLocation": {
+        "@type": "AdministrativeArea",
+        "name": "Palm Beach County, Florida"
+      },
+      "skills": "Agentic AI systems, LLM integration, workflow automation, systems verification and monitoring"
+    },
+    {
+      "@type": "Occupation",
+      "name": "Automation Engineer",
+      "occupationLocation": {
+        "@type": "AdministrativeArea",
+        "name": "Palm Beach County, Florida"
+      }
+    }
+  ],
+  "areaServed": [
+    {
+      "@type": "AdministrativeArea",
+      "name": "Palm Beach County",
+      "containedInPlace": {
+        "@type": "State",
+        "name": "Florida"
+      }
+    },
+    {
+      "@type": "City",
+      "name": "West Palm Beach"
+    },
+    {
+      "@type": "City",
+      "name": "Boca Raton"
+    },
+    {
+      "@type": "City",
+      "name": "Jupiter"
+    },
+    {
+      "@type": "City",
+      "name": "Delray Beach"
+    },
+    {
+      "@type": "City",
+      "name": "Wellington"
+    },
+    {
+      "@type": "Country",
+      "name": "United States"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "West Palm Beach",
+    "addressRegion": "FL",
+    "addressCountry": "US"
+  },
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Florida Atlantic University",
+    "department": "Finance",
+    "url": "https://www.fau.edu"
+  },
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "license",
+    "name": "Florida Real Estate Sales Associate License",
+    "recognizedBy": {
+      "@type": "GovernmentOrganization",
+      "name": "Florida Department of Business and Professional Regulation"
+    }
+  },
+  "founder": [
+    {
+      "@type": "Organization",
+      "@id": "https://customlab.ai/#organization",
+      "name": "CustomLab.ai",
+      "url": "https://customlab.ai"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://adshandled.com/#organization",
+      "name": "Ads Handled",
+      "url": "https://adshandled.com"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://trusenda.com/#organization",
+      "name": "Trusenda",
+      "url": "https://trusenda.com"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://palmbeachwebsites.com/#organization",
+      "name": "Palm Beach Websites",
+      "url": "https://palmbeachwebsites.com"
+    }
+  ],
+  "knowsAbout": [
+    "AI Consulting for Small and Mid-Sized Businesses",
+    "Agentic AI Engineering",
+    "AI Systems Architecture",
+    "AI Agents",
+    "Large Language Model Applications",
+    "LLM Integration",
+    "Retrieval-Augmented Generation (RAG)",
+    "Workflow Automation",
+    "Business Process Automation",
+    "AI Automation for Home-Service Contractors",
+    "AI Receptionists and Call Handling",
+    "Lead Routing and CRM Automation",
+    "Autonomous Content Systems",
+    "AI System Verification and Monitoring",
+    "Full-Stack Web Development",
+    "React and Next.js",
+    "Node.js",
+    "Python",
+    "Supabase and PostgreSQL",
+    "iOS Application Development",
+    "SwiftUI",
+    "Technical SEO",
+    "Mergers and Acquisitions Modeling",
+    "Financial Planning and Analysis (FP&A)",
+    "Commercial Real Estate",
+    "Industrial Real Estate Leasing and Sales",
+    "Facebook Ads Management",
+    "Google Ads Management"
+  ],
+  "subjectOf": [
+    {
+      "@type": "WebPage",
+      "@id": "https://zacharyvorsteg.com/ai-consultant-palm-beach-county/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://zacharyvorsteg.com/ai-automation-palm-beach-county/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://zacharyvorsteg.com/ai-systems-architect-florida/"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/zacharyvorsteg",
+    "https://github.com/ZacharyVorsteg",
+    "https://x.com/zachvorsteg",
+    "https://customlab.ai",
+    "https://trusenda.com",
+    "https://adshandled.com",
+    "https://callshandled.ai",
+    "https://palmbeachwebsites.com",
+    "https://palmbeachwarehouses.com",
+    "https://palmbeachhomesrealty.com",
+    "https://palmbeachquotes.com",
+    "https://vorstegsoftware.com"
+  ]
+}
