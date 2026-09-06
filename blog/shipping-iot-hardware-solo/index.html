@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipping IoT Hardware Solo: ESP32 Prototype to Deployment | Zachary Vorsteg</title>
+    <title>Shipping IoT Hardware Solo: ESP32 Prototype to Deployment</title>
     <meta name="description" content="I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here's the full journey.">
     <meta name="keywords" content="building iot hardware products as a solo developer, solo developer iot hardware, ESP32 IoT project production, shipping hardware solo founder, IoT thermal detection system, solo hardware development, ESP32-S3 MLX90640, embedded systems solo developer, IoT prototype to production, hardware startup solo founder">
     <link rel="canonical" href="https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/">
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="alternate" type="application/rss+xml" href="/blog/feed.xml">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Shipping IoT Hardware Solo: ESP32 Prototype to Deployment">
@@ -40,9 +41,7 @@
       "description": "I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here's the full journey.",
       "image": "https://zacharyvorsteg.com/og-image.jpg",
       "datePublished": "2026-03-21",
-      "author": {
-        "@type": "Person",
-        "name": "Zachary Vorsteg",
+      "author": { "@type": "Person", "@id": "https://zacharyvorsteg.com/#person", "name": "Zachary Vorsteg", "url": "https://zacharyvorsteg.com" }}",
         "url": "https://zacharyvorsteg.com"
       },
       "publisher": {
@@ -161,6 +160,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        *:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+        *:focus:not(:focus-visible) { outline: none; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: var(--black); color: var(--white); padding: 8px; text-decoration: none; z-index: 100; }
+        .skip-link:focus { top: 0; }
 
         :root {
             --black: #000000;
@@ -930,8 +933,10 @@
             }
         }
     </style>
+<link rel="author" href="https://zacharyvorsteg.com/">
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
     <header>
         <div class="container">
@@ -943,7 +948,7 @@
                     <a href="/#services">Services</a>
                     <a href="/#templates">Templates</a>
                     <a href="/blog/" class="active">Blog</a>
-                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
+                    <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; font-weight: 600;">Pro Forma Tool</a>
                     <a href="/#contact" class="btn btn-primary">Work With Me</a>
                 </nav>
 
@@ -966,7 +971,7 @@
                 <a href="/#services">Services</a>
                 <a href="/#templates">Templates</a>
                 <a href="/blog/">Blog</a>
-                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                <a href="https://zacharyvorsteg.com/proforma.html" target="_blank" rel="noopener nofollow" style="color: #f59e0b; display: flex; align-items: center; gap: 8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                     Pro Forma Tool
                 </a>
@@ -990,7 +995,7 @@
 
                     <div class="article-meta-top">
                         <span class="article-pillar-badge">Hardware & PropTech</span>
-                        <time class="article-date">March 20, 2026</time>
+                        <time class="article-date" datetime="2026-03-21">March 20, 2026</time>
                         <span class="article-time">20 min read</span>
                     </div>
 
