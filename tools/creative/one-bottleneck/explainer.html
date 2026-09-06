@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>One bottleneck — conversation explainer</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:720px;height:1280px;overflow:hidden;background:#f8f8f5}svg{display:block;width:720px;height:1280px}text{font-kerning:normal}.serif{font-family:Georgia,'Times New Roman',serif}.sans{font-family:Arial,Helvetica,sans-serif}
+</style></head><body><svg id="canvas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" role="img" aria-label="Illustrative workflow explainer inviting a conversation with Zach"></svg><script>
+const C={paper:'#f8f8f5',ink:'#222b2b',blue:'#0060be',muted:'#586260',line:'#cfd5d0',pale:'#e9eeeb'};
+const clamp=n=>Math.max(0,Math.min(1,n));const ease=n=>1-Math.pow(1-clamp(n),3);
+function text(str,x,y,size=64,color=C.ink,extra=''){return `<text x="${x}" y="${y}" font-size="${size}" fill="${color}" class="serif" ${extra}>${str}</text>`}
+function sans(str,x,y,size=24,color=C.muted,extra=''){return `<text x="${x}" y="${y}" font-size="${size}" fill="${color}" class="sans" ${extra}>${str}</text>`}
+function reveal(content,t,start=0){const a=ease((t-start)/.55);return `<g opacity="${a}" transform="translate(0,${24*(1-a)})">${content}</g>`}
+function scene(content,t,start,end){const a=Math.min(ease((t-start)/.32),ease((end-t)/.3));return `<g opacity="${a}">${content}</g>`}
+function line(x1,y1,x2,y2,color=C.line,width=2){return `<path d="M${x1},${y1} L${x2},${y2}" fill="none" stroke="${color}" stroke-width="${width}"/>`}
+function arrow(y,t,start){const p=ease((t-start)/.65);return `<g opacity="${p}"><path d="M360,${y}v${60*p}" fill="none" stroke="${C.blue}" stroke-width="3"/><path d="m352,${y+52*p} 8,8 8,-8" fill="none" stroke="${C.blue}" stroke-width="3"/></g>`}
+function node(label,y,t,start){const p=ease((t-start)/.6);return `<g opacity="${p}" transform="translate(0,${20*(1-p)})"><rect x="76" y="${y}" width="568" height="110" rx="12" fill="${C.paper}" stroke="${C.line}" stroke-width="2"/><circle cx="116" cy="${y+55}" r="7" fill="${C.blue}"/>${sans(label,149,y+68,36,C.ink)}</g>`}
+function renderAt(t){let out=`<rect width="720" height="1280" fill="${C.paper}"/>${line(60,128,660,128)}${sans('ZACHARY VORSTEG',60,93,21,C.ink,'letter-spacing="2.2"')}${sans('Business · systems · people',60,1185,22,C.muted)}`;
+// The first scene uses typography only: no implied client interface or results.
+let a='';['Still copying','the same','information','between tools?'].forEach((s,i)=>a+=reveal(text(s,60,326+i*84,68,i===2?C.blue:C.ink),t,.24+i*.1));
+a+=reveal(`${line(62,746,62,991,C.blue,3)}${sans('Copy.',96,789,38,C.ink)}${sans('Paste.',96,873,38,C.ink)}${sans('Repeat.',96,957,38,C.ink)}`,t,1.05);out+=scene(a,t,0,4.5);
+let u=t-4.5;let b=reveal(text('Start with',60,296,72),u,.15)+reveal(text('one bottleneck.',60,381,72,C.blue),u,.3);
+b+=reveal(sans('ILLUSTRATIVE WORKFLOW',76,545,28,C.muted,'letter-spacing="2"'),u,.65);
+b+=node('Inquiry',602,u,.8)+arrow(729,u,1.2)+node('Follow-up',802,u,1.65)+arrow(929,u,2.0)+node('Reporting',1002,u,2.45);out+=scene(b,t,4.5,10.6);
+u=t-10.6;let c=reveal(text('Connect the work.',60,323,66),u,.15)+reveal(text('Keep a person',60,446,66),u,.45)+reveal(text('accountable.',60,526,66,C.blue),u,.65);
+c+=reveal(sans('ILLUSTRATIVE WORKFLOW',76,693,28,C.muted,'letter-spacing="2"'),u,.95);
+const p=ease((u-1.2)/1);c+=`<g opacity="${p}">${line(116,798,604,798,C.blue,3)}${[116,360,604].map(x=>`<circle cx="${x}" cy="798" r="16" fill="${C.paper}" stroke="${C.blue}" stroke-width="3"/>`).join('')}${sans('Inquiry',116,755,23,C.ink,'text-anchor="middle"')}${sans('Follow-up',360,755,23,C.ink,'text-anchor="middle"')}${sans('Reporting',604,755,23,C.ink,'text-anchor="middle"')}${line(360,814,360,938,C.blue,3)}<circle cx="360" cy="965" r="27" fill="${C.blue}"/>${sans('Z',360,975,28,C.paper,'text-anchor="middle" font-weight="700"')}${sans('One clear point of contact',360,1044,27,C.ink,'text-anchor="middle"')}</g>`;
+out+=scene(c,t,10.6,15.7);
+u=t-15.7;let d=reveal(text('Tell Zach',60,329,72),u,.15)+reveal(text('what’s slowing',60,416,72),u,.3)+reveal(text('you down.',60,503,72,C.blue),u,.45);
+d+=reveal(`${sans('Start a conversation',60,773,40,C.ink,'font-weight="600"')}${line(60,802,596,802,C.blue,3)}<path d="M605,758h45m-14,-14 14,14 -14,14" fill="none" stroke="${C.blue}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${sans('zacharyvorsteg.com',60,890,35,C.blue)}`,u,.9);
+out+=scene(d,t,15.7,21.4);
+document.getElementById('canvas').innerHTML=out;
+}
+window.renderAt=renderAt;renderAt(1);
+</script></body></html>

@@ -1,0 +1,13 @@
+{
+  "duration": "21.000000",
+  "bytes": 268736,
+  "width": 720,
+  "height": 1280,
+  "codec": "h264",
+  "fps": "24/1",
+  "pixel_format": "yuv420p",
+  "frames": "504",
+  "audio_streams": 0,
+  "faststart_moov_before_mdat": true,
+  "under_2MB": true
+}

@@ -2255,8 +2255,8 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 .logo-subline { display: block; margin-top: 5px; font-size: 12px; font-weight: 400; letter-spacing: .1px; color: var(--home-muted); }
 .conversion-home .desktop-nav { gap: 24px; }
 .conversion-home .desktop-nav a { font-size: 14px; color: var(--home-ink); }
-.conversion-home .desktop-nav .btn { color: #fff; background: var(--accent); padding: 12px 19px; }
-.conversion-home .desktop-nav .btn:hover { background: var(--accent-hover); }
+.conversion-home .desktop-nav .btn { color: #fff; background: var(--accent) !important; padding: 12px 19px; }
+.conversion-home .desktop-nav .btn:hover { background: var(--accent-hover) !important; }
 .conversion-home .btn { border-radius: 5px; box-shadow: none; font-weight: 500; }
 .conversion-home .btn:hover { transform: none; }
 .conversion-home .btn-secondary { background: transparent; border: 1px solid #9aa6a1; }

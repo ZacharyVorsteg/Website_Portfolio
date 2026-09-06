@@ -4,10 +4,10 @@
 Zach: "integrate aligned with the quality standard… the idea is to (1) compel and convert people and (2) make people
 want to contract us for the service… that belongs on zacharyvorsteg.com."
 
-Every asset on this page is our own output and carries its receipt: FLUX stills → Seedance 2.5 push-ins (render-forge),
-brief-verified plates, and kinetic pieces that PASSED the production standard gate (only those — pieces that pass under the
-legacy standard are not shown). Nothing here is a mockup, a stock clip, or someone else's work. No claims, no counts we
-cannot back, no "#1".
+Every asset on this page is our own output: signature stills, push-in reels,
+brief-verified plates, kinetic pieces, a clearly illustrative explainer and a
+disclosed synthetic spokesperson excerpt. Original source clips remain in Git;
+only reviewed excerpts are featured. Production examples are not conversion proof.
 Assets are staged by the encode step into images/production/ (720x1280 H.264, posters, 4:5 stills).
 """
 import importlib.util, pathlib, re, json
@@ -17,11 +17,11 @@ ASSETS = ROOT / "images" / "production"
 
 PAGE = dict(
   slug="production",
-  eyebrow="Production · reels, stills and kinetic pieces",
+  eyebrow="Production · messages, motion and stills",
   title="Content Production for Premium Brands | Zachary Vorsteg",
   description="Cinematic reels, stills and kinetic pieces produced on a schedule, checked against a written standard and posted with a receipt. For owner-led Palm Beach brands.",
   h1="A consistent look for your brand, produced every week.",
-  lede=("Signature stills, detail reels and kinetic pieces built around your brand and offers. The work below was produced "
+  lede=("Explainers, disclosed AI spokesperson pieces, stills and reels built around your brand and offers. The work below was produced "
         "for my own businesses. An annual scope sets the formats, cadence, review responsibilities and publishing destinations, "
         "so you know what is being produced and where it goes."),
   cta_href="/?topic=production#contact",
@@ -38,27 +38,30 @@ PAGE = dict(
      "I work with you on the brand kit, offers, destinations and approval responsibilities. The agreed process covers production, "
      "checks, publishing and reporting; the written scope sets the formats and cadence."]),
   ],
-  grid=("What a month produces", [
+  grid=("Formats we can scope together", [
    ("Signature stills", "Cinematic renders in your brand's world, one idea per frame, with a restrained wordmark. Used across the feed, ads and the site."),
    ("Detail reels", "One material, one light, one slow move: 9:16 clips made from your own stills so motion and stills share a look."),
    ("Kinetic pieces", "Short typographic pieces that make one point with one line, cut to a measured pace on a brief-verified plate."),
+   ("Spokesperson pieces", "A synthetic spokesperson with a consistent visual reference and an approved script. AI disclosure stays on the piece; the persona is never presented as a customer or testimonial."),
    ("Captions and destinations", "Hook-first captions per platform, niche hashtags capped, a funnel link where links are clickable."),
    ("Verification", "Plates are checked frame by frame by a vision model; every piece passes a written standard gate before it can post."),
    ("Receipts", "Every post is logged with its destination and status. A monthly report says what ran, in plain English."),
   ]),
   why_title="How a piece is made",
   why=[
-   "Signature render: a still generated for the brand's world — no text, no logos, no faces — and kept if it passes review.",
+   "Signature stills: an image generated for the brand's world and reviewed against the brief. This visual format uses no faces; spokesperson pieces follow their own script and disclosure review.",
    "Motion: the still itself is animated with a single slow push-in, so stills and motion share one look.",
    "Brief verification: three frames are shown to a vision model with the brand's brief; at least two of three must agree.",
    "Standard gate: kinetic pieces are checked against the written production standard — pace, structure, plate, audio — before posting.",
+   "Spokesperson review: approve the script and business claims, check the captions against the spoken line, and keep a readable AI disclosure on the piece.",
    "Posting with receipts: the piece goes to the destinations you approved, and the log records where and whether it landed.",
   ],
   faq=[
-   ("Is this stock footage or templates?", "No. Every still is generated for the brand; every clip is made from that still; every kinetic piece is built from the brand's own claim-locked lines. Nothing on this page comes from a library."),
-   ("Will it look like everyone else's AI content?", "The look is set by a house style and a written standard, not by a prompt someone typed once. The same restraint you see here — one idea per frame, no text burned into images, no invented people — is enforced on every piece."),
+   ("Is this stock footage or templates?", "These examples were produced for my own businesses. The detail reels animate signature stills, kinetic pieces use each brand's written lines, and the explainer illustrates a workflow. Sloane is a disclosed synthetic spokesperson shown as a short production demo."),
+   ("Will it look like everyone else's AI content?", "The look is set by a house style and a written standard. Each format has a purpose: a still establishes the visual world, an explainer carries a message, and a spokesperson delivers an approved script. Synthetic personas are disclosed on the piece and never presented as customers or testimonials."),
    ("Who approves what goes out?", "You approve the brand kit, offers, destinations and publishing permissions. We agree which pieces require your review before posting. Production checks support that process; they do not replace approval of your business claims."),
    ("What do you need from us?", "Logo files, colours, the offers you actually want promoted, and access to the social accounts you want used. A brand kit takes one conversation."),
+   ("Which tools do you use?", "Image, video and speech models support our production process. The brief, script, written standard, review and publishing records matter more than a particular model. We agree how those steps apply to your scope."),
    ("How is it priced?", "Annually, against a scope in writing, as part of an Operating Layer or Embedded engagement or on its own. We agree the formats, cadence, destinations, review responsibilities and reporting before work starts. A focused advertising need can be discussed through Ads Handled; production and campaign results are evaluated separately."),
   ],
   close=("If your brand should look like this", "Send me one thing you sell and the platforms you care about. I'll reply with what a first month would produce."),
@@ -103,8 +106,62 @@ def blocks():
 .method figure img,.method figure video{display:block;width:100%;height:100%;object-fit:cover}
 .method figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#cfd5df;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase}
 .receipt{margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6b7280}
+.production-examples{background:#f5f7fa;padding:48px 0;scroll-margin-top:100px}
+.production-examples h2{margin:0 0 12px}
+.production-examples .examples-intro{max-width:720px;margin:0 0 28px}
+.examples-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.production-example{min-width:0;background:#fff;border:1px solid #dbe1ea;border-radius:18px;padding:24px}
+.production-example h3{font-size:1.25rem;line-height:1.3;margin:0 0 8px;letter-spacing:-.02em}
+.production-example .example-meta{font-size:.875rem;color:#4b5563;margin:0 0 20px}
+.example-video{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:9/16;margin:0 auto 20px;background:#0b0d12;border-radius:10px}
+.example-video:focus-visible{outline:3px solid #194ce8;outline-offset:4px}
+.production-example p{font-size:1rem;line-height:1.6;margin:0 0 14px}
+.production-example details{border-top:1px solid #dbe1ea;padding-top:4px}
+.production-example summary{cursor:pointer;min-height:44px;padding:10px 0;color:#142f75;font-weight:600}
+.production-example summary:focus-visible{outline:3px solid #194ce8;outline-offset:3px}
+.production-example details p{font-size:.9375rem;color:#374151}
+.examples-action{margin-top:28px}
+@media(max-width:700px){.examples-grid{grid-template-columns:1fr}.production-example{padding:20px}.production-examples{padding:36px 0}}
+@media(max-width:375px){.production-example{padding:14px}}
 @media(prefers-reduced-motion:reduce){.snd{display:none}}
 </style>"""
+    # User-initiated examples stay outside the ambient reel playback controller.
+    # The original UGC files are retained as source assets, not featured as evidence.
+    demos = [
+        ("one-bottleneck", "One bottleneck. One clear next step.", "21 seconds · Silent explainer · Illustrative workflow",
+         "A message-led example for this site: start with an owner's problem and end with a clear invitation. The workflow is illustrative.",
+         ["Still copying the same information between tools? Copy. Paste. Repeat.",
+          "Start with one bottleneck. Illustrative workflow: Inquiry → Follow-up → Reporting.",
+          "Connect the work. Keep a person accountable. One clear point of contact.",
+          "Tell Zach what’s slowing you down. Start a conversation at zacharyvorsteg.com."]),
+        ("sloane-ai-demo", "An AI spokesperson, clearly disclosed.", "3.25 seconds · With speech · Production demo",
+         "Sloane is a synthetic spokesperson shown here to demonstrate the format and disclosure. She is not a customer or a testimonial.",
+         ["Everything about this video is AI. Including me.", "On-screen disclosure: Sloane · AI-generated spokesperson · Demo."]),
+    ]
+    demo_cards = ""
+    for key, title, meta, purpose, transcript in demos:
+        for ext in ("mp4", "jpg", "vtt"):
+            assert (ASSETS / f"{key}.{ext}").is_file(), f"missing reviewed example: {key}.{ext}"
+        demo_cards += (
+            f'<article class="production-example" aria-labelledby="{key}-h"><h3 id="{key}-h">{b.esc(title)}</h3>'
+            f'<p class="example-meta" id="{key}-meta">{b.esc(meta)}</p>'
+            f'<video class="example-video" controls playsinline preload="none" width="720" height="1280" '
+            f'poster="/images/production/{key}.jpg" aria-labelledby="{key}-h" aria-describedby="{key}-meta">'
+            f'<source src="/images/production/{key}.mp4" type="video/mp4">'
+            f'<track kind="captions" src="/images/production/{key}.vtt" srclang="en" label="English">'
+            f'<a href="/images/production/{key}.mp4">Open the demo video</a></video>'
+            f'<p>{b.esc(purpose)}</p><details><summary>Read the transcript</summary>'
+            + "".join(f'<p>{b.esc(line)}</p>' for line in transcript) + '</details></article>'
+        )
+    examples = (
+        '<section class="production-examples" id="examples" aria-labelledby="examples-h"><div class="container">'
+        '<p class="stu-label">Optional viewing · message and format</p>'
+        '<h2 id="examples-h">See the message, then the production style.</h2>'
+        '<p class="examples-intro">Two short examples show how an idea can become a clear message. Play either when you want, or read the transcripts. These demonstrate production choices; they do not establish campaign results.</p>'
+        f'<div class="examples-grid">{demo_cards}</div>'
+        '<div class="examples-action"><a class="btn btn-accent" href="/?topic=production#contact">Discuss a production brief</a></div>'
+        '</div></section>'
+    )
     # ---- reel wall: our detail reels (FLUX still → Seedance 2.5 push-in), five words each ----
     reels = ""
     for code, (name, handle) in BRAND.items():
@@ -137,7 +194,7 @@ def blocks():
               f'<div class="stills">{st}</div></div></section>')
     # ---- method strip: still → push-in → plate → piece ----
     method = ('<section class="svc-section" aria-labelledby="me-h"><div class="container"><p class="stu-label">04 · From still to post</p>'
-              '<h2 id="me-h" style="margin-top:0">The same four steps, every time</h2><div class="method">'
+              '<h2 id="me-h" style="margin-top:0">From a still to a kinetic piece</h2><div class="method">'
               '<figure><img src="/images/production/reel-pbw.jpg" alt="Signature still: a warehouse loading dock at dawn" loading="lazy"><figcaption>1 · Signature still</figcaption></figure>'
               f'<figure>{vid("reel-pbw.mp4", "reel-pbw.jpg", "Push-in", "The same dock, animated with a slow push-in")}<figcaption>2 · Push-in</figcaption></figure>'
               f'<figure>{vid("plate-pbw.mp4", "plate-pbw.jpg", "Plate", "A verified brand plate: a distribution park from above")}<figcaption>3 · Brief-verified plate</figcaption></figure>'
@@ -152,14 +209,14 @@ var update=function(v){if(motion&&motion.matches){v.pause();v.muted=true;v.query
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting)visible.add(v);else visible.delete(v);update(v)})},{rootMargin:'120px',threshold:.25});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){visible.add(v);update(v)})}
 if(motion&&motion.addEventListener)motion.addEventListener('change',function(){vs.forEach(update)});
 document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v||(motion&&motion.matches))return;v.muted=!v.muted;if(!v.muted)vs.forEach(function(o){if(o!==v)o.muted=true});soundButtons()})});soundButtons();})();</script>"""
-    return css, wall, kinetic, stills, method, js
+    return css, examples, wall, kinetic, stills, method, js
 
 if __name__ == "__main__":
     out = b.page_html(PAGE)
-    css, wall, kinetic, stills, method, js = blocks()
+    css, examples, wall, kinetic, stills, method, js = blocks()
     out = out.replace("</head>", css + "\n</head>", 1)
     hero_end = out.find("</section>", out.find('class="svc-hero"')) + len("</section>")
-    out = out[:hero_end] + wall + kinetic + stills + out[hero_end:]
+    out = out[:hero_end] + examples + wall + kinetic + stills + out[hero_end:]
     faq_at = out.find('<h2>Frequently asked questions</h2>'); sec_start = out.rfind('<section class="svc-section">', 0, faq_at)
     out = out[:sec_start] + method + out[sec_start:]
     out = out.replace("</body>", js + "\n</body>", 1)
