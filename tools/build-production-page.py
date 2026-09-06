@@ -83,6 +83,7 @@ def blocks():
     css = """
 <style>
 .stu-label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#6b7280;margin:0 0 10px}
+.svc-section .stu-label{font-size:.75rem;line-height:1.6;letter-spacing:.13em;margin:0 0 10px}
 .wall{background:#0b0d12;color:#e8ecf2;padding:44px 0 40px}
 .wall h2{color:#fff;margin:0 0 6px}
 .wall .sub{color:#a7aeba;margin:0 0 22px}
@@ -94,18 +95,25 @@ def blocks():
 .reel figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#e8ecf2}
 .reel.kin{aspect-ratio:auto;display:flex;flex-direction:column}.reel.kin video{aspect-ratio:9/16;height:auto}.reel figcaption.below{position:static;background:#12151c;padding:12px 14px 14px}
 .reel figcaption b{display:block;font-size:.98rem;line-height:1.3;letter-spacing:-.01em}
-.reel figcaption span{display:block;margin-top:4px;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#a7aeba}
-.reel .snd{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(5,6,10,.55);color:#fff;font-size:14px;cursor:pointer}
+.reel figcaption span{display:block;margin-top:4px;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;line-height:1.5;letter-spacing:.06em;text-transform:uppercase;color:#a7aeba;overflow-wrap:anywhere}
+.reel .snd{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(5,6,10,.85);color:#fff;font-size:16px;cursor:pointer}
+.reel .snd:disabled{opacity:.5;cursor:default}
 .reel .snd:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .stills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:14px;margin-top:8px}
 .stills figure{margin:0;border-radius:14px;overflow:hidden;background:#f3f4f6;box-shadow:0 10px 30px rgba(0,0,0,.08)}
 .stills img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
-.stills figcaption{padding:10px 12px;font-family:ui-monospace,Menlo,monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:#6b7280}
+.stills figcaption{padding:10px 12px;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#586360}
 .method{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:14px;margin-top:8px}
 .method figure{margin:0;border-radius:12px;overflow:hidden;background:#0b0d12;aspect-ratio:9/16;position:relative}
 .method figure img,.method figure video{display:block;width:100%;height:100%;object-fit:cover}
 .method figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(transparent,rgba(5,6,10,.85));color:#cfd5df;font-family:ui-monospace,Menlo,monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase}
 .receipt{margin-top:14px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6b7280}
+.gallery-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 20px}
+.gallery-motion,.gallery-arrow{min-height:44px;padding:10px 16px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font-family:inherit;font-size:.875rem;font-weight:600;line-height:1.4;cursor:pointer}
+.gallery-motion:focus-visible,.gallery-arrow:focus-visible,.kinetic-reels:focus-visible{outline:3px solid #5b9cf5;outline-offset:3px}
+.gallery-arrow{display:none;width:44px;padding:8px;font-size:18px}.gallery-arrow:disabled{opacity:.4;cursor:default}
+.gallery-hint{display:none}
+@media(max-width:900px){.kinetic-reels{grid-auto-flow:column;grid-auto-columns:min(82vw,320px);grid-template-columns:none;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding-bottom:14px;scrollbar-width:thin}.kinetic-reels .reel{scroll-snap-align:start}.gallery-arrow{display:inline-block}.gallery-hint{display:block;font-size:.875rem;color:#a7aeba;margin:0 0 14px}}
 .production-examples{background:#f5f7fa;padding:48px 0;scroll-margin-top:100px}
 .production-examples h2{margin:0 0 12px}
 .production-examples .examples-intro{max-width:720px;margin:0 0 28px}
@@ -123,8 +131,8 @@ def blocks():
 .examples-action{margin-top:28px}
 @media(max-width:700px){.examples-grid{grid-template-columns:1fr}.production-example{padding:20px}.production-examples{padding:36px 0}}
 @media(max-width:375px){.production-example{padding:14px}}
-@media(prefers-reduced-motion:reduce){.snd{display:none}}
 </style>"""
+    motion_control = '<button type="button" class="gallery-motion" hidden>Pause motion</button>'
     # User-initiated examples stay outside the ambient reel playback controller.
     # The original UGC files are retained as source assets, not featured as evidence.
     demos = [
@@ -173,6 +181,7 @@ def blocks():
     wall = ('<section class="wall" aria-labelledby="wall-h"><div class="container"><p class="stu-label">01 · Detail reels — one material, one light, one slow move</p>'
             '<h2 id="wall-h">Made from our own stills, so motion and stills share a look</h2>'
             '<p class="sub">Each clip is a signature render animated with a single push-in. No text in the frame; the caption carries the words.</p>'
+            f'<div class="gallery-controls">{motion_control}</div>'
             f'<div class="reels">{reels}</div>'
             '<div class="receipt" style="color:#8b93a3">Receipts · signature still → single push-in · brief-verified 3/3 frames each · rendered 2026-09-06</div></div></section>')
     # ---- kinetic pieces: only those that PASSED the kinetic standard gate ----
@@ -183,8 +192,10 @@ def blocks():
         for k, name, t in KINETIC if (ASSETS / f"kinetic-{k}.mp4").exists())
     kinetic = ('<section class="wall" style="background:#111420" aria-labelledby="kin-h"><div class="container"><p class="stu-label">02 · Kinetic pieces — the production standard</p>'
                '<h2 id="kin-h">One point, one line, a measured pace</h2>'
-               '<p class="sub">Typographic pieces built from each brand\'s own claim-locked lines, cut on a brief-verified plate with a licensed bed. Shown here only if they passed the written standard gate. Tap the note for sound.</p>'
-               f'<div class="reels">{kin}</div>'
+               '<p class="sub">Typographic pieces built from each brand\'s own claim-locked lines, cut on a brief-verified plate with a licensed bed. Shown here only if they passed the written standard gate. Use each sound button to listen.</p>'
+               f'<div class="gallery-controls">{motion_control}<button class="gallery-arrow" type="button" id="kin-prev" aria-label="Previous kinetic example" aria-controls="kinetic-track">&larr;</button><button class="gallery-arrow" type="button" id="kin-next" aria-label="Next kinetic example" aria-controls="kinetic-track">&rarr;</button></div>'
+               '<p class="gallery-hint">Scroll sideways or use the arrows to see all three.</p>'
+               f'<div class="reels kinetic-reels" id="kinetic-track" role="region" tabindex="0" aria-label="Kinetic examples">{kin}</div>'
                '<div class="receipt" style="color:#8b93a3">Receipts · standard gate: kinetic, pass · plate verdicts on file · beds generated under commercial licence</div></div></section>')
     # ---- stills ----
     st = "".join(f'<figure><img src="/images/production/still-{c}.jpg" alt="{b.esc(BRAND[c][0])} signature still" width="1080" height="1350" loading="lazy"><figcaption>{b.esc(BRAND[c][1])} · signature still</figcaption></figure>'
@@ -194,7 +205,7 @@ def blocks():
               f'<div class="stills">{st}</div></div></section>')
     # ---- method strip: still → push-in → plate → piece ----
     method = ('<section class="svc-section" aria-labelledby="me-h"><div class="container"><p class="stu-label">04 · From still to post</p>'
-              '<h2 id="me-h" style="margin-top:0">From a still to a kinetic piece</h2><div class="method">'
+              f'<h2 id="me-h" style="margin-top:0">From a still to a kinetic piece</h2><div class="gallery-controls">{motion_control}</div><div class="method">'
               '<figure><img src="/images/production/reel-pbw.jpg" alt="Signature still: a warehouse loading dock at dawn" loading="lazy"><figcaption>1 · Signature still</figcaption></figure>'
               f'<figure>{vid("reel-pbw.mp4", "reel-pbw.jpg", "Push-in", "The same dock, animated with a slow push-in")}<figcaption>2 · Push-in</figcaption></figure>'
               f'<figure>{vid("plate-pbw.mp4", "plate-pbw.jpg", "Plate", "A verified brand plate: a distribution park from above")}<figcaption>3 · Brief-verified plate</figcaption></figure>'
@@ -202,17 +213,24 @@ def blocks():
               '</div><div class="receipt">Every step writes a receipt: source, seed, checksum, verdict. Nothing ships without one.</div></div></section>')
     js = """
 <script>(function(){var vs=[].slice.call(document.querySelectorAll('video.pv'));if(!vs.length)return;
-var motion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');var visible=new Set();
+var motion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)');var visible=new Set(),userPaused=false,allowReduced=false;
+var stopped=function(){return userPaused||(motion&&motion.matches&&!allowReduced)};
 var load=function(v){if(v.dataset.loaded)return;var s=document.createElement('source');s.src=v.dataset.src;s.type='video/mp4';v.appendChild(s);v.dataset.loaded='1';v.load()};
-var soundButtons=function(){document.querySelectorAll('.snd').forEach(function(btn){var v=btn.parentNode.querySelector('video');btn.textContent=v.muted?'♪':'■';btn.setAttribute('aria-label',v.muted?'Turn sound on':'Turn sound off');btn.setAttribute('aria-pressed',String(!v.muted))})};
-var update=function(v){if(motion&&motion.matches){v.pause();v.muted=true;v.querySelectorAll('source').forEach(function(s){s.remove()});delete v.dataset.loaded;v.load();soundButtons();return;}if(visible.has(v)){load(v);v.play().catch(function(){})}else{v.pause()}};
+var soundButtons=function(){document.querySelectorAll('.snd').forEach(function(btn){var v=btn.parentNode.querySelector('video');btn.textContent=v.muted?'♪':'■';btn.disabled=Boolean(stopped());btn.setAttribute('aria-label',v.muted?'Turn sound on':'Turn sound off');btn.setAttribute('aria-pressed',String(!v.muted))})};
+var sync=function(){document.querySelectorAll('.gallery-motion').forEach(function(btn){btn.hidden=false;btn.textContent=stopped()?'Play motion':'Pause motion'});soundButtons()};
+var update=function(v){if(stopped()){v.pause();v.muted=true;if(motion&&motion.matches&&!allowReduced){v.querySelectorAll('source').forEach(function(s){s.remove()});delete v.dataset.loaded;v.load();}return;}if(visible.has(v)){load(v);v.play().catch(function(){})}else{v.pause()}};
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting)visible.add(v);else visible.delete(v);update(v)})},{rootMargin:'120px',threshold:.25});vs.forEach(function(v){io.observe(v)})}else{vs.forEach(function(v){visible.add(v);update(v)})}
-if(motion&&motion.addEventListener)motion.addEventListener('change',function(){vs.forEach(update)});
-document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v||(motion&&motion.matches))return;v.muted=!v.muted;if(!v.muted)vs.forEach(function(o){if(o!==v)o.muted=true});soundButtons()})});soundButtons();})();</script>"""
+if(motion&&motion.addEventListener)motion.addEventListener('change',function(){allowReduced=false;vs.forEach(update);sync()});
+document.querySelectorAll('.gallery-motion').forEach(function(btn){btn.addEventListener('click',function(){if(stopped()){userPaused=false;allowReduced=true}else{userPaused=true;allowReduced=false}vs.forEach(update);sync()})});
+document.querySelectorAll('.snd').forEach(function(btn){btn.addEventListener('click',function(){var v=btn.parentNode.querySelector('video');if(!v||stopped())return;v.muted=!v.muted;if(!v.muted)vs.forEach(function(o){if(o!==v)o.muted=true});soundButtons()})});sync();
+var track=document.getElementById('kinetic-track'),prev=document.getElementById('kin-prev'),next=document.getElementById('kin-next');
+if(track&&prev&&next){var arrows=function(){prev.disabled=track.scrollLeft<2;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2};var move=function(d){var card=track.querySelector('.reel');if(card)track.scrollBy({left:d*(card.getBoundingClientRect().width+14),behavior:motion&&motion.matches?'auto':'smooth'})};prev.addEventListener('click',function(){move(-1)});next.addEventListener('click',function(){move(1)});track.addEventListener('scroll',arrows,{passive:true});window.addEventListener('resize',arrows);arrows()}
+})();</script>"""
     return css, examples, wall, kinetic, stills, method, js
 
 if __name__ == "__main__":
     out = b.page_html(PAGE)
+    out = out.replace('href="/?topic=ai#contact"', 'href="/?topic=production#contact"')
     css, examples, wall, kinetic, stills, method, js = blocks()
     out = out.replace("</head>", css + "\n</head>", 1)
     hero_end = out.find("</section>", out.find('class="svc-hero"')) + len("</section>")

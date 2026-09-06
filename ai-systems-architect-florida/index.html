@@ -28,10 +28,10 @@
     <meta name="twitter:description" content="Zachary Vorsteg, AI systems architect in West Palm Beach, Florida: architecture, build and operation of reliable AI systems for businesses statewide.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
-    <link rel="stylesheet" href="/styles.css?v=conversion-1">
+    <link rel="stylesheet" href="/styles.css?v=polish-1">
 
     <!-- Service Schema -->
-    <!-- FAQPage Schema (GEO/AEO — designed to be quoted by AI answer engines) -->
+    <!-- FAQPage schema matching the visible questions and answers -->
     <!-- Breadcrumb Schema -->
     <style>
         .svc-hero { padding: 120px 0 60px; margin-top: 72px; }
@@ -76,95 +76,52 @@
             .svc-section h2, .svc-close h2 { font-size: 26px; }
         }
     </style>
+    <style>
+
+        .secondary-page .svc-hero { padding: 56px 0 60px; margin-top: 80px; }
+        .secondary-page .svc-hero h1 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.16; }
+        .secondary-page .svc-crosslinks { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; }
+        .secondary-page .svc-crosslinks a { margin: 0; padding: 8px 0; line-height: 1.5; }
+        @media (max-width: 767px) {
+            .secondary-page .svc-hero { padding: 44px 0 48px; }
+            .secondary-page .svc-hero p.lead { font-size: 18px; line-height: 1.65; }
+        }
+    </style>
+    <link rel="stylesheet" href="/site-shell.css?v=polish-1">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "AI Systems Architecture", "serviceType": "AI systems architecture and implementation", "provider": {"@id": "https://zacharyvorsteg.com/#person"}, "areaServed": [{"@type": "AdministrativeArea", "name": "Palm Beach County", "containedInPlace": {"@type": "State", "name": "Florida"}}, {"@type": "City", "name": "West Palm Beach"}, {"@type": "City", "name": "Boca Raton"}, {"@type": "City", "name": "Jupiter"}, {"@type": "City", "name": "Delray Beach"}, {"@type": "City", "name": "Wellington"}, {"@type": "Country", "name": "United States"}], "url": "https://zacharyvorsteg.com/ai-systems-architect-florida/", "description": "Zachary Vorsteg, AI systems architect in West Palm Beach, Florida: architecture, build and operation of reliable AI systems for businesses statewide."}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://zacharyvorsteg.com/ai-systems-architect-florida/", "url": "https://zacharyvorsteg.com/ai-systems-architect-florida/", "name": "AI Systems Architect in Florida | Zachary Vorsteg", "description": "Zachary Vorsteg, AI systems architect in West Palm Beach, Florida: architecture, build and operation of reliable AI systems for businesses statewide.", "about": {"@id": "https://zacharyvorsteg.com/#person"}, "isPartOf": {"@type": "WebSite", "url": "https://zacharyvorsteg.com", "name": "Zachary Vorsteg"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://zacharyvorsteg.com/"}, {"@type": "ListItem", "position": 2, "name": "AI Systems Architecture", "item": "https://zacharyvorsteg.com/ai-systems-architect-florida/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What's the difference between an AI architect and an AI developer?", "acceptedAnswer": {"@type": "Answer", "text": "A developer implements a feature. An architect decides the system: what the model may do, where code must be deterministic, how data flows, how failures surface. I do both, but the architecture is what determines whether the project holds up."}}, {"@type": "Question", "name": "Do you build it yourself or hand off a design?", "acceptedAnswer": {"@type": "Answer", "text": "I build it — alone or alongside your team — and stay on for operation. A design that nobody can run is not finished."}}, {"@type": "Question", "name": "Which industries?", "acceptedAnswer": {"@type": "Answer", "text": "Home services and contractors, professional services, real estate and property operators, and multi-venture founders. The patterns transfer; the tools are chosen per business."}}, {"@type": "Question", "name": "How do you price architecture work?", "acceptedAnswer": {"@type": "Answer", "text": "We agree a written scope, deliverables, investment and any ongoing commitment before work starts. The initial conversation is free."}}, {"@type": "Question", "name": "Where are you based?", "acceptedAnswer": {"@type": "Answer", "text": "West Palm Beach, Florida. I serve Palm Beach County in person and the rest of Florida and the United States remotely."}}]}</script>
 </head>
-<body>
+<body class="secondary-page">
     <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <div class="logo"><a href="/" style="color:inherit;text-decoration:none;">Zachary Vorsteg</a></div>
-                <nav class="desktop-nav" aria-label="Main navigation">
-                    <a href="/#disciplines">How I help</a>
-                    <a href="/#work">Selected work</a>
-                    <a href="/about/">About</a>
-                    <a href="/blog/">Insights</a>
-                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
-                </nav>
-                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+    <header class="site-header">
+        <div class="container header-container">
+            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
+            </nav>
+            <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu site-menu" id="mobileMenu" hidden>
         <div class="mobile-menu-content">
-            <button class="mobile-menu-close" aria-label="Close menu">×</button>
-            <nav aria-label="Mobile navigation"><a href="/#disciplines">How I help</a>
-                    <a href="/#work">Selected work</a>
-                    <a href="/about/">About</a>
-                    <a href="/blog/">Insights</a>
-                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a></nav>
+            <button class="mobile-menu-close" type="button" aria-label="Close menu">×</button>
+            <nav aria-label="Mobile navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk</a><a href="tel:5617186725">Call (561) 718-6725</a>
+            </nav>
         </div>
     </div>
 
     <main id="main" tabindex="-1"><section class="svc-hero"><div class="container"><div class="svc-hero-content"><div class="hero-eyebrow">AI Systems Architecture · Florida</div><h1>An AI systems architect in Florida who owns the outcome, not just the design</h1><p>Architecture is where AI projects succeed or quietly fail. I design the whole system — data, models, tools, permissions, monitoring and the humans in the loop — then build and run it, for businesses in Palm Beach County and across Florida.</p><div class="svc-cta-row"><a href="/?topic=ai#contact" class="btn btn-accent">Start a conversation</a><a href="/#contact" class="btn btn-secondary">Book a discovery call</a></div></div></div></section><section class="svc-section"><div class="container"><h2>What an AI systems architect does</h2><p>Decides what the model is allowed to do and what it is not. Chooses where deterministic code beats a prompt. Designs the data flow, the tool interfaces, the approval boundaries, and the checks that prove the system is still working. Then makes sure the whole thing can be operated by the people who own it.</p><p>I do this as a founder who runs his own AI-driven businesses, so the designs are shaped by what survives contact with real customers, real phones and real money.</p></div></section><section class="svc-section"><div class="container"><h2>Architecture work I take on</h2><div class="svc-grid"><div class="svc-card"><h3>Greenfield AI systems</h3><p>From the first whiteboard to a monitored system in production.</p></div><div class="svc-card"><h3>Rescue and hardening</h3><p>Audit an AI project that demos well and fails in use; redesign the boundaries; make it reliable.</p></div><div class="svc-card"><h3>Operations automation</h3><p>Intake, follow-up, scheduling, reporting and content systems for growing companies.</p></div><div class="svc-card"><h3>Data and integration design</h3><p>Postgres, Supabase, APIs and event flows that keep the model grounded in the truth.</p></div><div class="svc-card"><h3>Verification and monitoring</h3><p>Gates, ledgers, health checks and assertion registries so failures are loud.</p></div><div class="svc-card"><h3>Founder-level advisory</h3><p>Where AI belongs in the business, what to build, what to buy, what to skip.</p></div></div></div></section><section class="svc-section"><div class="container"><h2>Serving Florida from West Palm Beach</h2><p>Palm Beach County in person; Miami, Fort Lauderdale, Orlando, Tampa, Jacksonville and the rest of Florida remotely, with on-site work when a project needs it. Also available to companies nationwide.</p></div></section><section class="svc-section"><div class="container"><h2>Why this approach</h2><ul class="svc-list"><li>Systems engineering discipline — verification, monitoring and reliability — applied to AI, not just generation.</li><li>Provider-agnostic design: frontier models with fallbacks, no lock-in to a single vendor.</li><li>Built on the tools a business already runs; migration only when it earns its cost.</li><li>Documented so your team can operate it; I don&#x27;t build systems only I can run.</li><li>Founder of CustomLab.ai, with work across business automation, CRM and ad management.</li></ul></div></section><section class="svc-section"><div class="container"><h2>Frequently asked questions</h2><div class="faq-block"><div class="faq-item"><h3>What&#x27;s the difference between an AI architect and an AI developer?</h3><p>A developer implements a feature. An architect decides the system: what the model may do, where code must be deterministic, how data flows, how failures surface. I do both, but the architecture is what determines whether the project holds up.</p></div><div class="faq-item"><h3>Do you build it yourself or hand off a design?</h3><p>I build it — alone or alongside your team — and stay on for operation. A design that nobody can run is not finished.</p></div><div class="faq-item"><h3>Which industries?</h3><p>Home services and contractors, professional services, real estate and property operators, and multi-venture founders. The patterns transfer; the tools are chosen per business.</p></div><div class="faq-item"><h3>How do you price architecture work?</h3><p>We agree a written scope, deliverables, investment and any ongoing commitment before work starts. The initial conversation is free.</p></div><div class="faq-item"><h3>Where are you based?</h3><p>West Palm Beach, Florida. I serve Palm Beach County in person and the rest of Florida and the United States remotely.</p></div></div></div></section><section class="svc-close"><div class="container"><h2>Design it once, run it for years</h2><p>If you&#x27;re about to build — or rebuild — an AI system, a short architecture conversation now saves a rewrite later.</p><a href="/?topic=ai#contact" class="btn btn-accent">Start a conversation</a><p class="svc-response">I reply within one business day.</p><div class="svc-crosslinks"><a href="/agentic-ai-engineer-west-palm-beach/">Agentic AI engineering</a><a href="/ai-consultant-palm-beach-county/">AI consultant</a><a href="/ai-automation">AI automation services</a><a href="/custom-software">Custom software</a></div></div></section></main>
 
     <!-- Footer (same as site) -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col footer-brand">
-                    <div class="footer-name">Zachary Vorsteg</div>
-                    <p class="footer-tagline">AI systems architect &amp; automation engineer. Building from West Palm Beach, nationwide.</p>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Software</div>
-                    <ul>
-                        <li><a href="https://customlab.ai" target="_blank" rel="noopener">CustomLab.ai</a></li>
-                        <li><a href="https://trusenda.com" target="_blank" rel="noopener">Trusenda</a></li>
-                        <li><a href="https://adshandled.com" target="_blank" rel="noopener">Ads Handled</a></li>
-                        <li><a href="https://palmbeachwebsites.com" target="_blank" rel="noopener">Palm Beach Websites</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Real Estate</div>
-                    <ul>
-                        <li><a href="https://palmbeachwarehouses.com" target="_blank" rel="noopener">Palm Beach Warehouses</a></li>
-                        <li><a href="https://palmbeachhomesrealty.com" target="_blank" rel="noopener">Palm Beach Homes Realty</a></li>
-                        <li><a href="https://palmbeachquotes.com" target="_blank" rel="noopener">Palm Beach Quotes</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Connect</div>
-                    <ul>
-                        <li><a href="https://www.linkedin.com/in/zacharyvorsteg" target="_blank" rel="noopener">LinkedIn</a></li>
-                        <li><a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">GitHub</a></li>
-                        <li><a href="tel:5617186725">(561) 718-6725</a></li>
-                        <li><a href="mailto:zacharyvorsteg@gmail.com">Email</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Credentials</div>
-                    <ul class="footer-credentials">
-                        <li>FAU '20 Finance</li>
-                        <li>FL Licensed Sales Associate</li>
-                        <li>SL3603483 · Cornerstone Realty</li>
-                        <li>West Palm Beach, FL</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                © 2026 Zachary Vorsteg · All ventures built and operated independently.
-            </div>
-        </div>
-    </footer>
+    <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.</p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="/?topic=ai#contact">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
 
     <script src="/app.js?v=conversion-1" defer></script>
 </body>

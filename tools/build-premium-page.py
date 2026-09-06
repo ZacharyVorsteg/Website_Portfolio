@@ -95,19 +95,23 @@ def showcase_html():
 .work-card figcaption strong{display:block;margin-bottom:4px}
 .work-card figcaption span{color:var(--text-muted,#6b7280)}
 .work-nav{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-.work-nav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(0,0,0,.15);background:#fff;font-size:18px;cursor:pointer}
+.work-nav button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.15);background:#fff;font-size:18px;cursor:pointer}
+.work-nav button:disabled{opacity:.4;cursor:default}
 .work-nav button:focus-visible{outline:3px solid var(--accent,#2563eb);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.work-track{scroll-behavior:auto}}
 </style>"""
     js = """
 <script>(function(){var t=document.getElementById('worktrack');if(!t)return;var w=function(){var c=t.querySelector('.work-card');return c?c.getBoundingClientRect().width+18:400};
 var behavior=function(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'};
-document.getElementById('workprev').addEventListener('click',function(){t.scrollBy({left:-w(),behavior:behavior()})});
-document.getElementById('worknext').addEventListener('click',function(){t.scrollBy({left:w(),behavior:behavior()})});})();</script>"""
+var prev=document.getElementById('workprev'),next=document.getElementById('worknext');
+var sync=function(){var s=getComputedStyle(t),start=parseFloat(s.paddingLeft)||0,end=parseFloat(s.paddingRight)||0;prev.disabled=t.scrollLeft<=start+2;next.disabled=t.scrollLeft+t.clientWidth>=t.scrollWidth-end-2};
+prev.addEventListener('click',function(){t.scrollBy({left:-w(),behavior:behavior()})});
+next.addEventListener('click',function(){t.scrollBy({left:w(),behavior:behavior()})});
+t.addEventListener('scroll',sync,{passive:true});window.addEventListener('resize',sync);sync();})();</script>"""
     return (css + '<section class="work svc-section" aria-labelledby="work-h"><div class="container"><h2 id="work-h">Selected work — live systems, not mockups</h2>'
             '<p class="work-sub">Screenshots of products and sites I have built. Founder projects and the client example are identified below.</p>'
             f'<div class="work-track" id="worktrack" tabindex="0" aria-label="Selected work, scroll horizontally">{cards}</div>'
-            '<div class="work-nav"><button type="button" id="workprev" aria-label="Previous">&larr;</button><button type="button" id="worknext" aria-label="Next">&rarr;</button></div>'
+            '<div class="work-nav"><button type="button" id="workprev" aria-label="Previous example" aria-controls="worktrack">&larr;</button><button type="button" id="worknext" aria-label="Next example" aria-controls="worktrack">&rarr;</button></div>'
             '</div></section>' + js)
 
 def studio_blocks():
@@ -116,6 +120,7 @@ def studio_blocks():
     css = """
 <style>
 .stu-label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#6b7280;margin:0 0 10px}
+.svc-section .stu-label{font-size:.75rem;line-height:1.6;letter-spacing:.13em;margin:0 0 10px}
 .render{background:#0b0d12;color:#e8ecf2;border-radius:16px;padding:28px 28px 22px;position:relative;overflow:hidden;
  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:36px 36px}
 .render .stu-label{color:#8b93a3}
@@ -123,13 +128,10 @@ def studio_blocks():
 .tile{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 16px 14px}
 .tile b{display:block;font-size:1.9rem;line-height:1;letter-spacing:-.02em;font-weight:700;color:#fff}
 .tile span{display:block;margin-top:6px;font-size:.86rem;color:#a7aeba;line-height:1.4}
-.tile em{display:block;margin-top:8px;font-style:normal;font-family:ui-monospace,Menlo,monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#6b7280}
-.render-foot{margin-top:16px;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#6b7280}
-.marquee{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08);padding:12px 0;margin:36px 0 0}
-.marquee div{display:inline-block;animation:mq 42s linear infinite;font-family:ui-monospace,Menlo,monospace;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#6b7280}
-.marquee span{margin:0 22px}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(prefers-reduced-motion:reduce){.marquee div{animation:none}}
+.tile em{display:block;margin-top:8px;font-style:normal;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#a7aeba}
+.render-foot{margin-top:16px;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;line-height:1.6;letter-spacing:.08em;text-transform:uppercase;color:#a7aeba}
+.marquee{border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08);padding:16px 0;margin:0}
+.marquee div{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;line-height:1.5;letter-spacing:.1em;text-transform:uppercase;color:#59636b}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:10px}
 .step{border-top:2px solid #15181d;padding-top:12px}
 .step .n{font-family:ui-monospace,Menlo,monospace;font-size:.78rem;letter-spacing:.16em;color:#6b7280}
@@ -152,7 +154,7 @@ def studio_blocks():
               '</div><div class="render-foot">Recorded internal activity · publishing checks and output counts do not measure client conversion results</div></div>'
               '</div></section>')
     mq_items = ["Private wealth", "Luxury residential", "Developers", "Aesthetic &amp; medical", "Marine", "Boutique law &amp; CPA", "Design-build", "High-end trades"]
-    mq = '<div class="marquee" aria-hidden="true"><div>' + "".join(f"<span>{x} •</span>" for x in mq_items * 2) + "</div></div>"
+    mq = '<div class="marquee" role="group" aria-label="Who this is for"><div class="container">' + "".join(f"<span>{x}</span>" for x in mq_items) + "</div></div>"
     steps = [("01", "Discovery", "Where your time goes, and what the business must do without you."),
              ("02", "Scope", "Systems, outputs, reporting and the annual fee — in writing before anything starts."),
              ("03", "Onboarding", "Confirm access, business rules and approvals; plan the first system for the first month and review readiness against the scope."),
@@ -177,21 +179,25 @@ if __name__ == "__main__":
     hero_end = out.find("</section>", out.find('class="svc-hero"')) + len("</section>")
     # SIGNATURE RENDERS (render-forge, FLUX via fal.ai, 2026-09-06): cinematic stills, one per idea — the layer that sells.
     hero_fig = ('<style>.sig{margin:0;position:relative;border-radius:0}'
-                '.sig img{display:block;width:100%;height:min(72vh,720px);object-fit:cover;object-position:center 60%}'
+                '.sig-video{display:block;width:100%;height:clamp(280px,42vw,480px);object-fit:cover;object-position:center 60%}'
+                '.sig-motion{position:absolute;top:16px;right:16px;min-height:44px;padding:10px 16px;border:1px solid #a7aeba;border-radius:999px;background:#0b0d12;color:#fff;font-family:inherit;font-size:.875rem;font-weight:600;line-height:1.4;cursor:pointer}'
+                '.sig-motion:focus-visible{outline:3px solid #fff;outline-offset:3px}'
                 '.sig figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 22px;background:linear-gradient(transparent,rgba(5,6,10,.75));color:#cfd5df;'
-                'font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}'
-                '.render{background-image:linear-gradient(rgba(5,6,10,.82),rgba(5,6,10,.88)),url(/images/renders/render-05.jpg);background-size:cover;background-position:center}</style>'
+                'font-family:ui-monospace,Menlo,monospace;font-size:.75rem;line-height:1.5;letter-spacing:.1em;text-transform:uppercase}</style>'
                 '<figure class="sig">'
                 # living render: a 5s image-to-video push-in generated from the same still (render-forge video); the still is the poster
-                # and the only thing shown when the visitor prefers reduced motion or the video cannot play.
-                '<video class="sig-video" muted loop playsinline preload="none" poster="/images/renders/render-06.jpg" data-src="/images/renders/hero-loop.mp4" aria-label="A quiet studio at dusk over the Intracoastal, one monitor showing an orderly dashboard" style="display:block;width:100%;height:min(72vh,720px);object-fit:cover;object-position:center 60%"></video>'
+                # and the default under reduced motion; visitors can explicitly opt into playback.
+                '<video class="sig-video" id="signature-motion" muted loop playsinline preload="none" poster="/images/renders/render-06.jpg" data-src="/images/renders/hero-loop.mp4" aria-label="A quiet studio at dusk over the Intracoastal, one monitor showing an orderly dashboard"></video>'
+                '<button class="sig-motion" type="button" aria-controls="signature-motion" hidden>Pause motion</button>'
                 '<figcaption>Signature render · the operating layer, West Palm Beach, dusk</figcaption></figure>'
                 '<script>(function(){var v=document.querySelector(".sig-video");if(!v)return;'
-                'var motion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)");var visible=false;'
-                'function update(){if(motion&&motion.matches){v.pause();v.removeAttribute("src");v.load();return;}'
+                'var motion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)");var visible=false,userPaused=false,allowReduced=false;var btn=document.querySelector(".sig-motion");btn.hidden=false;'
+                'function stopped(){return userPaused||(motion&&motion.matches&&!allowReduced);}'
+                'function update(){btn.textContent=stopped()?"Play motion":"Pause motion";if(stopped()){v.pause();if(motion&&motion.matches&&!allowReduced){v.removeAttribute("src");v.load();}return;}'
                 'if(!visible){v.pause();return;}if(!v.getAttribute("src")){v.src=v.dataset.src;v.load();}v.play().catch(function(){});}'
                 'if("IntersectionObserver" in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting;update();},{threshold:.1}).observe(v);}else{visible=true;update();}'
-                'if(motion&&motion.addEventListener)motion.addEventListener("change",update);})();</script>')
+                'btn.addEventListener("click",function(){if(stopped()){userPaused=false;allowReduced=true;}else{userPaused=true;allowReduced=false;}update();});'
+                'if(motion&&motion.addEventListener)motion.addEventListener("change",function(){allowReduced=false;update();});update();})();</script>')
     out = out[:hero_end] + hero_fig + mq + render + showcase_html() + out[hero_end:]
     faq_at = out.find('<h2>Frequently asked questions</h2>')
     sec_start = out.rfind('<section class="svc-section">', 0, faq_at)

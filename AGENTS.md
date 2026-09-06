@@ -33,3 +33,9 @@ assert against `BANNED` in `tools/build-entity-pages.py`); Zach is a Florida rea
 - `tools/build-entity-pages.py` leaves the redesigned homepage intact by default. If changing Person data, sync its node inside the homepage `@graph` as well as `entity/person.jsonld`. Do not replace the entire graph.
 - Contact form is still Netlify `contact`, POST `/index.html`. Phone/topic are optional; topic/source/campaign fields are allowlisted. Do not claim a successful request is a booked call, or add personal form contents to analytics.
 - See `docs/CONVERSION-RELEASE-2026-09-06.md` for decisions, verification and remaining measurement gates.
+
+## Polish regression gates
+- Read `docs/POST-DEPLOYMENT-POLISH-2026-09-06.md` before changing conversion layout. Shared navigation/footer styles live in `site-shell.css`; preserve service-specific inquiry topics when rebuilding.
+- Run both browser test files and `tools/validate-public.py`. Check breakpoint-adjacent widths, peer CTA alignment and the actual mobile CTA-to-message-field path, after fonts and two animation frames settle. Full-page screenshots alone are insufficient.
+- Preserve visible FAQ/schema equivalence, approved media/disclosures and the property route. PBW advertising is a separate funnel.
+- Do not describe the design as statistically optimal without qualified-inquiry evidence. Use `docs/QUALIFIED-INQUIRY-EXPERIMENT.md` for measurement and experiment gates.

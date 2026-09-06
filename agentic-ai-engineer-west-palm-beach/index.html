@@ -28,10 +28,10 @@
     <meta name="twitter:description" content="Zachary Vorsteg is an agentic AI engineer in West Palm Beach who designs, builds and operates multi-agent systems that run real business operations.">
     <meta name="twitter:image" content="https://zacharyvorsteg.com/og-image.jpg">
 
-    <link rel="stylesheet" href="/styles.css?v=conversion-1">
+    <link rel="stylesheet" href="/styles.css?v=polish-1">
 
     <!-- Service Schema -->
-    <!-- FAQPage Schema (GEO/AEO — designed to be quoted by AI answer engines) -->
+    <!-- FAQPage schema matching the visible questions and answers -->
     <!-- Breadcrumb Schema -->
     <style>
         .svc-hero { padding: 120px 0 60px; margin-top: 72px; }
@@ -76,95 +76,52 @@
             .svc-section h2, .svc-close h2 { font-size: 26px; }
         }
     </style>
+    <style>
+
+        .secondary-page .svc-hero { padding: 56px 0 60px; margin-top: 80px; }
+        .secondary-page .svc-hero h1 { font-size: clamp(34px, 4.2vw, 52px); line-height: 1.16; }
+        .secondary-page .svc-crosslinks { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; }
+        .secondary-page .svc-crosslinks a { margin: 0; padding: 8px 0; line-height: 1.5; }
+        @media (max-width: 767px) {
+            .secondary-page .svc-hero { padding: 44px 0 48px; }
+            .secondary-page .svc-hero p.lead { font-size: 18px; line-height: 1.65; }
+        }
+    </style>
+    <link rel="stylesheet" href="/site-shell.css?v=polish-1">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "Agentic AI Engineering", "serviceType": "AI agent design and operation", "provider": {"@id": "https://zacharyvorsteg.com/#person"}, "areaServed": [{"@type": "AdministrativeArea", "name": "Palm Beach County", "containedInPlace": {"@type": "State", "name": "Florida"}}, {"@type": "City", "name": "West Palm Beach"}, {"@type": "City", "name": "Boca Raton"}, {"@type": "City", "name": "Jupiter"}, {"@type": "City", "name": "Delray Beach"}, {"@type": "City", "name": "Wellington"}, {"@type": "Country", "name": "United States"}], "url": "https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/", "description": "Zachary Vorsteg is an agentic AI engineer in West Palm Beach who designs, builds and operates multi-agent systems that run real business operations."}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "@id": "https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/", "url": "https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/", "name": "Agentic AI Engineer in West Palm Beach | Zachary Vorsteg", "description": "Zachary Vorsteg is an agentic AI engineer in West Palm Beach who designs, builds and operates multi-agent systems that run real business operations.", "about": {"@id": "https://zacharyvorsteg.com/#person"}, "isPartOf": {"@type": "WebSite", "url": "https://zacharyvorsteg.com", "name": "Zachary Vorsteg"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://zacharyvorsteg.com/"}, {"@type": "ListItem", "position": 2, "name": "Agentic AI Engineering", "item": "https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is an agentic AI system?", "acceptedAnswer": {"@type": "Answer", "text": "Software where a language model plans and executes multi-step work using tools — reading data, calling APIs, writing, sending — inside boundaries an engineer defines. The engineering is mostly in those boundaries."}}, {"@type": "Question", "name": "Which models and frameworks do you use?", "acceptedAnswer": {"@type": "Answer", "text": "Whatever fits the job: frontier models from several providers with fallbacks, typed tool interfaces, and orchestration I build rather than a single vendor's framework. The design is provider-agnostic."}}, {"@type": "Question", "name": "How do you keep agents from doing something harmful?", "acceptedAnswer": {"@type": "Answer", "text": "Scoped permissions, approval gates for anything external or irreversible, action ledgers, caps, and daily assertions that catch regressions. Customer-facing outputs pass deterministic quality gates before they ship."}}, {"@type": "Question", "name": "Do you work with companies outside Palm Beach?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. I'm based in West Palm Beach and work remotely with teams across Florida and the United States."}}, {"@type": "Question", "name": "Can you take over an existing AI project?", "acceptedAnswer": {"@type": "Answer", "text": "Often. The first step is an audit of what the current system actually does versus what its reports claim — that gap is usually where the risk is."}}]}</script>
 </head>
-<body>
+<body class="secondary-page">
     <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <div class="logo"><a href="/" style="color:inherit;text-decoration:none;">Zachary Vorsteg</a></div>
-                <nav class="desktop-nav" aria-label="Main navigation">
-                    <a href="/#disciplines">How I help</a>
-                    <a href="/#work">Selected work</a>
-                    <a href="/about/">About</a>
-                    <a href="/blog/">Insights</a>
-                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a>
-                </nav>
-                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+    <header class="site-header">
+        <div class="container header-container">
+            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
+            </nav>
+            <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu site-menu" id="mobileMenu" hidden>
         <div class="mobile-menu-content">
-            <button class="mobile-menu-close" aria-label="Close menu">×</button>
-            <nav aria-label="Mobile navigation"><a href="/#disciplines">How I help</a>
-                    <a href="/#work">Selected work</a>
-                    <a href="/about/">About</a>
-                    <a href="/blog/">Insights</a>
-                    <a href="/?topic=ai#contact" class="btn btn-primary">Let’s talk</a></nav>
+            <button class="mobile-menu-close" type="button" aria-label="Close menu">×</button>
+            <nav aria-label="Mobile navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk</a><a href="tel:5617186725">Call (561) 718-6725</a>
+            </nav>
         </div>
     </div>
 
     <main id="main" tabindex="-1"><section class="svc-hero"><div class="container"><div class="svc-hero-content"><div class="hero-eyebrow">Agentic AI Engineering</div><h1>An agentic AI engineer in West Palm Beach who runs agents in production, not demos</h1><p>Agentic AI is easy to demo and hard to operate. I design multi-agent systems that do real work — research, writing, outreach, monitoring, publishing — inside guardrails: typed tools, approval boundaries, ledgers, and checks that prove an outcome happened rather than that a job ran.</p><div class="svc-cta-row"><a href="/?topic=ai#contact" class="btn btn-accent">Start a conversation</a><a href="/blog/" class="btn btn-secondary">Read the engineering notes</a></div></div></div></section><section class="svc-section"><div class="container"><h2>What agentic engineering means in practice</h2><p>An agent is a model with tools and a loop. Making one useful means deciding what it may touch, what it must ask before doing, how its actions are recorded, and how you find out when it is wrong. Most of the engineering is in those boundaries, not in the prompt.</p><p>The systems I run use typed, permission-scoped tools instead of open shells, keep an action ledger for every outbound step, gate anything customer-facing behind deterministic quality checks, and maintain a registry of assertions — one per past failure — that runs every day so nothing regresses silently.</p></div></section><section class="svc-section"><div class="container"><h2>What I engineer</h2><div class="svc-grid"><div class="svc-card"><h3>Multi-agent orchestration</h3><p>Operators with scoped tools, schedules, caps and receipts — coordinated, not chaotic.</p></div><div class="svc-card"><h3>Tool and permission design</h3><p>Typed tools, allow-lists and approval boundaries instead of an open terminal.</p></div><div class="svc-card"><h3>Verification layers</h3><p>Deterministic gates, live checks and a never-twice assertion registry.</p></div><div class="svc-card"><h3>LLM integration</h3><p>Retrieval, structured outputs, provider fallbacks and cost control across models.</p></div><div class="svc-card"><h3>Observability</h3><p>Ledgers, health checks and plain-English alerts so humans stay in the loop without being in the way.</p></div><div class="svc-card"><h3>Reliability engineering</h3><p>Timeouts, idempotency, dedupe and rollback — the boring parts that keep agents trustworthy.</p></div></div></div></section><section class="svc-section"><div class="container"><h2>Production examples</h2><p>A fleet of operator agents that manufactures demand for several businesses: research, outreach drafting, call handling, follow-up and reporting, each within caps and a ledger. An autonomous content system that researches, writes, gates, publishes and verifies articles across the venture sites and audits its own output against a written standard daily. A consolidated owner inbox built so no inbound is missed.</p></div></section><section class="svc-section"><div class="container"><h2>How I work</h2><ul class="svc-list"><li>Outcomes over activity: every automated step must produce a receipt that can be checked.</li><li>Fail closed. When a check cannot run, the system stops, it does not guess.</li><li>Small typed changes, tested, reviewed adversarially before they ship.</li><li>Every incident becomes an assertion that runs daily — the same mistake is not made twice.</li><li>Based in West Palm Beach, working with companies across Florida and nationwide.</li></ul></div></section><section class="svc-section"><div class="container"><h2>Frequently asked questions</h2><div class="faq-block"><div class="faq-item"><h3>What is an agentic AI system?</h3><p>Software where a language model plans and executes multi-step work using tools — reading data, calling APIs, writing, sending — inside boundaries an engineer defines. The engineering is mostly in those boundaries.</p></div><div class="faq-item"><h3>Which models and frameworks do you use?</h3><p>Whatever fits the job: frontier models from several providers with fallbacks, typed tool interfaces, and orchestration I build rather than a single vendor&#x27;s framework. The design is provider-agnostic.</p></div><div class="faq-item"><h3>How do you keep agents from doing something harmful?</h3><p>Scoped permissions, approval gates for anything external or irreversible, action ledgers, caps, and daily assertions that catch regressions. Customer-facing outputs pass deterministic quality gates before they ship.</p></div><div class="faq-item"><h3>Do you work with companies outside Palm Beach?</h3><p>Yes. I&#x27;m based in West Palm Beach and work remotely with teams across Florida and the United States.</p></div><div class="faq-item"><h3>Can you take over an existing AI project?</h3><p>Often. The first step is an audit of what the current system actually does versus what its reports claim — that gap is usually where the risk is.</p></div></div></div></section><section class="svc-close"><div class="container"><h2>Bring me the agent that almost works</h2><p>If you have an AI workflow that demos well and fails in production, that is the exact problem I solve.</p><a href="/?topic=ai#contact" class="btn btn-accent">Start a conversation</a><p class="svc-response">I reply within one business day.</p><div class="svc-crosslinks"><a href="/ai-systems-architect-florida/">AI systems architecture</a><a href="/ai-consultant-palm-beach-county/">AI consultant</a><a href="/blog/agentic-engineering-patterns/">Agentic engineering patterns</a><a href="/custom-software">Custom software</a></div></div></section></main>
 
     <!-- Footer (same as site) -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col footer-brand">
-                    <div class="footer-name">Zachary Vorsteg</div>
-                    <p class="footer-tagline">AI systems architect &amp; automation engineer. Building from West Palm Beach, nationwide.</p>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Software</div>
-                    <ul>
-                        <li><a href="https://customlab.ai" target="_blank" rel="noopener">CustomLab.ai</a></li>
-                        <li><a href="https://trusenda.com" target="_blank" rel="noopener">Trusenda</a></li>
-                        <li><a href="https://adshandled.com" target="_blank" rel="noopener">Ads Handled</a></li>
-                        <li><a href="https://palmbeachwebsites.com" target="_blank" rel="noopener">Palm Beach Websites</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Real Estate</div>
-                    <ul>
-                        <li><a href="https://palmbeachwarehouses.com" target="_blank" rel="noopener">Palm Beach Warehouses</a></li>
-                        <li><a href="https://palmbeachhomesrealty.com" target="_blank" rel="noopener">Palm Beach Homes Realty</a></li>
-                        <li><a href="https://palmbeachquotes.com" target="_blank" rel="noopener">Palm Beach Quotes</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Connect</div>
-                    <ul>
-                        <li><a href="https://www.linkedin.com/in/zacharyvorsteg" target="_blank" rel="noopener">LinkedIn</a></li>
-                        <li><a href="https://github.com/ZacharyVorsteg" target="_blank" rel="noopener">GitHub</a></li>
-                        <li><a href="tel:5617186725">(561) 718-6725</a></li>
-                        <li><a href="mailto:zacharyvorsteg@gmail.com">Email</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="footer-label">Credentials</div>
-                    <ul class="footer-credentials">
-                        <li>FAU '20 Finance</li>
-                        <li>FL Licensed Sales Associate</li>
-                        <li>SL3603483 · Cornerstone Realty</li>
-                        <li>West Palm Beach, FL</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                © 2026 Zachary Vorsteg · All ventures built and operated independently.
-            </div>
-        </div>
-    </footer>
+    <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.</p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="/?topic=ai#contact">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
 
     <script src="/app.js?v=conversion-1" defer></script>
 </body>

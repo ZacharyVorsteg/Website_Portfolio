@@ -925,43 +925,29 @@
         }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
+    <link rel="stylesheet" href="/site-shell.css?v=polish-1">
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <a href="/" class="logo">Zachary Vorsteg</a>
-
-                <nav class="desktop-nav" aria-label="Main navigation">
-                    <a href="/#work">Selected work</a>
-                    <a href="/#disciplines">How I help</a>
-                    <a href="/about/">About</a>
-                    <a href="/blog/" class="active" aria-current="page">Insights</a>
-                    <a href="/?topic=finance#contact" class="btn btn-primary">Let’s talk</a>
-                </nav>
-
-                <button class="mobile-menu-btn" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
+    <header class="site-header">
+        <div class="container header-container">
+            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <nav class="desktop-nav" aria-label="Main navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=finance#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
+            </nav>
+            <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
         </div>
     </header>
 
     <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu site-menu" id="mobileMenu" hidden>
         <div class="mobile-menu-content">
-            <button class="mobile-menu-close" aria-label="Close menu">×</button>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/#work">Selected work</a>
-                <a href="/#disciplines">How I help</a>
-                <a href="/about/">About</a>
-                <a href="/blog/">Blog</a>
-                <a href="tel:5617186725" class="btn btn-primary">Call Now</a>
+            <button class="mobile-menu-close" type="button" aria-label="Close menu">×</button>
+            <nav aria-label="Mobile navigation">
+                <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/blog/">Insights</a>
+                <a href="/?topic=finance#contact" class="btn btn-accent">Let's talk</a><a href="tel:5617186725">Call (561) 718-6725</a>
             </nav>
         </div>
     </div>
@@ -1211,15 +1197,7 @@ print(f&quot;Monthly total: ${sum(MONTHLY_COSTS.values()):.2f}&quot;)
     </aside>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div style="color: var(--gray-600); font-size: 14px;">
-                    © 2026 Zachary Vorsteg | <a href="tel:5617186725" style="color: var(--gray-600); text-decoration: none;">(561) 718-6725</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.</p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="/?topic=finance#contact">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
 
     <script src="/app.js?v=conversion-1" defer></script>
 </body>

@@ -1975,7 +1975,8 @@ footer {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--gray-500);
+    color: #586360;
+    opacity: 1;
     margin-bottom: 8px;
 }
 
@@ -2268,7 +2269,7 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 .home-intro h1 em { display: block; font-family: Georgia, 'Times New Roman', serif; color: #0060be; font-weight: 400; letter-spacing: -3.2px; }
 .home-lede { max-width: 620px; font-size: 20px; line-height: 1.65; color: var(--home-muted); margin: 25px 0 0; }
 .home-actions { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-top: 29px; }
-.home-text-link { color: var(--home-ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-color: #9ba9a1; font-size: 15px; font-weight: 500; }
+.home-text-link { display: inline-flex; align-items: baseline; gap: .4em; color: var(--home-ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-color: #9ba9a1; font-size: 15px; font-weight: 500; }
 .home-text-link:hover { color: #0052a3; text-decoration-color: currentColor; }
 .home-reassurance { color: var(--home-muted); margin: 17px 0 0; font-size: 13px; line-height: 1.6; }
 .home-founder { border-left: 1px solid var(--home-rule); padding-left: 28px; }
@@ -2303,15 +2304,19 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 .home-product-image img { display: block; width: 100%; height: auto; max-height: 385px; object-fit: cover; object-position: top; border: 1px solid #60716b; border-radius: 7px 0 0 7px; }
 .home-product-image figcaption { padding: 12px 20px 0 0; color: #cad7d0; font-size: 12px; }
 .home-supporting-work { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; margin-top: 34px; }
-.home-work-card { border-bottom: 1px solid var(--home-rule); padding-bottom: 30px; }
+.home-work-card { display: flex; flex-direction: column; border-bottom: 1px solid var(--home-rule); padding-bottom: 30px; }
 .home-work-card > img { display: block; width: 100%; height: 230px; object-fit: cover; object-position: top; border-radius: 5px; background: #e6ece6; }
-.home-work-card > div { padding-top: 23px; }
+.home-work-card > div { display: flex; flex-direction: column; flex: 1; padding-top: 23px; }
+.home-work-card .home-text-link { margin-top: auto; align-self: flex-start; }
+.home-work-card .home-explainer-preview { object-fit: contain; background: #f8f8f5; }
+.home-text-link > [aria-hidden] { flex-shrink: 0; white-space: nowrap; }
 .home-work-card .home-case-label { margin-bottom: 12px; }
 .home-work-card h3 { font-size: 24px; line-height: 1.25; letter-spacing: -.6px; margin-bottom: 12px; }
 .home-work-card p:not(.home-case-label) { color: var(--home-muted); font-size: 15px; }
 .home-outcomes { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 38px; }
-.home-outcomes article { border-top: 1px solid #aeb9b2; padding-top: 24px; }
+.home-outcomes article { display: flex; flex-direction: column; border-top: 1px solid #aeb9b2; padding-top: 24px; }
 .home-step-number { display: block; font-size: 13px; color: #0060be; margin-bottom: 22px; }
+.home-outcomes .home-text-link { margin-top: auto; align-self: flex-start; }
 .home-outcomes h3 { font-size: 23px; letter-spacing: -.6px; margin-bottom: 16px; }
 .home-outcomes p { color: var(--home-muted); font-size: 16px; margin-bottom: 23px; }
 .home-engagement { display: flex; gap: 40px; justify-content: space-between; align-items: center; margin-top: 58px; border: 1px solid var(--home-rule); padding: 28px 30px; background: #eeefea; }
@@ -2340,7 +2345,10 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 .home-network-note { margin: 20px 0 0; font-size: 14px; color: var(--home-muted); }
 .home-network-note a { color: #0055ab; text-underline-offset: 3px; }
 .home-contact { position: relative; background: #e9ede7; border-block: 1px solid var(--home-rule); }
-.home-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 78px; align-items: start; }
+.home-contact-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "intro form" "support form"; grid-template-rows: auto 1fr; column-gap: 78px; row-gap: 0; align-items: start; }
+.home-contact-intro { grid-area: intro; }
+.home-contact-support { grid-area: support; }
+.home-contact-grid > form, .home-contact-grid > #formStatus { grid-area: form; }
 .home-contact h2 { font-size: 40px; letter-spacing: -1.5px; line-height: 1.17; margin-bottom: 23px; }
 .home-contact-grid > div > p:not(.home-eyebrow) { color: var(--home-muted); font-size: 16px; }
 .home-contact-person { display: flex; gap: 14px; align-items: center; margin: 28px 0; }
@@ -2463,3 +2471,29 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
     .home-footer-connect { flex-direction: row; flex-wrap: wrap; gap: 24px; }
     .home-footer-bottom { flex-direction: column; gap: 12px; line-height: 1.7; }
 }
+
+/* Post-deployment polish: reserve usable columns and keep the actual form close to its anchor. */
+.secondary-page main .container { padding-inline: var(--site-gutter, 24px); }
+.secondary-page .secondary-hero-actions { align-items: flex-start; }
+@media (min-width: 640px) and (max-width: 999px) {
+    .home-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+    .home-intro h1 { font-size: clamp(40px, 8vw, 62px); letter-spacing: -1.9px; }
+    .home-intro h1 em { letter-spacing: -1.9px; }
+    .home-founder { display: flex; align-items: center; gap: 20px; padding: 24px 0 0; border-left: 0; border-top: 1px solid var(--home-rule); }
+    .home-founder img { width: 78px; height: 78px; margin: 0; flex-shrink: 0; }
+    .home-founder p { margin-bottom: 8px; }
+    .home-credibility { margin-top: 28px; }
+}
+@media (max-width: 799px) {
+    .home-outcomes { grid-template-columns: minmax(0,1fr); gap: 28px; }
+    .home-step-number { margin-bottom: 14px; }
+    .home-contact-grid { grid-template-columns: minmax(0,1fr); grid-template-areas: "intro" "form" "support"; grid-template-rows: auto; gap: 24px; }
+    .home-contact { padding-block: 36px; }
+    .home-contact .home-eyebrow { margin-bottom: 12px; }
+    .home-contact h2 { margin-bottom: 14px; }
+    .home-contact-intro > p:last-child { margin-bottom: 0; }
+    .home-contact-support .home-contact-person { margin: 0 0 12px; }
+    .home-contact-support .home-direct-contact { margin: 0; }
+}
+
+@media (max-width: 999px) { .home-intro h1 { font-size: clamp(40px, 8vw, 62px); } }

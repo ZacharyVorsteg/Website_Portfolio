@@ -1,0 +1,63 @@
+/* Shared site chrome: keep all entry pages consistent without resetting article styles. */
+:root { --site-gutter: 32px; --site-header-height: 88px; }
+.site-header, .site-header.scrolled, .conversion-home .site-header, .conversion-home .site-header.scrolled {
+    position: fixed; inset: 0 0 auto; z-index: 1000;
+    background: #f8f8f5; border-bottom: 1px solid #d6dcd6;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    color: #222b2b; box-shadow: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.site-header > .container, .home-footer > .container {
+    box-sizing: border-box; width: 100%; max-width: 1200px;
+    margin-inline: auto; padding-inline: var(--site-gutter);
+}
+.site-header .header-container { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: var(--site-header-height); }
+.site-header .logo { display: block; flex-shrink: 0; color: #222b2b; font-size: 20px; font-weight: 600; line-height: 1.25; letter-spacing: -.6px; white-space: nowrap; text-decoration: none; }
+.site-header .logo-subline { display: block; color: #586360; margin-top: 5px; font-size: 12px; font-weight: 400; letter-spacing: .1px; line-height: 1.4; }
+.site-header .desktop-nav { display: flex; align-items: center; gap: 24px; }
+.site-header .desktop-nav a { display: inline-flex; align-items: center; font-size: 14px; font-weight: 500; line-height: 1.5; color: #222b2b; padding: 8px 12px; text-decoration: none; white-space: nowrap; }
+.site-header .desktop-nav a:hover { color: #0052a3; background: #edf0ec; }
+.site-header .desktop-nav .btn, .site-menu .btn {
+    display: inline-flex; justify-content: center; align-items: center; gap: 12px;
+    color: #fff !important; background: #0066cc !important; border: 0; border-radius: 5px;
+    padding: 12px 19px; min-height: 44px; font-weight: 500; box-shadow: none; text-decoration: none;
+}
+.site-header .desktop-nav .btn:hover, .site-menu .btn:hover { background: #0052a3 !important; transform: none; }
+.site-header a:focus-visible, .site-header button:focus-visible, .site-menu a:focus-visible, .site-menu button:focus-visible { outline: 3px solid #0066cc; outline-offset: 4px; }
+.site-header .mobile-menu-btn { display: none; align-items: center; justify-content: center; flex-direction: column; gap: 5px; width: 48px; height: 48px; min-width: 48px; background: none; border: 0; cursor: pointer; }
+.site-header .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: #222b2b; }
+.site-menu[hidden] { display: none !important; }
+.site-menu { position: fixed; inset: 0; z-index: 1100; background: #f8f8f5; color: #222b2b; }
+.site-menu .mobile-menu-content { box-sizing: border-box; max-height: 100dvh; overflow-y: auto; width: 100%; padding: 90px var(--site-gutter) max(36px,env(safe-area-inset-bottom)); }
+.site-menu .mobile-menu-close { position: absolute; top: 16px; right: var(--site-gutter); width: 48px; height: 48px; border: 0; background: none; color: #222b2b; font-size: 32px; cursor: pointer; }
+.site-menu nav { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.site-menu nav a { display: block; padding: 12px 8px; min-height: 44px; color: #222b2b; text-decoration: none; font-size: 20px; font-weight: 500; line-height: 1.5; }
+.home-footer { background: #202b29; color: #f4f7f3; padding: 44px 0 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+.home-footer * { box-sizing: border-box; }
+.home-footer-top { display: grid; grid-template-columns: 1.2fr 1fr .5fr; gap: 40px; }
+.home-footer .logo { display: inline-block; font-size: 20px; font-weight: 600; line-height: 1.3; color: #f4f7f3; text-decoration: none; }
+.home-footer p { font-size: 14px; line-height: 1.7; color: #c5d0c8; margin: 14px 0 0; }
+.home-footer nav { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 26px; align-content: start; }
+.home-footer a:not(.logo) { display: inline-flex; align-items: center; gap: .35em; min-height: 36px; font-size: 14px; line-height: 1.5; color: #dce5de; text-decoration: none; }
+.home-footer a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.home-footer a:focus-visible { outline: 3px solid #9fcdff; outline-offset: 4px; }
+.home-footer-connect { display: flex; flex-direction: column; gap: 4px; }
+.home-footer-bottom { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid #607069; margin-top: 28px; padding-top: 18px; font-size: 12px; line-height: 1.7; color: #c5d0c8; }
+@media (max-width: 999px) {
+    :root { --site-gutter: 24px; --site-header-height: 80px; }
+    .site-header .desktop-nav { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+    .site-header .desktop-nav a { font-size: 15px; }
+    .menu-ready .site-header .desktop-nav { display: none; }
+    .menu-ready .site-header .mobile-menu-btn { display: flex; }
+    body:not(.menu-ready) .site-header { position: static; }
+    body:not(.menu-ready) .site-header .header-container { height: auto; flex-wrap: wrap; gap: 16px; padding-block: 20px; }
+    body:not(.menu-ready) .site-header .desktop-nav { width: 100%; }
+}
+@media (max-width: 639px) {
+    :root { --site-gutter: 22px; }
+    .site-header .logo { font-size: 18px; }
+    .site-header .logo-subline { font-size: 11px; }
+    .home-footer-top { grid-template-columns: 1fr; gap: 24px; }
+    .home-footer-connect { flex-direction: row; flex-wrap: wrap; gap: 8px 24px; }
+    .home-footer-bottom { flex-direction: column; gap: 12px; }
+}
