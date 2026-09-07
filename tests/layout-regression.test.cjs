@@ -224,3 +224,30 @@ test('home, About, blog, and production share usable header/footer layouts', asy
         assert.ok(spread <= 1, `Shared header heights differ at ${width}px: ${JSON.stringify(headerHeights)}`);
     }
 });
+
+
+test('resource worksheet preserves mobile spacing, print access and the inquiry topic', async () => {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await page.route('**/*', route => new URL(route.request().url()).origin === base && route.request().method() === 'GET' ? route.continue() : route.abort());
+    try {
+        await page.goto(base + '/');
+        await page.locator('#templates').scrollIntoViewIfNeeded();
+        await page.evaluate(() => document.fonts.ready);
+        assert.ok(await page.locator('.home-resource-feature').isVisible());
+        await assertNoOverflow(page, 'resource choices at390px');
+        await page.locator('.home-resource-feature').click();
+        assert.equal(new URL(page.url()).pathname, '/workflow-check/');
+        assert.equal(await page.locator('.worksheet-steps li').count(), 5);
+        assert.ok(await page.evaluate(() => document.querySelector('.worksheet .home-eyebrow').getBoundingClientRect().top >= document.querySelector('header').getBoundingClientRect().bottom + 20), 'Worksheet clears the fixed brand header.');
+        assert.equal(await page.locator('form').count(), 0, 'Resource stays ungated.');
+        await assertNoOverflow(page, 'worksheet at390px');
+        await page.evaluate(() => { window.__printed = false; window.print = () => { window.__printed = true; }; });
+        await page.locator('#print-worksheet').click();
+        assert.equal(await page.evaluate(() => window.__printed), true);
+        await page.locator('.worksheet-next .btn').click();
+        assert.equal(new URL(page.url()).searchParams.get('topic'), 'ai');
+        assert.equal(await page.locator('[name="service"]').inputValue(), 'ai');
+        assert.equal(await page.locator('[name="source-page"]').inputValue(), '/workflow-check/');
+        assert.ok(await page.locator('#discoveryForm').isVisible());
+    } finally { await page.close(); }
+});

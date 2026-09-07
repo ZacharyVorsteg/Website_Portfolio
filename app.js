@@ -5,7 +5,7 @@
     const campaignStorageKey = 'zv-campaign-attribution-v1';
     const topics = new Set(['ai', 'software', 'finance', 'real-estate', 'production', 'partnership', 'other']);
     const sourcePages = new Set([
-        '/', '/index.html', '/about/', '/portfolio/', '/apps/', '/apps.html', '/proforma.html', '/macro.html',
+        '/', '/index.html', '/workflow-check/', '/about/', '/portfolio/', '/apps/', '/apps.html', '/proforma.html', '/macro.html',
         '/ai-operating-layer/', '/ai-automation/', '/custom-software/', '/finance/',
         '/commercial-real-estate/', '/production/', '/blog/',
         '/ai-automation-palm-beach-county/', '/ai-consultant-palm-beach-county/',

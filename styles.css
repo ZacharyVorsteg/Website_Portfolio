@@ -2498,3 +2498,10 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 }
 
 @media (max-width: 999px) { .home-intro h1 { font-size: clamp(40px, 8vw, 62px); } }
+
+/* Resource choices share one clear hierarchy on mobile and desktop. */
+.home-resources .home-resource-feature{display:block;padding:22px;margin-top:22px;border:1px solid var(--home-rule);border-radius:10px;background:var(--home-paper);text-decoration:none;color:var(--home-ink)}
+.home-resource-feature strong{display:block;font-size:18px;line-height:1.4}.home-resource-feature>span{display:block;font-size:14px;line-height:1.65;color:var(--home-muted);margin:10px 0 14px}.home-resource-feature small{font-size:14px;text-decoration:underline;text-underline-offset:4px}.home-resource-feature:hover{border-color:var(--home-ink)}
+.home-resource-subtitle{font-size:18px;line-height:1.4;margin:0 0 12px}.home-resources li a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;min-height:64px}.home-resources li strong{font-weight:500;line-height:1.5}.home-resources li .resource-format{float:none;margin:0;font-size:12px;white-space:nowrap;line-height:1.75}.home-resources li small{grid-column:1/-1;display:block;color:var(--home-muted);font-size:13px;line-height:1.55}.home-resources .home-resource-note{font-size:12px;line-height:1.6;margin-top:16px}
+
+.home-resources > .container > div > .home-eyebrow:first-child{margin-top:0}
