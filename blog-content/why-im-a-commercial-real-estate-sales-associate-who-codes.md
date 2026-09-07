@@ -1,6 +1,6 @@
 ---
 title: "Why I'm a Commercial Real Estate Sales Associate Who Codes"
-description: "I'm a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here's why commercial real estate's tech gap is my biggest competitive advantage."
+description: "How coding helps me analyze deals and serve commercial real estate clients, and why I combine software building with work as a licensed sales associate."
 keywords: commercial real estate sales associate who codes, CRE sales associate technology, proptech, commercial real estate technology, CRE sales associate automation, proptech adoption commercial real estate, CRE deal analysis automation, commercial real estate AI, proptech market 2026, commercial real estate technology gap
 date: 2026-03-20
 pillar: Hardware & PropTech

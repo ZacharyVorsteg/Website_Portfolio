@@ -1,6 +1,6 @@
 ---
 title: "What Breaks When You Automate Everything as a Solo Founder"
-description: "I run a fleet of automated trading systems, IoT hardware, and an iOS app — all solo. Here's what actually breaks, how failures cascade, and what I've learned you can't automate."
+description: "What breaks when a solo founder automates trading, hardware and apps: cascading failures, monitoring blind spots and what still needs human judgment."
 keywords: what breaks when you automate everything, solo founder automation failures, automation failure modes, cascading failures solo founder, what you can't automate, solo founder operational risk, automation monitoring blind spots, automation maintenance reality, dependency rot software, solo founder burnout automation
 date: 2026-03-21
 pillar: Solo Founder Operations

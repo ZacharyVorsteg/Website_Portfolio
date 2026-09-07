@@ -48,7 +48,7 @@ These are the only metrics that show up in my daily standup with my AI agent sta
 
 **Open deal count** per venture with a staleness flag is the closest thing I have to a CRM nag. If a deal hasn't moved in seven days, it's either dead or needs a nudge. Both are worth knowing. Trusenda—the CRM I built specifically for commercial real estate—surfaces this automatically. I built the staleness flag after losing two deals in a quarter to silence I mistook for "still warm."
 
-**Bot uptime** matters because I have 54 trading bots running on launchctl across several strategies. A single bot going down is fine. Three going down simultaneously usually indicates something systemic—a connectivity issue, a credential rotation I forgot, or a dependency that broke. Uptime below 95% fleet-wide is the signal I watch. I wrote more about how the system works in my post on [building 54 trading bots as a side project](https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/).
+**Bot uptime** matters because I have 54 trading bots running on launchctl across several strategies. A single bot going down is fine. Three going down simultaneously usually indicates something systemic—a connectivity issue, a credential rotation I forgot, or a dependency that broke. Uptime below 95% fleet-wide is the signal I watch. I wrote more about how the system works in my post on [building 54 trading bots as a side project](/blog/algorithmic-trading-bots-side-project/).
 
 **Unread inbound messages** across all ventures is the human layer nothing else replaces. A potential client who waited five hours for an answer on a $500/month service usually doesn't stick around. I route everything through a single intake queue, but the queue still needs a human decision on edge cases.
 
@@ -82,7 +82,7 @@ The metrics I removed were harder to cut than the ones I added. Here's what left
 
 **Revenue by day.** This one took me the longest to drop. Checking daily revenue felt important. In practice, it caused me to make campaign decisions based on noise rather than signal. I now review revenue weekly with a 4-week rolling average. That's the number I actually act on.
 
-I wrote about some of the broader failure modes that come from automating without the right measurement layer in my post on [what breaks when you automate everything](https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/). The measurement mistakes I made as I automated were the most expensive lessons.
+I wrote about some of the broader failure modes that come from automating without the right measurement layer in my post on [what breaks when you automate everything](/blog/what-breaks-when-you-automate-everything/). The measurement mistakes I made as I automated were the most expensive lessons.
 
 ---
 

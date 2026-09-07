@@ -1,6 +1,6 @@
 ---
 title: "Shipping IoT Hardware Solo: ESP32 Prototype to Deployment"
-description: "I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here's the full journey."
+description: "From ESP32 prototype to field deployment: lessons from building an IoT thermal detection system with infrared sensors and cellular connectivity."
 keywords: building iot hardware products as a solo developer, solo developer iot hardware, ESP32 IoT project production, shipping hardware solo founder, IoT thermal detection system, solo hardware development, ESP32-S3 MLX90640, embedded systems solo developer, IoT prototype to production, hardware startup solo founder
 date: 2026-03-21
 pillar: Hardware & PropTech

@@ -1,6 +1,6 @@
 ---
 title: How I Build in Public as a Technical Founder
-description: "I run a multi-market trading infrastructure, ship iOS apps, and build IoT hardware — all solo. Here's what I share, what I keep private, and why transparency compounds."
+description: "How I share progress across software, trading and hardware: what to publish, what to keep private, and a practical framework for building in public."
 keywords: build in public, technical founder, building in public, solo founder transparency, open startup, indie hacker build in public, solo founder accountability, building in public framework
 date: 2026-03-20
 pillar: Building in Public

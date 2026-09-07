@@ -980,7 +980,7 @@
 <p><strong>Cost per lead</strong> is the number I&#39;ve learned to trust most for paid acquisition. It&#39;s a leading indicator: if CPL spikes before volume drops, I catch a problem before I&#39;ve burned budget. On AdsHandled, CPL above $35 almost never produces a client within a normal sales cycle. Below $28 consistently means the creative is doing real work.</p>
 <p><strong>Demo request count</strong> at zero for 48 hours isn&#39;t always a demand problem. Half the time it&#39;s a routing issue—a webhook that stopped firing or a form field that broke after a deploy. I learned this the hard way after spending a week tweaking messaging when the problem was a misconfigured endpoint. Now zero for 48 hours triggers a technical check first, demand hypothesis second.</p>
 <p><strong>Open deal count</strong> per venture with a staleness flag is the closest thing I have to a CRM nag. If a deal hasn&#39;t moved in seven days, it&#39;s either dead or needs a nudge. Both are worth knowing. Trusenda—the CRM I built specifically for commercial real estate—surfaces this automatically. I built the staleness flag after losing two deals in a quarter to silence I mistook for &quot;still warm.&quot;</p>
-<p><strong>Bot uptime</strong> matters because I have 54 trading bots running on launchctl across several strategies. A single bot going down is fine. Three going down simultaneously usually indicates something systemic—a connectivity issue, a credential rotation I forgot, or a dependency that broke. Uptime below 95% fleet-wide is the signal I watch. I wrote more about how the system works in my post on <a href="https://zacharyvorsteg.com/blog/algorithmic-trading-bots-side-project/">building 54 trading bots as a side project</a>.</p>
+<p><strong>Bot uptime</strong> matters because I have 54 trading bots running on launchctl across several strategies. A single bot going down is fine. Three going down simultaneously usually indicates something systemic—a connectivity issue, a credential rotation I forgot, or a dependency that broke. Uptime below 95% fleet-wide is the signal I watch. I wrote more about how the system works in my post on <a href="/blog/algorithmic-trading-bots-side-project/">building 54 trading bots as a side project</a>.</p>
 <p><strong>Unread inbound messages</strong> across all ventures is the human layer nothing else replaces. A potential client who waited five hours for an answer on a $500/month service usually doesn&#39;t stick around. I route everything through a single intake queue, but the queue still needs a human decision on edge cases.</p>
 <hr>
 <h2>Per-Venture Metrics That Go Deeper</h2>
@@ -997,7 +997,7 @@
 <p><strong>Social media follower counts.</strong> Completely gone. Followers on any platform are a lagging, gamed, algorithm-dependent number. The metric I care about is inbound messages that reference specific content—that tells me something resonated. Aggregate counts don&#39;t.</p>
 <p><strong>Website sessions.</strong> I still have analytics installed, but I don&#39;t review session counts in my daily or weekly routine. Session counts without conversion context are noise. The exception: if CPL spikes or demo volume drops, I&#39;ll look at sessions to see if there&#39;s a traffic problem upstream. It&#39;s a diagnostic tool, not a performance indicator.</p>
 <p><strong>Revenue by day.</strong> This one took me the longest to drop. Checking daily revenue felt important. In practice, it caused me to make campaign decisions based on noise rather than signal. I now review revenue weekly with a 4-week rolling average. That&#39;s the number I actually act on.</p>
-<p>I wrote about some of the broader failure modes that come from automating without the right measurement layer in my post on <a href="https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/">what breaks when you automate everything</a>. The measurement mistakes I made as I automated were the most expensive lessons.</p>
+<p>I wrote about some of the broader failure modes that come from automating without the right measurement layer in my post on <a href="/blog/what-breaks-when-you-automate-everything/">what breaks when you automate everything</a>. The measurement mistakes I made as I automated were the most expensive lessons.</p>
 <hr>
 <h2>The System Behind the Numbers</h2>
 <p>The dashboard itself is a custom SQLite database that aggregates data from Stripe, my ad platforms, launchctl log files, and a small inbound queue tool I built for the ventures. Python scripts pull from each source every hour and write normalized rows with timestamps.</p>
@@ -1065,7 +1065,7 @@
       <div class="related-card">
         <a href="/blog/what-breaks-when-you-automate-everything/">
           <h4>What Breaks When You Automate Everything as a Solo Founder</h4>
-          <p class="related-desc">I run a fleet of automated trading systems, IoT hardware, and an iOS app — all solo. Here&apos;s what actually breaks, how failures cascade, and what I&apos;ve learned you can&apos;t automate.</p>
+          <p class="related-desc">What breaks when a solo founder automates trading, hardware and apps: cascading failures, monitoring blind spots and what still needs human judgment.</p>
           <span class="related-meta">March 21, 2026</span>
         </a>
       </div>

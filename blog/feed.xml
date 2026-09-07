@@ -35,7 +35,7 @@
       <link>https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/agentic-engineering-patterns/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>Karpathy coined agentic engineering as vibe coding&apos;s professional counterpart. Here&apos;s the methodology — task decomposition, review gates, and real walkthroughs.</description>
+      <description>A practical guide to agentic engineering: break work into tasks, set review gates and decide when AI-generated code needs human intervention.</description>
       <category>AI Workflow &amp; Context Engineering</category>
     </item>
     <item>
@@ -51,7 +51,7 @@
       <link>https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here&apos;s what agentic AI actually does in my daily workflow, not what it could.</description>
+      <description>How I use AI agents across real estate, trading, hardware and apps: tasks I delegate, limits I work around, and lessons for a one-person company.</description>
       <category>AI Workflow &amp; Context Engineering</category>
     </item>
     <item>
@@ -59,7 +59,7 @@
       <link>https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/shipping-iot-hardware-solo/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I built an IoT thermal detection system using ESP32-S3, MLX90640 sensors, and cellular backhaul — solo, with no hardware background. Here&apos;s the full journey.</description>
+      <description>From ESP32 prototype to field deployment: lessons from building an IoT thermal detection system with infrared sensors and cellular connectivity.</description>
       <category>Hardware &amp; PropTech</category>
     </item>
     <item>
@@ -67,7 +67,7 @@
       <link>https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/vibe-coding-vs-real-engineering/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.</description>
+      <description>Where AI-assisted coding helps, where it creates risk, and how I choose between rapid prototypes and engineering for production systems.</description>
       <category>AI &amp; Engineering</category>
     </item>
     <item>
@@ -75,7 +75,7 @@
       <link>https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/what-breaks-when-you-automate-everything/</guid>
       <pubDate>Sat, 21 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I run a fleet of automated trading systems, IoT hardware, and an iOS app — all solo. Here&apos;s what actually breaks, how failures cascade, and what I&apos;ve learned you can&apos;t automate.</description>
+      <description>What breaks when a solo founder automates trading, hardware and apps: cascading failures, monitoring blind spots and what still needs human judgment.</description>
       <category>Solo Founder Operations</category>
     </item>
     <item>
@@ -91,7 +91,7 @@
       <link>https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/how-i-build-in-public-as-a-technical-founder/</guid>
       <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I run a multi-market trading infrastructure, ship iOS apps, and build IoT hardware — all solo. Here&apos;s what I share, what I keep private, and why transparency compounds.</description>
+      <description>How I share progress across software, trading and hardware: what to publish, what to keep private, and a practical framework for building in public.</description>
       <category>Building in Public</category>
     </item>
     <item>
@@ -107,7 +107,7 @@
       <link>https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/</link>
       <guid isPermaLink="true">https://zacharyvorsteg.com/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/</guid>
       <pubDate>Fri, 20 Mar 2026 00:00:00 GMT</pubDate>
-      <description>I&apos;m a licensed CRE sales associate who also runs production trading infrastructure and ships software. Here&apos;s why commercial real estate&apos;s tech gap is my biggest competitive advantage.</description>
+      <description>How coding helps me analyze deals and serve commercial real estate clients, and why I combine software building with work as a licensed sales associate.</description>
       <category>Hardware &amp; PropTech</category>
     </item>
     <item>

@@ -1,6 +1,6 @@
 ---
 title: "Vibe Coding vs Real Engineering: Where I Draw the Line"
-description: "I use AI to write code daily and run production trading bots handling real money. Here's where vibe coding works, where it breaks, and why the debate misses the point."
+description: "Where AI-assisted coding helps, where it creates risk, and how I choose between rapid prototypes and engineering for production systems."
 keywords: vibe coding vs real engineering, vibe coding AI, AI generated code production, vibe coding limitations, AI coding tools founders, AI assisted development 2026, vibe coding Andrej Karpathy, when to use AI coding, AI code quality, technical founder AI tools
 date: 2026-03-21
 pillar: AI & Engineering

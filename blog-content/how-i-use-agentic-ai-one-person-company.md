@@ -1,6 +1,6 @@
 ---
 title: "How I Use Agentic AI to Run a One-Person Company"
-description: "I manage CRE deals, dozens of trading strategies, IoT hardware, and iOS apps — alone. Here's what agentic AI actually does in my daily workflow, not what it could."
+description: "How I use AI agents across real estate, trading, hardware and apps: tasks I delegate, limits I work around, and lessons for a one-person company."
 keywords: agentic AI workflow solo founder, agentic AI automation one person company, AI agent daily workflow, solo founder AI tools 2026, agentic AI real workflow, one person company AI, AI agent task delegation, solo founder productivity AI, agentic AI limitations, AI automated business operations
 date: 2026-03-21
 pillar: AI Workflow & Context Engineering

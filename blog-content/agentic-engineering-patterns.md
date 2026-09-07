@@ -1,6 +1,6 @@
 ---
 title: "Agentic Engineering: What Replaced Vibe Coding"
-description: "Karpathy coined agentic engineering as vibe coding's professional counterpart. Here's the methodology — task decomposition, review gates, and real walkthroughs."
+description: "A practical guide to agentic engineering: break work into tasks, set review gates and decide when AI-generated code needs human intervention."
 keywords: agentic engineering, agentic engineering patterns, what replaced vibe coding, agentic engineering vs vibe coding, AI coding methodology 2026, agentic engineering solo founder, AI agent engineering workflow, task decomposition AI agents, Karpathy agentic engineering, Willison agentic engineering patterns
 date: 2026-03-21
 pillar: AI Workflow & Context Engineering

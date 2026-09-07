@@ -1,0 +1,11 @@
+# September 7, 2026: entry-to-inquiry detail review
+
+The prior conversion layout and resource offer remain the baseline. This pass checked the home, About, portfolio, apps, workflow worksheet, production, ongoing engagements, four service routes and blog entry/article templates at 320, 390, 768 and 1440 CSS pixels. All 918 resolved local links and 319 fragment destinations were inspected; none were missing. The current shared header, equal image gutters, service-specific inquiry context and optional-detail contact form passed again.
+
+Seven article descriptions now explain the practical value earlier and more concisely. Related cards, standard/social metadata, archive and RSS were regenerated from those source descriptions. Six absolute internal Markdown links were normalized. Publication dates, article bodies, existing imagery, logos, colors, brand voice, inquiry fields and endpoint remain unchanged. All 14 articles remain accessible. The blog build's nine editorial warnings are now zero.
+
+Validation: 35 existing tests passed; public validator passed 44 HTML pages and 31 sitemap routes; 52 additional browser route/width cases passed. No real inquiry was submitted. A shorter description does not guarantee a specific Google snippet or increased CTR; Google can select page text based on a query. Guidance: https://developers.google.com/search/docs/appearance/snippet
+
+Keep the response-first inquiry path: relevant situation and desired outcome, deeper questions optional, and an honest explanation of what happens next. The ungated workflow worksheet already develops these ideas without adding another form. SPIN is a conversation framework, not proof that adding four questions will improve a website. Sandler's next-step clarity informs the request language, not pressure or invented urgency.
+
+Regression lesson: homepage appearance alone cannot verify a network release. Check every distinct service, city, resource and inquiry template; verify the rendered CTA destination, preserved context, required field labels and actual saved-receipt contract. The network release record in the audit workspace records the other ventures separately. No claim of perfection, measured conversion uplift or real-user speed improvement is made by this review.

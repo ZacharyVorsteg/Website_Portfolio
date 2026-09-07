@@ -57,7 +57,7 @@ Here is what I operate as of September 2026, built over roughly 18 months:
 
 The language-model API I use bills per token, with different rates by model tier. That makes model selection part of the cost calculation. [Source: model provider pricing.](https://www.anthropic.com/pricing) The voice service bills per minute of live conversation. [Source: voice AI provider pricing.](https://www.retellai.com/pricing) According to Netlify's pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. [Source: Netlify pricing.](https://www.netlify.com/pricing/)
 
-Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in [What My AI Development Stack Actually Costs](https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/).
+Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in [What My AI Development Stack Actually Costs](/blog/what-my-ai-development-stack-actually-costs/).
 
 The operating principle: pay per token (not per seat), self-host orchestration, and never pay for a managed service where a SQLite table does the same job.
 
@@ -81,7 +81,7 @@ After building across these products, most AI systems design comes down to three
 
 A stateless agent runs a task and forgets it. A stateful agent maintains memory across invocations — it knows what happened yesterday, what the user last asked, what state a deal is in.
 
-Most tutorials show stateless agents because they are simpler to demo. Most useful products need stateful agents because context is what makes output actually good. I use file-based memory (markdown + SQLite) over a vector database for most low-volume cases — retrieval latency and cost matter when you are not at enterprise scale. The full pattern is in [Context Engineering for AI Agents: What I Actually Configure](https://zacharyvorsteg.com/blog/context-engineering-ai-agents/).
+Most tutorials show stateless agents because they are simpler to demo. Most useful products need stateful agents because context is what makes output actually good. I use file-based memory (markdown + SQLite) over a vector database for most low-volume cases — retrieval latency and cost matter when you are not at enterprise scale. The full pattern is in [Context Engineering for AI Agents: What I Actually Configure](/blog/context-engineering-ai-agents/).
 
 ### 2. Single Model vs. Multi-Model Routing
 
@@ -91,7 +91,7 @@ Running one model for everything is simpler but expensive. Routing short classif
 
 Every AI system has low-stakes reversible tasks (safe to automate) and high-stakes or irreversible tasks (require human approval). Confusing these categories is where real failures happen.
 
-My rule: if the action touches money, sends a message to a real person, or deploys code to production, it requires explicit human approval. Everything else runs automatically. The practical implementation is an approval queue — agents propose actions, the owner approves with a single tap. More on the full workflow in [How I Use Agentic AI to Run a One-Person Company](https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/).
+My rule: if the action touches money, sends a message to a real person, or deploys code to production, it requires explicit human approval. Everything else runs automatically. The practical implementation is an approval queue — agents propose actions, the owner approves with a single tap. More on the full workflow in [How I Use Agentic AI to Run a One-Person Company](/blog/how-i-use-agentic-ai-one-person-company/).
 
 ## What Breaks When You Get Architecture Wrong
 
@@ -135,6 +135,6 @@ Observability. A system can pass every local test and degrade silently in produc
 **How much does it cost to run an AI-based product solo?**
 It depends on call volume and model selection. My September 2026 operating-cost snapshot was $370–$590/month. Model costs vary by tier; routing expensive models only to tasks that need them is one cost control to evaluate against actual workload and quality requirements. [Source: model provider pricing.](https://www.anthropic.com/pricing)
 
-Building something similar? [Reach out](https://zacharyvorsteg.com/#contact) — or see the ventures at https://zacharyvorsteg.com/#ventures.
+Building something similar? [Reach out](/#contact) — or see the ventures at https://zacharyvorsteg.com/#ventures.
 
 <!-- content-artifact-sha256: undefined -->

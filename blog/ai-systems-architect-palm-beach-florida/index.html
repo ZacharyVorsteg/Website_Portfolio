@@ -996,7 +996,7 @@
 </tr>
 </tbody></table>
 <p>The language-model API I use bills per token, with different rates by model tier. That makes model selection part of the cost calculation. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a> The voice service bills per minute of live conversation. <a href="https://www.retellai.com/pricing">Source: voice AI provider pricing.</a> According to Netlify&#39;s pricing, hosting starts at free and scales to fixed monthly tiers without variable egress surprises. <a href="https://www.netlify.com/pricing/">Source: Netlify pricing.</a></p>
-<p>Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in <a href="https://zacharyvorsteg.com/blog/what-my-ai-development-stack-actually-costs/">What My AI Development Stack Actually Costs</a>.</p>
+<p>Total AI infrastructure: roughly $370–$590/month across my products and services. An earlier March 2026 snapshot of my development subscriptions appears in <a href="/blog/what-my-ai-development-stack-actually-costs/">What My AI Development Stack Actually Costs</a>.</p>
 <p>The operating principle: pay per token (not per seat), self-host orchestration, and never pay for a managed service where a SQLite table does the same job.</p>
 <h2>Where Being in Palm Beach Matters</h2>
 <p>According to the State of Florida&#39;s official tax guide, Florida has no state income tax. <a href="https://www.stateofflorida.com/taxes/">Source: State of Florida tax guide.</a> For a solo founder generating revenue across multiple ventures, that difference compounds significantly over time compared to California or New York, where state income tax rates for high earners reach 9–13%.</p>
@@ -1008,12 +1008,12 @@
 <p>After building across these products, most AI systems design comes down to three decisions. Get these wrong and the product fails silently or costs more than it earns.</p>
 <h3>1. Stateless vs. Stateful Agents</h3>
 <p>A stateless agent runs a task and forgets it. A stateful agent maintains memory across invocations — it knows what happened yesterday, what the user last asked, what state a deal is in.</p>
-<p>Most tutorials show stateless agents because they are simpler to demo. Most useful products need stateful agents because context is what makes output actually good. I use file-based memory (markdown + SQLite) over a vector database for most low-volume cases — retrieval latency and cost matter when you are not at enterprise scale. The full pattern is in <a href="https://zacharyvorsteg.com/blog/context-engineering-ai-agents/">Context Engineering for AI Agents: What I Actually Configure</a>.</p>
+<p>Most tutorials show stateless agents because they are simpler to demo. Most useful products need stateful agents because context is what makes output actually good. I use file-based memory (markdown + SQLite) over a vector database for most low-volume cases — retrieval latency and cost matter when you are not at enterprise scale. The full pattern is in <a href="/blog/context-engineering-ai-agents/">Context Engineering for AI Agents: What I Actually Configure</a>.</p>
 <h3>2. Single Model vs. Multi-Model Routing</h3>
 <p>Running one model for everything is simpler but expensive. Routing short classification tasks to a fast, cheap model and reserving capable models for complex reasoning cuts costs by 40–60% in my systems, without meaningfully degrading output quality. The model pricing schedule shows different per-token rates by tier. Compare expected savings with the engineering and monitoring cost before adding a routing layer. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a> The tradeoff: routing logic is code you maintain. If it breaks, the whole system degrades silently. I test routing decisions explicitly and log which model handled each task type.</p>
 <h3>3. Human-in-the-Loop Gates vs. Full Automation</h3>
 <p>Every AI system has low-stakes reversible tasks (safe to automate) and high-stakes or irreversible tasks (require human approval). Confusing these categories is where real failures happen.</p>
-<p>My rule: if the action touches money, sends a message to a real person, or deploys code to production, it requires explicit human approval. Everything else runs automatically. The practical implementation is an approval queue — agents propose actions, the owner approves with a single tap. More on the full workflow in <a href="https://zacharyvorsteg.com/blog/how-i-use-agentic-ai-one-person-company/">How I Use Agentic AI to Run a One-Person Company</a>.</p>
+<p>My rule: if the action touches money, sends a message to a real person, or deploys code to production, it requires explicit human approval. Everything else runs automatically. The practical implementation is an approval queue — agents propose actions, the owner approves with a single tap. More on the full workflow in <a href="/blog/how-i-use-agentic-ai-one-person-company/">How I Use Agentic AI to Run a One-Person Company</a>.</p>
 <h2>What Breaks When You Get Architecture Wrong</h2>
 <p>I have broken all three of the above at least once.</p>
 <p><strong>Stateless when stateful was needed.</strong> AI receptionist forgot a caller&#39;s previous contact, leading to repeated intake questions on the second call. Fixed by writing call summaries to persistent storage after every session. According to the 2025 Stack Overflow Developer Survey, 45% of developers find debugging AI-produced errors more time-consuming than standard debugging — building structured logs upfront is faster than reconstructing them after a failure. <a href="https://survey.stackoverflow.co/2025/ai">Source: Stack Overflow Developer Survey 2025.</a></p>
@@ -1041,7 +1041,7 @@ Palm Beach works for the way I build: I can stay close to the business workflows
 Observability. A system can pass every local test and degrade silently in production. Without a team to catch it, you need instrumentation that catches problems before clients do. According to the 2025 Stack Overflow Developer Survey, 66% of developers say the biggest AI frustration is output that is almost right but not quite — in a live system, &quot;almost right&quot; at scale is a real problem. <a href="https://survey.stackoverflow.co/2025/ai">Source: Stack Overflow Developer Survey 2025.</a></p>
 <p><strong>How much does it cost to run an AI-based product solo?</strong>
 It depends on call volume and model selection. My September 2026 operating-cost snapshot was $370–$590/month. Model costs vary by tier; routing expensive models only to tasks that need them is one cost control to evaluate against actual workload and quality requirements. <a href="https://www.anthropic.com/pricing">Source: model provider pricing.</a></p>
-<p>Building something similar? <a href="https://zacharyvorsteg.com/#contact">Reach out</a> — or see the ventures at <a href="https://zacharyvorsteg.com/#ventures">https://zacharyvorsteg.com/#ventures</a>.</p>
+<p>Building something similar? <a href="/#contact">Reach out</a> — or see the ventures at <a href="https://zacharyvorsteg.com/#ventures">https://zacharyvorsteg.com/#ventures</a>.</p>
 <!-- content-artifact-sha256: undefined -->
             </div>
         </article>
@@ -1071,7 +1071,7 @@ It depends on call volume and model selection. My September 2026 operating-cost 
       <div class="related-card">
         <a href="/blog/vibe-coding-vs-real-engineering/">
           <h4>Vibe Coding vs Real Engineering: Where I Draw the Line</h4>
-          <p class="related-desc">I use AI to write code daily and run production trading bots handling real money. Here&apos;s where vibe coding works, where it breaks, and why the debate misses the point.</p>
+          <p class="related-desc">Where AI-assisted coding helps, where it creates risk, and how I choose between rapid prototypes and engineering for production systems.</p>
           <span class="related-meta">March 21, 2026</span>
         </a>
       </div>
