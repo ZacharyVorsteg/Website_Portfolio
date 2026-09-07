@@ -41,3 +41,10 @@ assert against `BANNED` in `tools/build-entity-pages.py`); Zach is a Florida rea
 - Do not describe the design as statistically optimal without qualified-inquiry evidence. Use `docs/QUALIFIED-INQUIRY-EXPERIMENT.md` for measurement and experiment gates.
 - For an authorized delivery test, read both verified and spam records using supported query parameters. The September QA was initially spam; manual verification delivered its notification. Preserve that distinction and never repeat a possibly accepted POST to manufacture a pass.
 - On stacked cards, compare both image gutters with the text inset and caption edge. A desktop image that reaches a card edge must not inherit a one-sided mobile margin. See the screenshot correction in `docs/POST-DEPLOYMENT-POLISH-2026-09-06.md`.
+
+## Free resource quality gates
+- Read `docs/RESOURCE-QUALITY-2026-09-07.md` before changing the pro forma, worksheet or Excel downloads. Useful resources require reviewed calculations, interfaces, printouts and exported files, not just working links.
+- `proforma-model.js` is the sole calculation source. Preserve v3 migration, explicit fee modes/timing, opt-in local storage, null undefined ratios and the absence of arbitrary investment grades. Run the model and resource-browser suites after relevant changes.
+- Keep resource styling in `resource-styles.css` and calculator styling in `proforma-styles.css`. Inspect currency at320px and actual print text; hidden responsive line breaks must retain literal word separation.
+- All three financial downloads are illustrative. Recalculate and independently check formulas/returns and balance-sheet reconciliation before publishing edits; retain formula/input distinctions and explicit assumptions. Change the download version query after replacing a cached workbook.
+- Resource-specific preview PNGs have reproducible code-native source in `tools/render-resource-previews.cjs`; preview mapping is in `tools/preview-metadata.cjs`. Keep the actual PNG dimensions and metadata consistent.

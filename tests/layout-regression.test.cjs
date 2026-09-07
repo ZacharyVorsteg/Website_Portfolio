@@ -238,13 +238,13 @@ test('resource worksheet preserves mobile spacing, print access and the inquiry 
         await page.locator('.home-resource-feature').click();
         assert.equal(new URL(page.url()).pathname, '/workflow-check/');
         assert.equal(await page.locator('.worksheet-steps li').count(), 5);
-        assert.ok(await page.evaluate(() => document.querySelector('.worksheet .home-eyebrow').getBoundingClientRect().top >= document.querySelector('header').getBoundingClientRect().bottom + 20), 'Worksheet clears the fixed brand header.');
+        assert.ok(await page.evaluate(() => document.querySelector('.resource-hero .resource-kicker').getBoundingClientRect().top >= document.querySelector('header').getBoundingClientRect().bottom + 20), 'Worksheet clears the fixed brand header.');
         assert.equal(await page.locator('form').count(), 0, 'Resource stays ungated.');
         await assertNoOverflow(page, 'worksheet at390px');
         await page.evaluate(() => { window.__printed = false; window.print = () => { window.__printed = true; }; });
         await page.locator('#print-worksheet').click();
         assert.equal(await page.evaluate(() => window.__printed), true);
-        await page.locator('.worksheet-next .btn').click();
+        await page.locator('.resource-conversation .button-primary').click();
         assert.equal(new URL(page.url()).searchParams.get('topic'), 'ai');
         assert.equal(await page.locator('[name="service"]').inputValue(), 'ai');
         assert.equal(await page.locator('[name="source-page"]').inputValue(), '/workflow-check/');

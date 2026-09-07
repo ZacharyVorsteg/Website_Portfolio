@@ -5,12 +5,17 @@ const path = require('node:path');
 const DOMAIN = 'https://zacharyvorsteg.com';
 const IMAGE = `${DOMAIN}/images/preview-founder.png`;
 const ALT = 'Zachary Vorsteg — practical AI, connected operations and custom software. Founder and builder in West Palm Beach.';
+const resourcePreviews = {
+  'proforma.html': ['preview-proforma.png', 'Real estate pro forma by Zachary Vorsteg. Rental income, financing and cash flow. Make every assumption visible.'],
+  'resources/index.html': ['preview-resources.png', 'The resource collection by Zachary Vorsteg. Financial templates and interactive tools for your next business decision.'],
+  'workflow-check/index.html': ['preview-workflow.png', 'Workflow opportunity worksheet by Zachary Vorsteg. Map a repetitive process and choose a practical starting point.'],
+};
 const overrides = {
   'about/index.html': ['About Zachary Vorsteg | Founder & Builder', 'Meet Zachary Vorsteg, a technical founder in West Palm Beach building business systems, AI workflows and custom software. Explore his work and approach.'],
   'portfolio/index.html': ['Selected Work & Ventures | Zachary Vorsteg', 'Explore software, automation and property projects built by Zachary Vorsteg, including Trusenda and Palm Beach Warehouses. Discuss a similar business problem.'],
   'blog/index.html': ['Business Systems & Founder Insights | Zachary Vorsteg', 'Notes from Zachary Vorsteg on building software, automating business workflows, finance and real estate. Explore practical lessons from his own ventures.'],
   'macro.html': ['Macroeconomic Research Dashboard | Zachary Vorsteg', "Explore macroeconomic indicators and scenarios in Zachary Vorsteg's research dashboard."],
-  'proforma.html': ['Property Investment Pro Forma | Zachary Vorsteg', 'Model property operating income, leasing costs and cash flow using the assumptions you enter. Explore the investment pro forma by Zachary Vorsteg.'],
+  'proforma.html': ['Free Real Estate Pro Forma | Zachary Vorsteg', 'Model rental-property income, expenses, financing and cash flow. Make assumptions visible, save scenarios and print a clear report. No email required.'],
 };
 // Decode once, so an intentionally literal &amp;apos; stays literal after re-encoding.
 const decode = text => text.replace(/&(amp|quot|apos|lt|gt|#\d+|#x[\da-f]+);/gi, (entity, code) => {
@@ -43,8 +48,9 @@ function normalizePreview(file, relative) {
     const canonical = canonicalTag ? attr(canonicalTag, 'href') : DOMAIN + '/' + relative.replace(/index\.html$/, '');
     const type = meta(head, 'og:type') || (relative.startsWith('blog/') && relative !== 'blog/index.html' ? 'article' : 'website');
     const utility = /^(bidpro|customlabcrm|detailpro|pressurewashpro)\//.test(relative);
-    const image = utility ? `${DOMAIN}/apple-touch-icon.png` : IMAGE;
-    const alt = utility ? 'Zachary Vorsteg, app developer' : ALT;
+    const resourcePreview = resourcePreviews[relative];
+    const image = utility ? `${DOMAIN}/apple-touch-icon.png` : resourcePreview ? `${DOMAIN}/images/${resourcePreview[0]}` : IMAGE;
+    const alt = utility ? 'Zachary Vorsteg, app developer' : resourcePreview ? resourcePreview[1] : ALT;
     const tags = {
       description,
       'og:type': type, 'og:url': canonical, 'og:site_name': 'Zachary Vorsteg', 'og:locale': 'en_US',

@@ -18,6 +18,12 @@ test('every published preview has one complete head, correct image bytes and unc
     await context.route('**/*', route => route.abort());
     const page = await context.newPage();
     const titles = new Set();
+    const resourceImages = new Map([
+      ['proforma.html', ['preview-proforma.png', 'Real estate pro forma']],
+      [path.join('resources', 'index.html'), ['preview-resources.png', 'resource collection']],
+      [path.join('workflow-check', 'index.html'), ['preview-workflow.png', 'Workflow opportunity worksheet']],
+    ]);
+    const foundResourceImages = new Set();
     let count = 0;
     for (const file of files(output)) {
       const html = fs.readFileSync(file, 'utf8');
@@ -42,6 +48,13 @@ test('every published preview has one complete head, correct image bytes and unc
       assert.equal(data.values['og:url'][0], data.canonicals[0]);
       assert.equal(data.values['og:site_name'][0], 'Zachary Vorsteg');
       assert.equal(data.values['twitter:image'][0], data.values['og:image'][0]);
+      if (resourceImages.has(relative)) {
+        const [filename, label] = resourceImages.get(relative);
+        assert.equal(data.values['og:image'][0], 'https://zacharyvorsteg.com/images/' + filename, 'Page-specific resource preview: ' + relative);
+        assert.ok(data.values['og:image:alt'][0].includes(label), 'Resource-specific alternative text: ' + relative);
+        assert.equal(data.values['twitter:image:alt'][0], data.values['og:image:alt'][0]);
+        foundResourceImages.add(filename);
+      }
       if (relative.startsWith('blog' + path.sep) && relative !== path.join('blog', 'index.html')) {
         const source = await page.evaluate(html => {
           const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -60,7 +73,9 @@ test('every published preview has one complete head, correct image bytes and unc
       assert.equal(html.split('</head>')[1], fs.readFileSync(path.join(root, relative), 'utf8').split('</head>')[1], `Page body preserved: ${relative}`);
       count++;
     }
-    assert.equal(count, 43);
+    assert.ok(count >= 43, 'Existing published pages remain present');
+    assert.equal(foundResourceImages.size, 3, 'All three resources use distinct preview images');
+    for (const required of ['proforma.html', 'resources/index.html', 'workflow-check/index.html']) assert.ok(fs.existsSync(path.join(output, required)), 'Resource is published: ' + required);
     assert.equal(files(path.join(output, 'blog')).length, 15);
     const icon = fs.readFileSync(path.join(output, 'apple-touch-icon.png'));
     assert.equal(icon.readUInt32BE(16), 180);

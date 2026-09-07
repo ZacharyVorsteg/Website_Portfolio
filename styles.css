@@ -2505,3 +2505,6 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 .home-resource-subtitle{font-size:18px;line-height:1.4;margin:0 0 12px}.home-resources li a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;min-height:64px}.home-resources li strong{font-weight:500;line-height:1.5}.home-resources li .resource-format{float:none;margin:0;font-size:12px;white-space:nowrap;line-height:1.75}.home-resources li small{grid-column:1/-1;display:block;color:var(--home-muted);font-size:13px;line-height:1.55}.home-resources .home-resource-note{font-size:12px;line-height:1.6;margin-top:16px}
 
 .home-resources > .container > div > .home-eyebrow:first-child{margin-top:0}
+
+/* Free resource collection: preserve the workflow-first homepage hierarchy. */
+.home-resources .resource-collection-link{display:inline-flex;margin-top:17px;font-size:13px;line-height:1.7;min-height:36px;align-items:center;gap:8px}
