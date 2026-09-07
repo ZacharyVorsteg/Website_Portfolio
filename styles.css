@@ -2446,8 +2446,9 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
     .home-featured { display: flex; flex-direction: column; }
     .home-featured-copy { padding: 25px; }
     .home-featured h3 { font-size: 31px; }
-    .home-product-image { margin: 0 0 24px 25px; }
-    .home-product-image img { max-height: 250px; }
+    .home-product-image { align-self: stretch; min-width: 0; margin: 0 25px 24px; }
+    .home-product-image img { max-height: 250px; border-radius: 7px; }
+    .home-product-image figcaption { padding: 12px 0 0; }
     .home-supporting-work { grid-template-columns: 1fr; gap: 30px; margin-top: 30px; }
     .home-work-card > img { height: 205px; }
     .home-work-card h3 { font-size: 24px; }

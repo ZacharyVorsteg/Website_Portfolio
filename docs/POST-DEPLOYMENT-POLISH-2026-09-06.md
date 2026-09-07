@@ -1,5 +1,23 @@
 # Personal-site polish and regression record
 
+## Owner screenshot follow-up
+
+Zach supplied an iPhone screenshot showing a featured preview misaligned with its card.
+The same CSS defect remained in the current Palm Beach Warehouses feature: at 390px the image
+had a 25px left inset and zero right inset. The previous review tested page overflow and peer
+CTA baselines but omitted image-to-card and image-to-copy alignment. An overflow-free page
+can still be visibly misaligned.
+
+The stacked mobile figure now stretches within equal 25px side margins, the caption uses its
+full available width without extra right padding, and all four image corners share the same
+radius. Desktop composition remains intact. A new regression reproduces the old failure at
+320, 375, 390, 430 and 639px and checks both gutters, text alignment and caption alignment.
+The homepage stylesheet URL is versioned so this correction is fetched on return visits.
+
+Palm Beach Warehouses is the owner's stated priority for careful preservation. Keep its
+existing structure and advertising while testing concrete defects in isolated changes.
+Private campaign evidence belongs in the owner-only task record, not this public repository.
+
 This release follows the conversion release published at `95fc945`. Zach requested another
 gap review, implementation, push and deployment. His clarification: the personal site serves
 mixed traffic; no personal-site ads are currently running. Palm Beach Warehouses is his strongest

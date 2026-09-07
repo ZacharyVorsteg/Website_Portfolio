@@ -96,6 +96,26 @@ test('the hero CTA does not jump at the 639/640px breakpoint', async t => {
     assert.ok(jump <= 40, `A 1px viewport change moved the CTA ${jump.toFixed(2)}px: ${JSON.stringify(measurements)}`);
 });
 
+test('mobile featured preview has matching gutters and aligns with its copy and caption', async t => {
+    for (const width of [320, 375, 390, 430, 639]) {
+        await t.test(`${width}px featured card`, async t => {
+            const page = await openPage(t, width);
+            const card = await page.locator('.home-featured').boundingBox();
+            const copy = await page.locator('.home-featured-copy').boundingBox();
+            const image = await page.locator('.home-product-image img').boundingBox();
+            const caption = await page.locator('.home-product-image figcaption').boundingBox();
+            const padding = await page.locator('.home-featured-copy').evaluate(e => parseFloat(getComputedStyle(e).paddingLeft));
+            const leftInset = image.x - card.x;
+            const rightInset = card.x + card.width - image.x - image.width;
+            assert.ok(Math.abs(leftInset - rightInset) <= 1, `Image gutters differ: left ${leftInset}px, right ${rightInset}px`);
+            assert.ok(Math.abs(image.x - copy.x - padding) <= 1, 'Image and text share the same left edge.');
+            assert.ok(Math.abs(caption.x - image.x) <= 1, 'Caption starts at the image edge.');
+            assert.ok(image.width > 0 && image.width <= card.width - padding * 2 + 1, 'Preview respects both card gutters.');
+            await assertNoOverflow(page, `${width}px featured card`);
+        });
+    }
+});
+
 test('mobile primary CTA exposes the message field and focuses contact before the venture directory', async t => {
     const page = await openPage(t, 390, 844);
     const order = await page.evaluate(() => {
