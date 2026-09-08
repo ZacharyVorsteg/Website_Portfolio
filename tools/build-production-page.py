@@ -74,6 +74,11 @@ BRAND = {"zv": ("Zachary Vorsteg", "zacharyvorsteg.com"), "ah": ("Ads Handled", 
          "pbw": ("Palm Beach Warehouses", "palmbeachwarehouses.com"), "cl": ("CustomLab", "customlab.ai")}
 CAPTIONS = json.loads((ASSETS / "captions.json").read_text()) if (ASSETS / "captions.json").exists() else {}
 KINETIC = [("adshandled", "Ads Handled", "Your Google profile"), ("callshandled", "CallsHandled", "After hours"), ("pbw", "Palm Beach Warehouses", "Specs that matter")]  # kinetic-standard PASS only
+# PRODUCT-DEMO family (kinetic standard v4.3, 2026-09-07; Zach: "not one trick ponies… the work needs to sell / convert them"): the
+# same gate, a second dynamic — the work shown happening (a task card ticking off, the hand clicking the next step). PASS only.
+KINETIC_DEMO = [("callshandled-demo", "CallsHandled", "Tonight's call, handled"), ("adshandled-demo", "Ads Handled", "A lead moves through the system"),
+                ("pbw-demo", "Palm Beach Warehouses", "How a search actually goes"), ("customlab-demo", "CustomLab", "One handoff, mapped, then built"),
+                ("vorsteg-demo", "Vorsteg Software", "From one workflow to an app"), ("palmbeachwebsites-demo", "Palm Beach Websites", "A site with one job")]
 
 def vid(src, poster, label, aria, cls="pv", sound=False):
     return (f'<video class="{cls}" muted loop playsinline preload="none" poster="/images/production/{poster}" aria-label="{b.esc(aria)}" data-src="/images/production/{src}"'
@@ -190,12 +195,20 @@ def blocks():
         f'<button type="button" class="snd" aria-label="Toggle sound">&#9834;</button>'
         f'<figcaption class="below"><b>{b.esc(t)}</b><span>{b.esc(name)} · kinetic piece · standard: pass</span></figcaption></figure>'
         for k, name, t in KINETIC if (ASSETS / f"kinetic-{k}.mp4").exists())
+    kin_demo = "".join(
+        f'<figure class="reel kin">{vid(f"kinetic-{k}.mp4", f"kinetic-{k}.jpg", name, f"{name} kinetic piece, product-demo family: {t}", sound=True)}'
+        f'<button type="button" class="snd" aria-label="Toggle sound">&#9834;</button>'
+        f'<figcaption class="below"><b>{b.esc(t)}</b><span>{b.esc(name)} · product-demo family · standard: pass</span></figcaption></figure>'
+        for k, name, t in KINETIC_DEMO if (ASSETS / f"kinetic-{k}.mp4").exists())
+    kin_demo_html = (f'<p class="stu-label" style="margin-top:26px">02b · Product-demo family — the work, visibly happening</p>'
+                     f'<div class="reels" role="region" aria-label="Product-demo kinetic examples">{kin_demo}</div>') if kin_demo else ""
     kinetic = ('<section class="wall" style="background:#111420" aria-labelledby="kin-h"><div class="container"><p class="stu-label">02 · Kinetic pieces — the production standard</p>'
                '<h2 id="kin-h">One point, one line, a measured pace</h2>'
-               '<p class="sub">Typographic pieces built from each brand\'s own claim-locked lines, cut on a brief-verified plate with a licensed bed. Shown here only if they passed the written standard gate. Use each sound button to listen.</p>'
+               '<p class="sub">Two families, so a feed never looks like one trick. Typographic pieces show a line; product-demo pieces show the work being done — a call handled, a lead moving, a search narrowing — with the hand clicking the next step. Each is built from the brand\'s own claim-locked lines on a brief-verified plate with a licensed bed, and shown here only if it passed the written standard gate. Use each sound button to listen.</p>'
                f'<div class="gallery-controls">{motion_control}<button class="gallery-arrow" type="button" id="kin-prev" aria-label="Previous kinetic example" aria-controls="kinetic-track">&larr;</button><button class="gallery-arrow" type="button" id="kin-next" aria-label="Next kinetic example" aria-controls="kinetic-track">&rarr;</button></div>'
                '<p class="gallery-hint">Scroll sideways or use the arrows to see all three.</p>'
                f'<div class="reels kinetic-reels" id="kinetic-track" role="region" tabindex="0" aria-label="Kinetic examples">{kin}</div>'
+               f'{kin_demo_html}'
                '<div class="receipt" style="color:#8b93a3">Receipts · standard gate: kinetic, pass · plate verdicts on file · beds generated under commercial licence</div></div></section>')
     # ---- stills ----
     st = "".join(f'<figure><img src="/images/production/still-{c}.jpg" alt="{b.esc(BRAND[c][0])} signature still" width="1080" height="1350" loading="lazy"><figcaption>{b.esc(BRAND[c][1])} · signature still</figcaption></figure>'
