@@ -24,4 +24,5 @@ for (const entry of entries) {
   });
 }
 require('./tools/preview-metadata.cjs').normalizePublic(out);
+console.log(`llms-full.txt: ${require('./tools/build-llms-full.cjs').build(out)} pages indexed.`);
 console.log(`Staged ${entries.length} public entries.`);
