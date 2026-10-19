@@ -67,7 +67,8 @@ PERSON = {
         {"@type": "WebPage", "@id": DOMAIN + "/ai-consultant-palm-beach-county/"},
         {"@type": "WebPage", "@id": DOMAIN + "/ai-automation-palm-beach-county/"},
         {"@type": "WebPage", "@id": DOMAIN + "/agentic-ai-engineer-west-palm-beach/"},
-        {"@type": "WebPage", "@id": DOMAIN + "/ai-systems-architect-florida/"}
+        {"@type": "WebPage", "@id": DOMAIN + "/ai-systems-architect-florida/"},
+        {"@type": "WebPage", "@id": DOMAIN + "/ai-consulting-west-palm-beach/"}
     ],
     "sameAs": [
         "https://www.linkedin.com/in/zacharyvorsteg", "https://github.com/ZacharyVorsteg", "https://x.com/zachvorsteg"
@@ -285,6 +286,58 @@ PAGES = [
   close=("Design it once, run it for years", "If you're about to build — or rebuild — an AI system, a short architecture conversation now saves a rewrite later."),
   crosslinks=[("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-consultant-palm-beach-county/", "AI consultant"), ("/ai-automation", "AI automation services"), ("/custom-software", "Custom software")],
   service_name="AI Systems Architecture", service_type="AI systems architecture and implementation",
+ ),
+ dict(
+  slug="ai-consulting-west-palm-beach",
+  eyebrow="AI Consulting · West Palm Beach",
+  title="AI Consulting in West Palm Beach | Zachary Vorsteg",
+  description="AI consulting in West Palm Beach for owner-led businesses: find the manual work worth automating, then build, monitor and maintain the system that does it.",
+  h1="AI consulting in West Palm Beach that ends in a working system",
+  lede=("I'm Zachary Vorsteg, and I work from West Palm Beach with owner-led businesses that know AI could help but "
+        "don't want another strategy deck. We start with one workflow your team does by hand, decide what a model can "
+        "handle reliably and what stays with a person, and then I build it, monitor it and keep it running."),
+  cta2=("https://callshandled.ai/?utm_source=zacharyvorsteg.com&utm_medium=referral&utm_campaign=ai-consulting-wpb", "Just need calls answered? See CallsHandled"),
+  sections=[
+   ("What a first AI consulting conversation covers",
+    ["We look at where hours go each week: intake, follow-up, scheduling, reporting, document work. For each one we ask "
+     "three questions. Can a model do it reliably? What has to stay with a person? How will you know it is still "
+     "working next month?",
+     "If there is a real system in it, I scope it in writing: deliverables, timing, investment and any ongoing support, "
+     "agreed before work starts. If I can't find at least 5 hours a week to save, I'll say so before we start."]),
+   ("Local to West Palm Beach, working across Palm Beach County",
+    ["I'm based in West Palm Beach and meet in person when it helps, from downtown and Northwood to Palm Beach Gardens, "
+     f"Wellington and Lake Worth Beach. The rest of {CITIES} is a short drive, and discovery calls are remote."]),
+   ("Just need the phone answered?",
+    ["If the main problem is missed calls, you may not need a custom build. CallsHandled, one of my ventures, is an AI "
+     "receptionist that answers missed and after-hours calls 24/7, captures each caller's details and texts you a "
+     "summary. Plans start at $297/mo."]),
+  ],
+  grid=("Where AI consulting usually pays off first", [
+   ("Lead intake and follow-up", "Every inquiry captured, qualified and routed, with a follow-up cadence so nothing sits unanswered."),
+   ("Calls and missed-call text-back", "After-hours and overflow calls answered or texted back while the caller is still deciding."),
+   ("Reporting in plain English", "The numbers you check every morning, delivered to you, with alerts when something drifts."),
+   ("Documents and proposals", "Quotes, summaries and reports drafted from your data and reviewed before they go out."),
+   ("Agentic workflows with gates", "Multi-step agents that act across your CRM, inbox and calendar, behind review steps and logs."),
+   ("Custom software when nothing fits", "Web apps, iOS apps and integrations built around how your business actually runs."),
+  ]),
+  why_title="How I work",
+  why=[
+   "You work directly with the person who designs and builds the system. There's no account-manager layer.",
+   "Every project is scoped in writing before work starts.",
+   "Systems are built on the tools you already run; you are not moved onto new software.",
+   "Verification, monitoring and logs are part of the build, so failures are loud instead of silent.",
+   "I run these patterns in my own ventures every day, so the advice comes from systems I keep running myself.",
+  ],
+  faq=[
+   ("What does AI consulting cost for a small business in West Palm Beach?", "It depends on the scope. We agree the deliverables, timing, investment and any ongoing support in writing before work starts, and the first conversation is free."),
+   ("Do you only advise, or do you build?", "I build. The consulting is grounded in systems I design, ship and keep running, and an engagement normally ends with a live system rather than a report."),
+   ("Do we meet in person?", "When it helps. I'm based in West Palm Beach and meet clients across Palm Beach County; discovery calls are remote."),
+   ("Do I need to be technical?", "No. You need to know where your team loses time. I handle the architecture, the build and plain-English reporting."),
+   ("What if I only need missed calls answered?", "Then a custom project may be more than you need. CallsHandled is an AI receptionist that answers missed and after-hours calls 24/7, with plans starting at $297/mo."),
+  ],
+  close=("Bring one workflow you'd like to stop doing by hand", "Tell me the task and how it runs today. If there's a real system in it, I'll scope it and tell you what it should save."),
+  crosslinks=[("/ai-consultant-palm-beach-county/", "AI consultant, Palm Beach County"), ("/ai-automation-palm-beach-county/", "AI automation for contractors"), ("/agentic-ai-engineer-west-palm-beach/", "Agentic AI engineering"), ("/ai-operating-layer/", "Ongoing engagements")],
+  service_name="AI Consulting in West Palm Beach", service_type="AI consulting and implementation",
  ),
 ]
 
