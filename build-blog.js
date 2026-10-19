@@ -406,6 +406,7 @@ function build() {
       .replace(/{{DATE}}/g, article.dateISO)
       .replace(/{{DATE_FORMATTED}}/g, article.dateFormatted)
       .replace(/{{CONTENT}}/g, article.content)
+      .replace(/{{POST_CTA}}/g, () => postCta(article.slug, topic, `/?topic=${topic}#contact`))
       .replace(/{{PILLAR}}/g, article.pillar)
       .replace(/{{READ_TIME}}/g, article.readTime)
       .replace(/{{RELATED_ARTICLES}}/g, relatedHtml)
@@ -426,6 +427,31 @@ function build() {
   });
 
   return { articles, warnings };
+}
+
+
+// In-article CTAs. The two agent-tooling posts get a full "work with me" box; other AI posts get the
+// short CallsHandled block. Finance, real-estate and other pillars get neither (no cross-pitch to CRE readers).
+const FEATURED_AI_CTA = new Set(['claude-code-dangerously-skip-permissions', 'codex-vs-claude-code']);
+const CALLSHANDLED_URL = 'https://callshandled.ai/?utm_source=zacharyvorsteg.com&utm_medium=referral&utm_campaign=blog-cta';
+function callsHandledBlock(slug) {
+  const href = `${CALLSHANDLED_URL}&utm_content=${encodeURIComponent(slug)}`;
+  return `<aside class="post-offer post-offer-calls" aria-label="CallsHandled AI receptionist">
+                    <p class="post-offer-kicker">Missing calls while you work?</p>
+                    <p><strong>CallsHandled</strong> is an AI receptionist that answers missed and after-hours calls 24/7, captures each caller's details and texts you a summary. Plans start at $297/mo.</p>
+                    <a class="post-offer-link" href="${href}" target="_blank" rel="noopener">See how CallsHandled works <span aria-hidden="true">↗</span></a>
+                </aside>`;
+}
+function postCta(slug, topic, contactHref) {
+  if (FEATURED_AI_CTA.has(slug)) {
+    return `<aside class="post-offer" aria-label="Work with Zach">
+                    <p class="post-offer-kicker">Want agents doing real work in your business?</p>
+                    <p>I set up supervised AI workflows for owner-led businesses: the same gates, receipts and review steps described above, connected to your leads, follow-up and reporting.</p>
+                    <a class="btn post-offer-btn" href="${contactHref}">Talk through your workflow</a>
+                </aside>
+                ${callsHandledBlock(slug)}`;
+  }
+  return topic === 'ai' ? callsHandledBlock(slug) : '';
 }
 
 // Generate blog index

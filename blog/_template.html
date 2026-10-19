@@ -643,6 +643,14 @@
         }
 
         /* CTA Section */
+        .post-offer { margin: 40px 0 0; padding: 24px; border: 1px solid #d6dcd6; border-left: 4px solid #0066cc; border-radius: 6px; background: #f8f8f5; }
+        .post-offer + .post-offer { margin-top: 16px; }
+        .post-offer p { margin: 0 0 12px; font-size: 1rem; line-height: 1.6; }
+        .post-offer .post-offer-kicker { font-weight: 700; font-size: 1.1rem; color: #222b2b; }
+        .post-offer-calls { border-left-color: #2e7d5b; }
+        .post-offer .post-offer-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 12px 20px; border-radius: 5px; background: #0066cc; color: #fff; text-decoration: none; font-weight: 600; }
+        .post-offer .post-offer-btn:hover { background: #0052a3; }
+        .post-offer .post-offer-link { display: inline-flex; align-items: center; gap: .35em; min-height: 44px; font-weight: 600; color: #0052a3; }
         .article-cta {
             max-width: 800px;
             margin: 60px auto;
@@ -859,6 +867,8 @@
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
         .fade-in { opacity: 1; transform: none; animation: none; }
     [hidden] { display: none !important; }
+        /* No-JS fallback only: with scripting the page paints in its final menu state (prevents CLS). */
+        @media (scripting: none) {
         body:not(.menu-ready) .mobile-menu-btn,
         body:not(.menu-ready) .mobile-menu { display: none; }
         body:not(.menu-ready) .desktop-nav { display: flex; flex-wrap: wrap; }
@@ -866,6 +876,7 @@
             body:not(.menu-ready) header { position: static; }
             body:not(.menu-ready) .header-container { height: auto; min-height: 72px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
             body:not(.menu-ready) main { padding-top: 0; }
+        }
         }
     </style>
 <link rel="author" href="https://zacharyvorsteg.com/">
@@ -925,6 +936,7 @@
         <article class="article-body">
             <div class="container">
                 {{CONTENT}}
+                {{POST_CTA}}
             </div>
         </article>
 
@@ -963,7 +975,7 @@
     </aside>
 
     <!-- Footer -->
-    <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.</p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="{{CONTACT_HREF}}">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
+    <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.</p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="/ai-consulting-west-palm-beach/">AI consulting, West Palm Beach</a><a href="{{CONTACT_HREF}}">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
 
     <script src="/app.js?v=conversion-1" defer></script>
 </body>

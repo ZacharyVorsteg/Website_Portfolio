@@ -49,6 +49,14 @@
     .site-header .desktop-nav a { font-size: 15px; }
     .menu-ready .site-header .desktop-nav { display: none; }
     .menu-ready .site-header .mobile-menu-btn { display: flex; }
+}
+/* Mobile menu state: paint the final (JS) layout from the first frame so app.js adding .menu-ready
+   never shifts the page (CLS). The expanded-nav fallback applies only when scripting is off. */
+@media (max-width: 999px) and (scripting: enabled) {
+    .site-header .desktop-nav { display: none; }
+    .site-header .mobile-menu-btn { display: flex; }
+}
+@media (max-width: 999px) and (scripting: none) {
     body:not(.menu-ready) .site-header { position: static; }
     body:not(.menu-ready) .site-header .header-container { height: auto; flex-wrap: wrap; gap: 16px; padding-block: 20px; }
     body:not(.menu-ready) .site-header .desktop-nav { width: 100%; }
