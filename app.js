@@ -250,6 +250,8 @@
                 // Netlify's HTML response is a transport acknowledgement, not independent proof
                 // of durable storage or notification. Readback remains a deployment QA gate.
                 sent = true;
+                // GA4: the endpoint accepted the inquiry. No form contents are sent, only where it came from.
+                try { if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_id: form.getAttribute('name') || 'contact', page_path: window.location.pathname }); } catch (_) { /* analytics must never block the form */ }
                 form.reset();
                 if (form.contains(status)) form.insertAdjacentElement('afterend', status);
                 form.hidden = true;
