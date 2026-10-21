@@ -2515,3 +2515,5 @@ main:focus, section[tabindex="-1"]:focus { outline: none; }
 
 /* Free resource collection: preserve the workflow-first homepage hierarchy. */
 .home-resources .resource-collection-link{display:inline-flex;margin-top:17px;font-size:13px;line-height:1.7;min-height:36px;align-items:center;gap:8px}
+.home-also { margin-top: 28px; color: var(--home-muted); font-size: 16px; }
+.home-pilot { padding-top: 0; }
