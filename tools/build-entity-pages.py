@@ -31,8 +31,8 @@ PERSON = {
     "description": ("AI systems architect and automation engineer based in West Palm Beach, Florida. Designs and ships "
                     "agentic AI systems, LLM integrations, and custom software that remove manual work for small and "
                     "mid-sized businesses across Palm Beach County and nationwide. Founder of CustomLab.ai, with shipped "
-                    "products including Trusenda and Ads Handled. Also an M&A/FP&A "
-                    "financial analyst and a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone "
+                    "products including Trusenda and Ads Handled. Also has a finance background "
+                    "(FAU '20) and is a Florida-licensed commercial real estate sales associate (SL3603483, Cornerstone "
                     "Realty). FAU Finance '20."),
     "hasOccupation": [
         {"@type": "Occupation", "name": "AI Systems Architect",
