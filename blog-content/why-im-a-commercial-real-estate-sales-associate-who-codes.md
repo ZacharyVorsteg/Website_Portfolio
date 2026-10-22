@@ -80,7 +80,7 @@ Thirty seconds. Kills most deals dead before I invest a single hour of underwrit
 
 The barrier isn't ability. It's incentive structure.
 
-Brokerage compensation runs entirely on commissions. Every hour spent learning Python is an hour not prospecting, not touring properties with clients, not grinding toward a close. The return on coding stays completely invisible until the system is built and humming — all upfront investment, delayed payoff, with no guarantee the broker sticks with it long enough to see the compounding kick in.
+In real estate sales, you get paid only when a deal closes. Every hour spent learning Python is an hour not prospecting, not touring properties with clients, not grinding toward a close. The return on coding stays completely invisible until the system is built and humming — all upfront investment, delayed payoff, with no guarantee the broker sticks with it long enough to see the compounding kick in.
 
 And that's precisely what makes it a durable moat. Anything hard to replicate and slow to pay off keeps competitors out indefinitely. Relationships remain the traditional CRE moat — and they still matter enormously, maybe more than ever in a market drowning in digital noise. But relationships combined with technical capability? I can count on one hand the brokers in my market who bring both to the table.
 
