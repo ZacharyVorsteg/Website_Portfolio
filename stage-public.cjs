@@ -82,7 +82,10 @@ function injectCfBeacon(dir) {
     if (entry.isDirectory()) { n += injectCfBeacon(full); continue; }
     if (!entry.name.endsWith('.html')) continue;
     let html = fs.readFileSync(full, 'utf8');
-    if (html.includes('data-cf-beacon') || !html.includes('</body>')) continue;
+    if (!html.includes('</body>')) continue;
+    // Fleet telemetry (first-party, cookieless, honors GPC/DNT and the Reject choice), per the 2026-10-31 decision.
+    if (!html.includes('fleet-telemetry.js')) html = html.replace(/<\/body>/i, '<script src="https://customlab.ai/fleet-telemetry.js" defer></script>' + '</body>');
+    if (html.includes('data-cf-beacon')) { fs.writeFileSync(full, html); continue; }
     fs.writeFileSync(full, html.replace(/<\/body>/i, CF_BEACON + '</body>'));
     n += 1;
   }
