@@ -1,11 +1,14 @@
-/* Hybrid consent: US default-on with one-tap opt-out; EU/EEA/UK + California stay opt-in. Honor GPC/DNT. */
+/* Hybrid consent: US default-on with thin strip notice; EU/EEA/UK + California stay opt-in. Honor GPC/DNT. */
 (() => {
   'use strict';
   if (window.__siteAnalyticsConsent) return;
   const script = document.currentScript;
   const id = script.dataset.measurementId;
-  const page = script.dataset.page;
+  const pageAttr = script.dataset.page;
   const origin = '__SITE_ORIGIN__';
+  let page;
+  if (typeof pageAttr === 'string' && pageAttr.startsWith(origin + '/')) page = pageAttr;
+  else page = origin + location.pathname + location.search;
   if (location.origin !== origin || !/^G-[A-Z0-9]+$/.test(id) || !page.startsWith(origin + '/')) return;
   if (window.gtag || window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com"]')) return;
   window.__siteAnalyticsConsent = true;
@@ -69,12 +72,14 @@
 
   const EU_EEA_UK = new Set(['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB']);
   const key = 'site-analytics-consent-v1';
+  const noticeKey = 'site-analytics-notice-v1';
   const disabled = 'ga-disable-' + id;
   const denied = { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' };
   let loaded = false;
   let counted = false;
   let clarityLoaded = false;
   let mode = 'pending'; /* optin | optout */
+  let scrollDismissBound = false;
 
   function privacySignalsDenied() {
     return !!(navigator.globalPrivacyControl || navigator.doNotTrack === '1');
@@ -86,6 +91,9 @@
       if (saved && Date.now() - saved.at >= 0 && Date.now() - saved.at < 180 * 86400000 && ['granted', 'denied'].includes(saved.value)) return saved.value;
     } catch (_) {}
     return 'unknown';
+  }
+  function noticeDismissed() {
+    try { return localStorage.getItem(noticeKey) === '1'; } catch (_) { return false; }
   }
   let choice = readChoice();
   window[disabled] = choice !== 'granted';
@@ -100,19 +108,57 @@
   panel.hidden = true;
   document.body.appendChild(panel);
 
-  const settings = button('Analytics choices', () => {
+  const strip = document.createElement('section');
+  strip.className = 'analytics-consent ac-strip';
+  strip.hidden = true;
+  document.body.appendChild(strip);
+
+  const settings = document.createElement('button');
+  settings.type = 'button';
+  settings.className = 'analytics-choices';
+  settings.textContent = 'Your Privacy Choices';
+  settings.addEventListener('click', () => {
     buildPanel(true);
     panel.hidden = false;
+    strip.hidden = true;
     const focusable = panel.querySelector('button');
     if (focusable) focusable.focus({ preventScroll: true });
-  }, document.body);
-  settings.className = 'analytics-choices';
+  });
+
+  function placeSettings() {
+    if (settings.isConnected) return;
+    const footer = document.querySelector('footer');
+    if (footer) {
+      const eco = footer.querySelector('.eco');
+      const disc = footer.querySelector('.disc, .disclaimer, p:last-of-type');
+      const host = eco || disc || footer;
+      const wrap = document.createElement('span');
+      wrap.className = 'ac-footer-choices';
+      wrap.style.cssText = 'display:inline-block;margin:0 0 0 .75rem';
+      if (eco) {
+        wrap.style.margin = '0';
+        eco.appendChild(wrap);
+      } else if (disc && disc.parentNode) {
+        wrap.style.display = 'block';
+        wrap.style.margin = '8px 0 0';
+        disc.parentNode.insertBefore(wrap, disc.nextSibling);
+      } else {
+        footer.appendChild(wrap);
+      }
+      wrap.appendChild(settings);
+      return;
+    }
+    settings.classList.add('ac-fallback');
+    document.body.appendChild(settings);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', placeSettings);
+  else placeSettings();
 
   function gtag() { window.dataLayer.push(arguments); }
   function pageview() {
     if (counted || choice !== 'granted') return;
     counted = true;
-    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: '__SITE_TITLE__' });
+    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex' });
   }
   function mayMeasure() {
     return loaded && choice === 'granted' && !window[disabled] && !privacySignalsDenied();
@@ -155,7 +201,7 @@
     gtag('config', id, {
       ...attribution,
       send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false,
-      page_location: page, page_referrer: referrer, page_title: '__SITE_TITLE__',
+      page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex',
       cookie_domain: 'none', cookie_expires: 15552000, cookie_update: false
     });
     pageview();
@@ -168,6 +214,7 @@
   function choose(value) {
     choice = privacySignalsDenied() ? 'denied' : value;
     try { localStorage.setItem(key, JSON.stringify({ value: choice, at: Date.now() })); } catch (_) {}
+    try { localStorage.setItem(noticeKey, '1'); } catch (_) {}
     if (choice === 'denied') {
       window[disabled] = true;
       for (const item of document.cookie.split(';')) {
@@ -177,34 +224,79 @@
       if (loaded) { location.reload(); return; }
     } else start();
     panel.hidden = true;
-    settings.focus();
+    strip.hidden = true;
+    settings.focus({ preventScroll: true });
+  }
+
+  function dismissStrip() {
+    try { localStorage.setItem(noticeKey, '1'); } catch (_) {}
+    strip.hidden = true;
+  }
+
+  function positionStrip() {
+    const mcta = document.querySelector('.mcta');
+    if (mcta) {
+      const cs = getComputedStyle(mcta);
+      const box = mcta.getBoundingClientRect();
+      /* Fixed .mcta: offsetParent is null; use geometry. */
+      const shown = cs.display !== 'none' && cs.visibility !== 'hidden' && box.height > 0 && box.width > 0;
+      if (shown) {
+        strip.style.bottom = Math.ceil(box.height) + 'px';
+        return;
+      }
+    }
+    strip.style.bottom = '0px';
+  }
+
+  function buildStrip() {
+    strip.innerHTML = '';
+    strip.className = 'analytics-consent ac-strip';
+    strip.setAttribute('aria-label', 'Analytics notice');
+    const text = document.createElement('p');
+    text.className = 'ac-copy';
+    text.textContent = script.dataset.consentOptoutCopy || 'This site uses analytics to improve your visit.';
+    strip.appendChild(text);
+    const priv = document.createElement('button');
+    priv.type = 'button';
+    priv.className = 'ac-priv';
+    priv.textContent = 'Privacy choices';
+    priv.addEventListener('click', () => {
+      buildPanel(true);
+      panel.hidden = false;
+      const focusable = panel.querySelector('button');
+      if (focusable) focusable.focus({ preventScroll: true });
+    });
+    strip.appendChild(priv);
+    const x = document.createElement('button');
+    x.type = 'button';
+    x.className = 'ac-strip-x';
+    x.setAttribute('aria-label', 'Dismiss');
+    x.textContent = '\u00d7';
+    x.addEventListener('click', dismissStrip);
+    strip.appendChild(x);
+    positionStrip();
   }
 
   function buildPanel(forceOptIn) {
     panel.innerHTML = '';
-    panel.className = 'analytics-consent' + ((mode === 'optout' && !forceOptIn) ? ' ac-optout' : '');
-    panel.setAttribute('aria-label', (mode === 'optout' && !forceOptIn) ? 'Analytics notice' : 'Optional analytics');
+    panel.className = 'analytics-consent';
+    panel.setAttribute('aria-label', 'Optional analytics');
     let brand = script.dataset.brandColor || '#177a8b';
     if (!/^#[0-9A-Fa-f]{6}$/.test(brand)) brand = '#177a8b';
     panel.style.setProperty('--consent-brand', brand);
     const text = document.createElement('p');
     text.className = 'ac-copy';
-    if (mode === 'optout' && !forceOptIn) {
-      text.textContent = script.dataset.consentOptoutCopy || 'We use privacy-friendly analytics cookies to improve this Palm Beach site. No ads. Form entries are never sold. One tap opts out.';
-      panel.appendChild(text);
-      button('Opt out', () => choose('denied'), panel).className = 'ac-optout-btn';
-    } else {
-      text.textContent = script.dataset.consentCopy || 'Allow optional Google Analytics cookies to help us understand page visits and contact actions? We do not send form entries or use this for advertising. You can change your choice anytime.';
-      panel.appendChild(text);
-      const actions = document.createElement('div');
-      actions.className = 'ac-actions';
-      actions.setAttribute('role', 'group');
-      button('Reject analytics', () => choose('denied'), actions);
-      button('Allow analytics', () => choose('granted'), actions);
-      panel.appendChild(actions);
-    }
+    text.textContent = script.dataset.consentCopy || 'Allow optional Google Analytics cookies to help us understand page visits and contact actions? We do not send form entries or use this for advertising. You can change your choice anytime.';
+    panel.appendChild(text);
+    const actions = document.createElement('div');
+    actions.className = 'ac-actions';
+    actions.setAttribute('role', 'group');
+    button('Reject analytics', () => choose('denied'), actions);
+    button('Allow analytics', () => choose('granted'), actions);
+    panel.appendChild(actions);
     const privacy = document.createElement('a');
-    privacy.href = '/privacy/';
+    const privHref = script.dataset.privacyHref || '/privacy/';
+    privacy.href = (typeof privHref === 'string' && privHref.startsWith('/') && !privHref.startsWith('//')) ? privHref : '/privacy/';
     privacy.textContent = 'Privacy policy';
     panel.appendChild(privacy);
     if (privacySignalsDenied()) {
@@ -213,6 +305,18 @@
       status.textContent = 'Your browser privacy preference keeps analytics off.';
       panel.appendChild(status);
     }
+  }
+
+  function showUsStrip() {
+    if (noticeDismissed()) return;
+    buildStrip();
+    strip.hidden = false;
+    if (!scrollDismissBound) {
+      scrollDismissBound = true;
+      const onScroll = () => { dismissStrip(); window.removeEventListener('scroll', onScroll); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    window.addEventListener('resize', positionStrip);
   }
 
   function requiresOptIn(geo) {
@@ -280,8 +384,7 @@
     window[disabled] = false;
     try { localStorage.setItem(key, JSON.stringify({ value: choice, at: Date.now() })); } catch (_) {}
     start();
-    buildPanel(false);
-    panel.hidden = false;
+    showUsStrip();
   }
 
   window.addEventListener('storage', event => {
