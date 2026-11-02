@@ -1,0 +1,23 @@
+/* Hybrid consent UI: EU/CA opt-in card; US thin bottom strip + footer privacy choices. */
+.analytics-consent{position:fixed;bottom:3.5rem;left:1rem;right:1rem;max-width:38rem;padding:1rem;background:#fff;color:#172d29;border:1px solid #36594f;box-shadow:0 4px 24px #0003;z-index:10000;font:16px/1.5 system-ui,sans-serif;border-radius:8px;max-height:70vh;overflow:auto}
+.analytics-consent[hidden]{display:none!important}
+.analytics-consent p{margin:0 0 .75rem}
+.analytics-consent button{font:inherit;cursor:pointer;border:1px solid #36594f;background:#fff;color:#172d29;padding:.65rem .85rem;border-radius:4px;margin:0 .5rem .5rem 0}
+.analytics-consent a{display:inline-block;color:#174e40;margin:.5rem}
+.analytics-consent button:focus-visible,.analytics-choices:focus-visible,.ac-strip a:focus-visible,.ac-strip-x:focus-visible{outline:3px solid #2d8067;outline-offset:2px}
+.analytics-consent .ac-actions{display:flex;flex-wrap:wrap;gap:.25rem}
+/* US default-on: thin unobtrusive bottom strip (not a modal). Sits above sticky Call/CTA (.mcta z=20). */
+.analytics-consent.ac-strip{left:0;right:0;bottom:0;max-width:none;width:100%;margin:0;padding:0 10px;height:36px;max-height:40px;display:flex;align-items:center;gap:8px;box-sizing:border-box;background:rgba(255,255,255,.96);color:#334;border:0;border-top:1px solid rgba(0,0,0,.12);border-radius:0;box-shadow:0 -1px 6px rgba(0,0,0,.06);font:12px/1.35 system-ui,sans-serif;z-index:19;overflow:hidden}
+.analytics-consent.ac-strip .ac-copy{margin:0;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:1.35}
+.analytics-consent.ac-strip .ac-priv{margin:0;flex:0 0 auto;color:#174e40;text-decoration:underline;font-size:12px;white-space:nowrap;padding:0;border:0;background:none;cursor:pointer}
+.analytics-consent.ac-strip .ac-strip-x{flex:0 0 auto;margin:0;padding:2px 6px;border:0;background:transparent;color:#556;font:16px/1 system-ui,sans-serif;cursor:pointer;border-radius:2px}
+body.has-mcta .analytics-consent.ac-strip{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+/* Footer persistent link (replaces body "Analytics choices" button). */
+.analytics-choices{display:inline;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;font-size:inherit;line-height:inherit;cursor:pointer;text-decoration:underline;opacity:.85;border-radius:0}
+.analytics-choices.ac-fallback{display:block;position:fixed;left:12px;bottom:12px;z-index:18;font:12px system-ui,sans-serif;color:#174e40;background:rgba(255,255,255,.9);padding:4px 8px;border-radius:4px;box-shadow:0 1px 4px #0002}
+body.has-mcta .analytics-choices.ac-fallback{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+@media(max-width:768px){
+  .analytics-consent:not(.ac-strip){bottom:calc(5rem + env(safe-area-inset-bottom,0px))}
+  .analytics-consent.ac-strip{height:36px;max-height:40px;padding:0 8px;font-size:11px}
+  .analytics-consent.ac-strip .ac-copy,.analytics-consent.ac-strip .ac-priv{font-size:11px}
+}
