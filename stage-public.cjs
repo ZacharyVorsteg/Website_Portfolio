@@ -23,27 +23,55 @@ for (const entry of entries) {
     },
   });
 }
-// GA4 (zacharyvorsteg.com, G-H3M3RWT19L): one gtag.js per page, loaded on first interaction or
-// 3 s after load so it stays off the critical path. app.js sends generate_lead when the contact
-// endpoint accepts a request; no form contents go to analytics.
+// Hybrid consent (US default-on / EU+CA opt-in; honor GPC/DNT). Assets filled at stage time
+// from tools/analytics template with origin lock for zacharyvorsteg.com + zachvorsteg.com.
+const crypto = require('node:crypto');
 const GA4_ID = 'G-H3M3RWT19L';
-const GA4_SNIPPET = `<!-- GA4: config queued now; gtag.js loads once on first interaction or 3 s after load. -->
-<script>(function(w,d){if(w.__zvGa4)return;w.__zvGa4=1;var ID='${GA4_ID}';w.dataLayer=w.dataLayer||[];w.gtag=w.gtag||function(){w.dataLayer.push(arguments)};w.gtag('js',new Date());w.gtag('config',ID);var done=0,ev=['pointerdown','keydown','touchstart','scroll'];function go(){if(done)return;done=1;ev.forEach(function(e){w.removeEventListener(e,go,true)});if(!d.querySelector('script[src^="https://www.googletagmanager.com/gtag/js"]')){var s=d.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+ID;d.head.appendChild(s)}}ev.forEach(function(e){w.addEventListener(e,go,{capture:true,passive:true,once:true})});function later(){setTimeout(go,3000)}if(d.readyState==='complete')later();else w.addEventListener('load',later,{once:true})})(window,document);</script>
-`;
-function injectGa4(dir) {
+const CONSENT_ORIGIN = 'https://zacharyvorsteg.com';
+const CONSENT_TITLE = 'Zachary Vorsteg';
+const templatePath = path.join(__dirname, 'tools', 'analytics', 'analytics-consent.js.template');
+const cssPath = path.join(__dirname, 'tools', 'analytics', 'analytics-consent.css');
+// Fall back to portfolio tools path on the box if local tools/analytics is absent.
+const fallbackTemplate = '/workspace/sites/portfolio/tools/analytics/analytics-consent.js.template';
+const fallbackCss = '/workspace/sites/portfolio/tools/analytics/analytics-consent.css';
+let template = fs.existsSync(templatePath) ? fs.readFileSync(templatePath, 'utf8') : fs.readFileSync(fallbackTemplate, 'utf8');
+let css = fs.existsSync(cssPath) ? fs.readFileSync(cssPath, 'utf8') : fs.readFileSync(fallbackCss, 'utf8');
+template = template.replaceAll('__SITE_ORIGIN__', CONSENT_ORIGIN).replaceAll('__SITE_TITLE__', CONSENT_TITLE);
+// Allow zachvorsteg.com alias host
+template = template.replace(
+  "if (location.origin !== origin || !/^G-[A-Z0-9]+$/.test(id) || !page.startsWith(origin + '/')) return;",
+  "const allowedOrigins = ['https://zacharyvorsteg.com','https://www.zacharyvorsteg.com','https://zachvorsteg.com','https://www.zachvorsteg.com'];\n  if (!allowedOrigins.includes(location.origin) || !/^G-[A-Z0-9]+$/.test(id)) return;\n  if (!allowedOrigins.some((o) => page.startsWith(o + '/'))) return;"
+);
+const jsh = crypto.createHash('sha256').update(template).digest('hex').slice(0, 12);
+const csh = crypto.createHash('sha256').update(css).digest('hex').slice(0, 12);
+const assetsOut = path.join(out, 'assets');
+fs.mkdirSync(assetsOut, { recursive: true });
+fs.writeFileSync(path.join(assetsOut, 'analytics-consent.js'), template);
+fs.writeFileSync(path.join(assetsOut, 'analytics-consent.css'), css);
+const CONSENT_SNIPPET = `<link rel="stylesheet" href="/assets/analytics-consent.css?v=${csh}">\n<script data-site-analytics defer src="/assets/analytics-consent.js?v=${jsh}" data-measurement-id="${GA4_ID}"></script>\n`;
+function injectConsent(dir) {
   let n = 0;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) { n += injectGa4(full); continue; }
+    if (entry.isDirectory()) { n += injectConsent(full); continue; }
     if (!entry.name.endsWith('.html')) continue;
-    const html = fs.readFileSync(full, 'utf8');
-    if (html.includes('googletagmanager.com/gtag/js') || !html.includes('</head>')) continue;
-    fs.writeFileSync(full, html.replace('</head>', `${GA4_SNIPPET}</head>`));
+    let html = fs.readFileSync(full, 'utf8');
+    if (!html.includes('</head>')) continue;
+    // Drop legacy ungated GA4 bootstraps if present
+    html = html.replace(/<!--\s*GA4[^>]*-->\s*<script>\(function\(w,d\)\{if\(w\.__zvGa4\).*?<\/script>/is, '');
+    html = html.replace(/<script>\(function\(w,d\)\{if\(w\.__zvGa4\).*?<\/script>/gs, '');
+    if (html.includes('data-site-analytics')) {
+      html = html.replace(/<link rel="stylesheet" href="\/assets\/analytics-consent\.css(?:\?v=[^"]*)?">/, `<link rel="stylesheet" href="/assets/analytics-consent.css?v=${csh}">`);
+      html = html.replace(/<script data-site-analytics[^>]*><\/script>/, `<script data-site-analytics defer src="/assets/analytics-consent.js?v=${jsh}" data-measurement-id="${GA4_ID}"></script>`);
+    } else {
+      html = html.replace('</head>', `${CONSENT_SNIPPET}</head>`);
+    }
+    fs.writeFileSync(full, html);
     n += 1;
   }
   return n;
 }
-console.log(`GA4 snippet injected into ${injectGa4(out)} pages.`);
+console.log(`Hybrid consent injected into ${injectConsent(out)} pages (js=${jsh}).`);
 require('./tools/preview-metadata.cjs').normalizePublic(out);
 console.log(`llms-full.txt: ${require('./tools/build-llms-full.cjs').build(out)} pages indexed.`);
 console.log(`Staged ${entries.length} public entries.`);
