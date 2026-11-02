@@ -10,7 +10,14 @@
   if (typeof pageAttr === 'string' && pageAttr.startsWith(origin + '/')) page = pageAttr;
   else page = origin + location.pathname + location.search;
   if (location.origin !== origin || !/^G-[A-Z0-9]+$/.test(id) || !page.startsWith(origin + '/')) return;
-  if (window.gtag || window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com"]')) return;
+  /* Coexist with Ads/Meta/GTM stubs: window.gtag may exist without our mid configured.
+     Always mount strip + privacy choices. Skip only gtag.js load/config when this mid
+     is already configured or a GTM container is present. */
+  const ga4Already = (window.dataLayer || []).some((entry) => entry && entry[0] === 'config' && entry[1] === id);
+  const gtmPresent = !!(window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com/gtm.js"]'));
+  const gtagScriptPresent = !!document.querySelector('script[src*="googletagmanager.com/gtag/js"], script[src*="googletagmanager.com/gtm.js"]');
+  /* Skip only when a real tag script already owns transport; a bare dataLayer stub must not block load. */
+  window.__siteAnalyticsConsentSkipLoad = gtmPresent || (ga4Already && gtagScriptPresent);
   window.__siteAnalyticsConsent = true;
 
   const sources = new Set(['google', 'bing', 'duckduckgo', 'facebook', 'instagram', 'linkedin', 'youtube', 'x', 'twitter', 'newsletter', 'chatgpt', 'perplexity', 'claude']);
@@ -195,8 +202,17 @@
     loaded = true;
     window[disabled] = false;
     window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || gtag;
+    if (window.__siteAnalyticsConsentSkipLoad) {
+      try {
+        gtag('consent', 'default', denied);
+        gtag('consent', 'update', { ...denied, analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
+        gtag('event', 'page_view', { send_to: id, page_location: page, page_title: (document.title || '') });
+      } catch (_) {}
+      return;
+    }
     gtag('consent', 'default', denied);
-    gtag('consent', 'update', { ...denied, analytics_storage: 'granted' });
+    gtag('consent', 'update', { ...denied, analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
     gtag('js', new Date());
     gtag('config', id, {
       ...attribution,
