@@ -72,6 +72,24 @@ function injectConsent(dir) {
   return n;
 }
 console.log(`Hybrid consent injected into ${injectConsent(out)} pages (js=${jsh}).`);
+
+// CF Web Analytics (gray-cloud host token for zacharyvorsteg.com)
+const CF_BEACON = `<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "213353d38d024606a7b2352be2616ebf"}'></script><!-- End Cloudflare Web Analytics -->\n`;
+function injectCfBeacon(dir) {
+  let n = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) { n += injectCfBeacon(full); continue; }
+    if (!entry.name.endsWith('.html')) continue;
+    let html = fs.readFileSync(full, 'utf8');
+    if (html.includes('data-cf-beacon') || !html.includes('</body>')) continue;
+    fs.writeFileSync(full, html.replace(/<\/body>/i, CF_BEACON + '</body>'));
+    n += 1;
+  }
+  return n;
+}
+console.log(`CF Web Analytics beacon injected into ${injectCfBeacon(out)} pages.`);
+
 require('./tools/preview-metadata.cjs').normalizePublic(out);
 console.log(`llms-full.txt: ${require('./tools/build-llms-full.cjs').build(out)} pages indexed.`);
 console.log(`Staged ${entries.length} public entries.`);
