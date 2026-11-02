@@ -5,21 +5,13 @@
   const script = document.currentScript;
   const id = script.dataset.measurementId;
   const pageAttr = script.dataset.page;
-  const allowedOrigins = ['https://zacharyvorsteg.com', 'https://www.zacharyvorsteg.com'];
-  const origin = allowedOrigins.includes(location.origin) ? location.origin : '';
+  const origin = 'https://zacharyvorsteg.com';
   if (location.origin !== origin || !/^G-[A-Z0-9]+$/.test(id)) return;
   /* Missing/invalid data-page: fall back to current URL (do not throw). */
   let page;
   if (typeof pageAttr === 'string' && pageAttr.startsWith(origin + '/')) page = pageAttr;
   else page = origin + location.pathname + location.search;
-  /* Coexist with Ads/Meta/GTM stubs: window.gtag may exist without our mid configured.
-     Always mount strip + privacy choices. Skip only gtag.js load/config when this mid
-     is already configured or a GTM container is present. */
-  const ga4Already = (window.dataLayer || []).some((entry) => entry && entry[0] === 'config' && entry[1] === id);
-  const gtmPresent = !!(window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com/gtm.js"]'));
-  const gtagScriptPresent = !!document.querySelector('script[src*="googletagmanager.com/gtag/js"], script[src*="googletagmanager.com/gtm.js"]');
-  /* Skip only when a real tag script already owns transport; a bare dataLayer stub must not block load. */
-  window.__siteAnalyticsConsentSkipLoad = gtmPresent || (ga4Already && gtagScriptPresent);
+  if (window.gtag || window.google_tag_manager || document.querySelector('script[src*="googletagmanager.com"]')) return;
   window.__siteAnalyticsConsent = true;
 
   const sources = new Set(['google', 'bing', 'duckduckgo', 'facebook', 'instagram', 'linkedin', 'youtube', 'x', 'twitter', 'newsletter', 'chatgpt', 'perplexity', 'claude']);
@@ -54,6 +46,7 @@
     const fill = () => {
       document.querySelectorAll('form').forEach((form) => {
         const set = (name, value) => {
+          if (value == null || value === '') return;
           let el = form.querySelector('[name="' + name + '"]');
           if (!el) {
             el = document.createElement('input');
@@ -61,7 +54,7 @@
             el.name = name;
             form.appendChild(el);
           }
-          if (value != null && value !== '' && !el.value) el.value = String(value).slice(0, 500);
+          if (!el.value) el.value = String(value).slice(0, 500);
         };
         set('utm_source', params.get('utm_source'));
         set('utm_medium', params.get('utm_medium'));
@@ -71,7 +64,7 @@
         set('gclid', params.get('gclid'));
         set('fbclid', params.get('fbclid'));
         set('landing_page', landing);
-        set('referrer', document.referrer || '');
+        if (document.referrer) set('referrer', document.referrer);
       });
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill);
@@ -166,7 +159,7 @@
   function pageview() {
     if (counted || choice !== 'granted') return;
     counted = true;
-    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: 'Zachary Vorsteg' });
+    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex' });
   }
   function mayMeasure() {
     return loaded && choice === 'granted' && !window[disabled] && !privacySignalsDenied();
@@ -203,20 +196,13 @@
     loaded = true;
     window[disabled] = false;
     window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || gtag;
-    if (window.__siteAnalyticsConsentSkipLoad) {
-      try {
-        gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' });
-      } catch (_) {}
-      return;
-    }
     gtag('consent', 'default', denied);
     gtag('consent', 'update', { ...denied, analytics_storage: 'granted' });
     gtag('js', new Date());
     gtag('config', id, {
       ...attribution,
       send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false,
-      page_location: page, page_referrer: referrer, page_title: 'Zachary Vorsteg',
+      page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex',
       cookie_domain: 'none', cookie_expires: 15552000, cookie_update: false
     });
     pageview();
