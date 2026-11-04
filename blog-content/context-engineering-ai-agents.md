@@ -1,6 +1,6 @@
 ---
-title: "Context Engineering for AI Agents: What I Actually Configure"
-description: "How I configure agent instructions, tool routing, memory and permission hooks for production workflows across my ventures."
+title: "Context Engineering for AI Agents: Memory, Context Store & Hooks I Actually Configure"
+description: "How I set up the context store, persistent instructions, tool routing, memory and permission hooks that AI agents run on in production across my ventures."
 keywords: context engineering AI agents, context engineering vs prompt engineering, persistent instruction configuration, MCP model context protocol, AI agent hooks, AI agent memory architecture, context engineering solo founder, AI agent subagent routing, context engineering practical guide, AI agent configuration 2026
 date: 2026-03-21
 pillar: AI Workflow & Context Engineering

@@ -1,6 +1,6 @@
 ---
-title: "Codex vs Claude Code: My Real Division of Labor"
-description: "How I use OpenAI Codex CLI and Claude Code together — the actual task split, review gates, what each one gets wrong, and why I stopped picking one."
+title: "Codex vs Claude Code (2026): Which One I Use for What"
+description: "Codex CLI vs Claude Code from daily use across real projects: the exact task split, review gates, what each one gets wrong, and why running both beats picking one."
 keywords: "codex vs claude code, codex cli claude code comparison, agentic coding tools 2026, openai codex vs anthropic claude code, ai coding agent division of labor"
 date: "2026-09-08"
 pillar: "AI & Engineering"

@@ -1,6 +1,6 @@
 ---
-title: "Claude Code --dangerously-skip-permissions: What It Disables"
-description: "What Claude Code --dangerously-skip-permissions turns off, how auto mode differs, and the container gates I run before unattended agents."
+title: "Claude Code --dangerously-skip-permissions: What It Disables, Risks & Safer Setup"
+description: "What --dangerously-skip-permissions (bypassPermissions) actually turns off in Claude Code, how auto mode differs, and the container gates and hooks I run before letting an agent work unattended."
 keywords: claude code dangerously-skip-permissions, claude --dangerously-skip-permissions, claude code bypassPermissions, claude code auto mode, claude code permission modes, run claude code unattended, claude code yolo mode, claude code classifier, claude code hooks permissions, autonomous coding agent safety
 date: 2026-09-07
 pillar: AI Workflow & Context Engineering
