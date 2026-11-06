@@ -62,7 +62,7 @@ Zachary Vorsteg
 - Email: Via contact form on site
 - Phone: (561) 718-6725
 - GitHub: [@ZacharyVorsteg](https://github.com/ZacharyVorsteg)
-- LinkedIn: [linkedin.com/in/zachary-vorsteg](https://www.linkedin.com/in/zachary-vorsteg)
+- LinkedIn: [linkedin.com/in/zacharyvorsteg](https://www.linkedin.com/in/zacharyvorsteg)
 
 ---
 
