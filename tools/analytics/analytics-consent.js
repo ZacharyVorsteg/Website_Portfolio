@@ -159,7 +159,7 @@
   function pageview() {
     if (counted || choice !== 'granted') return;
     counted = true;
-    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex' });
+    gtag('event', 'page_view', { send_to: id, page_location: page, page_referrer: referrer, page_title: (document.title || 'Zachary Vorsteg') });
   }
   function mayMeasure() {
     return loaded && choice === 'granted' && !window[disabled] && !privacySignalsDenied();
@@ -202,7 +202,7 @@
     gtag('config', id, {
       ...attribution,
       send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false,
-      page_location: page, page_referrer: referrer, page_title: 'Palm Beach Flex',
+      page_location: page, page_referrer: referrer, page_title: (document.title || 'Zachary Vorsteg'),
       cookie_domain: 'none', cookie_expires: 15552000, cookie_update: false
     });
     pageview();

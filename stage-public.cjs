@@ -48,7 +48,7 @@ const assetsOut = path.join(out, 'assets');
 fs.mkdirSync(assetsOut, { recursive: true });
 fs.writeFileSync(path.join(assetsOut, 'analytics-consent.js'), template);
 fs.writeFileSync(path.join(assetsOut, 'analytics-consent.css'), css);
-const CONSENT_SNIPPET = `<link rel="stylesheet" href="/assets/analytics-consent.css?v=${csh}">\n<script data-site-analytics defer src="/assets/analytics-consent.js?v=${jsh}" data-measurement-id="${GA4_ID}"></script>\n`;
+const CONSENT_SNIPPET = `<link rel="stylesheet" href="/assets/analytics-consent.css?v=${csh}">\n<script data-site-analytics defer src="/assets/analytics-consent.js?v=${jsh}" data-measurement-id="${GA4_ID}"></script>\n<script src="https://customlab.ai/fleet-telemetry.js" defer data-venture="zacharyvorsteg"></script>\n`;
 function injectConsent(dir) {
   let n = 0;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -63,6 +63,7 @@ function injectConsent(dir) {
     if (html.includes('data-site-analytics')) {
       html = html.replace(/<link rel="stylesheet" href="\/assets\/analytics-consent\.css(?:\?v=[^"]*)?">/, `<link rel="stylesheet" href="/assets/analytics-consent.css?v=${csh}">`);
       html = html.replace(/<script data-site-analytics[^>]*><\/script>/, `<script data-site-analytics defer src="/assets/analytics-consent.js?v=${jsh}" data-measurement-id="${GA4_ID}"></script>`);
+      if (!html.includes('fleet-telemetry.js')) html = html.replace('</head>', `<script src="https://customlab.ai/fleet-telemetry.js" defer data-venture="zacharyvorsteg"></script>\n</head>`);
     } else {
       html = html.replace('</head>', `${CONSENT_SNIPPET}</head>`);
     }
