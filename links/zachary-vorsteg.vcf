@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Vorsteg;Zachary;;;
+FN:Zachary Vorsteg
+TITLE:Fractional AI Operator
+TEL;TYPE=CELL,VOICE:+15617186725
+EMAIL;TYPE=INTERNET:zacharyvorsteg@gmail.com
+URL:https://zacharyvorsteg.com
+ADR;TYPE=WORK:;;;West Palm Beach;FL;;US
+END:VCARD
