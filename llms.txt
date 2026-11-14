@@ -32,7 +32,7 @@
 
 These are distinct offers associated with Zach, not alternate identities for the person. Follow each offer's current page for its scope, availability, pricing and terms.
 
-- [Vorsteg Software](https://vorstegsoftware.com/): Custom business applications and ongoing care.
+- [CustomLab.ai custom software](https://customlab.ai/software.html): Custom business applications and ongoing care (Vorsteg Software is now part of CustomLab).
 - [CustomLab.ai](https://customlab.ai/): Operations automation across existing business tools.
 - [Trusenda](https://trusenda.com/): CRM for independent commercial real estate brokers, on web and iPhone.
 - [AdsHandled](https://adshandled.com/): Paid advertising management for local businesses.

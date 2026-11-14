@@ -57,6 +57,20 @@
     Cache-Control = "public, max-age=3600, must-revalidate"
 
 # Redirect old blog URL to new URL (FREC compliance fix)
+# 2026-11-14 (Zach-approved): zachvorsteg.com and www -> https://zacharyvorsteg.com.
+# Inert until zachvorsteg.com + www.zachvorsteg.com are moved onto this Netlify site as domain aliases.
+[[redirects]]
+  from = "https://zachvorsteg.com/*"
+  to = "https://zacharyvorsteg.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.zachvorsteg.com/*"
+  to = "https://zacharyvorsteg.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/blog/why-im-a-commercial-real-estate-broker-who-codes/*"
   to = "/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/:splat"
