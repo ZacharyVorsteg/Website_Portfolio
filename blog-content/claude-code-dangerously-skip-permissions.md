@@ -114,6 +114,14 @@ No. Bypass mode disables prompts and safety checks entirely, including writes to
 
 Yes. Setting `permissions.disableBypassPermissionsMode` to `"disable"` in a managed settings file removes bypass mode, and `disableAutoMode` does the same for auto mode. A user can also set it in their own settings to lock themselves out ([Anthropic, 2026](https://code.claude.com/docs/en/permissions)).
 
+### Why does it say "--dangerously-skip-permissions cannot be used with root/sudo privileges for security reasons"?
+
+On Linux and macOS, Claude Code refuses to start in bypass mode when it runs as root or under `sudo`, and that is the message it prints. The check is skipped inside a recognized sandbox, and Anthropic's documentation points to the dev container configuration, which runs Claude Code as a non-root user ([Anthropic, 2026](https://code.claude.com/docs/en/permission-modes)). Do not work around it by running as root on your own machine; run as a normal user inside a container instead.
+
+### How do I stop Claude Code asking for permission without the flag?
+
+Start with allow rules. A `permissions.allow` list such as `"Bash(npm run *)"` lets Claude run the commands you name without asking, and a deny rule such as `"Bash(git push *)"` still blocks in every mode ([Anthropic, 2026](https://code.claude.com/docs/en/permissions)). `acceptEdits` mode approves file edits and common filesystem commands in your working directory, and auto mode reduces prompts by having a classifier review each tool call before it runs ([Anthropic, 2026](https://code.claude.com/docs/en/permission-modes)).
+
 ### Does the classifier see the web pages my agent reads?
 
 No. Per Anthropic's engineering write-up, the classifier sees user messages and the tool-call commands only; it strips assistant prose, tool outputs and external content ([Anthropic, March 25, 2026](https://anthropic.com/engineering/claude-code-auto-mode)). That is why I treat every fetched page as untrusted input and keep the actions that matter behind separate gates.

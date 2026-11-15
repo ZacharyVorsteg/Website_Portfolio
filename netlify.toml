@@ -71,6 +71,17 @@
   status = 301
   force = true
 
+# Retired slug still shown in Search Console (404); send it to the closest live post.
+[[redirects]]
+  from = "/blog/one-person-business-with-ai-agents"
+  to = "/blog/how-i-use-agentic-ai-one-person-company/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/one-person-business-with-ai-agents/*"
+  to = "/blog/how-i-use-agentic-ai-one-person-company/"
+  status = 301
+
 [[redirects]]
   from = "/blog/why-im-a-commercial-real-estate-broker-who-codes/*"
   to = "/blog/why-im-a-commercial-real-estate-sales-associate-who-codes/:splat"

@@ -97,6 +97,14 @@ test('topic and source allowlists preserve intent without query/free-text leakag
     assert.equal(await page.locator('[name=source-offer]').inputValue(), '');
     assert.equal(await page.locator('details.home-optional-details').evaluate(e => e.open), false);
     assert.equal(await page.locator('[name=utm_source]').inputValue(), 'portfolio'); // Invalid/later input cannot replace the first safe campaign.
+    await page.goto(base + '/?topic=ai', { referer: base + '/ai-consulting-west-palm-beach/?q=ignored' });
+    assert.equal(await page.locator('[name=source-page]').inputValue(), '/ai-consulting-west-palm-beach/');
+    await page.goto(base + '/?topic=ai', { referer: base + '/ai-automation' });
+    assert.equal(await page.locator('[name=source-page]').inputValue(), '/ai-automation/'); // No-slash duplicate maps to the canonical path.
+    await page.goto(base + '/?topic=ai', { referer: base + '/ai-consulting-cost/' });
+    assert.equal(await page.locator('[name=source-page]').inputValue(), '/ai-consulting-cost/');
+    await page.goto(base + '/?topic=ai', { referer: base + '/not-a-listed-page/' });
+    assert.equal(await page.locator('[name=source-page]').inputValue(), '/');
     await context.close();
 });
 

@@ -9,9 +9,13 @@
         '/ai-operating-layer/', '/ai-automation/', '/custom-software/', '/finance/',
         '/commercial-real-estate/', '/production/', '/blog/',
         '/ai-automation-palm-beach-county/', '/ai-consultant-palm-beach-county/',
-        '/ai-systems-architect-florida/', '/agentic-ai-engineer-west-palm-beach/'
+        '/ai-systems-architect-florida/', '/agentic-ai-engineer-west-palm-beach/',
+        '/ai-consulting-west-palm-beach/', '/ai-for-commercial-real-estate/', '/ai-consulting-cost/',
+        '/ventures/', '/resources/', '/resources/revenue-waterfall/', '/links/'
     ]);
     const prefersReducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+    // Google indexes some no-slash duplicates (/ai-automation, /links); record them under the canonical slash path.
+    const normalizePath = path => (typeof path === 'string' && path.length > 1 && !path.endsWith('/') && !/\.[a-z0-9]+$/i.test(path)) ? path + '/' : path;
     const allowedSource = path => sourcePages.has(path) || /^\/blog\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(path);
     const allowedCampaign = value => typeof value === 'string' && /^[a-z0-9][a-z0-9._-]{0,99}$/i.test(value) ? value : '';
     const visible = element => Boolean(element?.getClientRects().length) && getComputedStyle(element).visibility !== 'hidden';
@@ -140,9 +144,11 @@
         const localSource = () => {
             try {
                 const referrer = new URL(document.referrer);
-                if (referrer.origin === location.origin && allowedSource(referrer.pathname)) return referrer.pathname;
+                const referrerPath = normalizePath(referrer.pathname);
+                if (referrer.origin === location.origin && allowedSource(referrerPath)) return referrerPath;
             } catch (_) { /* No usable referrer. */ }
-            return allowedSource(location.pathname) ? location.pathname : '/';
+            const currentPath = normalizePath(location.pathname);
+            return allowedSource(currentPath) ? currentPath : '/';
         };
         function applyTopic(topic) {
             if (!form || !topics.has(topic)) return;
