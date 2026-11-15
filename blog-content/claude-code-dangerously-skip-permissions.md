@@ -120,7 +120,7 @@ On Linux and macOS, Claude Code refuses to start in bypass mode when it runs as 
 
 ### How do I stop Claude Code asking for permission without the flag?
 
-Start with allow rules. A `permissions.allow` list such as `"Bash(npm run *)"` lets Claude run the commands you name without asking, and a deny rule such as `"Bash(git push *)"` still blocks in every mode ([Anthropic, 2026](https://code.claude.com/docs/en/permissions)). `acceptEdits` mode approves file edits and common filesystem commands in your working directory, and auto mode reduces prompts by having a classifier review each tool call before it runs ([Anthropic, 2026](https://code.claude.com/docs/en/permission-modes)).
+Start with allow rules. A `permissions.allow` list such as `"Bash(npm run *)"` lets Claude run the commands you name without asking, and a deny rule such as `"Bash(git push *)"` blocks the matching commands ([Anthropic, 2026](https://code.claude.com/docs/en/permissions)). Deny rules apply in every mode, including bypass. `acceptEdits` mode approves file edits and common filesystem commands in your working directory, and in auto mode a classifier reviews actions instead of prompting you ([Anthropic, 2026](https://code.claude.com/docs/en/permission-modes)).
 
 ### Does the classifier see the web pages my agent reads?
 
