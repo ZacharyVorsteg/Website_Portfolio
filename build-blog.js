@@ -442,6 +442,9 @@ function callsHandledBlock(slug) {
                     <a class="post-offer-link" href="${href}" target="_blank" rel="noopener">See how CallsHandled works <span aria-hidden="true">↗</span></a>
                 </aside>`;
 }
+// One descriptive line on AI posts pointing readers to the local consulting, cost and engagement pages.
+const AI_CONSULT_LINKS = `<p class="post-consult-links">If you want this kind of system in your own business, see <a href="/ai-consulting-west-palm-beach/">AI consulting in West Palm Beach</a>, <a href="/ai-consulting-cost/">what it costs</a>, and <a href="/ai-operating-layer/">ongoing engagements</a>.</p>`;
+
 function postCta(slug, topic, contactHref) {
   if (FEATURED_AI_CTA.has(slug)) {
     return `<aside class="post-offer" aria-label="Work with Zach">
@@ -449,9 +452,11 @@ function postCta(slug, topic, contactHref) {
                     <p>I set up supervised AI workflows for owner-led businesses: the same gates, receipts and review steps described above, connected to your leads, follow-up and reporting.</p>
                     <a class="btn post-offer-btn" href="${contactHref}">Talk through your workflow</a>
                 </aside>
+                ${AI_CONSULT_LINKS}
                 ${callsHandledBlock(slug)}`;
   }
-  return topic === 'ai' ? callsHandledBlock(slug) : '';
+  return topic === 'ai' ? `${AI_CONSULT_LINKS}
+                ${callsHandledBlock(slug)}` : '';
 }
 
 // Generate blog index

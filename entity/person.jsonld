@@ -11,8 +11,8 @@
   "image": "https://zacharyvorsteg.com/images/zach-headshot.jpg",
   "telephone": "+15617186725",
   "email": "mailto:zacharyvorsteg@gmail.com",
-  "jobTitle": "Operator, AI systems and Palm Beach real estate",
-  "description": "Operator based in West Palm Beach, Florida, who builds AI systems that run small businesses and uses them to find Palm Beach owners for his real estate desk. Founder of CustomLab.ai, with shipped products including Trusenda, CallsHandled and Ads Handled. Finance background (FAU '20). Florida-licensed real estate sales associate (SL3603483) with Cornerstone Realty.",
+  "jobTitle": "AI systems builder and consultant",
+  "description": "AI systems builder and consultant based in West Palm Beach, Florida. He builds and runs AI workflow systems in his own live products and installs the same kind of systems for owner-led Palm Beach County businesses, with a person approving anything that sends, spends or publishes. 5+ shipped products, including Trusenda, CallsHandled, AdsHandled and CustomLab.ai. Finance background (FAU '20). Florida real estate sales associate (SL3603483) with Cornerstone Realty.",
   "hasOccupation": [
     {
       "@type": "Occupation",
@@ -51,7 +51,8 @@
     "recognizedBy": {
       "@type": "GovernmentOrganization",
       "name": "Florida Department of Business and Professional Regulation"
-    }
+    },
+    "identifier": "SL3603483"
   },
   "knowsAbout": [
     "AI Consulting for Small and Mid-Sized Businesses",
@@ -103,37 +104,20 @@
     {
       "@type": "WebPage",
       "@id": "https://zacharyvorsteg.com/ai-consulting-west-palm-beach/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://zacharyvorsteg.com/ai-consulting-cost/"
     }
   ],
   "sameAs": [
     "https://www.linkedin.com/in/zacharyvorsteg",
     "https://github.com/ZacharyVorsteg",
     "https://x.com/zachvorsteg",
-        "https://www.myfloridalicense.com/wl11.asp",
-        "https://customlab.ai/",
-        "https://callshandled.ai/",
-        "https://adshandled.com/",
-        "https://trusenda.com/",
-        "https://palmbeachwarehouses.com/",
-        "https://palmbeachoceanfrontestates.com/",
-        "https://palmbeachestatesforsale.com/",
-        "https://palmbeachwaterfrontestates.com/",
-        "https://palmbeachpenthouses.com/",
-        "https://wellingtonequestrianfarms.com/",
-        "https://wellingtonseasonalrentals.com/",
-        "https://palmbeachinvestmentsales.com/",
-        "https://palmbeachdevelopmentsites.com/",
-        "https://palmbeachboatslips.com/",
-        "https://palmbeachcarcondos.com/",
-        "https://palmbeachtruckyards.com/",
-        "https://palmbeachhangars.com/",
-        "https://palmbeachboatstorage.com/",
-        "https://palmbeachjetinteriors.com/",
-        "https://palmbeachjetsales.com/",
-        "https://palmbeachsuperyachts.com/",
-        "https://palmbeachsportfish.com/",
-        "https://palmbeachcarwraps.com/",
-        "https://westpalmseawalls.com/",
-        "https://palmbeachprintco.com/"
-  ]
+    "https://apps.apple.com/us/developer/zachary-vorsteg/id1847188302"
+  ],
+  "affiliation": {
+    "@type": "RealEstateAgent",
+    "name": "Cornerstone Realty"
+  }
 }

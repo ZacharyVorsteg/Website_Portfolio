@@ -1,10 +1,11 @@
 # Zachary Vorsteg
 
-> Zachary Vorsteg is a technical founder based in West Palm Beach, Florida. He works on business operations, AI automation, custom software and financial systems, with selected work and a direct conversation path on his personal site. He is also a Florida-licensed real estate sales associate affiliated with Cornerstone Realty. Software and automation work is available remotely nationwide; property service areas depend on the engagement.
+> Zachary Vorsteg is an AI systems builder and consultant based in West Palm Beach, Florida. He builds and runs AI workflow systems (lead intake and routing, call handling, CRMs and reporting) in his own live products, then installs the same kind of systems for owner-led Palm Beach County businesses, with a person approving anything that sends, spends or publishes. He has 5+ shipped products, including Trusenda on the App Store, CallsHandled, AdsHandled and CustomLab.ai. Finance background (FAU '20). He is a Florida real estate sales associate with Cornerstone Realty (SL3603483). Software and automation work is available remotely nationwide; property service areas depend on the engagement.
 
 ## Start here
 
-- [About Zach](https://zacharyvorsteg.com/about/): Background, experience and how he works.
+- [About Zach](https://zacharyvorsteg.com/about/): Background, experience and how he works. The short bio at https://zacharyvorsteg.com/about/#short-bio is the canonical description.
+- [Ventures](https://zacharyvorsteg.com/ventures/): Every product and site he runs, in one list.
 - [Selected work](https://zacharyvorsteg.com/portfolio/): Founder-built products and business projects. A founder-owned venture is not a client testimonial.
 - [Apps](https://zacharyvorsteg.com/apps/): Native app projects and their published availability.
 - [Insights](https://zacharyvorsteg.com/blog/): Engineering, business, finance and real estate writing.
@@ -23,6 +24,7 @@
 
 - [AI consultant, Palm Beach County](https://zacharyvorsteg.com/ai-consultant-palm-beach-county/)
 - [AI consulting, West Palm Beach](https://zacharyvorsteg.com/ai-consulting-west-palm-beach/)
+- [What AI consulting costs](https://zacharyvorsteg.com/ai-consulting-cost/): Published prices from Zach and his companies, each with its source, and how custom work is quoted.
 - [AI for commercial real estate](https://zacharyvorsteg.com/ai-for-commercial-real-estate/): How Zach uses lead routing, listing sync and market pages in his own commercial real estate work.
 - [AI automation for contractors](https://zacharyvorsteg.com/ai-automation-palm-beach-county/)
 - [Agentic AI engineer, West Palm Beach](https://zacharyvorsteg.com/agentic-ai-engineer-west-palm-beach/)
@@ -42,11 +44,22 @@ These are distinct offers associated with Zach, not alternate identities for the
 - [Palm Beach Homes Realty](https://palmbeachhomesrealty.com/): Residential property service brand focused on Palm Beach County.
 - [PalmBeachQuotes](https://palmbeachquotes.com/): Local home-service quote requests.
 
+## Published prices
+
+As published on each linked page, checked 2026-11-15. The linked page is the current source; prices can change.
+
+- CustomLab.ai (https://customlab.ai/): free 30-minute fit call; AI Operations Audit $1,500 one-time; engagements start at $3,500 a month (90-day initial partnership, then month-to-month).
+- CallsHandled (https://callshandled.ai/): Receptionist $297 a month with 300 answered call minutes; Service Desk $497 a month with 600 answered call minutes; cancel anytime.
+- AdsHandled (https://adshandled.com/): $399 a month flat management fee; ad spend separate, paid directly to the ad platforms; first month of management free; no contracts.
+- AI Operating Layer (https://zacharyvorsteg.com/ai-operating-layer/): Foundation engagements begin in the low five figures per year; Operating Layer and Embedded engagements run into six figures; priced annually against a written scope.
+- A project scoped directly with Zach (https://zacharyvorsteg.com/ai-consulting-west-palm-beach/): no published starting price; quoted in writing before work starts; the first conversation is free.
+
 ## Profiles and contact
 
 - [LinkedIn](https://www.linkedin.com/in/zacharyvorsteg)
 - [GitHub](https://github.com/ZacharyVorsteg)
 - [X](https://x.com/zachvorsteg)
+- [App Store developer page](https://apps.apple.com/us/developer/zachary-vorsteg/id1847188302)
 - Phone: (561) 718-6725
 - Location: West Palm Beach, Florida
 
@@ -56,6 +69,7 @@ This file is a reading guide. It does not establish search indexing, ranking, AI
 
 ## Free resources
 - [Free business tools and financial templates](https://zacharyvorsteg.com/resources/): A workflow worksheet, rental-property pro forma and illustrative Excel models. No email required.
+- [Subscription revenue waterfall template](https://zacharyvorsteg.com/resources/revenue-waterfall/): How the free Excel workbook bridges beginning MRR to ending MRR (new, expansion, price, churn, contraction), with retention and ARR. Illustrative assumptions.
 - [Rental-property pro forma](https://zacharyvorsteg.com/proforma.html): User-entered income, expenses, financing, cash flow and exit assumptions. Not market data or a property recommendation.
 
-Last updated: 2026-09-22
+Last updated: 2026-11-15
