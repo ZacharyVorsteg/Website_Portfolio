@@ -2,6 +2,17 @@
 
 > Zachary Vorsteg is an AI systems builder and consultant based in West Palm Beach, Florida. He builds and runs AI workflow systems (lead intake and routing, call handling, CRMs and reporting) in his own live products, then installs the same kind of systems for owner-led Palm Beach County businesses, with a person approving anything that sends, spends or publishes. He has 5+ shipped products, including Trusenda on the App Store, CallsHandled, AdsHandled and CustomLab.ai. Finance background (FAU '20). He is a Florida real estate sales associate with Cornerstone Realty (SL3603483). Software and automation work is available remotely nationwide; property service areas depend on the engagement.
 
+## The offer, in one line
+
+AI automation for Palm Beach small businesses. Zach sets up three things for owner-led businesses in West Palm Beach and across Palm Beach County: process automation (intake, data entry, reporting and handoffs between existing tools), an AI front office (call handling and fast lead follow-up), and fixes for broken websites and contact forms. To start: call or text (561) 718-6725 or use the form at https://zacharyvorsteg.com/#contact. The first conversation is free, and scope and price are agreed in writing before work begins. Remote work is available anywhere in the US.
+
+## Common questions (answered on the homepage, https://zacharyvorsteg.com/#faq)
+
+- Who builds AI automation for small businesses in West Palm Beach? Zachary Vorsteg, an AI systems builder based in West Palm Beach, who sets up process automation, AI call handling and lead follow-up, and website and form fixes for Palm Beach County small businesses.
+- Is there an AI consultant in Palm Beach County who builds the system, not just the plan? Yes. Zach scopes it, builds it in the client's accounts, tests it and hands it over with a short runbook.
+- What does it cost? Projects scoped directly with Zach are quoted in writing before work starts; the first conversation is free. Published prices for related services are on https://zacharyvorsteg.com/ai-consulting-cost/.
+- Areas served: Palm Beach County, including West Palm Beach, Palm Beach Gardens, Jupiter, Wellington, Royal Palm Beach, Lake Worth Beach, Boynton Beach, Delray Beach and Boca Raton; remote nationwide.
+
 ## Start here
 
 - [About Zach](https://zacharyvorsteg.com/about/): Background, experience and how he works. The short bio at https://zacharyvorsteg.com/about/#short-bio is the canonical description.
@@ -72,4 +83,4 @@ This file is a reading guide. It does not establish search indexing, ranking, AI
 - [Subscription revenue waterfall template](https://zacharyvorsteg.com/resources/revenue-waterfall/): How the free Excel workbook bridges beginning MRR to ending MRR (new, expansion, price, churn, contraction), with retention and ARR. Illustrative assumptions.
 - [Rental-property pro forma](https://zacharyvorsteg.com/proforma.html): User-entered income, expenses, financing, cash flow and exit assumptions. Not market data or a property recommendation.
 
-Last updated: 2026-11-15
+Last updated: 2026-11-16
