@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=other#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1009,7 +1009,7 @@
 <h3>Real Cascade: A Market Data Failure That Touched Four Systems</h3>
 <p>February 2026. A market data provider changed their WebSocket heartbeat interval from 30 seconds to 15 seconds — no announcement, no deprecation notice, nothing. My connection handler interpreted missed heartbeats as a stale connection and reconnected. Correct behavior. But during the reconnection window, three strategies depending on continuous price feeds received stale cached prices instead of live data.</p>
 <p>Those stale prices fed into position sizing calculations. The sizing looked reasonable — no alert triggered. Two strategies opened positions based on prices that were 45 seconds old. In a volatile market, 45 seconds is a different universe.</p>
-<pre><code>2026-02-14 09:31:47 [schwab-scalper] WebSocket heartbeat missed (30s timeout)
+<pre tabindex="0"><code>2026-02-14 09:31:47 [schwab-scalper] WebSocket heartbeat missed (30s timeout)
 2026-02-14 09:31:47 [schwab-scalper] Reconnecting to market data feed...
 2026-02-14 09:31:48 [oanda-carry-7] Using cached price EURUSD=1.0847 (age: 34s)
 2026-02-14 09:31:48 [schwab-arb-3]  Using cached price SPY=592.41 (age: 38s)
@@ -1094,7 +1094,7 @@
 <p>Organizations lose an average of 86 hours to downtime annually (Cockroach Labs, 2025). Spread across a team, that&#39;s survivable. For one person running five systems alone, 86 hours is a full workweek per year spent in reactive recovery instead of building anything new.</p>
 <h3>My Actual Triage Protocol</h3>
 <p>When multiple things break simultaneously — and they do, because failures correlate far more than you&#39;d expect — I run this:</p>
-<pre><code>TRIAGE PRIORITY (when multiple systems are down):
+<pre tabindex="0"><code>TRIAGE PRIORITY (when multiple systems are down):
 
 1. MONEY AT RISK → Fix first
    - Open positions with no stop-loss

@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=other#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1014,7 +1014,7 @@
 <p>The <a href="/blog/financial-modeling-fundamentals/">financial modeling fundamentals</a> I use for M&amp;A translate cleanly into CRE deal evaluation — but I can run them at scale, across dozens of opportunities simultaneously, while a traditional analyst is still formatting their first spreadsheet.</p>
 <p>Morgan Stanley (2025) puts it at 37% of real estate tasks automatable, worth $34 billion in operating efficiencies by 2030. Brokers and services get the biggest lift: a projected 34% increase in operating cash flow through automation — the highest of any CRE subsector.</p>
 <p>Here&#39;s a simplified version of how I screen a deal before committing to full underwriting:</p>
-<pre><code class="language-python"># CRE deal quick-screen — runs before full underwriting
+<pre tabindex="0"><code class="language-python"># CRE deal quick-screen — runs before full underwriting
 def quick_screen(noi, asking_price, market_cap_rate, loan_rate, ltv=0.70):
     implied_cap = noi / asking_price
     debt_service = (asking_price * ltv * loan_rate) / 12

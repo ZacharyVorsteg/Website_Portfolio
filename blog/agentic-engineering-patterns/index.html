@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1122,7 +1122,7 @@
 <p>Context is the check most people skip. And it&#39;s the one that catches the worst bugs. An agent can generate a perfectly working function that solves the wrong problem because it didn&#39;t grasp the broader system design. I&#39;ve watched one produce a correct database query that returns the right data from the wrong table — syntactically perfect, semantically wrong. That&#39;s what review gates catch that running the test suite never will.</p>
 <h3>Trust Calibration by Domain</h3>
 <p>Review intensity varies with what&#39;s at stake:</p>
-<pre><code>REVIEW DEPTH BY DOMAIN
+<pre tabindex="0"><code>REVIEW DEPTH BY DOMAIN
 
 Trading strategy logic:     LINE-BY-LINE
   → Every conditional, every calculation, every edge case
@@ -1168,7 +1168,7 @@ Research outputs:            CROSS-REFERENCE
 <p>Theory is cheap. Here are two actual sessions, annotated with the decisions that mattered.</p>
 <h3>Session 1: Cross-Codebase Bug Fix</h3>
 <p>A test failure in BidPro&#39;s PropertyDetailView traced to a nil optional — but the root cause turned out to be a Supabase schema change that both the iOS app and the blog build system consumed.</p>
-<pre><code>SESSION: Bug fix — PropertyDetailView nil crash
+<pre tabindex="0"><code>SESSION: Bug fix — PropertyDetailView nil crash
 TIME: 47 minutes total (14 min human, 33 min agent)
 
 [SURVEY] Agent reads test failure, traces to
@@ -1196,7 +1196,7 @@ TIME: 47 minutes total (14 min human, 33 min agent)
 <p>Fourteen minutes of my time to resolve a cross-codebase issue. The cross-codebase check — something I might have forgotten if I were just heads-down fixing the crash — happened because I decomposed it as a parallel task during the plan phase. That&#39;s the methodology earning its keep.</p>
 <h3>Session 2: New Feature Build</h3>
 <p>Adding a comparison table component to the blog build system — responsive, with caption support.</p>
-<pre><code>SESSION: New feature — comparison table markdown support
+<pre tabindex="0"><code>SESSION: New feature — comparison table markdown support
 TIME: 1h 22min total (25 min human, 57 min agent)
 
 [SURVEY] Agent reads build-blog.js, identifies the

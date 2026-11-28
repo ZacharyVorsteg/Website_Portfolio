@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1087,7 +1087,7 @@
 <p>Here&#39;s the killer feature, though: <code>KeepAlive</code>. Bot crashes at 3 AM? launchd restarts it before anyone notices. No supervisor process. No watchdog script. No PagerDuty alert yanking me out of sleep. When you&#39;re a team of one with no NOC (network operations center), that isn&#39;t a nice-to-have — it&#39;s what keeps you sane.</p>
 <h3>The Anatomy of a Bot plist</h3>
 <p>Every bot lives as a property list (plist) file in <code>~/Library/LaunchAgents/</code>:</p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<pre tabindex="0"><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot;
   &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
 &lt;plist version=&quot;1.0&quot;&gt;
@@ -1115,7 +1115,7 @@
 </code></pre>
 <p><code>KeepAlive</code> set to <code>true</code> means launchd restarts the process whenever it exits. <code>PYTHONUNBUFFERED=1</code> ensures log output writes immediately — critical when you&#39;re reconstructing a 2 AM crash from your 7 AM log review.</p>
 <p>Two commands. That&#39;s the entire management interface:</p>
-<pre><code class="language-bash"># Load and start a bot
+<pre tabindex="0"><code class="language-bash"># Load and start a bot
 launchctl load ~/Library/LaunchAgents/com.trading.schwab-scalper.plist
 
 # Check running bots
