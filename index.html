@@ -164,6 +164,26 @@
             </div>
         </section>
     </main>
+<!-- newsletter-optin:start (double opt-in; posts to the shared Trusenda endpoint, list=zacharyvorsteg) -->
+<section id="newsletter-optin" aria-labelledby="newsletter-optin-title" style="max-width:720px;margin:48px auto;padding:28px 24px;border:1px solid rgba(127,127,127,.25);border-radius:14px;font-family:inherit">
+  <h2 id="newsletter-optin-title" style="margin:0 0 8px;font-size:1.35rem;line-height:1.3">Notes from Zach</h2>
+  <p style="margin:0 0 16px;opacity:.85;line-height:1.55">A short monthly email on AI and automation for owner-led businesses in Palm Beach County: what I built, what worked, what didn't.</p>
+  <form method="POST" action="https://trusenda.com/.netlify/functions/newsletter-subscribe" style="display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start">
+    <input type="hidden" name="list" value="zacharyvorsteg">
+    <input type="hidden" name="return_url" value="https://zacharyvorsteg.com/#newsletter-optin">
+    <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Leave blank <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label for="newsletter-optin-email" style="position:absolute;left:-9999px">Email address</label>
+    <input id="newsletter-optin-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com" style="flex:1 1 240px;min-width:0;padding:12px 14px;border:1px solid rgba(127,127,127,.45);border-radius:8px;font:inherit">
+    <button type="submit" style="padding:12px 20px;border:0;border-radius:8px;background:#0f172a;color:#fff;font:inherit;font-weight:600;cursor:pointer">Subscribe</button>
+    <label style="flex:1 1 100%;display:flex;gap:8px;align-items:flex-start;font-size:.88rem;line-height:1.45;opacity:.85">
+      <input type="checkbox" name="consent" value="yes" required style="margin-top:3px">
+      <span>Yes, send me Zach's monthly notes. We'll email you a confirmation link first (double opt-in), and you're only added after you click it. Unsubscribe anytime from any email. We never sell or share your address. <a href="https://zacharyvorsteg.com/terms/#privacy">Privacy</a>.</span>
+    </label>
+  </form>
+  <p id="newsletter-optin-status" role="status" style="margin:12px 0 0;font-size:.92rem"></p>
+  <script>(function(){var m={"check-email":"Check your inbox for a confirmation link.","confirmed":"You're subscribed. Thanks!","invalid":"Please enter a valid email and tick the consent box.","not-enabled":"Signups open soon. Please check back.","error":"Something went wrong. Please try again."};var v=new URLSearchParams(location.search).get("newsletter");var el=document.getElementById("newsletter-optin-status");if(v&&m[v]&&el)el.textContent=m[v];})();</script>
+</section>
+<!-- newsletter-optin:end -->
     <footer class="home-footer"><div class="container"><div class="home-footer-top"><div><a class="logo" href="/">Zachary Vorsteg</a><p>A founder who builds.<br>West Palm Beach, Florida.<br><a href="https://palmbeachcompanies.com/">Part of Palm Beach Companies</a></p></div><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/Zachary_Vorsteg_Resume.pdf?v=20261105c">Résumé (PDF)</a><a href="/portfolio/">Work &amp; ventures</a><a href="/blog/">Insights</a><a href="/production/">Production</a><a href="/resources/">Free resources</a><a href="/ai-operating-layer/">Ongoing engagements</a><a href="/ai-consulting-west-palm-beach/">AI consulting, West Palm Beach</a><a href="#contact">Let's talk</a></nav><div class="home-footer-connect"><a href="https://www.linkedin.com/in/zacharyvorsteg">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ZacharyVorsteg">GitHub <span aria-hidden="true">↗</span></a><a href="mailto:zacharyvorsteg@gmail.com">Email <span aria-hidden="true">↗</span></a></div></div><p class="home-footer-disclaimer" style="font-size:13px;opacity:.8;margin:18px 0">Information on this site is general and educational. It is not financial, legal, tax or other professional advice. Case studies describe past work, results vary, and nothing here is a guarantee. Demos use sample data unless stated otherwise. See our <a href="/terms/">Terms</a> and <a href="/terms/#privacy">Privacy</a>.</p><div class="home-footer-bottom"><span>© 2026 Zachary Vorsteg</span><span>Florida real estate sales associate · Cornerstone Realty · SL3603483</span></div></div></footer>
     <script src="/app.js?v=conversion-1" defer></script>
 </body>
