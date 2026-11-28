@@ -27,8 +27,8 @@ PERSON = {
     "image": DOMAIN + "/images/zach-headshot.jpg",
     "telephone": "+15617186725",
     "email": "mailto:zacharyvorsteg@gmail.com",
-    "jobTitle": "AI Systems Architect & Automation Engineer",
-    "description": ("AI systems architect and automation engineer based in West Palm Beach, Florida. Designs and ships "
+    "jobTitle": "AI Automation Consultant (Fractional AI Lead)",
+    "description": ("AI automation consultant (fractional AI lead) based in West Palm Beach, Florida. Designs and ships "
                     "agentic AI systems, LLM integrations, and custom software that remove manual work for small and "
                     "mid-sized businesses across Palm Beach County and nationwide. Founder of CustomLab.ai, with shipped "
                     "products including Trusenda and Ads Handled. Also has a finance background "
@@ -68,10 +68,12 @@ PERSON = {
         {"@type": "WebPage", "@id": DOMAIN + "/ai-automation-palm-beach-county/"},
         {"@type": "WebPage", "@id": DOMAIN + "/agentic-ai-engineer-west-palm-beach/"},
         {"@type": "WebPage", "@id": DOMAIN + "/ai-systems-architect-florida/"},
-        {"@type": "WebPage", "@id": DOMAIN + "/ai-consulting-west-palm-beach/"}
+        {"@type": "WebPage", "@id": DOMAIN + "/ai-consulting-west-palm-beach/"},
+        {"@type": "WebPage", "@id": DOMAIN + "/zach-vorsteg-ai-consultant-west-palm-beach/"}
     ],
     "sameAs": [
-        "https://www.linkedin.com/in/zacharyvorsteg", "https://github.com/ZacharyVorsteg", "https://x.com/zachvorsteg"
+        "https://www.linkedin.com/in/zacharyvorsteg", "https://github.com/ZacharyVorsteg", "https://x.com/zachvorsteg",
+        "https://apps.apple.com/us/developer/zachary-vorsteg/id1847188302"
     ]
 }
 

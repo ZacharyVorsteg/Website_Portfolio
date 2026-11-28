@@ -69,3 +69,5 @@
     .home-footer-connect { flex-direction: row; flex-wrap: wrap; gap: 8px 24px; }
     .home-footer-bottom { flex-direction: column; gap: 12px; }
 }
+/* Entity page link adds one desktop nav item: tighten spacing where the row is narrowest so every link still fits */
+@media (min-width: 1000px) and (max-width: 1239px) { .site-header .desktop-nav { gap: 2px; } .site-header .desktop-nav a { padding: 8px 8px; font-size: 13.5px; } .site-header .desktop-nav .btn { padding-left: 14px; padding-right: 14px; } }
