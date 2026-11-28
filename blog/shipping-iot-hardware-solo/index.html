@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=other#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1067,7 +1067,7 @@
 <h3>My First Firmware: What a Software Developer Gets Wrong</h3>
 <p>Everything. You get everything wrong.</p>
 <p>My first prototype read the MLX90640 sensor, processed the 768-pixel thermal array, and transmitted data over Wi-Fi. Worked beautifully on my desk. Deployed to a building, it crashed within four hours.</p>
-<pre><code class="language-c">// What I wrote first (wrong)
+<pre tabindex="0"><code class="language-c">// What I wrote first (wrong)
 void app_main(void) {
     mlx90640_init(&amp;sensor, I2C_NUM_0);
     wifi_init_sta();  // blocks until connected
@@ -1107,7 +1107,7 @@ void app_main(void) {
 <p>Why process data on-site instead of streaming everything to a server? Three reasons: latency, bandwidth cost, and the ability to run inference at the edge without depending on an internet connection that might drop.</p>
 <p>NVIDIA&#39;s Jetson Orin Nano packs 40 TOPS (trillion operations per second) of AI compute into a module smaller than a credit card. It runs my thermal anomaly detection model locally using TensorRT (NVIDIA&#39;s inference optimizer for deploying trained models on edge devices) — comparing incoming sensor frames against baseline patterns and flagging deviations that indicate leaks, HVAC failures, or insulation degradation. Sensor nodes push data over MQTT (Message Queuing Telemetry Transport — a lightweight publish-subscribe protocol designed for constrained IoT devices and unreliable networks).</p>
 <h3>The Pipeline: Sensor to Insight</h3>
-<pre><code>ESP32-S3 (sensor node) → [cellular/local network] → Jetson Orin Nano (edge hub)
+<pre tabindex="0"><code>ESP32-S3 (sensor node) → [cellular/local network] → Jetson Orin Nano (edge hub)
    ├── Read MLX90640 (768 pixels, 30s interval)
    ├── Local buffer (survives network outages)
    ├── Transmit compressed frame via MQTT

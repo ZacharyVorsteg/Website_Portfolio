@@ -332,6 +332,8 @@ function build() {
     const dateISO = formatDateISO(dateStr);
     const readTimeStr = readTime(body);
     let htmlContent = marked(body);
+    // a11y (WCAG 2.1.1): make horizontally scrollable code blocks keyboard-focusable
+    htmlContent = htmlContent.replace(/<pre>/g, '<pre tabindex="0">');
     // Strip leading H1 from content (title is rendered separately in template)
     htmlContent = htmlContent.replace(/^\s*<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '');
     // Ensure external links with target="_blank" have rel="noopener nofollow"

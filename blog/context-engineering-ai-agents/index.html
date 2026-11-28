@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=ai#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1048,7 +1048,7 @@
 <p>People hear &quot;500 lines&quot; and assume it&#39;s bloated. It isn&#39;t. Every section earned its place through a specific failure that cost me time.</p>
 <h3>Behavioral Rules and Permission Tiers</h3>
 <p>First section: operating rules. Not task instructions — behavioral defaults that govern how the agent behaves regardless of what I&#39;m working on:</p>
-<pre><code class="language-yaml"># Friction Reduction
+<pre tabindex="0"><code class="language-yaml"># Friction Reduction
 
 Just Do It (no confirmation needed):
 - Read any file
@@ -1130,7 +1130,7 @@ Hard Rules (Never Break):
 <h2>Hooks: Event-Driven Automation Without Manual Triggers</h2>
 <p>Hooks are shell commands that fire automatically in response to agent lifecycle events — no human intervention needed. My setup uses four lifecycle hook points: <code>SessionStart</code>, <code>PreToolUse</code>, <code>PostToolUse</code>, and <code>Stop</code>. I use all four.</p>
 <p>This schematic configuration uses example paths under <code>~/.agent/</code>; it is not a drop-in configuration for every tool.</p>
-<pre><code class="language-json">{
+<pre tabindex="0"><code class="language-json">{
   &quot;hooks&quot;: {
     &quot;SessionStart&quot;: [{
       &quot;command&quot;: &quot;cat ~/.agent/memory/learnings.md&quot;,
@@ -1162,7 +1162,7 @@ Hard Rules (Never Break):
 <p>I fix this with structured persistence.</p>
 <h3>Why Structured Memory Beats Chat History</h3>
 <p>Four memory types in my file-based system, each serving a distinct purpose:</p>
-<pre><code class="language-markdown">---
+<pre tabindex="0"><code class="language-markdown">---
 name: user_role
 description: Zach is a technical founder running multiple ventures
 type: user

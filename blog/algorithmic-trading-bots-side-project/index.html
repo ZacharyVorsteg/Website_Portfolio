@@ -947,7 +947,7 @@
     <!-- Header -->
     <header class="site-header">
         <div class="container header-container">
-            <a class="logo" href="/" aria-label="Zachary Vorsteg home">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
+            <a class="logo" href="/">Zachary Vorsteg<span class="logo-subline">Founder &amp; builder · West Palm Beach</span></a>
             <nav class="desktop-nav" aria-label="Main navigation">
                 <a href="/#disciplines">How I help</a><a href="/#work">Selected work</a><a href="/about/">About</a><a href="/zach-vorsteg-ai-consultant-west-palm-beach/">AI consultant</a><a href="/blog/">Insights</a>
                 <a href="/?topic=finance#contact" class="btn btn-accent">Let's talk <span aria-hidden="true">↗</span></a>
@@ -1135,7 +1135,7 @@
 </tr>
 </tbody></table>
 <p>The single most maddening issue across every broker I&#39;ve used: <strong>authentication expiration during live trading.</strong> Schwab requires daily OAuth re-authentication. Token expires mid-strategy? Bot can read market data but can&#39;t execute. I&#39;ve watched a bot identify a perfect entry, log the signal with full confidence, and then just... sit there, helpless — because the auth token had died 45 minutes earlier.</p>
-<pre><code class="language-python"># Pre-flight auth check — runs before every trade cycle
+<pre tabindex="0"><code class="language-python"># Pre-flight auth check — runs before every trade cycle
 def ensure_auth(client, token_expiry):
     buffer_minutes = 5
     if datetime.now() &gt;= token_expiry - timedelta(minutes=buffer_minutes):
@@ -1166,7 +1166,7 @@ def ensure_auth(client, token_expiry):
 <li><strong>Win rate delta.</strong> Compare trailing 30-day win rate against lifetime average. A drop exceeding 15 percentage points flags decay.</li>
 <li><strong>Average trade P&amp;L vs. cost.</strong> If average profit falls below 2x average transaction cost (spread + slippage + fees), the strategy no longer covers its overhead.</li>
 </ol>
-<pre><code class="language-python"># Strategy health check — simplified version
+<pre tabindex="0"><code class="language-python"># Strategy health check — simplified version
 def evaluate_strategy(trades_30d, lifetime_win_rate, avg_txn_cost):
     sharpe = rolling_sharpe(trades_30d, window=30)
     recent_wr = sum(1 for t in trades_30d if t.pnl &gt; 0) / len(trades_30d)
