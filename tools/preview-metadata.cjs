@@ -4,14 +4,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const DOMAIN = 'https://zacharyvorsteg.com';
 const IMAGE = `${DOMAIN}/images/preview-founder.png`;
-const ALT = 'Zachary Vorsteg — practical AI, connected operations and custom software. Founder and builder in West Palm Beach.';
+const ALT = 'Zachary Vorsteg, AI automation consultant (fractional AI lead) in West Palm Beach, Florida: practical AI, connected operations and custom software.';
 const resourcePreviews = {
   'proforma.html': ['preview-proforma.png', 'Real estate pro forma by Zachary Vorsteg. Rental income, financing and cash flow. Make every assumption visible.'],
   'resources/index.html': ['preview-resources.png', 'The resource collection by Zachary Vorsteg. Financial templates and interactive tools for your next business decision.'],
   'workflow-check/index.html': ['preview-workflow.png', 'Workflow opportunity worksheet by Zachary Vorsteg. Map a repetitive process and choose a practical starting point.'],
 };
 const overrides = {
-  'about/index.html': ['About Zachary Vorsteg | Founder & Builder', 'Meet Zachary Vorsteg, a technical founder in West Palm Beach building business systems, AI workflows and custom software. Explore his work and approach.'],
+  'about/index.html': ['About Zachary Vorsteg | AI Automation Consultant, West Palm Beach', 'Meet Zachary Vorsteg, an AI automation consultant (fractional AI lead) in West Palm Beach building business systems, AI workflows and custom software. Explore his work and approach.'],
   'portfolio/index.html': ['Selected Work & Ventures | Zachary Vorsteg', 'Explore software, automation and property projects built by Zachary Vorsteg, including Trusenda and Palm Beach Warehouses. Discuss a similar business problem.'],
   'blog/index.html': ['Business Systems & Founder Insights | Zachary Vorsteg', 'Notes from Zachary Vorsteg on building software, automating business workflows, finance and real estate. Explore practical lessons from his own ventures.'],
   'macro.html': ['Macroeconomic Research Dashboard | Zachary Vorsteg', "Explore macroeconomic indicators and scenarios in Zachary Vorsteg's research dashboard."],
