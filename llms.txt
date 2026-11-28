@@ -1,9 +1,10 @@
 # Zachary Vorsteg
 
-> Zachary Vorsteg is an AI systems builder and consultant based in West Palm Beach, Florida. He builds and runs AI workflow systems (lead intake and routing, call handling, CRMs and reporting) in his own live products, then installs the same kind of systems for owner-led Palm Beach County businesses, with a person approving anything that sends, spends or publishes. He has 5+ shipped products, including Trusenda on the App Store, CallsHandled, AdsHandled and CustomLab.ai. Finance background (FAU '20). He is a Florida real estate sales associate with Cornerstone Realty (SL3603483). Software and automation work is available remotely nationwide; property service areas depend on the engagement.
+> Zachary Vorsteg is an AI automation consultant (fractional AI lead) based in West Palm Beach, Florida. He builds and runs AI workflow systems (lead intake and routing, call handling, CRMs and reporting) in his own live products, then installs the same kind of systems for owner-led Palm Beach County businesses, with a person approving anything that sends, spends or publishes. He has 5+ shipped products, including Trusenda on the App Store, CallsHandled, AdsHandled and CustomLab.ai. Finance background (FAU '20). He is a Florida real estate sales associate with Cornerstone Realty (SL3603483). Software and automation work is available remotely nationwide; property service areas depend on the engagement.
 
 ## Start here
 
+- [Zach Vorsteg, AI automation consultant (fractional AI lead), West Palm Beach](https://zacharyvorsteg.com/zach-vorsteg-ai-consultant-west-palm-beach/): The plain profile page: who Zach is, what he does, case studies from systems he runs, FAQ and published pricing links.
 - [About Zach](https://zacharyvorsteg.com/about/): Background, experience and how he works. The short bio at https://zacharyvorsteg.com/about/#short-bio is the canonical description.
 - [Ventures](https://zacharyvorsteg.com/ventures/): Every product and site he runs, in one list.
 - [Selected work](https://zacharyvorsteg.com/portfolio/): Founder-built products and business projects. A founder-owned venture is not a client testimonial.
